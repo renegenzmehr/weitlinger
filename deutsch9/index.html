@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sachtexte – Lernzettel Kl. 9</title>
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --text: #1f2430;
+    --muted: #5b6475;
+    --accent: #2f6fdf;
+    --accent-soft: #e6eefc;
+    --green: #1f9d63;
+    --green-soft: #e3f6ed;
+    --orange: #d9822b;
+    --orange-soft: #fdf0e1;
+    --red: #c94040;
+    --red-soft: #fbe6e6;
+    --border: #dde1ea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171f;
+      --card: #1d212b;
+      --text: #e6e8ee;
+      --muted: #9aa3b5;
+      --accent: #6b9cff;
+      --accent-soft: #222d45;
+      --green: #4cc58c;
+      --green-soft: #1b3329;
+      --orange: #f0a557;
+      --orange-soft: #3a2c1b;
+      --red: #ef7b7b;
+      --red-soft: #3b1f22;
+      --border: #2e3442;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(135deg, #2f6fdf, #6a4fd8);
+    color: #fff;
+    padding: 2rem 1rem 1.5rem;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 .3rem; font-size: 1.9rem; }
+  header p { margin: 0; opacity: .9; }
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem;
+    padding: .6rem .5rem;
+  }
+  nav a {
+    text-decoration: none; color: var(--accent);
+    background: var(--accent-soft);
+    padding: .35rem .75rem; border-radius: 999px;
+    font-size: .9rem; font-weight: 600;
+  }
+  nav a:hover { filter: brightness(.95); }
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 1.6rem;
+    scroll-margin-top: 70px;
+  }
+  h2 {
+    margin-top: 0; font-size: 1.5rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  h2 .num {
+    background: var(--accent); color: #fff;
+    width: 2rem; height: 2rem; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  h3 { margin-bottom: .4rem; color: var(--accent); }
+  .box {
+    border-left: 5px solid var(--accent);
+    background: var(--accent-soft);
+    padding: .8rem 1rem; border-radius: 8px; margin: 1rem 0;
+  }
+  .box.merke { border-color: var(--green); background: var(--green-soft); }
+  .box.tipp { border-color: var(--orange); background: var(--orange-soft); }
+  .box.fehler { border-color: var(--red); background: var(--red-soft); }
+  .box strong.label { display: block; margin-bottom: .3rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--border); padding: .5rem .6rem; text-align: left; vertical-align: top; }
+  th { background: var(--accent-soft); }
+  .table-wrap { overflow-x: auto; }
+  ol.steps { counter-reset: s; list-style: none; padding-left: 0; }
+  ol.steps li {
+    counter-increment: s; position: relative;
+    padding: .5rem .5rem .5rem 2.8rem; margin-bottom: .4rem;
+    background: var(--bg); border-radius: 8px;
+  }
+  ol.steps li::before {
+    content: counter(s);
+    position: absolute; left: .7rem; top: .5rem;
+    width: 1.6rem; height: 1.6rem; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .85rem;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .9rem; margin: 1rem 0; }
+  .card {
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: .8rem 1rem; background: var(--bg);
+  }
+  .card h4 { margin: 0 0 .3rem; }
+  code, .bsp {
+    background: var(--bg); border: 1px solid var(--border);
+    padding: .05rem .35rem; border-radius: 5px; font-family: inherit;
+  }
+  .bsp-block {
+    background: var(--bg); border: 1px dashed var(--border);
+    padding: .7rem 1rem; border-radius: 8px; margin: .6rem 0; font-style: italic;
+  }
+  details {
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: .6rem 1rem; margin: .7rem 0; background: var(--bg);
+  }
+  details summary { cursor: pointer; font-weight: 600; }
+  details .loesung {
+    margin-top: .6rem; padding-top: .6rem; border-top: 1px dashed var(--border);
+  }
+  .check li { list-style: none; margin-left: -1.2rem; }
+  .check label { cursor: pointer; }
+  .check input { transform: scale(1.2); margin-right: .5rem; accent-color: var(--green); }
+  .progress {
+    height: 12px; background: var(--bg); border-radius: 999px;
+    overflow: hidden; border: 1px solid var(--border); margin: .5rem 0 1rem;
+  }
+  .progress > div { height: 100%; width: 0; background: var(--green); transition: width .3s; }
+  .chart { max-width: 520px; margin: 1rem auto; display: block; }
+  .chart text { fill: var(--text); font-size: 12px; font-family: inherit; }
+  .chart .bar { fill: var(--accent); }
+  .chart .axis { stroke: var(--muted); }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding-bottom: 2rem; }
+  @media print {
+    nav, .no-print { display: none; }
+    body { background: #fff; color: #000; }
+    section { break-inside: avoid-page; border-color: #ccc; }
+    details { display: block; }
+    details > *:not(summary) { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Sachtexte – Klassenarbeit Deutsch</h1>
+  <p>Gemeinschaftsschule · Klasse 9 · Sachsen-Anhalt</p>
+</header>
+
+<nav>
+  <a href="#grundlagen">0 Grundlagen</a>
+  <a href="#textarbeit">1 Textarbeit</a>
+  <a href="#verstaendnis">2 Textverständnis</a>
+  <a href="#satzbau">3 Satzbau &amp; Zeichensetzung</a>
+  <a href="#diagramm">4 Diagramme</a>
+  <a href="#funktion">5 Funktion</a>
+  <a href="#check">✅ Checkliste</a>
+</nav>
+
+<main>
+
+<!-- ============ 0 GRUNDLAGEN ============ -->
+<section id="grundlagen">
+  <h2><span class="num">0</span> Was sind Sachtexte?</h2>
+  <p>Sachtexte (auch <strong>pragmatische Texte</strong> oder <strong>nichtliterarische Texte</strong>) beschäftigen sich mit der <strong>Wirklichkeit</strong>. Sie informieren über Tatsachen, Vorgänge oder Meinungen – im Gegensatz zu literarischen Texten (Gedicht, Kurzgeschichte, Roman), die erfunden sind.</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>Merkmal</th><th>Sachtext</th><th>Literarischer Text</th></tr>
+    <tr><td>Inhalt</td><td>reale Sachverhalte, Fakten</td><td>erfundene Handlung (Fiktion)</td></tr>
+    <tr><td>Sprache</td><td>sachlich, genau, oft Fachbegriffe</td><td>bildhaft, kreativ, mehrdeutig</td></tr>
+    <tr><td>Ziel</td><td>informieren, überzeugen, anleiten</td><td>unterhalten, zum Nachdenken anregen</td></tr>
+    <tr><td>Beispiele</td><td>Zeitungsartikel, Lexikon, Bericht, Anleitung</td><td>Kurzgeschichte, Fabel, Gedicht</td></tr>
+  </table>
+  </div>
+
+  <h3>Wichtige Sachtextsorten</h3>
+  <div class="grid">
+    <div class="card"><h4>📰 Nachricht / Meldung</h4>Kurz, sachlich, das Wichtigste zuerst (W-Fragen). Keine Meinung.</div>
+    <div class="card"><h4>📋 Bericht</h4>Ausführlicher als die Nachricht, sachlich, meist im Präteritum, chronologisch.</div>
+    <div class="card"><h4>🎥 Reportage</h4>Lebendig, mit Eindrücken vor Ort, Mischung aus Fakten und persönlichem Erleben, oft Präsens.</div>
+    <div class="card"><h4>💬 Kommentar</h4>Meinung des Verfassers zu einem Thema, mit Argumenten. Wertende Sprache.</div>
+    <div class="card"><h4>🎤 Interview</h4>Frage-Antwort-Form zwischen Journalist und Person.</div>
+    <div class="card"><h4>📖 Lexikonartikel / Sachbuchtext</h4>Erklärt Begriffe und Zusammenhänge neutral und genau.</div>
+    <div class="card"><h4>🛠️ Anleitung</h4>Schritt-für-Schritt, Imperativ oder Infinitiv („Schraube eindrehen.“).</div>
+    <div class="card"><h4>📊 Diskontinuierlicher Text</h4>Diagramm, Tabelle, Grafik, Fahrplan – Informationen nicht als Fließtext.</div>
+  </div>
+
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    <strong>Kontinuierliche Texte</strong> = Fließtext (Sätze, Absätze).<br>
+    <strong>Diskontinuierliche Texte</strong> = Diagramme, Tabellen, Schaubilder, Karten.
+  </div>
+</section>
+
+<!-- ============ 1 TEXTARBEIT ============ -->
+<section id="textarbeit">
+  <h2><span class="num">1</span> Textarbeit – Lesestrategien</h2>
+  <p>Bevor du Fragen beantwortest, musst du den Text gründlich erschließen. Dafür nutzt du die <strong>Fünf-Schritt-Lesemethode</strong>.</p>
+
+  <ol class="steps">
+    <li><strong>Überfliegen:</strong> Überschrift, Zwischenüberschriften, Bilder, Diagramme, Fettgedrucktes anschauen. Worum geht es ungefähr?</li>
+    <li><strong>Fragen stellen:</strong> Was weiß ich schon? Was will ich erfahren? (W-Fragen)</li>
+    <li><strong>Gründlich lesen:</strong> Absatz für Absatz lesen. Unbekannte Wörter aus dem Zusammenhang klären oder markieren.</li>
+    <li><strong>Markieren &amp; Notizen:</strong> Schlüsselwörter unterstreichen, am Rand Stichworte notieren.</li>
+    <li><strong>Zusammenfassen:</strong> Jedem Absatz eine eigene Überschrift geben, Kernaussage in einem Satz formulieren.</li>
+  </ol>
+
+  <h3>Richtig markieren</h3>
+  <div class="box tipp">
+    <strong class="label">💡 Tipp</strong>
+    Weniger ist mehr! Markiere nur <strong>Schlüsselwörter</strong> (ca. 1–3 pro Satz höchstens), nie ganze Sätze. Nutze feste Farben, z. B.:
+    <ul>
+      <li>🟨 Gelb = wichtige Informationen / Kernaussagen</li>
+      <li>🟩 Grün = Fachbegriffe, unbekannte Wörter</li>
+      <li>🟥 Rot = Zahlen, Daten, Fakten</li>
+    </ul>
+  </div>
+
+  <h3>Randnotizen / Zeichen</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Zeichen</th><th>Bedeutung</th></tr>
+    <tr><td><strong>!</strong></td><td>wichtig</td></tr>
+    <tr><td><strong>?</strong></td><td>unklar, nachschlagen</td></tr>
+    <tr><td><strong>Def.</strong></td><td>Definition / Erklärung eines Begriffs</td></tr>
+    <tr><td><strong>Bsp.</strong></td><td>Beispiel</td></tr>
+    <tr><td><strong>Arg.</strong></td><td>Argument</td></tr>
+    <tr><td><strong>→</strong></td><td>Folge / Ergebnis</td></tr>
+  </table>
+  </div>
+
+  <h3>Text gliedern &amp; zusammenfassen</h3>
+  <p>Eine <strong>Zusammenfassung</strong> gibt den Inhalt kurz und sachlich wieder:</p>
+  <ul>
+    <li><strong>Einleitungssatz:</strong> Textsorte, Titel, Autor, Erscheinungsort/-datum, Thema.</li>
+    <li><strong>Hauptteil:</strong> Wichtigste Informationen in eigenen Worten, logische Reihenfolge.</li>
+    <li><strong>Präsens</strong>, keine Zitate, keine eigene Meinung, keine wörtliche Rede (→ indirekte Rede).</li>
+  </ul>
+  <div class="bsp-block">
+    Im Zeitungsartikel „Jugendliche lesen weniger“ von Anna Berg, erschienen am 12.03.2026 in der Volksstimme, geht es um das veränderte Leseverhalten von Jugendlichen in Deutschland.
+  </div>
+
+  <div class="box fehler">
+    <strong class="label">✘ Typische Fehler</strong>
+    Zu viel markieren · Text nur einmal lesen · in der Zusammenfassung Meinung einbauen · Präteritum statt Präsens · ganze Sätze abschreiben.
+  </div>
+</section>
+
+<!-- ============ 2 TEXTVERSTÄNDNIS ============ -->
+<section id="verstaendnis">
+  <h2><span class="num">2</span> Textverständnis – Fragen sicher beantworten</h2>
+
+  <h3>Operatoren – was wird von mir verlangt?</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Operator</th><th>Das musst du tun</th></tr>
+    <tr><td><strong>nennen / benennen</strong></td><td>Informationen ohne Erklärung aufzählen (Stichpunkte reichen oft).</td></tr>
+    <tr><td><strong>wiedergeben</strong></td><td>Inhalt mit eigenen Worten darstellen.</td></tr>
+    <tr><td><strong>beschreiben</strong></td><td>Sachverhalt genau und geordnet darstellen.</td></tr>
+    <tr><td><strong>erklären / erläutern</strong></td><td>Zusammenhänge verständlich machen (warum? wie?), mit Beispielen.</td></tr>
+    <tr><td><strong>belegen</strong></td><td>Aussage mit Textstelle (Zitat + Zeilenangabe) beweisen.</td></tr>
+    <tr><td><strong>vergleichen</strong></td><td>Gemeinsamkeiten <em>und</em> Unterschiede herausarbeiten.</td></tr>
+    <tr><td><strong>beurteilen / Stellung nehmen</strong></td><td>Eigene, begründete Meinung formulieren.</td></tr>
+  </table>
+  </div>
+
+  <h3>Aufgabentypen in der Klassenarbeit</h3>
+  <div class="grid">
+    <div class="card"><h4>☑ Multiple Choice</h4>Alle Antworten lesen! Im Text die passende Stelle suchen, nicht raten.</div>
+    <div class="card"><h4>✔/✘ Richtig – Falsch</h4>Auf kleine Wörter achten: <em>immer, nie, alle, einige, nur</em>.</div>
+    <div class="card"><h4>🔗 Zuordnen</h4>Überschriften zu Absätzen, Begriffe zu Erklärungen.</div>
+    <div class="card"><h4>✍ Offene Fragen</h4>Ganze Sätze, eigene Worte, Textbeleg angeben.</div>
+  </div>
+
+  <h3>Richtig zitieren und belegen</h3>
+  <div class="box merke">
+    <strong class="label">✔ So geht's</strong>
+    Wörtliches Zitat in Anführungszeichen + Zeilenangabe in Klammern:<br>
+    <span class="bsp">Die Autorin betont, dass „mehr als die Hälfte der Jugendlichen kaum noch Bücher liest“ (Z. 12 f.).</span><br><br>
+    Sinngemäßes Zitat (eigene Worte) mit <em>vgl.</em>:<br>
+    <span class="bsp">Viele Jugendliche lesen lieber am Handy (vgl. Z. 20–23).</span><br><br>
+    <strong>Z. 5</strong> = Zeile 5 · <strong>Z. 5 f.</strong> = Zeile 5 und 6 · <strong>Z. 5 ff.</strong> = Zeile 5 und folgende · <strong>Z. 5–9</strong> = Zeilen 5 bis 9
+  </div>
+
+  <h3>Fakt oder Meinung?</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Fakt (Tatsache)</th><th>Meinung (Wertung)</th></tr>
+    <tr><td>überprüfbar, objektiv</td><td>persönliche Sicht, subjektiv</td></tr>
+    <tr><td>„70 % der Jugendlichen besitzen ein Smartphone.“</td><td>„Smartphones machen Jugendliche dumm.“</td></tr>
+    <tr><td>Zahlen, Daten, Studien, Ereignisse</td><td>Signalwörter: <em>meiner Meinung nach, leider, zum Glück, sollte, schlecht, toll</em></td></tr>
+  </table>
+  </div>
+
+  <h3>Unbekannte Wörter erschließen</h3>
+  <ul>
+    <li>aus dem <strong>Zusammenhang</strong> (Satz davor/danach lesen)</li>
+    <li>über <strong>Wortbestandteile</strong> (z. B. <em>Un-abhäng-ig-keit</em>)</li>
+    <li>über <strong>verwandte Wörter</strong> oder Fremdsprachen (<em>Mobilität</em> → mobil)</li>
+    <li>im <strong>Wörterbuch</strong> nachschlagen (wenn erlaubt)</li>
+  </ul>
+
+  <div class="box tipp">
+    <strong class="label">💡 Antwort-Formel für offene Fragen</strong>
+    <strong>Behauptung</strong> (Antwort in eigenen Worten) → <strong>Beleg</strong> (Zitat mit Zeile) → <strong>Erklärung</strong> (was zeigt das?)
+  </div>
+</section>
+
+<!-- ============ 3 SATZBAU & ZEICHENSETZUNG ============ -->
+<section id="satzbau">
+  <h2><span class="num">3</span> Satzbau und Zeichensetzung</h2>
+
+  <h3>Satzglieder</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Satzglied</th><th>Frage</th><th>Beispiel: <em>Am Montag schreibt die Klasse im Raum 12 eine Arbeit.</em></th></tr>
+    <tr><td>Subjekt</td><td>Wer oder was?</td><td>die Klasse</td></tr>
+    <tr><td>Prädikat</td><td>Was tut …?</td><td>schreibt</td></tr>
+    <tr><td>Akkusativobjekt</td><td>Wen oder was?</td><td>eine Arbeit</td></tr>
+    <tr><td>Dativobjekt</td><td>Wem?</td><td>(z. B. <em>Sie hilft <u>ihm</u>.</em>)</td></tr>
+    <tr><td>Temporaladverbial</td><td>Wann? Wie lange?</td><td>am Montag</td></tr>
+    <tr><td>Lokaladverbial</td><td>Wo? Wohin?</td><td>im Raum 12</td></tr>
+    <tr><td>Kausaladverbial</td><td>Warum?</td><td>(z. B. <em>wegen des Regens</em>)</td></tr>
+    <tr><td>Modaladverbial</td><td>Wie? Womit?</td><td>(z. B. <em>sehr konzentriert</em>)</td></tr>
+  </table>
+  </div>
+  <p>👉 <strong>Umstellprobe:</strong> Was beim Umstellen zusammenbleibt, ist ein Satzglied.</p>
+
+  <h3>Satzarten: Hauptsatz und Nebensatz</h3>
+  <div class="grid">
+    <div class="card"><h4>Hauptsatz (HS)</h4>Kann allein stehen. Gebeugtes Verb an <strong>2. Stelle</strong>.<br><em>Die Schüler lesen den Text.</em></div>
+    <div class="card"><h4>Nebensatz (NS)</h4>Kann nicht allein stehen. Gebeugtes Verb am <strong>Ende</strong>. Beginnt mit Konjunktion oder Relativpronomen.<br><em>…, weil sie eine Arbeit <u>schreiben</u>.</em></div>
+    <div class="card"><h4>Satzreihe</h4>HS + HS<br><em>Es regnet, wir bleiben drinnen.</em></div>
+    <div class="card"><h4>Satzgefüge</h4>HS + NS<br><em>Wir bleiben drinnen, weil es regnet.</em></div>
+  </div>
+
+  <h3>Kommaregeln – die wichtigsten</h3>
+  <ol class="steps">
+    <li><strong>Aufzählungen:</strong> Komma zwischen gleichrangigen Wörtern/Wortgruppen – aber nicht vor <em>und / oder / sowie</em>.<br><em>Wir brauchen Stifte, Papier, Lineal und Textmarker.</em></li>
+    <li><strong>Hauptsatz + Hauptsatz:</strong> Komma (vor <em>und/oder</em> freiwillig).<br><em>Sie liest den Text, er markiert die Schlüsselwörter.</em></li>
+    <li><strong>Vor entgegensetzenden Konjunktionen:</strong> <em>aber, sondern, doch, jedoch</em>.<br><em>Der Text ist lang, aber verständlich.</em></li>
+    <li><strong>Haupt- und Nebensatz</strong> werden immer durch Komma getrennt.<br><em>Ich lerne heute, weil morgen die Arbeit ist.</em><br><em>Weil morgen die Arbeit ist, lerne ich heute.</em></li>
+    <li><strong>Relativsätze</strong> (der, die, das, welcher …) werden durch Kommas abgetrennt – eingeschobene auf beiden Seiten!<br><em>Der Artikel, den wir gelesen haben, war spannend.</em></li>
+    <li><strong>Appositionen</strong> (nachgestellte Erklärungen) werden eingeschlossen.<br><em>Frau Berg, die Autorin des Artikels, ist Journalistin.</em></li>
+    <li><strong>Infinitivgruppen</strong> mit <em>um … zu, ohne … zu, statt … zu, anstatt … zu, außer … zu</em> → Komma.<br><em>Sie liest den Text zweimal, um alles zu verstehen.</em></li>
+    <li><strong>Einschübe und Ausrufe, Anreden</strong> werden abgetrennt.<br><em>Ja, das stimmt. Leon, hilf mir bitte!</em></li>
+  </ol>
+
+  <h3>Wichtige Konjunktionen (leiten Nebensätze ein)</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Art</th><th>Konjunktionen</th><th>Bedeutung</th></tr>
+    <tr><td>kausal</td><td>weil, da</td><td>Grund</td></tr>
+    <tr><td>konditional</td><td>wenn, falls, sofern</td><td>Bedingung</td></tr>
+    <tr><td>temporal</td><td>als, nachdem, bevor, während, seit</td><td>Zeit</td></tr>
+    <tr><td>konzessiv</td><td>obwohl, obgleich</td><td>Einräumung / Gegengrund</td></tr>
+    <tr><td>final</td><td>damit, (um … zu)</td><td>Zweck</td></tr>
+    <tr><td>konsekutiv</td><td>sodass, so … dass</td><td>Folge</td></tr>
+    <tr><td>Inhaltssatz</td><td>dass, ob</td><td>Inhalt</td></tr>
+  </table>
+  </div>
+
+  <h3>das oder dass?</h3>
+  <div class="box merke">
+    <strong class="label">✔ Ersatzprobe</strong>
+    Kannst du <strong>dieses, jenes</strong> oder <strong>welches</strong> einsetzen? → <strong>das</strong><br>
+    Wenn nicht → <strong>dass</strong> (Konjunktion)<br>
+    <em>Das Buch, <u>das</u> (welches) ich lese, ist spannend.</em><br>
+    <em>Ich hoffe, <u>dass</u> die Arbeit gut wird.</em>
+  </div>
+
+  <h3>Weitere Satzzeichen</h3>
+  <ul>
+    <li><strong>Doppelpunkt:</strong> vor Aufzählungen, Erklärungen, wörtlicher Rede.</li>
+    <li><strong>Anführungszeichen:</strong> bei wörtlicher Rede und Zitaten („…“).</li>
+    <li><strong>Gedankenstrich:</strong> für Einschübe oder Pausen – wie hier.</li>
+    <li><strong>Semikolon:</strong> trennt stärker als ein Komma, schwächer als ein Punkt.</li>
+  </ul>
+</section>
+
+<!-- ============ 4 DIAGRAMME ============ -->
+<section id="diagramm">
+  <h2><span class="num">4</span> Diagrammauswertung</h2>
+
+  <h3>Diagrammarten und wofür sie geeignet sind</h3>
+  <div class="grid">
+    <div class="card"><h4>📊 Säulen-/Balkendiagramm</h4>Vergleich von Mengen/Werten verschiedener Gruppen.</div>
+    <div class="card"><h4>📈 Liniendiagramm (Kurvendiagramm)</h4>Entwicklung über einen <strong>Zeitraum</strong> (Zu- oder Abnahme).</div>
+    <div class="card"><h4>🥧 Kreisdiagramm (Tortendiagramm)</h4>Anteile an einem <strong>Ganzen</strong> (zusammen 100 %).</div>
+    <div class="card"><h4>📋 Tabelle</h4>Viele genaue Werte übersichtlich geordnet.</div>
+  </div>
+
+  <h3>Beispieldiagramm</h3>
+  <svg class="chart" viewBox="0 0 520 300" role="img" aria-label="Beispiel-Säulendiagramm">
+    <text x="260" y="20" text-anchor="middle" font-weight="700">Tägliche Handynutzung Jugendlicher (12–19 J.) in Minuten</text>
+    <line class="axis" x1="60" y1="250" x2="490" y2="250"/>
+    <line class="axis" x1="60" y1="40" x2="60" y2="250"/>
+    <text x="50" y="254" text-anchor="end">0</text>
+    <text x="50" y="204" text-anchor="end">100</text>
+    <text x="50" y="154" text-anchor="end">200</text>
+    <text x="50" y="104" text-anchor="end">300</text>
+    <rect class="bar" x="90"  y="140" width="60" height="110"/><text x="120" y="135" text-anchor="middle">220</text><text x="120" y="268" text-anchor="middle">2020</text>
+    <rect class="bar" x="190" y="124" width="60" height="126"/><text x="220" y="119" text-anchor="middle">252</text><text x="220" y="268" text-anchor="middle">2022</text>
+    <rect class="bar" x="290" y="112" width="60" height="138"/><text x="320" y="107" text-anchor="middle">276</text><text x="320" y="268" text-anchor="middle">2024</text>
+    <rect class="bar" x="390" y="107" width="60" height="143"/><text x="420" y="102" text-anchor="middle">286</text><text x="420" y="268" text-anchor="middle">2026</text>
+    <text x="260" y="292" text-anchor="middle" font-size="11">Quelle: erfundene Übungsdaten</text>
+  </svg>
+
+  <h3>Auswertung in 4 Schritten</h3>
+  <ol class="steps">
+    <li><strong>Einleitung (Formales):</strong> Diagrammart, Titel/Thema, Quelle, Erhebungszeitraum, Einheit (%, Minuten, Anzahl …).</li>
+    <li><strong>Beschreibung:</strong> Was zeigen die Achsen? Wichtigste Werte nennen: höchster, niedrigster Wert, auffällige Werte.</li>
+    <li><strong>Auswertung/Deutung:</strong> Entwicklung (Trend), Vergleich, Zusammenhänge. Was ist die Hauptaussage?</li>
+    <li><strong>Schluss:</strong> Ergebnis zusammenfassen, ggf. mögliche Gründe nennen oder Bezug zum Sachtext herstellen.</li>
+  </ol>
+
+  <h3>Formulierungshilfen</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Schritt</th><th>Satzbausteine</th></tr>
+    <tr><td>Einleitung</td><td>Das vorliegende Säulendiagramm mit dem Titel „…“ stammt von … aus dem Jahr … · Es stellt dar / zeigt / informiert über …</td></tr>
+    <tr><td>Werte</td><td>Den höchsten Wert erreicht … mit … · Den geringsten Anteil hat … · An erster Stelle steht … · Knapp dahinter folgt …</td></tr>
+    <tr><td>Entwicklung</td><td>steigt an / nimmt zu / wächst · sinkt / nimmt ab / geht zurück · bleibt gleich / stagniert · erreicht einen Höchststand · verdoppelt sich</td></tr>
+    <tr><td>Vergleich</td><td>im Vergleich zu … · während … , … · deutlich mehr / weniger als … · etwa genauso viel wie …</td></tr>
+    <tr><td>Mengenwörter</td><td>knapp die Hälfte · mehr als ein Drittel · drei Viertel · fast jeder Zweite · die Mehrheit / Minderheit</td></tr>
+    <tr><td>Schluss</td><td>Zusammenfassend lässt sich sagen, dass … · Das Diagramm verdeutlicht, dass …</td></tr>
+  </table>
+  </div>
+
+  <div class="box fehler">
+    <strong class="label">✘ Typische Fehler</strong>
+    Einheit vergessen (% vs. absolute Zahlen) · Quelle/Jahr nicht nennen · nur Zahlen aufzählen ohne Aussage · eigene Meinung in die Beschreibung mischen · Prozentpunkte und Prozent verwechseln.
+  </div>
+
+  <details>
+    <summary>📝 Übung: Werte das Beispieldiagramm oben aus</summary>
+    <div class="loesung">
+      <strong>Musterlösung:</strong><br>
+      Das vorliegende Säulendiagramm zeigt die tägliche Handynutzung von Jugendlichen zwischen 12 und 19 Jahren in Minuten in den Jahren 2020 bis 2026. Es handelt sich um erfundene Übungsdaten.<br>
+      Im Jahr 2020 nutzten Jugendliche ihr Handy durchschnittlich 220 Minuten am Tag. Bis 2022 stieg der Wert auf 252 Minuten, 2024 auf 276 Minuten. Den Höchstwert erreicht das Jahr 2026 mit 286 Minuten.<br>
+      Insgesamt ist eine stetige Zunahme zu erkennen: Die Nutzungsdauer ist innerhalb von sechs Jahren um 66 Minuten gestiegen. Der Anstieg wird jedoch kleiner (+32, +24, +10 Minuten).<br>
+      Zusammenfassend lässt sich sagen, dass Jugendliche ihr Handy immer länger nutzen, der Zuwachs sich aber zuletzt verlangsamt.
+    </div>
+  </details>
+</section>
+
+<!-- ============ 5 FUNKTION ============ -->
+<section id="funktion">
+  <h2><span class="num">5</span> Funktion von Sachtexten</h2>
+  <p>Jeder Sachtext hat eine <strong>Absicht (Intention)</strong>: Was will der Verfasser beim Leser erreichen?</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>Funktion</th><th>Ziel</th><th>Typische Textsorten</th><th>Erkennungsmerkmale</th></tr>
+    <tr><td><strong>informieren</strong></td><td>Wissen vermitteln, sachlich aufklären</td><td>Nachricht, Bericht, Lexikonartikel, Sachbuch</td><td>Fakten, Zahlen, neutrale Sprache, W-Fragen</td></tr>
+    <tr><td><strong>meinungsbildend / kommentieren</strong></td><td>eigene Meinung darlegen, Leser überzeugen</td><td>Kommentar, Leserbrief, Glosse, Rezension</td><td>Argumente, wertende Adjektive, „ich finde“, rhetorische Fragen</td></tr>
+    <tr><td><strong>appellieren</strong></td><td>Leser zu einer Handlung auffordern</td><td>Werbung, Aufruf, Plakat, Flyer</td><td>Imperativ, direkte Ansprache („du/Sie“), Ausrufezeichen</td></tr>
+    <tr><td><strong>anleiten / instruieren</strong></td><td>erklären, wie man etwas tut</td><td>Bedienungsanleitung, Rezept, Spielregel</td><td>Schrittfolge, Nummerierung, Imperativ/Infinitiv</td></tr>
+    <tr><td><strong>regeln / normieren</strong></td><td>Verhalten verbindlich festlegen</td><td>Gesetz, Hausordnung, Vertrag</td><td>„muss, darf nicht, ist verboten“, Paragrafen</td></tr>
+  </table>
+  </div>
+
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    Viele Texte haben <strong>mehrere Funktionen</strong>. Eine Reportage informiert, kann aber auch unterhalten oder zum Nachdenken anregen. Nenne dann die <strong>Hauptfunktion</strong> und begründe mit Textmerkmalen.
+  </div>
+
+  <h3>Funktion von Textbestandteilen</h3>
+  <div class="grid">
+    <div class="card"><h4>Überschrift</h4>weckt Interesse, nennt das Thema</div>
+    <div class="card"><h4>Vorspann / Lead</h4>fasst das Wichtigste zusammen</div>
+    <div class="card"><h4>Zwischenüberschriften</h4>gliedern, erleichtern Orientierung</div>
+    <div class="card"><h4>Diagramm / Tabelle</h4>veranschaulicht Zahlen, belegt Aussagen, macht Vergleiche sichtbar</div>
+    <div class="card"><h4>Bild / Foto</h4>veranschaulicht, weckt Gefühle, zieht Aufmerksamkeit</div>
+    <div class="card"><h4>Zitat einer Person</h4>macht glaubwürdig (Experte), lebendig</div>
+  </div>
+
+  <div class="box tipp">
+    <strong class="label">💡 Formulierungshilfe</strong>
+    „Der Text hat vor allem eine <em>informierende</em> Funktion, da er sachlich über … berichtet. Das erkennt man an … (Z. …).“<br>
+    „Das Diagramm ergänzt den Text, indem es die Aussage, dass …, mit Zahlen belegt.“
+  </div>
+</section>
+
+<!-- ============ ÜBUNGEN ============ -->
+<section id="uebungen">
+  <h2><span class="num">✎</span> Übungen mit Lösungen</h2>
+
+  <h3>Übungstext</h3>
+  <div class="bsp-block" style="font-style:normal">
+    <strong>Weniger Schlaf durch Bildschirme</strong><br>
+    (1) Immer mehr Jugendliche in Deutschland schlafen zu wenig. (2) Laut einer aktuellen Studie kommen nur 35 Prozent der 14- bis 17-Jährigen auf die empfohlenen acht bis zehn Stunden Schlaf pro Nacht. (3) Als Hauptursache nennen die Forscher die Nutzung von Smartphones vor dem Einschlafen. (4) Das blaue Licht der Bildschirme hemmt die Bildung des Schlafhormons Melatonin. (5) Wer müde in die Schule kommt, kann sich schlechter konzentrieren und erzielt oft schlechtere Noten. (6) Experten raten deshalb, das Handy mindestens eine Stunde vor dem Schlafengehen wegzulegen.
+  </div>
+  <p style="font-size:.9rem;color:var(--muted)">(Zahlen in Klammern = Satz/Zeile für die Belege)</p>
+
+  <details><summary>1. Nenne die Hauptursache für den Schlafmangel.</summary>
+    <div class="loesung">Die Nutzung von Smartphones vor dem Einschlafen (Z. 3).</div></details>
+
+  <details><summary>2. Richtig oder falsch? „Die meisten Jugendlichen schlafen ausreichend.“ Belege.</summary>
+    <div class="loesung"><strong>Falsch.</strong> Nur „35 Prozent der 14- bis 17-Jährigen“ (Z. 2) schlafen ausreichend, also weniger als die Hälfte.</div></details>
+
+  <details><summary>3. Erkläre, warum Bildschirme den Schlaf stören.</summary>
+    <div class="loesung">Das blaue Licht der Bildschirme verhindert, dass der Körper genügend Melatonin bildet (vgl. Z. 4). Dieses Hormon macht müde. Fehlt es, kann man schlechter einschlafen.</div></details>
+
+  <details><summary>4. Bestimme die Hauptfunktion des Textes und begründe.</summary>
+    <div class="loesung">Der Text ist vor allem <strong>informierend</strong>: Er nennt Fakten (35 Prozent, Z. 2) und erklärt Ursachen sachlich (Z. 3 f.). Im letzten Satz (Z. 6) gibt es zusätzlich einen <strong>appellativen</strong> Anteil (Rat der Experten).</div></details>
+
+  <details><summary>5. Setze die fehlenden Kommas: „Wer müde in die Schule kommt kann sich schlechter konzentrieren obwohl er sich Mühe gibt.“</summary>
+    <div class="loesung">Wer müde in die Schule kommt<strong>,</strong> kann sich schlechter konzentrieren<strong>,</strong> obwohl er sich Mühe gibt.<br>(NS + HS + NS → beide Nebensätze abtrennen)</div></details>
+
+  <details><summary>6. das oder dass? „Experten raten, ___ man ___ Handy früher weglegt.“</summary>
+    <div class="loesung">Experten raten, <strong>dass</strong> man <strong>das</strong> Handy früher weglegt. (<em>das</em> = Artikel, ersetzbar durch <em>dieses</em>)</div></details>
+
+  <details><summary>7. Bestimme die Satzglieder: „Experten raten den Jugendlichen eine frühere Bildschirmpause.“</summary>
+    <div class="loesung">Experten = Subjekt · raten = Prädikat · den Jugendlichen = Dativobjekt · eine frühere Bildschirmpause = Akkusativobjekt</div></details>
+
+  <details><summary>8. Formuliere einen Einleitungssatz für eine Zusammenfassung.</summary>
+    <div class="loesung">In dem Sachtext „Weniger Schlaf durch Bildschirme“ geht es darum, dass viele Jugendliche zu wenig schlafen, weil sie abends ihr Smartphone nutzen.</div></details>
+
+  <details><summary>9. Fakt oder Meinung? „Smartphones sind das Schlimmste, was Jugendlichen passieren konnte.“</summary>
+    <div class="loesung"><strong>Meinung</strong> – stark wertend („das Schlimmste“), nicht überprüfbar.</div></details>
+
+  <details><summary>10. Setze die Kommas: „Sie legt das Handy weg um besser schlafen zu können und liest stattdessen ein Buch das ihr ihre Oma geschenkt hat.“</summary>
+    <div class="loesung">Sie legt das Handy weg<strong>,</strong> um besser schlafen zu können<strong>,</strong> und liest stattdessen ein Buch<strong>,</strong> das ihr ihre Oma geschenkt hat.<br>(Infinitivgruppe mit <em>um … zu</em> wird eingeschlossen, Relativsatz abgetrennt)</div></details>
+</section>
+
+<!-- ============ CHECKLISTE ============ -->
+<section id="check">
+  <h2><span class="num">✅</span> Checkliste – Bin ich bereit?</h2>
+  <div class="progress no-print"><div id="bar"></div></div>
+  <p id="ptext" class="no-print" style="margin-top:-.6rem;color:var(--muted)">0 von 0 erledigt</p>
+  <ul class="check" id="checklist">
+    <li><label><input type="checkbox"> Ich kann Sachtexte von literarischen Texten unterscheiden.</label></li>
+    <li><label><input type="checkbox"> Ich kenne die wichtigsten Sachtextsorten (Nachricht, Bericht, Reportage, Kommentar, Interview).</label></li>
+    <li><label><input type="checkbox"> Ich beherrsche die Fünf-Schritt-Lesemethode.</label></li>
+    <li><label><input type="checkbox"> Ich markiere sparsam und gezielt Schlüsselwörter.</label></li>
+    <li><label><input type="checkbox"> Ich kann Absätzen Überschriften geben und einen Text zusammenfassen.</label></li>
+    <li><label><input type="checkbox"> Ich kenne die Operatoren (nennen, erklären, belegen …).</label></li>
+    <li><label><input type="checkbox"> Ich kann richtig zitieren mit Zeilenangabe (Z. 5 f.).</label></li>
+    <li><label><input type="checkbox"> Ich unterscheide Fakten und Meinungen.</label></li>
+    <li><label><input type="checkbox"> Ich kann Satzglieder bestimmen (Umstellprobe).</label></li>
+    <li><label><input type="checkbox"> Ich erkenne Haupt- und Nebensätze.</label></li>
+    <li><label><input type="checkbox"> Ich beherrsche die Kommaregeln (Aufzählung, NS, Relativsatz, Apposition, Infinitivgruppe).</label></li>
+    <li><label><input type="checkbox"> Ich unterscheide sicher „das“ und „dass“.</label></li>
+    <li><label><input type="checkbox"> Ich kenne die Diagrammarten und ihren Zweck.</label></li>
+    <li><label><input type="checkbox"> Ich kann ein Diagramm in 4 Schritten auswerten.</label></li>
+    <li><label><input type="checkbox"> Ich kann die Funktion eines Sachtextes bestimmen und begründen.</label></li>
+    <li><label><input type="checkbox"> Ich kann erklären, welche Funktion ein Diagramm im Text hat.</label></li>
+  </ul>
+
+  <div class="box tipp">
+    <strong class="label">💡 Tipps für die Klassenarbeit</strong>
+    <ul>
+      <li>Aufgaben zuerst <strong>komplett lesen</strong>, Operatoren unterstreichen.</li>
+      <li>Text <strong>mindestens zweimal</strong> lesen.</li>
+      <li>In <strong>ganzen Sätzen</strong> antworten (außer bei „nennen“).</li>
+      <li>Immer <strong>Textbelege</strong> mit Zeilenangabe.</li>
+      <li>Am Ende <strong>5 Minuten</strong> für Rechtschreibung und Kommas einplanen.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>Viel Erfolg bei der Klassenarbeit! 🍀</footer>
+
+<script>
+  (function () {
+    var boxes = document.querySelectorAll('#checklist input');
+    var bar = document.getElementById('bar');
+    var ptext = document.getElementById('ptext');
+    var KEY = 'sachtexte-check-kl9';
+    var saved = [];
+    try { saved = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
+    boxes.forEach(function (b, i) {
+      b.checked = !!saved[i];
+      b.addEventListener('change', update);
+    });
+    function update() {
+      var state = [], done = 0;
+      boxes.forEach(function (b) { state.push(b.checked); if (b.checked) done++; });
+      bar.style.width = (done / boxes.length * 100) + '%';
+      ptext.textContent = done + ' von ' + boxes.length + ' erledigt' + (done === boxes.length ? ' – super, du bist bereit! 🎉' : '');
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    }
+    update();
+  })();
+</script>
+</body>
+</html>
