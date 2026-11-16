@@ -7,12 +7,12 @@
 <style>
   :root {
     --bg: #f6f7fb; --card: #ffffff; --text: #1f2430; --muted: #5b6475;
-    --border: #dde1ea; --de: #2f6fdf; --de-soft: #e6eefc; --ma: #1f9d63; --ma-soft: #e3f6ed;
+    --border: #dde1ea; --de: #2f6fdf; --de-soft: #e6eefc; --ma: #1f9d63; --ma-soft: #e3f6ed; --ge: #a33a3a; --ge-soft: #f8e7e7;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #14171f; --card: #1d212b; --text: #e6e8ee; --muted: #9aa3b5;
-      --border: #2e3442; --de: #6b9cff; --de-soft: #222d45; --ma: #4cc58c; --ma-soft: #1b3329;
+      --border: #2e3442; --de: #6b9cff; --de-soft: #222d45; --ma: #4cc58c; --ma-soft: #1b3329; --ge: #e57d7d; --ge-soft: #3a2226;
     }
   }
   * { box-sizing: border-box; }
@@ -33,6 +33,7 @@
   .fach-head p { margin: 0; color: var(--muted); font-size: .95rem; }
   .de .tag { background: var(--de-soft); color: var(--de); }
   .ma .tag { background: var(--ma-soft); color: var(--ma); }
+  .ge .tag { background: var(--ge-soft); color: var(--ge); }
   ul { list-style: none; margin: 0; padding: .6rem; flex: 1; }
   li a { display: flex; align-items: center; gap: .7rem; padding: .55rem .8rem; border-radius: 8px;
          text-decoration: none; color: var(--text); }
@@ -42,10 +43,12 @@
             font-size: .8rem; font-weight: 700; color: #fff; }
   .de li a .n { background: var(--de); }
   .ma li a .n { background: var(--ma); }
+  .ge li a .n { background: var(--ge); }
   .start { margin: .4rem 1rem 1.1rem; text-align: center; padding: .7rem; border-radius: 10px;
            font-weight: 700; text-decoration: none; color: #fff; }
   .de .start { background: var(--de); }
   .ma .start { background: var(--ma); }
+  .ge .start { background: var(--ge); }
   footer { text-align: center; color: var(--muted); font-size: .85rem; padding-bottom: 2rem; }
 </style>
 </head>
@@ -98,6 +101,23 @@
       <li><a href="mathe9/index.html#check"><span class="n">11</span>Checkliste</a></li>
     </ul>
     <a class="start" href="mathe9/index.html">Zur Mathe-Lernseite →</a>
+  </section>
+
+  <section class="fach ge">
+    <div class="fach-head">
+      <span class="tag">Geschichte</span>
+      <h2>Der 1. Weltkrieg (1914–1918)</h2>
+      <p>Anlass, Kettenreaktion, Methoden der Kriegsführung</p>
+    </div>
+    <ul>
+      <li><a href="geschichte9/index.html#zeitstrahl"><span class="n">⏱</span>Zeitstrahl</a></li>
+      <li><a href="geschichte9/index.html#anlass"><span class="n">1</span>Anlass des Krieges</a></li>
+      <li><a href="geschichte9/index.html#kriegsfuehrung"><span class="n">2</span>Methoden der Kriegsführung</a></li>
+      <li><a href="geschichte9/index.html#begriffe"><span class="n">3</span>Wichtige Begriffe</a></li>
+      <li><a href="geschichte9/index.html#uebungen"><span class="n">✎</span>Übungen mit Lösungen</a></li>
+      <li><a href="geschichte9/index.html#check"><span class="n">✓</span>Checkliste</a></li>
+    </ul>
+    <a class="start" href="geschichte9/index.html">Zur Geschichte-Lernseite →</a>
   </section>
 
 </main>
