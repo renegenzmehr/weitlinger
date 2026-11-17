@@ -1,0 +1,54 @@
+/* Gemeinsames Layout für Startseite und Fachseiten */
+:root {
+  --bg: #f6f7fb; --card: #ffffff; --text: #1f2430; --muted: #5b6475; --border: #dde1ea;
+  --de: #2f6fdf; --de-soft: #e6eefc;
+  --ma: #1f9d63; --ma-soft: #e3f6ed;
+  --ge: #a33a3a; --ge-soft: #f8e7e7;
+  --c: #2f6fdf; --c-soft: #e6eefc; --c-grad: linear-gradient(135deg, #2f6fdf, #6a4fd8);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171f; --card: #1d212b; --text: #e6e8ee; --muted: #9aa3b5; --border: #2e3442;
+    --de: #6b9cff; --de-soft: #222d45;
+    --ma: #4cc58c; --ma-soft: #1b3329;
+    --ge: #e57d7d; --ge-soft: #3a2226;
+  }
+}
+body.de { --c: var(--de); --c-soft: var(--de-soft); --c-grad: linear-gradient(135deg, #1f4fae, #2f6fdf); }
+body.ma { --c: var(--ma); --c-soft: var(--ma-soft); --c-grad: linear-gradient(135deg, #136b43, #1f9d63); }
+body.ge { --c: var(--ge); --c-soft: var(--ge-soft); --c-grad: linear-gradient(135deg, #7a2b2b, #a33a3a 60%, #c06a3a); }
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+       background: var(--bg); color: var(--text); line-height: 1.5; }
+header { background: var(--c-grad); color: #fff; padding: 1.6rem 1rem 1.8rem; text-align: center; }
+header h1 { margin: 0 0 .3rem; font-size: 2rem; }
+header p { margin: 0; opacity: .9; }
+.crumbs { max-width: 1000px; margin: 0 auto .8rem; text-align: left; font-size: .95rem; opacity: .95; }
+.crumbs a { color: #fff; }
+
+main { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1rem 3rem;
+       display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; }
+
+/* Kachel (Fach oder Thema) */
+.tile { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+        display: flex; flex-direction: column; overflow: hidden; }
+a.tile { text-decoration: none; color: var(--text); transition: transform .1s; }
+a.tile:hover, a.tile:focus { transform: translateY(-2px); border-color: var(--c); outline: none; }
+.tile.de { --c: var(--de); --c-soft: var(--de-soft); }
+.tile.ma { --c: var(--ma); --c-soft: var(--ma-soft); }
+.tile.ge { --c: var(--ge); --c-soft: var(--ge-soft); }
+.tile-head { padding: 1.3rem 1.4rem; flex: 1; }
+.icon { font-size: 2.4rem; line-height: 1; }
+.tag { display: inline-block; font-size: .8rem; font-weight: 700; padding: .15rem .6rem;
+       border-radius: 999px; background: var(--c-soft); color: var(--c); margin-bottom: .4rem; }
+.tile h2 { margin: .4rem 0 .2rem; font-size: 1.4rem; }
+.tile p { margin: 0; color: var(--muted); font-size: .95rem; }
+.go { display: block; margin: 0 1rem 1rem; text-align: center; padding: .7rem; border-radius: 10px;
+      font-weight: 700; text-decoration: none; color: #fff; background: var(--c); }
+.links { list-style: none; margin: 0; padding: 0 .6rem .4rem; }
+.links a { display: block; padding: .5rem .8rem; border-radius: 8px; text-decoration: none; color: var(--text); }
+.links a:hover { background: var(--c-soft); }
+
+footer { text-align: center; color: var(--muted); font-size: .9rem; padding-bottom: 2rem; }
+footer a { color: var(--c); font-weight: 600; text-decoration: none; }

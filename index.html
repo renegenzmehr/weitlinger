@@ -4,122 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lernseiten Weitlinger</title>
-<style>
-  :root {
-    --bg: #f6f7fb; --card: #ffffff; --text: #1f2430; --muted: #5b6475;
-    --border: #dde1ea; --de: #2f6fdf; --de-soft: #e6eefc; --ma: #1f9d63; --ma-soft: #e3f6ed; --ge: #a33a3a; --ge-soft: #f8e7e7;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #14171f; --card: #1d212b; --text: #e6e8ee; --muted: #9aa3b5;
-      --border: #2e3442; --de: #6b9cff; --de-soft: #222d45; --ma: #4cc58c; --ma-soft: #1b3329; --ge: #e57d7d; --ge-soft: #3a2226;
-    }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-         background: var(--bg); color: var(--text); line-height: 1.5; }
-  header { background: linear-gradient(135deg, #2f6fdf, #6a4fd8); color: #fff;
-           padding: 2.2rem 1rem 1.8rem; text-align: center; }
-  header h1 { margin: 0 0 .3rem; font-size: 2rem; }
-  header p { margin: 0; opacity: .9; }
-  main { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1rem 3rem;
-         display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.4rem; }
-  .fach { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-          overflow: hidden; display: flex; flex-direction: column; }
-  .fach-head { padding: 1.2rem 1.4rem; border-bottom: 1px solid var(--border); }
-  .fach-head .tag { display: inline-block; font-size: .8rem; font-weight: 700; padding: .15rem .6rem;
-                    border-radius: 999px; margin-bottom: .4rem; }
-  .fach-head h2 { margin: 0 0 .2rem; font-size: 1.4rem; }
-  .fach-head p { margin: 0; color: var(--muted); font-size: .95rem; }
-  .de .tag { background: var(--de-soft); color: var(--de); }
-  .ma .tag { background: var(--ma-soft); color: var(--ma); }
-  .ge .tag { background: var(--ge-soft); color: var(--ge); }
-  ul { list-style: none; margin: 0; padding: .6rem; flex: 1; }
-  li a { display: flex; align-items: center; gap: .7rem; padding: .55rem .8rem; border-radius: 8px;
-         text-decoration: none; color: var(--text); }
-  li a:hover { background: var(--bg); }
-  li a .n { width: 1.7rem; height: 1.7rem; border-radius: 50%; flex-shrink: 0;
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: .8rem; font-weight: 700; color: #fff; }
-  .de li a .n { background: var(--de); }
-  .ma li a .n { background: var(--ma); }
-  .ge li a .n { background: var(--ge); }
-  .start { margin: .4rem 1rem 1.1rem; text-align: center; padding: .7rem; border-radius: 10px;
-           font-weight: 700; text-decoration: none; color: #fff; }
-  .de .start { background: var(--de); }
-  .ma .start { background: var(--ma); }
-  .ge .start { background: var(--ge); }
-  footer { text-align: center; color: var(--muted); font-size: .85rem; padding-bottom: 2rem; }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
   <h1>📚 Lernseiten Weitlinger</h1>
-  <p>Wähle ein Fach und spring direkt zum Thema</p>
+  <p>Wähle ein Fach</p>
 </header>
 
 <main>
-
-  <section class="fach de">
-    <div class="fach-head">
-      <span class="tag">Deutsch</span>
-      <h2>Sachtexte</h2>
-      <p>Textarbeit, Textverständnis, Satzbau &amp; Zeichensetzung, Diagramme, Funktion</p>
+  <a class="tile de" href="deutsch/">
+    <div class="tile-head">
+      <div class="icon">✍️</div>
+      <h2>Deutsch</h2>
+      <p>Sachtexte</p>
     </div>
-    <ul>
-      <li><a href="deutsch9/index.html#grundlagen"><span class="n">0</span>Was sind Sachtexte?</a></li>
-      <li><a href="deutsch9/index.html#textarbeit"><span class="n">1</span>Textarbeit – Lesestrategien</a></li>
-      <li><a href="deutsch9/index.html#verstaendnis"><span class="n">2</span>Textverständnis</a></li>
-      <li><a href="deutsch9/index.html#satzbau"><span class="n">3</span>Satzbau und Zeichensetzung</a></li>
-      <li><a href="deutsch9/index.html#diagramm"><span class="n">4</span>Diagrammauswertung</a></li>
-      <li><a href="deutsch9/index.html#funktion"><span class="n">5</span>Funktion von Sachtexten</a></li>
-      <li><a href="deutsch9/index.html#uebungen"><span class="n">✎</span>Übungen mit Lösungen</a></li>
-      <li><a href="deutsch9/index.html#check"><span class="n">✓</span>Checkliste</a></li>
-    </ul>
-    <a class="start" href="deutsch9/index.html">Zur Deutsch-Lernseite →</a>
-  </section>
+    <span class="go">Deutsch öffnen →</span>
+  </a>
 
-  <section class="fach ma">
-    <div class="fach-head">
-      <span class="tag">Mathematik</span>
-      <h2>Statistik &amp; Wahrscheinlichkeit</h2>
-      <p>Häufigkeiten, Kennwerte, Diagramme, Baumdiagramme</p>
+  <a class="tile ma" href="mathe/">
+    <div class="tile-head">
+      <div class="icon">📐</div>
+      <h2>Mathematik</h2>
+      <p>Statistik &amp; Wahrscheinlichkeit · Probearbeiten</p>
     </div>
-    <ul>
-      <li><a href="mathe9/index.html#ueberblick"><span class="n">0</span>Überblick: Was kommt dran?</a></li>
-      <li><a href="mathe9/index.html#prozent"><span class="n">1</span>Bruch – Dezimalzahl – Prozent</a></li>
-      <li><a href="mathe9/index.html#haeufigkeit"><span class="n">2</span>Begriffe und Häufigkeiten</a></li>
-      <li><a href="mathe9/index.html#kennwerte"><span class="n">3</span>Kennwerte: Mittelwert, Median &amp; Co.</a></li>
-      <li><a href="mathe9/index.html#klassen"><span class="n">4</span>Klasseneinteilung</a></li>
-      <li><a href="mathe9/index.html#diagramme"><span class="n">5</span>Diagramme</a></li>
-      <li><a href="mathe9/index.html#wk-grund"><span class="n">6</span>Grundbegriffe der Wahrscheinlichkeit</a></li>
-      <li><a href="mathe9/index.html#baum"><span class="n">7</span>Baumdiagramm, Pfad- und Summenregel</a></li>
-      <li><a href="mathe9/index.html#urne"><span class="n">8</span>Mit und ohne Zurücklegen</a></li>
-      <li><a href="mathe9/index.html#fehler"><span class="n">9</span>Typische Fehler vermeiden</a></li>
-      <li><a href="mathe9/index.html#uebungen"><span class="n">10</span>Übungsaufgaben mit Lösungen</a></li>
-      <li><a href="mathe9/index.html#check"><span class="n">11</span>Checkliste</a></li>
-    </ul>
-    <a class="start" href="mathe9/index.html">Zur Mathe-Lernseite →</a>
-  </section>
+    <span class="go">Mathematik öffnen →</span>
+  </a>
 
-  <section class="fach ge">
-    <div class="fach-head">
-      <span class="tag">Geschichte</span>
-      <h2>Der 1. Weltkrieg (1914–1918)</h2>
-      <p>Anlass, Kettenreaktion, Methoden der Kriegsführung</p>
+  <a class="tile ge" href="geschichte/">
+    <div class="tile-head">
+      <div class="icon">🏛️</div>
+      <h2>Geschichte</h2>
+      <p>Der 1. Weltkrieg</p>
     </div>
-    <ul>
-      <li><a href="geschichte9/index.html#zeitstrahl"><span class="n">⏱</span>Zeitstrahl</a></li>
-      <li><a href="geschichte9/index.html#anlass"><span class="n">1</span>Anlass des Krieges</a></li>
-      <li><a href="geschichte9/index.html#kriegsfuehrung"><span class="n">2</span>Methoden der Kriegsführung</a></li>
-      <li><a href="geschichte9/index.html#begriffe"><span class="n">3</span>Wichtige Begriffe</a></li>
-      <li><a href="geschichte9/index.html#uebungen"><span class="n">✎</span>Übungen mit Lösungen</a></li>
-      <li><a href="geschichte9/index.html#check"><span class="n">✓</span>Checkliste</a></li>
-    </ul>
-    <a class="start" href="geschichte9/index.html">Zur Geschichte-Lernseite →</a>
-  </section>
-
+    <span class="go">Geschichte öffnen →</span>
+  </a>
 </main>
 
 <footer>Viel Erfolg beim Lernen! 🍀</footer>
