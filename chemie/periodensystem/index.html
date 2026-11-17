@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interaktives Periodensystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c14;
+    --surface: #10131f;
+    --surface2: #181c2e;
+    --border: #232840;
+    --accent: #4af0c4;
+    --accent2: #f04a7b;
+    --text: #e8eaf6;
+    --text-dim: #6b7194;
+    --alkali: #ff6b6b;
+    --alkaline: #ffa94d;
+    --transition-metal: #4dabf7;
+    --post-transition: #74c0fc;
+    --metalloid: #63e6be;
+    --nonmetal: #a9e34b;
+    --halogen: #f8f0fc;
+    --noble: #e599f7;
+    --lanthanide: #ffd43b;
+    --actinide: #ff8787;
+    --unknown: #868e96;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  #scale-root {
+    width: max-content;
+  }
+
+  header {
+    padding: 24px 40px 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  header p {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  .search-bar {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .search-bar input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    width: 220px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-bar input:focus { border-color: var(--accent); }
+  .search-bar input::placeholder { color: var(--text-dim); }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 40px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .legend-item:hover { border-color: var(--border); color: var(--text); }
+  .legend-item.active { border-color: currentColor; color: var(--text); }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .table-wrapper {
+    padding: 20px 40px;
+    overflow-x: hidden;
+  }
+
+  .periodic-grid {
+    display: grid;
+    grid-template-columns: repeat(18, 56px);
+    grid-template-rows: repeat(10, 56px);
+    gap: 3px;
+  }
+
+  .element {
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 4px 4px 3px;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .element::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    transition: opacity 0.15s;
+  }
+
+  .element:hover {
+    transform: scale(1.12);
+    z-index: 10;
+    border-color: rgba(255,255,255,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  }
+
+  .element:hover::before { opacity: 0.22; }
+
+  .element.highlighted { border-color: rgba(255,255,255,0.5); transform: scale(1.08); z-index: 5; }
+  .element.dimmed { opacity: 0.2; }
+
+  .el-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1;
+  }
+
+  .el-symbol {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .el-name {
+    font-size: 0.5rem;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .el-mass {
+    font-size: 0.48rem;
+    text-align: center;
+    color: rgba(255,255,255,0.35);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Category colors as background tints */
+  .cat-alkali::before { background: var(--alkali); }
+  .cat-alkaline::before { background: var(--alkaline); }
+  .cat-transition::before { background: var(--transition-metal); }
+  .cat-post-transition::before { background: var(--post-transition); }
+  .cat-metalloid::before { background: var(--metalloid); }
+  .cat-nonmetal::before { background: var(--nonmetal); }
+  .cat-halogen::before { background: var(--halogen); }
+  .cat-noble::before { background: var(--noble); }
+  .cat-lanthanide::before { background: var(--lanthanide); }
+  .cat-actinide::before { background: var(--actinide); }
+  .cat-unknown::before { background: var(--unknown); }
+
+  .cat-alkali .el-symbol { color: var(--alkali); }
+  .cat-alkaline .el-symbol { color: var(--alkaline); }
+  .cat-transition .el-symbol { color: var(--transition-metal); }
+  .cat-post-transition .el-symbol { color: var(--post-transition); }
+  .cat-metalloid .el-symbol { color: var(--metalloid); }
+  .cat-nonmetal .el-symbol { color: var(--nonmetal); }
+  .cat-halogen .el-symbol { color: var(--halogen); }
+  .cat-noble .el-symbol { color: var(--noble); }
+  .cat-lanthanide .el-symbol { color: var(--lanthanide); }
+  .cat-actinide .el-symbol { color: var(--actinide); }
+  .cat-unknown .el-symbol { color: var(--unknown); }
+
+  .period-label, .group-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalIn 0.2s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .modal-symbol-block {
+    width: 90px; height: 90px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modal-symbol-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+  }
+
+  .modal-symbol {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .modal-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.5);
+    position: relative;
+    z-index: 1;
+  }
+
+  .modal-title h2 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .modal-title .latin-name {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  .modal-category-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    width: 30px; height: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .modal-close:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
+
+  .modal-body { padding: 20px 28px 28px; }
+
+  .modal-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 20px;
+    padding: 14px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .props-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .prop-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+
+  .prop-label {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 3px;
+  }
+
+  .prop-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .prop-value.highlight { color: var(--accent); }
+
+  .section-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .fact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .fact-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .fact-item::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    margin-top: 1px;
+  }
+
+  .uses-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .use-tag {
+    background: rgba(74,240,196,0.08);
+    border: 1px solid rgba(74,240,196,0.2);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 3px 9px;
+    font-size: 0.75rem;
+  }
+
+  .electron-config {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    color: var(--accent2);
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .state-indicator {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .state-box {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 0.72rem;
+  }
+
+  .state-box .state-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .lanthanide-gap, .actinide-gap {
+    grid-column: 3 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar { width: 6px; }
+  .scrollbar-custom::-webkit-scrollbar-track { background: var(--surface); }
+  .scrollbar-custom::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 800px) {
+    header { padding: 16px 16px 12px; flex-wrap: wrap; }
+    .table-wrapper { padding: 12px 16px; }
+    .legend { padding: 8px 16px; }
+    .search-bar { width: 100%; margin-left: 0; }
+    .search-bar input { width: 100%; }
+  }
+
+  /* ===== HEATMAP ===== */
+  .heatmap-bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 40px; border-bottom: 1px solid var(--border);
+    background: var(--surface); flex-wrap: wrap;
+  }
+  .heatmap-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+  .heatmap-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .heatmap-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-dim);
+    border-radius: 4px; padding: 3px 10px; font-size: 0.75rem; cursor: pointer;
+    transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+  }
+  .heatmap-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
+  .heatmap-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(74,240,196,0.07); }
+  .heatmap-scale { display: none; align-items: center; gap: 8px; margin-left: auto; }
+  .heatmap-gradient {
+    width: 100px; height: 10px; border-radius: 5px;
+    background: linear-gradient(to right, hsl(220,75%,55%), hsl(60,75%,55%), hsl(0,75%,55%));
+  }
+  .heatmap-min, .heatmap-max { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--text-dim); }
+
+  /* ===== QUIZ ===== */
+  .quiz-bar {
+    display: none; align-items: center; gap: 14px;
+    padding: 14px 40px; border-bottom: 1px solid var(--border);
+    background: var(--surface2); flex-wrap: wrap;
+  }
+  .quiz-bar.active { display: flex; }
+  .quiz-q-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+  .quiz-target {
+    font-family: 'Space Mono', monospace; font-size: 1.2rem; font-weight: 700;
+    color: var(--accent); border: 1px solid rgba(74,240,196,0.3);
+    background: rgba(74,240,196,0.06); border-radius: 6px; padding: 4px 14px;
+  }
+  .quiz-feedback { font-size: 0.82rem; padding: 4px 12px; border-radius: 4px; font-weight: 500; display: none; }
+  .quiz-feedback.correct { display: block; background: rgba(74,240,196,0.12); color: var(--accent); }
+  .quiz-feedback.wrong { display: block; background: rgba(240,74,123,0.12); color: var(--accent2); }
+  .quiz-score { margin-left: auto; font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--text-dim); white-space: nowrap; }
+  .quiz-score .ccount { color: var(--accent); font-size: 1rem; font-weight: 700; }
+  .quiz-stop-btn {
+    background: none; border: 1px solid var(--accent2); color: var(--accent2);
+    border-radius: 6px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  }
+  .quiz-stop-btn:hover { background: rgba(240,74,123,0.1); }
+  .quiz-start-btn {
+    background: rgba(74,240,196,0.1); border: 1px solid rgba(74,240,196,0.3);
+    color: var(--accent); border-radius: 6px; padding: 6px 14px; font-size: 0.8rem;
+    font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .quiz-start-btn:hover { background: rgba(74,240,196,0.2); }
+  @keyframes flashOk {
+    0%,100% { box-shadow: none; }
+    50% { box-shadow: 0 0 0 3px rgba(74,240,196,0.9), 0 0 28px rgba(74,240,196,0.4); }
+  }
+  @keyframes flashErr {
+    0%,100% { box-shadow: none; }
+    50% { box-shadow: 0 0 0 3px rgba(240,74,123,0.9), 0 0 28px rgba(240,74,123,0.4); }
+  }
+  .element.quiz-flash-ok { animation: flashOk 0.6s ease; }
+  .element.quiz-flash-err { animation: flashErr 0.6s ease; }
+  .periodic-grid.quiz-mode .el-name { visibility: hidden; }
+  .periodic-grid.quiz-mode .element { cursor: crosshair; }
+
+  /* ===== ELEKTRONENSCHALEN ===== */
+  .shell-diagram-wrap {
+    display: flex; align-items: center; gap: 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px;
+  }
+  .shell-diagram-wrap svg { flex-shrink: 0; }
+  .shell-info { display: flex; flex-direction: column; gap: 6px; }
+  .shell-row { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; }
+  .shell-name { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text-dim); width: 14px; }
+  .shell-dots { display: flex; gap: 3px; flex-wrap: wrap; }
+  .shell-dot { width: 8px; height: 8px; border-radius: 50%; opacity: 0.8; }
+  .shell-count { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--text-dim); }
+  .crumbs-bar { padding: 10px 40px 0; font-size: 0.85rem; color: var(--text-dim); }
+  .crumbs-bar a { color: var(--accent); text-decoration: underline; }
+</style>
+</head>
+<body>
+<div id="scale-root">
+<div class="crumbs-bar"><a href="../../">Start</a> › <a href="../">Chemie</a> › Periodensystem</div>
+
+<header>
+  <h1>Periodensystem</h1>
+  <p>118 Elemente · Interaktiv</p>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Element suchen… (Name, Symbol, Nummer)" oninput="filterElements(this.value)">
+    <button class="quiz-start-btn" onclick="startQuiz()">Quiz starten</button>
+  </div>
+</header>
+
+<div class="legend" id="legend">
+  <div class="legend-item" data-cat="alkali" onclick="filterByCategory('alkali', this)">
+    <div class="legend-dot" style="background:var(--alkali)"></div> Alkalimetalle
+  </div>
+  <div class="legend-item" data-cat="alkaline" onclick="filterByCategory('alkaline', this)">
+    <div class="legend-dot" style="background:var(--alkaline)"></div> Erdalkalimetalle
+  </div>
+  <div class="legend-item" data-cat="transition" onclick="filterByCategory('transition', this)">
+    <div class="legend-dot" style="background:var(--transition-metal)"></div> Übergangsmetalle
+  </div>
+  <div class="legend-item" data-cat="post-transition" onclick="filterByCategory('post-transition', this)">
+    <div class="legend-dot" style="background:var(--post-transition)"></div> Unedle Metalle
+  </div>
+  <div class="legend-item" data-cat="metalloid" onclick="filterByCategory('metalloid', this)">
+    <div class="legend-dot" style="background:var(--metalloid)"></div> Halbmetalle
+  </div>
+  <div class="legend-item" data-cat="nonmetal" onclick="filterByCategory('nonmetal', this)">
+    <div class="legend-dot" style="background:var(--nonmetal)"></div> Nichtmetalle
+  </div>
+  <div class="legend-item" data-cat="halogen" onclick="filterByCategory('halogen', this)">
+    <div class="legend-dot" style="background:var(--halogen)"></div> Halogene
+  </div>
+  <div class="legend-item" data-cat="noble" onclick="filterByCategory('noble', this)">
+    <div class="legend-dot" style="background:var(--noble)"></div> Edelgase
+  </div>
+  <div class="legend-item" data-cat="lanthanide" onclick="filterByCategory('lanthanide', this)">
+    <div class="legend-dot" style="background:var(--lanthanide)"></div> Lanthanoide
+  </div>
+  <div class="legend-item" data-cat="actinide" onclick="filterByCategory('actinide', this)">
+    <div class="legend-dot" style="background:var(--actinide)"></div> Actinoide
+  </div>
+</div>
+
+<div class="heatmap-bar">
+  <span class="heatmap-label">Heatmap:</span>
+  <div class="heatmap-btns">
+    <button class="heatmap-btn" onclick="toggleHeatmap('mass',this)">Atommasse</button>
+    <button class="heatmap-btn" onclick="toggleHeatmap('melt',this)">Schmelzpunkt</button>
+    <button class="heatmap-btn" onclick="toggleHeatmap('boil',this)">Siedepunkt</button>
+    <button class="heatmap-btn" onclick="toggleHeatmap('density',this)">Dichte</button>
+    <button class="heatmap-btn" onclick="toggleHeatmap('electronegativity',this)">Elektroneg.</button>
+  </div>
+  <div class="heatmap-scale" id="heatmapScale">
+    <span class="heatmap-min" id="heatmapMin"></span>
+    <div class="heatmap-gradient"></div>
+    <span class="heatmap-max" id="heatmapMax"></span>
+  </div>
+</div>
+
+<div class="quiz-bar" id="quizBar">
+  <span class="quiz-q-label">Klicke auf:</span>
+  <span class="quiz-target" id="quizTarget">—</span>
+  <span class="quiz-feedback" id="quizFeedback"></span>
+  <span class="quiz-score" id="quizScore"><span class="ccount" id="quizCorrectCount">0</span> / <span id="quizTotalCount">0</span> richtig</span>
+  <button class="quiz-stop-btn" onclick="stopQuiz()">Beenden</button>
+</div>
+
+<div class="table-wrapper">
+  <div class="periodic-grid" id="periodicGrid"></div>
+</div>
+
+</div><!-- #scale-root -->
+
+<div class="modal-overlay scrollbar-custom" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header" id="modalHeader">
+      <div class="modal-symbol-block" id="modalSymbolBlock">
+        <span class="modal-number" id="modalNumber"></span>
+        <span class="modal-symbol" id="modalSymbol"></span>
+      </div>
+      <div class="modal-title">
+        <h2 id="modalName"></h2>
+        <div class="latin-name" id="modalLatin"></div>
+        <div class="modal-category-badge" id="modalCatBadge"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const ELEMENTS = [
+  { n:1, sym:"H", name:"Wasserstoff", latin:"Hydrogenium", cat:"nonmetal", period:1, group:1, mass:"1.008", melt:"-259.1°C", boil:"-252.9°C", density:"0.0899 g/L", discovery:"1766 (Cavendish)", config:"1s¹", electronegativity:"2.20", oxidation:"+1, −1", uses:["Treibstoff","Ammoniak-Synthese","Metallurgie","Brennstoffzellen"], desc:"Das leichteste und häufigste Element im Universum. Wasserstoff macht ca. 75% der sichtbaren Materie aus. Im Innern von Sternen verschmilzt es durch Kernfusion zu Helium und setzt dabei gewaltige Energie frei.", facts:["75% der Atome im Universum sind Wasserstoff","Flüssiger Wasserstoff siedet bei -253°C","Reagiert explosiv mit Sauerstoff: Knallgas"] },
+  { n:2, sym:"He", name:"Helium", latin:"Helium", cat:"noble", period:1, group:18, mass:"4.003", melt:"−272.2°C", boil:"−268.9°C", density:"0.164 g/L", discovery:"1895 (Ramsay)", config:"1s²", electronegativity:"—", oxidation:"0", uses:["Ballons","MRT-Kühlung","Schweißschutzgas","Tieftauchen"], desc:"Entdeckt wurde Helium 1868 zunächst im Sonnenspektrum, bevor es auf der Erde gefunden wurde – daher der Name nach Helios, dem griechischen Sonnengott. Es ist das einzige Element, das bei normalem Druck nicht erstarrt.", facts:["Einziges Element ohne Festpunkt bei Normaldruck","Zweithäufigste Element im Universum","Supraflüssig unter 2,17 K (Lambda-Punkt)"] },
+  { n:3, sym:"Li", name:"Lithium", latin:"Lithium", cat:"alkali", period:2, group:1, mass:"6.941", melt:"180.5°C", boil:"1342°C", density:"0.534 g/cm³", discovery:"1817 (Arfwedson)", config:"[He] 2s¹", electronegativity:"0.98", oxidation:"+1", uses:["Akkus","Keramik","Glas","Medikamente"], desc:"Das leichteste aller Metalle – so leicht, dass es auf Wasser schwimmt. Lithium-Ionen-Akkus revolutionierten tragbare Elektronik und Elektrofahrzeuge. In der Psychiatrie wird Lithium als Stimmungsstabilisator eingesetzt.", facts:["Leichtestes Feststoffmetall der Welt","Lithium-Ionen-Akkus: Nobelpreis 2019","Reagiert heftig mit Wasser"] },
+  { n:4, sym:"Be", name:"Beryllium", latin:"Beryllium", cat:"alkaline", period:2, group:2, mass:"9.012", melt:"1287°C", boil:"2470°C", density:"1.85 g/cm³", discovery:"1797 (Vauquelin)", config:"[He] 2s²", electronegativity:"1.57", oxidation:"+2", uses:["Legierungen","Röntgenfenster","Kernreaktoren","Luft- & Raumfahrt"], desc:"Beryllium ist ein außergewöhnlich leichtes, aber sehr steifes Metall mit dem höchsten Schmelzpunkt aller Leichtmetalle. Es ist hochtoxisch und krebserregend, findet aber wegen seiner einzigartigen mechanischen Eigenschaften Verwendung in der Raumfahrt.", facts:["Transparent für Röntgenstrahlen","6x steifer als Stahl bei gleichem Gewicht","Im Smaragd als Berylliumaluminiumsilikat"] },
+  { n:5, sym:"B", name:"Bor", latin:"Borum", cat:"metalloid", period:2, group:13, mass:"10.81", melt:"2075°C", boil:"4000°C", density:"2.37 g/cm³", discovery:"1808 (Gay-Lussac)", config:"[He] 2s² 2p¹", electronegativity:"2.04", oxidation:"+3", uses:["Borosilikatglas","Düngemittel","Halbleiter","Kernreaktoren"], desc:"Bor ist ein Halbmetall, das in der Natur nie in elementarer Form vorkommt. Borax (Natriumtetraborat) war schon im Altertum bekannt. Bornitrid ist fast so hart wie Diamant.", facts:["Bornitrid ist diamanthart","Borfiber: 10× stärker als Stahl","Natürliches Bor: 2 stabile Isotope"] },
+  { n:6, sym:"C", name:"Kohlenstoff", latin:"Carboneum", cat:"nonmetal", period:2, group:14, mass:"12.01", melt:"3642°C", boil:"4830°C", density:"2.267 g/cm³", discovery:"Urzeit", config:"[He] 2s² 2p²", electronegativity:"2.55", oxidation:"+4, +2, −4", uses:["Stahl","Diamanten","Elektronik","Medizin"], desc:"Die Basis allen bekannten Lebens. Kohlenstoff ist der einzige Stoff, der in stabilen Formen von extrem weich (Graphit) bis extrem hart (Diamant) existiert. Fullerene, Nanoröhren und Graphen sind neuartige Kohlenstoff-Allotrope mit revolutionären Eigenschaften.", facts:["Diamant = härtestes Naturmineral","Graphen: 200× stärker als Stahl","¹⁴C ermöglicht Radiokohlenstoffdatierung"] },
+  { n:7, sym:"N", name:"Stickstoff", latin:"Nitrogenium", cat:"nonmetal", period:2, group:15, mass:"14.01", melt:"−209.9°C", boil:"−195.8°C", density:"1.251 g/L", discovery:"1772 (Rutherford)", config:"[He] 2s² 2p³", electronegativity:"3.04", oxidation:"+5 bis −3", uses:["Düngemittel","Sprengstoff","Kälteanwendungen","Lebensmittel"], desc:"Stickstoff macht 78% der Erdatmosphäre aus, ist in elementarer Form aber sehr reaktionsträge. Das Haber-Bosch-Verfahren zur Ammoniaksynthese wird als eine der bedeutendsten Erfindungen des 20. Jahrhunderts angesehen.", facts:["78% der Erdatmosphäre","N₂-Triple-Bond: stärkste Bindung","Flüssig bei −196°C: Kryokonservierung"] },
+  { n:8, sym:"O", name:"Sauerstoff", latin:"Oxygenium", cat:"nonmetal", period:2, group:16, mass:"16.00", melt:"−218.8°C", boil:"−183.0°C", density:"1.429 g/L", discovery:"1774 (Priestley/Scheele)", config:"[He] 2s² 2p⁴", electronegativity:"3.44", oxidation:"−2, −1", uses:["Medizin","Stahl","Schweißen","Raketentreibstoff"], desc:"Das dritthäufigste Element im Universum und das häufigste Element in der Erdkruste (46% nach Masse). Die Ozonschicht (O₃) schützt die Erde vor UV-Strahlung. Sauerstoff ist für nahezu alle komplexen Lebensformen unentbehrlich.", facts:["46% der Erdkruste nach Masse","Ozon O₃ absorbiert UV-Strahlung","Paramagnetzt im flüssigen Zustand"] },
+  { n:9, sym:"F", name:"Fluor", latin:"Fluorum", cat:"halogen", period:2, group:17, mass:"19.00", melt:"−219.7°C", boil:"−188.1°C", density:"1.696 g/L", discovery:"1886 (Moissan)", config:"[He] 2s² 2p⁵", electronegativity:"3.98", oxidation:"−1", uses:["Teflon","Zahnpasta","Flusssäure","Kältemittel"], desc:"Fluor ist das reaktivste aller Elemente und das stärkste Oxidationsmittel. Es reagiert sogar mit Edelgasen. Die Isolation des Elements kostete mehrere Chemiker das Leben ('Fluorkiller') – Moissan erhielt für die gelungene Isolierung den Nobelpreis.", facts:["Stärkstes Oxidationsmittel","Reagiert sogar mit Xenon","Teflon besteht aus Polytetrafluorethylen"] },
+  { n:10, sym:"Ne", name:"Neon", latin:"Neon", cat:"noble", period:2, group:18, mass:"20.18", melt:"−248.6°C", boil:"−246.1°C", density:"0.9 g/L", discovery:"1898 (Ramsay/Travers)", config:"[He] 2s² 2p⁶", electronegativity:"—", oxidation:"0", uses:["Leuchtreklamen","Laser","Kühlmittel","Plasma-TVs"], desc:"Neon wurde 1898 kurz nach Krypton und Xenon entdeckt. Im elektrischen Feld leuchtet es charakteristisch orangerot. Trotz des Namens 'Neonlicht' enthalten viele Leuchtreklamen andere Gase für verschiedene Farben.", facts:["Orangerot im elektrischen Feld","5. häufigstes Element im Universum","Keine bekannten stabilen Verbindungen"] },
+  { n:11, sym:"Na", name:"Natrium", latin:"Natrium", cat:"alkali", period:3, group:1, mass:"22.99", melt:"97.8°C", boil:"883°C", density:"0.97 g/cm³", discovery:"1807 (Davy)", config:"[Ne] 3s¹", electronegativity:"0.93", oxidation:"+1", uses:["Speisesalz","Seife","Straßenbeleuchtung","Papier"], desc:"Natrium ist essentiell für das menschliche Leben – Natriumchlorid (Kochsalz) ist lebensnotwendig. Natrium-Dampflampen geben gelb-oranges Licht und wurden lange als Straßenbeleuchtung genutzt. Im Kontakt mit Wasser reagiert es explosiv.", facts:["Reagiert explosiv mit Wasser","Na in NaOH = Natriumhydroxid (Lauge)","Menschlicher Körper: ~100g Natrium"] },
+  { n:12, sym:"Mg", name:"Magnesium", latin:"Magnesium", cat:"alkaline", period:3, group:2, mass:"24.31", melt:"650°C", boil:"1090°C", density:"1.74 g/cm³", discovery:"1755 (Black)", config:"[Ne] 3s²", electronegativity:"1.31", oxidation:"+2", uses:["Legierungen","Feuerwerkskörper","Sporternährung","Zement"], desc:"Magnesium ist das zentrale Atom im Chlorophyllmolekül und damit unverzichtbar für die Photosynthese. Es brennt mit blendend weißem Licht und lässt sich kaum löschen – sogar in CO₂ brennt es weiter.", facts:["Zentralatom im Chlorophyll","Verbrennt bei >650°C mit weißem Licht","8. häufigstes Element im Universum"] },
+  { n:13, sym:"Al", name:"Aluminium", latin:"Aluminium", cat:"post-transition", period:3, group:13, mass:"26.98", melt:"660.3°C", boil:"2519°C", density:"2.70 g/cm³", discovery:"1825 (Ørsted)", config:"[Ne] 3s² 3p¹", electronegativity:"1.61", oxidation:"+3", uses:["Verpackungen","Flugzeuge","Bauindustrie","Elektronik"], desc:"Aluminium ist das häufigste Metall und dritthäufigste Element der Erdkruste. Trotz Reaktivität bildet es eine schützende Oxidschicht. Im 19. Jahrhundert war es wertvoller als Silber – das Washington Monument bekam als Krone Aluminium.", facts:["Häufigstes Metall der Erdkruste","Recycling spart 95% der Energie","Im 19. Jh. wertvoller als Silber"] },
+  { n:14, sym:"Si", name:"Silicium", latin:"Silicium", cat:"metalloid", period:3, group:14, mass:"28.09", melt:"1414°C", boil:"3265°C", density:"2.33 g/cm³", discovery:"1824 (Berzelius)", config:"[Ne] 3s² 3p²", electronegativity:"1.90", oxidation:"+4, −4", uses:["Halbleiter","Glas","Beton","Solar"], desc:"Silicium ist die Grundlage der modernen Elektronik und des 'Silicon Valley'. Es ist das zweithäufigste Element der Erdkruste nach Sauerstoff. Siliciumdioxid (Sand/Quarz) ist eine der häufigsten Verbindungen der Erde.", facts:["Basis aller modernen Computer","27.7% der Erdkruste nach Masse","Sand = SiO₂ (Siliciumdioxid)"] },
+  { n:15, sym:"P", name:"Phosphor", latin:"Phosphorus", cat:"nonmetal", period:3, group:15, mass:"30.97", melt:"44.2°C", boil:"280.5°C", density:"1.82 g/cm³", discovery:"1669 (Brand)", config:"[Ne] 3s² 3p³", electronegativity:"2.19", oxidation:"+5, +3, −3", uses:["Düngemittel","Zündhölzer","Waschmittel","DNA/RNA"], desc:"Phosphor wurde 1669 von Hennig Brand entdeckt – dem ersten isolierten Element der Geschichte – als er Urin einkochen ließ. Weißer Phosphor ist hochgiftig und entzündet sich an der Luft. Es ist unverzichtbar in DNA und ATP.", facts:["Erster Mensch entdeckte es 1669","Weißer Phosphor entzündet sich an Luft","DNA und ATP enthalten Phosphor"] },
+  { n:16, sym:"S", name:"Schwefel", latin:"Sulphur", cat:"nonmetal", period:3, group:16, mass:"32.07", melt:"115.2°C", boil:"444.6°C", density:"2.07 g/cm³", discovery:"Urzeit", config:"[Ne] 3s² 3p⁴", electronegativity:"2.58", oxidation:"+6 bis −2", uses:["Schwefelsäure","Vulkanisation","Dünger","Feuerwerkskörper"], desc:"Schwefel war als 'brennender Stein' schon in der Antike bekannt und in der Bibel als 'Feuer und Schwefel' beschrieben. Die Schwefelsäure ist die weltweit am meisten produzierte Chemikalie. Vulkanische Gebiete enthalten oft natürliche Schwefelvorkommen.", facts:["Geruch: H₂S riecht nach faulen Eiern","Schwefelsäure: meistproduzierte Chemikalie","8 Atome bilden S₈-Ring im Feststoff"] },
+  { n:17, sym:"Cl", name:"Chlor", latin:"Chlorum", cat:"halogen", period:3, group:17, mass:"35.45", melt:"−101.5°C", boil:"−34.1°C", density:"3.21 g/L", discovery:"1774 (Scheele)", config:"[Ne] 3s² 3p⁵", electronegativity:"3.16", oxidation:"+7 bis −1", uses:["Trinkwasser","PVC","Bleichmittel","Desinfektionsmittel"], desc:"Chlor wurde im 1. Weltkrieg als Giftgas eingesetzt. Heute ist es unverzichtbar für die Trinkwasseraufbereitung. Als Natriumchlorid (Kochsalz) ist es lebenswichtig. PVC ist das am weitesten verbreitete chlorhaltige Kunststoff.", facts:["Im 1. WK als Giftgas verwendet","Chloriert Trinkwasser weltweit","NaCl = lebensnotwendiges Kochsalz"] },
+  { n:18, sym:"Ar", name:"Argon", latin:"Argon", cat:"noble", period:3, group:18, mass:"39.95", melt:"−189.4°C", boil:"−185.9°C", density:"1.784 g/L", discovery:"1894 (Rayleigh/Ramsay)", config:"[Ne] 3s² 3p⁶", electronegativity:"—", oxidation:"0", uses:["Schutzgas","Glühbirnen","Laser","Metallurgie"], desc:"Argon ist mit 0,93% das häufigste Edelgas der Atmosphäre. Der Name kommt vom griechischen 'argos' (träge). Es wird intensiv als Schutzgas beim Schweißen und in Glühbirnen genutzt, um die Wolfram-Wendel zu schützen.", facts:["0,93% der Erdatmosphäre","Häufigstes Edelgas auf Erden","Aus dem Griechischen 'argos' = träge"] },
+  { n:19, sym:"K", name:"Kalium", latin:"Kalium", cat:"alkali", period:4, group:1, mass:"39.10", melt:"63.4°C", boil:"759°C", density:"0.86 g/cm³", discovery:"1807 (Davy)", config:"[Ar] 4s¹", electronegativity:"0.82", oxidation:"+1", uses:["Düngemittel","Seife","Glas","Medizin"], desc:"Kalium ist essentiell für das Leben – es reguliert den Herzrhythmus und die Nervenfunktion. ⁴⁰K ist leicht radioaktiv und ein natürlicher Bestandteil des menschlichen Körpers. Bananen sind für ihren Kaliumgehalt bekannt.", facts:["Wichtig für Herzrhythmus und Nerven","⁴⁰K: natürlich radioaktiv in Lebensmitteln","Reagiert heftiger mit Wasser als Natrium"] },
+  { n:20, sym:"Ca", name:"Calcium", latin:"Calcium", cat:"alkaline", period:4, group:2, mass:"40.08", melt:"842°C", boil:"1484°C", density:"1.55 g/cm³", discovery:"1808 (Davy)", config:"[Ar] 4s²", electronegativity:"1.00", oxidation:"+2", uses:["Knochen & Zähne","Zement","Stahl","Kalk"], desc:"Calcium ist das fünfthäufigste Element der Erdkruste und das häufigste Metall im menschlichen Körper. Knochen und Zähne bestehen hauptsächlich aus Calciumphosphat. Kalkstein und Marmor sind Calciumcarbonat.", facts:["Häufigstes Metall im menschlichen Körper","99% im Körper in Knochen & Zähnen","Kalk, Marmor, Kreide = CaCO₃"] },
+  { n:21, sym:"Sc", name:"Scandium", latin:"Scandium", cat:"transition", period:4, group:3, mass:"44.96", melt:"1541°C", boil:"2836°C", density:"2.99 g/cm³", discovery:"1879 (Nilson)", config:"[Ar] 3d¹ 4s²", electronegativity:"1.36", oxidation:"+3", uses:["Legierungen","Sportgeräte","Lampen","Raketentreibstoff"], desc:"Scandium wurde von Mendeleev in seinem Periodensystem vorhergesagt, bevor es entdeckt wurde. Es ist in der Natur weit verstreut, aber selten konzentriert. Scandium-Aluminium-Legierungen sind für Flugzeuge und Sportgeräte wertvoll.", facts:["Von Mendeleev vorhergesagt","Hauptvorkommen in Russland & China","Al-Sc-Legierung: leicht & extrem fest"] },
+  { n:22, sym:"Ti", name:"Titan", latin:"Titanium", cat:"transition", period:4, group:4, mass:"47.87", melt:"1668°C", boil:"3287°C", density:"4.51 g/cm³", discovery:"1791 (Gregor)", config:"[Ar] 3d² 4s²", electronegativity:"1.54", oxidation:"+4, +3", uses:["Luft- & Raumfahrt","Medizinimplantate","Pigment","Sport"], desc:"Titan verbindet herausragende Festigkeit mit geringem Gewicht und höchster Korrosionsbeständigkeit. Es ist biokompatibel – menschliches Gewebe 'akzeptiert' es, daher ideal für Implantate und Herzschrittmacher. TiO₂ ist das weißeste bekannte Pigment.", facts:["Biokompatibel für Implantate","Dichte nur halb so groß wie Stahl","TiO₂: Weißpigment in Farben & Sonnencreme"] },
+  { n:23, sym:"V", name:"Vanadium", latin:"Vanadium", cat:"transition", period:4, group:5, mass:"50.94", melt:"1910°C", boil:"3407°C", density:"6.00 g/cm³", discovery:"1831 (Sefström)", config:"[Ar] 3d³ 4s²", electronegativity:"1.63", oxidation:"+5 bis +2", uses:["Stahl","Batterien","Katalysatoren","Werkzeuge"], desc:"Vanadium ist nach der nordischen Göttin Vanadis (Freya) benannt. Vanadium-Stahl findet sich in manchen Motorradrahmen und Werkzeugen. Vanadium-Redox-Batterien ermöglichen großskalige Energiespeicherung.", facts:["Nach der Göttin Vanadis benannt","Vanadium-Stahl: in Werkzeugen","Vanadium-Batterien für Energiespeicher"] },
+  { n:24, sym:"Cr", name:"Chrom", latin:"Chromium", cat:"transition", period:4, group:6, mass:"52.00", melt:"1907°C", boil:"2671°C", density:"7.19 g/cm³", discovery:"1797 (Vauquelin)", config:"[Ar] 3d⁵ 4s¹", electronegativity:"1.66", oxidation:"+6 bis +2", uses:["Edelstahl","Galvanik","Pigmente","Leder"], desc:"Der Name 'Chrom' kommt aus dem Griechischen für 'Farbe' – Chromverbindungen zeigen ein breites Farbspektrum: Rubin ist rot durch Cr³⁺, Smaragd grün. Edelstahl enthält mindestens 10,5% Chrom für seine Rostbeständigkeit.", facts:["Gibt Rubinen ihr Rot, Smaragden ihr Grün","Edelstahl: mind. 10,5% Chromgehalt","Griech. 'chroma' = Farbe"] },
+  { n:25, sym:"Mn", name:"Mangan", latin:"Manganum", cat:"transition", period:4, group:7, mass:"54.94", melt:"1246°C", boil:"2061°C", density:"7.43 g/cm³", discovery:"1774 (Gahn)", config:"[Ar] 3d⁵ 4s²", electronegativity:"1.55", oxidation:"+7 bis +2", uses:["Stahl","Batterien","Pigmente","Düngemittel"], desc:"Mangan ist essentiell für die menschliche Gesundheit und Pflanzenwachstum. Stahllegierungen mit Mangan sind zäher. Die Meeresböden enthalten Mangan-Knollen als potenzielle Rohstoffquelle. KMnO₄ (Kaliumpermanganat) ist ein starkes Oxidationsmittel.", facts:["Essentiell für Pflanzenwachstum","KMnO₄ = tiefviolettes Desinfektionsmittel","Auf dem Meeresboden: Mangan-Knollen"] },
+  { n:26, sym:"Fe", name:"Eisen", latin:"Ferrum", cat:"transition", period:4, group:8, mass:"55.85", melt:"1538°C", boil:"2862°C", density:"7.87 g/cm³", discovery:"Urzeit", config:"[Ar] 3d⁶ 4s²", electronegativity:"1.83", oxidation:"+3, +2", uses:["Stahl","Motoren","Gebäude","Medizin"], desc:"Eisen ist das Metall der Zivilisation. Der Erdkern besteht hauptsächlich aus Eisen und Nickel. Hämoglobin trägt Sauerstoff im Blut dank Eisen. Die Eisenzeit markierte einen kulturellen Wendepunkt der Menschheitsgeschichte.", facts:["Erdkern: Eisen-Nickel-Legierung","Hämoglobin: eisenhaltiger O₂-Träger","Meistproduziertes Metall der Welt"] },
+  { n:27, sym:"Co", name:"Cobalt", latin:"Cobaltum", cat:"transition", period:4, group:9, mass:"58.93", melt:"1495°C", boil:"2927°C", density:"8.90 g/cm³", discovery:"1735 (Brandt)", config:"[Ar] 3d⁷ 4s²", electronegativity:"1.88", oxidation:"+3, +2", uses:["Akkus","Legierungen","Pigmente","Magnete"], desc:"Cobalt (blau) färbte jahrhundertelang Glas und Keramik – das 'Kobaltblau' ist als Künstlerfarbe bis heute bekannt. Vitamin B12 enthält Cobalt als zentrales Atom. Für Lithium-Ionen-Akkus ist Cobalt unverzichtbar.", facts:["Vitamin B12 enthält Cobalt","Kobaltblau: jahrtausendealtes Pigment","Unverzichtbar für E-Auto-Akkus"] },
+  { n:28, sym:"Ni", name:"Nickel", latin:"Niccolum", cat:"transition", period:4, group:10, mass:"58.69", melt:"1455°C", boil:"2913°C", density:"8.91 g/cm³", discovery:"1751 (Cronstedt)", config:"[Ar] 3d⁸ 4s²", electronegativity:"1.91", oxidation:"+2, +3", uses:["Edelstahl","Münzen","Elektroden","Katalysatoren"], desc:"Nickel wurde nach den Berggeistern 'Nickel' benannt, weil das Erz scheinbar kein Kupfer enthielt, obwohl es kupferfarben aussah. Der Erdkern enthält viel Nickel. Es ist ein häufiger Kontaktallergen in Schmuck.", facts:["'Nickel' = mythischer Berggeist","Häufiges Kontaktallergen in Schmuck","US 5-Cent-Stück ist nur 25% Nickel"] },
+  { n:29, sym:"Cu", name:"Kupfer", latin:"Cuprum", cat:"transition", period:4, group:11, mass:"63.55", melt:"1084.6°C", boil:"2562°C", density:"8.96 g/cm³", discovery:"Urzeit (≥8000 v.Chr.)", config:"[Ar] 3d¹⁰ 4s¹", electronegativity:"1.90", oxidation:"+2, +1", uses:["Kabel","Rohre","Münzen","Legierungen"], desc:"Kupfer war eines der ersten Metalle, das von Menschen genutzt wurde – die Kupferzeit begann vor ca. 8000 Jahren. Es ist ein hervorragender elektrischer Leiter und antimikrobiell. Die Freiheitsstatue ist mit Kupfer verkleidet.", facts:["Eines der ersten genutzten Metalle","Freiheitsstatue: 81 Tonnen Kupfer","Antibakteriell: tötet Keime durch Kontakt"] },
+  { n:30, sym:"Zn", name:"Zink", latin:"Zincum", cat:"transition", period:4, group:12, mass:"65.38", melt:"419.5°C", boil:"907°C", density:"7.13 g/cm³", discovery:"1746 (Marggraf)", config:"[Ar] 3d¹⁰ 4s²", electronegativity:"1.65", oxidation:"+2", uses:["Verzinkung","Legierungen","Sonnencreme","Dünger"], desc:"Zink schützt Stahl durch galvanische Verzinkung vor Rost. Es ist essentiell für Enzyme und das Immunsystem des Menschen. Zinkoxid (weiße Creme) ist ein klassischer Sonnenschutz und Wundmittel.", facts:["Essentiell für das menschliche Immunsystem","Verzinkter Stahl: Zinkschutzschicht","ZnO in Sonnencreme & Wundcremes"] },
+  { n:31, sym:"Ga", name:"Gallium", latin:"Gallium", cat:"post-transition", period:4, group:13, mass:"69.72", melt:"29.8°C", boil:"2204°C", density:"5.91 g/cm³", discovery:"1875 (Lecoq de Boisbaudran)", config:"[Ar] 3d¹⁰ 4s² 4p¹", electronegativity:"1.81", oxidation:"+3", uses:["Halbleiter","LEDs","Solarzellen","Thermometer"], desc:"Gallium schmilzt bei knapp unter 30°C – es schmilzt buchstäblich in der Hand. Es wurde von Mendeleev vorhergesagt. GaN (Galliumnitrid) revolutionierte effiziente blaue LEDs (Nobelpreis 2014).", facts:["Schmilzt bei 29.8°C – in der Hand!","Von Mendeleev vorhergesagt","GaN ermöglicht blaue LEDs (Nobelpreis 2014)"] },
+  { n:32, sym:"Ge", name:"Germanium", latin:"Germanium", cat:"metalloid", period:4, group:14, mass:"72.63", melt:"938.2°C", boil:"2833°C", density:"5.32 g/cm³", discovery:"1886 (Winkler)", config:"[Ar] 3d¹⁰ 4s² 4p²", electronegativity:"2.01", oxidation:"+4, +2", uses:["Halbleiter","Glasfaser","Infrarot-Optik","Solar"], desc:"Mendeleev sagte Germanium voraus, nannte es 'Eka-Silicium'. Als Winkler es 1886 entdeckte, entsprachen alle Eigenschaften nahezu exakt der Vorhersage – ein Triumph für das Periodensystem. Germanium war das erste Transistormaterial.", facts:["Erstes Transistormaterial (1947)","Mendeleev sagte alle Eigenschaften voraus","Transparent für Infrarotstrahlung"] },
+  { n:33, sym:"As", name:"Arsen", latin:"Arsenicum", cat:"metalloid", period:4, group:15, mass:"74.92", melt:"817°C", boil:"614°C", density:"5.73 g/cm³", discovery:"Mittelalter (Magnus)", config:"[Ar] 3d¹⁰ 4s² 4p³", electronegativity:"2.18", oxidation:"+5, +3, −3", uses:["Halbleiter","Pestizide","Glas","Medizin"], desc:"Arsen war das klassische 'Erbgift' des Mittelalters und der Renaissance. Das Element kommt natürlich in vielen Mineralien vor. In der Medizin wurde Salvarsan (ein Arsenderivat) als erstes synthetisches Chemotherapeutikum gegen Syphilis eingesetzt.", facts:["Klassisches Mordgift des Mittelalters","Salvarsan: erstes Chemotherapeutikum (1909)","GaAs: wichtiger Halbleiter für Mobilfunk"] },
+  { n:34, sym:"Se", name:"Selen", latin:"Selenium", cat:"nonmetal", period:4, group:16, mass:"78.97", melt:"221°C", boil:"685°C", density:"4.81 g/cm³", discovery:"1817 (Berzelius)", config:"[Ar] 3d¹⁰ 4s² 4p⁴", electronegativity:"2.55", oxidation:"+6, −2", uses:["Fotokopieren","Solar","Glas","Elektronik"], desc:"Selen ist nach dem griechischen Mondgott Selene benannt. Es ist ein essentielles Spurenelement für Menschen, aber in hohen Dosen toxisch. Selen leitet unter Lichteinfall elektrischen Strom – wichtig für Fotokopiergeräte (Xerographie).", facts:["Leitet Strom unter Licht = Xerographie","Essentielles Spurenelement (Enzym Glutathionperoxidase)","Griech. Selene = Mondgöttin"] },
+  { n:35, sym:"Br", name:"Brom", latin:"Bromum", cat:"halogen", period:4, group:17, mass:"79.90", melt:"−7.3°C", boil:"58.8°C", density:"3.12 g/cm³", discovery:"1826 (Balard)", config:"[Ar] 3d¹⁰ 4s² 4p⁵", electronegativity:"2.96", oxidation:"+5 bis −1", uses:["Flammschutz","Fotografie","Medizin","Desinfektionsmittel"], desc:"Brom ist eines von nur zwei Elementen, die bei Raumtemperatur flüssig sind (das andere ist Quecksilber). Es riecht stechend – der Name kommt vom griechischen 'bromos' (stinkend). Brom war jahrhundertelang in Beruhigungsmitteln enthalten.", facts:["Eines von 2 flüssigen Elementen bei RT","Griech. 'bromos' = stinkend","AgBr war basis der Schwarz-Weiß-Fotografie"] },
+  { n:36, sym:"Kr", name:"Krypton", latin:"Krypton", cat:"noble", period:4, group:18, mass:"83.80", melt:"−157.4°C", boil:"−153.2°C", density:"3.75 g/L", discovery:"1898 (Ramsay/Travers)", config:"[Ar] 3d¹⁰ 4s² 4p⁶", electronegativity:"3.00", oxidation:"0, +2", uses:["Blitzlicht","Laser","Leuchtstoffröhren","Tauchlampen"], desc:"Krypton leuchtet blaugrün im elektrischen Feld und wurde im Hochleistungsblitzlicht genutzt. Von 1960 bis 1983 war der Meter offiziell durch Krypton-Spektrallinien definiert. Kryptonfluorid ist ein UV-Lasermaterial.", facts:["1960–1983: Meter über Kr-Spektrallinie definiert","Leuchtet blaugrün im elektrischen Feld","KrF₂: eine der wenigen Edelgasverbindungen"] },
+  { n:37, sym:"Rb", name:"Rubidium", latin:"Rubidium", cat:"alkali", period:5, group:1, mass:"85.47", melt:"39.3°C", boil:"688°C", density:"1.53 g/cm³", discovery:"1861 (Bunsen/Kirchhoff)", config:"[Kr] 5s¹", electronegativity:"0.82", oxidation:"+1", uses:["Atomuhren","Magnetresonanz","Ionenantriebe","Forschung"], desc:"Rubidium wurde durch Spektroskopie entdeckt – Bunsen und Kirchhoff erkannten es an den charakteristischen roten Spektrallinien (daher 'rubidus' = dunkelrot). Rubidiumuhren sind extrem präzise Atomuhren.", facts:["Per Spektroskopie entdeckt (1861)","Rubidiumuhren: extrem genau","Spontan entflammbar an der Luft"] },
+  { n:38, sym:"Sr", name:"Strontium", latin:"Strontium", cat:"alkaline", period:5, group:2, mass:"87.62", melt:"777°C", boil:"1382°C", density:"2.64 g/cm³", discovery:"1790 (Crawford)", config:"[Kr] 5s²", electronegativity:"0.95", oxidation:"+2", uses:["Feuerwerkskörper","Glasröhren","Leuchtfarben","Medizin"], desc:"Strontium erzeugt intensive rote Flammen – deshalb ist es unverzichtbar für rote Feuerwerkskörper und Signalraketen. Das radioaktive ⁹⁰Sr ist eines der gefährlichsten Spaltprodukte in nuklearen Fallout, da es sich wie Calcium in Knochen einlagert.", facts:["Rote Farbe in Feuerwerkskörpern","⁹⁰Sr: gefährliches Spaltprodukt (lagert in Knochen)","Benannt nach Strontian, Schottland"] },
+  { n:39, sym:"Y", name:"Yttrium", latin:"Yttrium", cat:"transition", period:5, group:3, mass:"88.91", melt:"1522°C", boil:"3345°C", density:"4.47 g/cm³", discovery:"1794 (Gadolin)", config:"[Kr] 4d¹ 5s²", electronegativity:"1.22", oxidation:"+3", uses:["Weißes LED","Supraleiter","Laser","Legierungen"], desc:"Yttrium ist nach dem schwedischen Dorf Ytterby benannt, in dem sein Erz entdeckt wurde – diesem Dorf sind gleich vier Elemente gewidmet. YBa₂Cu₃O₇ war der erste Hochtemperatur-Supraleiter über dem Siedepunkt von Stickstoff.", facts:["Nach dem Dorf Ytterby benannt","4 Elemente wurden in Ytterby entdeckt","Y-Ba-Cu-O: erster 'warmer' Supraleiter (1987)"] },
+  { n:40, sym:"Zr", name:"Zirconium", latin:"Zirconium", cat:"transition", period:5, group:4, mass:"91.22", melt:"1855°C", boil:"4409°C", density:"6.52 g/cm³", discovery:"1789 (Klaproth)", config:"[Kr] 4d² 5s²", electronegativity:"1.33", oxidation:"+4", uses:["Kernreaktoren","Keramik","Schmuck","Legierungen"], desc:"Zirconium ist eines der wenigen Metalle, die für thermische Neutronen fast transparent sind – ideal für Kernreaktorhüllen. Kubisches Zirconiumdioxid (Zirkonia) ist ein beliebter Diamantersatz im Schmuck.", facts:["Fast unsichtbar für Neutronen = Reaktorhüllen","Zirkonia: Diamant-Imitat im Schmuck","Extrem korrosionsbeständig"] },
+  { n:41, sym:"Nb", name:"Niob", latin:"Niobium", cat:"transition", period:5, group:5, mass:"92.91", melt:"2477°C", boil:"4744°C", density:"8.57 g/cm³", discovery:"1801 (Hatchett)", config:"[Kr] 4d⁴ 5s¹", electronegativity:"1.60", oxidation:"+5", uses:["Supraleiter","Stahl","Münzen","Piercings"], desc:"Niob ist supraleitend unter 9,26 K und wird für MRT-Magnete und Teilchenbeschleuniger eingesetzt. Es wurde nach Niobe, der griechischen Tochter des Tantalus, benannt – da es oft zusammen mit Tantal vorkommt.", facts:["Supraleiter unter 9,26 K","In MRT-Magneten und LHC-Magneten","Biokompatibel – beliebt für Piercings"] },
+  { n:42, sym:"Mo", name:"Molybdän", latin:"Molybdaenum", cat:"transition", period:5, group:6, mass:"95.96", melt:"2623°C", boil:"4639°C", density:"10.22 g/cm³", discovery:"1781 (Hjelm)", config:"[Kr] 4d⁵ 5s¹", electronegativity:"2.16", oxidation:"+6", uses:["Hochlegiierter Stahl","Schmierungsmittel","Elektronik","Dünger"], desc:"Molybdän hat einen der höchsten Schmelzpunkte aller Elemente. Es ist essentiell für Stickstoff-fixierende Bakterien (im Enzym Nitrogenase). MoS₂ ist ein ausgezeichnetes Hochtemperatur-Schmiermittel.", facts:["Essentiell für N₂-fixierende Bakterien","MoS₂: Schmiermittel bei Extremtemperaturen","Hochtemperatur-Ofenteile aus Molybdän"] },
+  { n:43, sym:"Tc", name:"Technetium", latin:"Technetium", cat:"transition", period:5, group:7, mass:"[97]", melt:"2157°C", boil:"4265°C", density:"11.50 g/cm³", discovery:"1937 (Perrier/Segrè)", config:"[Kr] 4d⁵ 5s²", electronegativity:"1.90", oxidation:"+7", uses:["Nuklearmedizin","Forschung","Korrosionsschutz"], desc:"Technetium war das erste künstlich hergestellte Element (1937) – sein Name bedeutet 'künstlich' auf Griechisch. Es hat keine stabilen Isotope. ⁹⁹mTc ist das wichtigste Radioisotop in der Nuklearmedizin – es wird für >20 Millionen Scans pro Jahr weltweit genutzt.", facts:["Erstes künstlich hergestelltes Element (1937)","Kein stabiles Isotop existiert","⁹⁹ᵐTc: häufigstes Radioisotop in der Medizin"] },
+  { n:44, sym:"Ru", name:"Ruthenium", latin:"Ruthenium", cat:"transition", period:5, group:8, mass:"101.1", melt:"2334°C", boil:"4150°C", density:"12.45 g/cm³", discovery:"1844 (Klaus)", config:"[Kr] 4d⁷ 5s¹", electronegativity:"2.20", oxidation:"+8 bis −2", uses:["Legierungen","Elektroden","Katalysatoren","Elektronik"], desc:"Ruthenium wurde nach 'Ruthenia' (Russland/Ukraine) benannt. Es ist extrem hart und korrosionsbeständig. In der Elektrochemie und Katalyse findet es wichtige Anwendungen. Ruthenium-Legierungen finden sich in Hochdruckfüllern.", facts:["Nach Ruthenia (historisches Osteuropa) benannt","Einer der seltensten Platinmetalle","Grenzwertiger Härter für Platin/Palladium"] },
+  { n:45, sym:"Rh", name:"Rhodium", latin:"Rhodium", cat:"transition", period:5, group:9, mass:"102.9", melt:"1964°C", boil:"3695°C", density:"12.41 g/cm³", discovery:"1803 (Wollaston)", config:"[Kr] 4d⁸ 5s¹", electronegativity:"2.28", oxidation:"+3", uses:["Katalysatoren","Weißgold","Spiegel","Thermometer"], desc:"Rhodium ist eines der seltensten und wertvollsten Metalle der Welt (teurer als Gold). Es wird in Autokatalysatoren für die Umwandlung von NOₓ eingesetzt. Rhodiumplattierung verleiht Weißgold-Schmuck seinen glänzenden Glanz.", facts:["Teurer als Gold – extrem selten","In Autokatalysatoren für NOₓ-Reduktion","Griech. 'rhodon' = Rose (wegen rosa Salze)"] },
+  { n:46, sym:"Pd", name:"Palladium", latin:"Palladium", cat:"transition", period:5, group:10, mass:"106.4", melt:"1555°C", boil:"2963°C", density:"12.02 g/cm³", discovery:"1803 (Wollaston)", config:"[Kr] 4d¹⁰", electronegativity:"2.20", oxidation:"+2, +4", uses:["Katalysatoren","Schmuck","Elektronik","Wasserstoffspeicherung"], desc:"Palladium wurde nach dem damals frisch entdeckten Asteroiden Pallas benannt. Es absorbiert bis zu 900mal sein Volumen an Wasserstoff – interessant für Wasserstoffspeicherung. In der organischen Chemie revolutionierten Palladium-katalysierte Reaktionen die Synthesechemie (Nobelpreis 2010).", facts:["Absorbiert 900× sein Volumen an H₂","Heck-Reaktion (Pd-Katalyse): Nobelpreis 2010","In nahezu allen modernen Autokatalysatoren"] },
+  { n:47, sym:"Ag", name:"Silber", latin:"Argentum", cat:"transition", period:5, group:11, mass:"107.9", melt:"961.8°C", boil:"2162°C", density:"10.49 g/cm³", discovery:"Urzeit", config:"[Kr] 4d¹⁰ 5s¹", electronegativity:"1.93", oxidation:"+1", uses:["Schmuck","Fotografie","Elektronik","Medizin"], desc:"Silber hat die höchste elektrische und thermische Leitfähigkeit aller Metalle. Es hat antibakterielle Eigenschaften, die seit der Antike genutzt werden. AgBr war die Basis der fotografischen Emulsion – die 'silbernen' Bilder gaben der Fotografie ihren Namen.", facts:["Beste elektrische Leitfähigkeit aller Metalle","Antibakteriell – bekannt seit Antike","AgBr: Grundlage analoger Fotografie"] },
+  { n:48, sym:"Cd", name:"Cadmium", latin:"Cadmium", cat:"transition", period:5, group:12, mass:"112.4", melt:"321.1°C", boil:"767°C", density:"8.65 g/cm³", discovery:"1817 (Stromeyer)", config:"[Kr] 4d¹⁰ 5s²", electronegativity:"1.69", oxidation:"+2", uses:["Akkus","Pigmente","Beschichtungen","Kernreaktoren"], desc:"Cadmium ist hochtoxisch und ein Krebserreger – in Japan verursachte Cadmiumvergiftung durch Reisbewässerung die 'Itai-Itai-Krankheit'. CdTe wird in Solarzellen genutzt. NiCd-Akkus sind wegen Cadmiums immer stärker reguliert.", facts:["Itai-Itai-Krankheit: Cadmium-Vergiftung Japan","CdTe: effizientes Solarzellenmaterial","EU: Cadmium in Elektronik stark reguliert"] },
+  { n:49, sym:"In", name:"Indium", latin:"Indium", cat:"post-transition", period:5, group:13, mass:"114.8", melt:"156.6°C", boil:"2072°C", density:"7.31 g/cm³", discovery:"1863 (Reich/Richter)", config:"[Kr] 4d¹⁰ 5s² 5p¹", electronegativity:"1.78", oxidation:"+3", uses:["Touchscreens","Solarzellen","Lötzinn","Spiegel"], desc:"Indium-Zinnoxid (ITO) ist das transparente Leitermaterial in fast allen Touchscreens und Flachbildschirmen. Indium wurde durch seine indigoblaue Spektrallinie entdeckt. Bei Verbiegen gibt es ein charakteristisches Knarren ab.", facts:["In nahezu jedem Smartphone-Display","Knarrt beim Verbiegen ('Indium-Schrei')","ITO: transparente Elektrode in Bildschirmen"] },
+  { n:50, sym:"Sn", name:"Zinn", latin:"Stannum", cat:"post-transition", period:5, group:14, mass:"118.7", melt:"231.9°C", boil:"2602°C", density:"7.29 g/cm³", discovery:"Urzeit (≥3500 v.Chr.)", config:"[Kr] 4d¹⁰ 5s² 5p²", electronegativity:"1.96", oxidation:"+4, +2", uses:["Lötzinn","Bronzeherstellung","Verpackungen","Glas"], desc:"Zinn + Kupfer = Bronze – die Entdeckung dieser Legierung läutete die Bronzezeit ein. 'Tin Pest' (Zinnpest) – die Umwandlung von weißem zu grauem Zinn bei Kälte – soll Napoleons Armee in Russland geschädigt haben.", facts:["Bronze = Kupfer + Zinn = Beginn der Bronzezeit","Zinnpest unter −13°C: Metall zerfällt zu Pulver","10 stabile Isotope – meiste aller Elemente"] },
+  { n:51, sym:"Sb", name:"Antimon", latin:"Stibium", cat:"metalloid", period:5, group:15, mass:"121.8", melt:"630.6°C", boil:"1587°C", density:"6.68 g/cm³", discovery:"Urzeit", config:"[Kr] 4d¹⁰ 5s² 5p³", electronegativity:"2.05", oxidation:"+5, +3, −3", uses:["Flammschutz","Batterien","Halbleiter","Pigmente"], desc:"Antimon wurde im alten Ägypten als Augen-Schminke (Kohl) verwendet. Es ist spröde und schlecht wärmeleitend. Antimonlegierungen dehnen sich beim Erstarren aus – nützlich für Schriftguss (Bleilettern mit Antimon). Antimontrioxid ist ein wichtiges Flammschutzmittel.", facts:["Im Alten Ägypten als Kohl genutzt","Schriftlegierung dehnt sich beim Erstarren aus","Sb₂O₃: wichtigstes Flammschutzmittel"] },
+  { n:52, sym:"Te", name:"Tellur", latin:"Tellurium", cat:"metalloid", period:5, group:16, mass:"127.6", melt:"449.5°C", boil:"988°C", density:"6.24 g/cm³", discovery:"1782 (Müller von Reichenstein)", config:"[Kr] 4d¹⁰ 5s² 5p⁴", electronegativity:"2.10", oxidation:"+6, −2", uses:["Solarzellen","Metallurgie","Halbleiter","DVD"], desc:"Tellur ist nach der Erde benannt (lat. tellus). Es ist eines der seltensten stabilen Elemente der Erdkruste. CdTe-Solarzellen und Phase-Change-Speicher (DVD/Blu-ray) nutzen Tellur. Es verleiht dem Atem einen intensiv knoblauchartigen Geruch.", facts:["Knoblauchgeruch nach Tellurkontakt","CdTe-Solar: günstigste Dünnschichtsolarzelle","Seltener als Platin in der Erdkruste"] },
+  { n:53, sym:"I", name:"Iod", latin:"Iodum", cat:"halogen", period:5, group:17, mass:"126.9", melt:"113.7°C", boil:"184.4°C", density:"4.93 g/cm³", discovery:"1811 (Courtois)", config:"[Kr] 4d¹⁰ 5s² 5p⁵", electronegativity:"2.66", oxidation:"+7 bis −1", uses:["Medizin","Schilddrüse","Fotografie","Desinfektionsmittel"], desc:"Iod ist essentiell für die Schilddrüsenhormone Thyroxin und Triiodthyronin. Iodmangel ist weltweit der häufigste vermeidbare Grund für geistige Behinderung. Lugolsche Lösung ist ein Desinfektionsmittel. Bei der Sublimation bildet Iod violetten Dampf.", facts:["Essentiell für Schilddrüsenhormone","Iodmangel: häufigste vermeidbare Behinderung","Bildet beim Erhitzen violetten Dampf"] },
+  { n:54, sym:"Xe", name:"Xenon", latin:"Xenon", cat:"noble", period:5, group:18, mass:"131.3", melt:"−111.8°C", boil:"−108.1°C", density:"5.90 g/L", discovery:"1898 (Ramsay/Travers)", config:"[Kr] 4d¹⁰ 5s² 5p⁶", electronegativity:"2.60", oxidation:"0, +2, +4, +6", uses:["Hochdrucklampen","Ionentriebwerke","Narkosemittel","Forschung"], desc:"Xenon-Hochdrucklampen liefern sehr weißes Licht, das dem Tageslicht ähnelt – z.B. in Kinoprojektoren und Kfz-Scheinwerfern. XeF₂ und XeF₄ waren die ersten stabilen Edelgasverbindungen (1962, Nobel-Niveau-Entdeckung). Xenon kann als Anästhetikum eingesetzt werden.", facts:["XeF₂: erste stabile Edelgasverbindung (1962)","Als Anästhetikum in der Medizin verwendbar","Xenon-Ionentriebwerke für Satelliten"] },
+  { n:55, sym:"Cs", name:"Caesium", latin:"Caesium", cat:"alkali", period:6, group:1, mass:"132.9", melt:"28.5°C", boil:"671°C", density:"1.93 g/cm³", discovery:"1860 (Bunsen/Kirchhoff)", config:"[Xe] 6s¹", electronegativity:"0.79", oxidation:"+1", uses:["Atomuhren","Bohrlochvermessung","Photoelektrischer Effekt","Ionentriebwerke"], desc:"Cäsium definiert die Sekunde: Die SI-Einheit Sekunde ist über 9.192.631.770 Schwingungen des Cs-133-Atoms festgelegt. Cs-Atomuhren sind auf 1 Sekunde in 300 Millionen Jahren genau. Es ist das elektropositivste stabile Element.", facts:["Die Sekunde ist durch Cs-133 definiert","Genauigkeit: 1s Fehler in 300 Mio. Jahren","Niedrigster Ionisierungspotenzial aller stabilen Elemente"] },
+  { n:56, sym:"Ba", name:"Barium", latin:"Barium", cat:"alkaline", period:6, group:2, mass:"137.3", melt:"727°C", boil:"1845°C", density:"3.51 g/cm³", discovery:"1808 (Davy)", config:"[Xe] 6s²", electronegativity:"0.89", oxidation:"+2", uses:["Röntgenkontrastmittel","Glas","Feuerwerkskörper","Bohrlochflüssigkeit"], desc:"Bariumsulfat ist wasserunlöslich und nichttoxisch – daher wird es als Kontrastmittel für Röntgenuntersuchungen des Verdauungstrakts geschluckt ('Breischluck'). Barium erzeugt grüne Flammen in Feuerwerkskörpern.", facts:["Bariumsulfat = Kontrastmittel für Röntgen-GI","Grüne Flammen in Feuerwerkskörpern","Bariumverbindungen sonst meist giftig"] },
+  { n:57, sym:"La", name:"Lanthan", latin:"Lanthanum", cat:"lanthanide", period:8, group:3, mass:"138.9", melt:"920°C", boil:"3464°C", density:"6.16 g/cm³", discovery:"1839 (Mosander)", config:"[Xe] 5d¹ 6s²", electronegativity:"1.10", oxidation:"+3", uses:["Kameraglas","Hybridakkus","Katalysatoren","Leuchtmittel"], desc:"Lanthan ist das namensgebende Element der Lanthanoide. Es verbessert die Brechkraft optischer Gläser. La-Ni-Hydrid-Batterien sind in Hybridfahrzeugen (Toyota Prius: 10-15 kg Lanthan). La₂O₃ ist ein wichtiger Katalysatorbestandteil.", facts:["Namensgeber der Lanthanoide","Toyota Prius: 10-15 kg Lanthan pro Akku","Verbessert Brechungsindex von Spezialglas"] },
+  { n:58, sym:"Ce", name:"Cer", latin:"Cerium", cat:"lanthanide", period:8, group:4, mass:"140.1", melt:"798°C", boil:"3443°C", density:"6.77 g/cm³", discovery:"1803 (Klaproth/Berzelius/Hisinger)", config:"[Xe] 4f¹ 5d¹ 6s²", electronegativity:"1.12", oxidation:"+4, +3", uses:["Feuerzeugstein","Katalysatoren","Polieren","Leuchtstoffe"], desc:"Cer ist das häufigste Seltenerd-Element. Das Pyrophor-Legierung Mischmetall (v.a. Cer) ist der Feuerstein in Feuerzeugen. CeO₂ poliert Glas und wird im Autokatalysator eingesetzt. Es ist nach dem Zwergplaneten Ceres benannt.", facts:["Häufigstes Seltenerd-Element","In Feuerzeugen als 'Feuerstein'","CeO₂ poliert Glas (Cerit-Schleifmittel)"] },
+  { n:59, sym:"Pr", name:"Praseodym", latin:"Praseodymium", cat:"lanthanide", period:8, group:5, mass:"140.9", melt:"931°C", boil:"3520°C", density:"6.77 g/cm³", discovery:"1885 (Auer von Welsbach)", config:"[Xe] 4f³ 6s²", electronegativity:"1.13", oxidation:"+3", uses:["Starke Magnete","Schweißgläser","Hochleistungs-Laser","Legierungen"], desc:"Praseodym wurde von Auer von Welsbach durch Trennung von Didymium entdeckt. Es gibt Glas und Keramik eine charakteristische gelbgrüne Farbe. Praseodym-Neodym-Mischungen in starken Permanentmagneten.", facts:["Von Auer von Welsbach entdeckt (1885)","Gelbgrünes Glas durch Pr-Oxide","Teil von PrFeB-Hochleistungsmagneten"] },
+  { n:60, sym:"Nd", name:"Neodym", latin:"Neodymium", cat:"lanthanide", period:8, group:6, mass:"144.2", melt:"1021°C", boil:"3074°C", density:"7.01 g/cm³", discovery:"1885 (Auer von Welsbach)", config:"[Xe] 4f⁴ 6s²", electronegativity:"1.14", oxidation:"+3", uses:["Stärkste Dauermagnete","Windturbinen","Elektromotoren","Laser"], desc:"Neodym-Eisen-Bor-Magnete (NdFeB) sind die stärksten dauerhaften Magnete der Welt. Ohne sie wären keine Elektroautos, Windräder oder Festplatten denkbar. Ein 1 kg Nd-Magnet kann das Mehrtausendfache seines Eigengewichts halten.", facts:["Nd-Fe-B: stärkster Permanentmagnet","Unverzichtbar für E-Autos & Windräder","1 kg Magnet hält mehrere Tonnen"] },
+  { n:61, sym:"Pm", name:"Promethium", latin:"Promethium", cat:"lanthanide", period:8, group:7, mass:"[145]", melt:"1042°C", boil:"3000°C", density:"7.26 g/cm³", discovery:"1945 (Marinsky/Glendenin/Coryell)", config:"[Xe] 4f⁵ 6s²", electronegativity:"1.13", oxidation:"+3", uses:["Atomuhren","Leuchttargets","Kernbatterien"], desc:"Promethium ist das einzige Lanthanoid ohne stabile Isotope. Es existiert nur in sehr kleinen Mengen natürlich als Spaltprodukt von Uran. Es wurde nach dem titanischen Halbgott Prometheus benannt. ¹⁴⁷Pm wird in nuklearen Batterien genutzt.", facts:["Einziges Lanthanoid ohne stabiles Isotop","Benannt nach dem Titan Prometheus","In nuklearen Herzschrittmacher-Batterien"] },
+  { n:62, sym:"Sm", name:"Samarium", latin:"Samarium", cat:"lanthanide", period:8, group:8, mass:"150.4", melt:"1072°C", boil:"1794°C", density:"7.52 g/cm³", discovery:"1879 (Boisbaudran)", config:"[Xe] 4f⁶ 6s²", electronegativity:"1.17", oxidation:"+3, +2", uses:["Samarium-Cobalt-Magnete","Kernreaktoren","Krebstherapie","Laser"], desc:"Samarium-Cobalt-Magnete wurden vor NdFeB-Magneten als stärkste Dauermagnete eingesetzt. Sie sind hitzebeständiger als NdFeB. Samarium-153 wird in der Krebstherapie eingesetzt. Es wurde nach dem Mineral Samarskyt benannt.", facts:["SmCo-Magnete: stabiler als NdFeB bei Hitze","¹⁵³Sm für Knochen-Krebstherapie","Benannt nach dem Mineral Samarskyt"] },
+  { n:63, sym:"Eu", name:"Europium", latin:"Europium", cat:"lanthanide", period:8, group:9, mass:"152.0", melt:"826°C", boil:"1529°C", density:"5.24 g/cm³", discovery:"1901 (Demarçay)", config:"[Xe] 4f⁷ 6s²", electronegativity:"1.20", oxidation:"+3, +2", uses:["Leuchtstoffe","Sicherheitsmerkmale","Bildschirme","Laser"], desc:"Europium erzeugt intensives rotes und blaues Leuchten – unverzichtbar für Farb-Leuchtstoffröhren und LEDs. Auf Euro-Banknoten werden europiumhaltige Leuchtstoffe als Fälschungsschutz eingesetzt.", facts:["Auf Euro-Banknoten als Fälschungsschutz","Rotes Leuchten in Farbmonitoren","Reaktivste Lanthanoid"] },
+  { n:64, sym:"Gd", name:"Gadolinium", latin:"Gadolinium", cat:"lanthanide", period:8, group:10, mass:"157.3", melt:"1312°C", boil:"3250°C", density:"7.90 g/cm³", discovery:"1880 (Marignac)", config:"[Xe] 4f⁷ 5d¹ 6s²", electronegativity:"1.20", oxidation:"+3", uses:["MRT-Kontrastmittel","Kernreaktoren","Magnetkühlung","Legierungen"], desc:"Gadolinium-Verbindungen sind die wichtigsten Kontrastmittel für die MRT-Bildgebung – weltweit werden jährlich über 10 Millionen Injektionen verabreicht. Es hat auch den größten Neutroneneinfangquerschnitt aller stabilen Isotope.", facts:["MRT-Kontrastmittel: >10 Mio. Injektionen/Jahr","Größter Neutroneneinfang aller stabilen Isotope","Gadolinit: Namensgeber des Elements"] },
+  { n:65, sym:"Tb", name:"Terbium", latin:"Terbium", cat:"lanthanide", period:8, group:11, mass:"158.9", melt:"1356°C", boil:"3230°C", density:"8.23 g/cm³", discovery:"1843 (Mosander)", config:"[Xe] 4f⁹ 6s²", electronegativity:"1.10", oxidation:"+3", uses:["Grüne LEDs","Magnetostriktoren","Festplatten","Laser"], desc:"Terbium-dotiertes Yttriumaluminat-Granat (YAG) erzeugt grünes Licht in weißen LEDs. Terbium-Dysprosium-Legierungen (Terfenol-D) zeigen Magnetostriktion – sie ändern ihre Form im Magnetfeld. Benannt nach Ytterby.", facts:["Grüne Komponente in weißen LEDs","Terfenol-D: magnetostriktiv für Sonar","Nach dem Dorf Ytterby benannt"] },
+  { n:66, sym:"Dy", name:"Dysprosium", latin:"Dysprosium", cat:"lanthanide", period:8, group:12, mass:"162.5", melt:"1407°C", boil:"2567°C", density:"8.55 g/cm³", discovery:"1886 (Boisbaudran)", config:"[Xe] 4f¹⁰ 6s²", electronegativity:"1.22", oxidation:"+3", uses:["NdFeB-Magnete verbessern","Kernreaktoren","Laser","Datenspeicher"], desc:"Dysprosium verbessert die Hochtemperatur-Eigenschaften von Nd-Fe-B-Magneten – essentiell für Elektromotoren in Autos bei hohen Temperaturen. Sein Name kommt vom Griechischen 'dysprositos' – schwer zugänglich – wegen der schwierigen Isolation.", facts:["Verbessert NdFeB-Magnete bei Hochtemperatur","Griech. 'dysprositos' = schwer erreichbar","Kritisch für E-Auto-Antriebe"] },
+  { n:67, sym:"Ho", name:"Holmium", latin:"Holmium", cat:"lanthanide", period:8, group:13, mass:"164.9", melt:"1461°C", boil:"2720°C", density:"8.80 g/cm³", discovery:"1879 (Soret/Clève)", config:"[Xe] 4f¹¹ 6s²", electronegativity:"1.23", oxidation:"+3", uses:["Laser","Magnetpole","Kernreaktoren","Spezialglas"], desc:"Holmium hat das höchste magnetische Moment aller Elemente bei normalen Bedingungen. Ho:YAG-Laser werden medizinisch für Nierensteincrushing und Knochenoperationen eingesetzt. Benannt nach Stockholm (lat. Holmia).", facts:["Höchstes magnetisches Moment aller Elemente","Ho:YAG-Laser für Medizin (Urologie)","Nach Stockholm (lat. Holmia) benannt"] },
+  { n:68, sym:"Er", name:"Erbium", latin:"Erbium", cat:"lanthanide", period:8, group:14, mass:"167.3", melt:"1529°C", boil:"2868°C", density:"9.07 g/cm³", discovery:"1843 (Mosander)", config:"[Xe] 4f¹² 6s²", electronegativity:"1.24", oxidation:"+3", uses:["Glasfaser-Verstärker","Er:YAG-Laser","Rosaglas","Kernreaktoren"], desc:"Erbium-dotierte Glasfaserverstärker (EDFA) ermöglichen die moderne Telekommunikation – sie verstärken optische Signale in Unterseekabeln und Langstreckenverbindungen. Er:YAG-Laser werden in der Dermatologie und Zahnmedizin eingesetzt.", facts:["EDFA: ermöglicht modernes Internet","Er:YAG-Laser für Hautbehandlungen","Erbium-Glas hat rosarote Farbe"] },
+  { n:69, sym:"Tm", name:"Thulium", latin:"Thulium", cat:"lanthanide", period:8, group:15, mass:"168.9", melt:"1545°C", boil:"1950°C", density:"9.32 g/cm³", discovery:"1879 (Clève)", config:"[Xe] 4f¹³ 6s²", electronegativity:"1.25", oxidation:"+3", uses:["Tm:YAG-Laser","Röntgengeräte","Supraeleiter-Forschung"], desc:"Thulium ist das seltenste der 'normalen' Lanthanoide und war nach Thule benannt – dem mythischen nördlichsten Land der Welt. ¹⁷⁰Tm ist eine Gammastrahlungsquelle für tragbare Röntgengeräte ohne Strom. Tm:YAG-Laser emittieren bei 2 µm.", facts:["Benannt nach dem mythischen Thule","¹⁷⁰Tm: Gammastrahlungsquelle für tragbare Röntgengeräte","Tm:YAG-Laser bei 2µm für Medizin"] },
+  { n:70, sym:"Yb", name:"Ytterbium", latin:"Ytterbium", cat:"lanthanide", period:8, group:16, mass:"173.0", melt:"824°C", boil:"1196°C", density:"6.90 g/cm³", discovery:"1878 (Marignac)", config:"[Xe] 4f¹⁴ 6s²", electronegativity:"1.10", oxidation:"+3, +2", uses:["Atomuhren","Glasfasern","Stahl","Laser"], desc:"Ytterbium-Atomuhren sind derzeit die genauesten Uhren der Welt – mit einem Fehler von 1 Sekunde in 10 Milliarden Jahren. Sie könnten die Definition der Sekunde ablösen. Ytterbium-dotierte Glasfasern liefern intensive Laserleistung.", facts:["Genaueste Atomuhr der Welt: 1s Fehler in 10 Mrd. Jahren","Könnte die Cs-Uhr ersetzen","4. Element, das nach Ytterby benannt wurde"] },
+  { n:71, sym:"Lu", name:"Lutetium", latin:"Lutetium", cat:"lanthanide", period:8, group:17, mass:"175.0", melt:"1652°C", boil:"3402°C", density:"9.84 g/cm³", discovery:"1907 (Urbain/Auer von Welsbach)", config:"[Xe] 4f¹⁴ 5d¹ 6s²", electronegativity:"1.27", oxidation:"+3", uses:["PET-Scanner","Katalysatoren","Lutetium-177-Therapie","Legierungen"], desc:"Lutetium ist das dichteste und härteste Lanthanoid. ¹⁷⁷Lu-DOTATATE ist eine bahnbrechende Krebstherapie für neuroendokrine Tumoren. Es wurde unabhängig von Urbain (Paris/Lutetia) und Auer von Welsbach entdeckt.", facts:["¹⁷⁷Lu-DOTATATE: revolutionäre Krebstherapie","Nach dem römischen Paris 'Lutetia' benannt","Dichtestes und härtestes Lanthanoid"] },
+  { n:72, sym:"Hf", name:"Hafnium", latin:"Hafnium", cat:"transition", period:6, group:4, mass:"178.5", melt:"2233°C", boil:"4603°C", density:"13.31 g/cm³", discovery:"1923 (Coster/Hevesy)", config:"[Xe] 4f¹⁴ 5d² 6s²", electronegativity:"1.30", oxidation:"+4", uses:["Kernreaktoren","Prozessorgates","Legierungen","Plasmatriebwerke"], desc:"Hafnium war das letzte stabile Element, das entdeckt wurde – vorhergesagt durch Bohr (Quantenmechanik), gefunden in Kopenhagen (lat. Hafnia). HfO₂ wird in modernen Intel-CPUs als High-k-Dielektrikum verwendet.", facts:["Letztes stabiles Element entdeckt (1923)","HfO₂ in Intel-Pentium-D ab 2007","Nach Kopenhagen (lat. Hafnia) benannt"] },
+  { n:73, sym:"Ta", name:"Tantal", latin:"Tantalum", cat:"transition", period:6, group:5, mass:"180.9", melt:"3017°C", boil:"5458°C", density:"16.65 g/cm³", discovery:"1802 (Ekeberg)", config:"[Xe] 4f¹⁴ 5d³ 6s²", electronegativity:"1.50", oxidation:"+5", uses:["Kondensatoren","Implantate","Hartmetall","Elektronik"], desc:"Tantal hat einen der höchsten Schmelzpunkte aller Metalle und ist extrem korrosionsbeständig. Tantalkondensatoren sind in fast jedem Smartphone. Das Element ist Teil des Konfliktrohstoffs 'Coltan' (Colombo-Tantalit) aus dem Kongo.", facts:["Tantalkondensatoren in fast jedem Smartphone","'Coltan' = Konfliktmineral aus dem Kongo","Biokompatibel für Knochenimplantate"] },
+  { n:74, sym:"W", name:"Wolfram", latin:"Wolframium", cat:"transition", period:6, group:6, mass:"183.8", melt:"3422°C", boil:"5555°C", density:"19.25 g/cm³", discovery:"1783 (de Elhuyar)", config:"[Xe] 4f¹⁴ 5d⁴ 6s²", electronegativity:"2.36", oxidation:"+6", uses:["Glühwendel","Hartmetall","Legierungen","Katalysatoren"], desc:"Wolfram hat den höchsten Schmelzpunkt aller Metalle (3422°C) und den niedrigsten Dampfdruck. Es wird für Glühlampenwendeln genutzt. Das chemische Symbol W kommt vom älteren deutschen Namen 'Wolfram' – die Spanier nannten es 'Tungsten' (schwerer Stein).", facts:["Höchster Schmelzpunkt aller Metalle (3422°C)","Glühbirnen-Wendel aus Wolfram","Symbol W von 'Wolfram' (schwedisch 'tungsten')"] },
+  { n:75, sym:"Re", name:"Rhenium", latin:"Rhenium", cat:"transition", period:6, group:7, mass:"186.2", melt:"3186°C", boil:"5596°C", density:"21.02 g/cm³", discovery:"1925 (Noddack/Berg/Tacke)", config:"[Xe] 4f¹⁴ 5d⁵ 6s²", electronegativity:"1.90", oxidation:"+7 bis −1", uses:["Düsentriebwerke","Katalysatoren","Thermometer","Elektronik"], desc:"Rhenium war das letzte stabile, natürliche Element, das entdeckt wurde. Es ist extrem selten und teuer. Rhenium-Legierungen verbessern die Hochtemperaturfestigkeit von Nickel-Superlegierungen in Düsentriebwerken. Benannt nach dem Rhein.", facts:["Letztes entdecktes stabiles Naturlement (1925)","In Düsentriebwerk-Superlegierungen","Benannt nach dem Rhein"] },
+  { n:76, sym:"Os", name:"Osmium", latin:"Osmium", cat:"transition", period:6, group:8, mass:"190.2", melt:"3033°C", boil:"5012°C", density:"22.59 g/cm³", discovery:"1803 (Tennant)", config:"[Xe] 4f¹⁴ 5d⁶ 6s²", electronegativity:"2.20", oxidation:"+8 bis −2", uses:["Legierungen","Katalysatoren","Elektronik","Fingerabdrücke"], desc:"Osmium ist das dichteste natürlich vorkommende Element (22,59 g/cm³). OsO₄ wird zum Anfärben von Biologieproben für die Elektronenmikroskopie genutzt. Der Name kommt vom griechischen 'osme' (Geruch) – OsO₄ riecht durchdringend und ist hochgiftig.", facts:["Dichtestes natürliches Element (22,59 g/cm³)","OsO₄: hochgiftig, für Elektronenmikroskopie","Griech. 'osme' = Geruch"] },
+  { n:77, sym:"Ir", name:"Iridium", latin:"Iridium", cat:"transition", period:6, group:9, mass:"192.2", melt:"2446°C", boil:"4428°C", density:"22.56 g/cm³", discovery:"1803 (Tennant)", config:"[Xe] 4f¹⁴ 5d⁷ 6s²", electronegativity:"2.20", oxidation:"+4, +3", uses:["Zünder","Legierungen","Katalysatoren","Standardgewichte"], desc:"Iridium ist das korrosionsbeständigste bekannte Element. Eine iridiumreiche Schicht in der Erdkruste (K-Pg-Grenzschicht) ist der stärkste Beweis für den Asteroiden-Einschlag vor 66 Millionen Jahren, der die Dinosaurier aussterben ließ.", facts:["K-Pg-Iridium-Schicht: Beweis Asteroiden-Einschlag","Korrosionsbeständigstes Element","Ursprüngliches internationales Kilogramm war Pt-Ir"] },
+  { n:78, sym:"Pt", name:"Platin", latin:"Platinum", cat:"transition", period:6, group:10, mass:"195.1", melt:"1768°C", boil:"3825°C", density:"21.45 g/cm³", discovery:"Vorkolumbianisch / 1735 (Ulloa)", config:"[Xe] 4f¹⁴ 5d⁹ 6s¹", electronegativity:"2.28", oxidation:"+4, +2", uses:["Schmuck","Katalysatoren","Elektroden","Krebstherapie"], desc:"Platin ist edler als Gold und chemisch nahezu unzerstörbar. Das Urokilogramm war bis 2019 ein Platin-Iridium-Zylinder in Paris. Cisplatin (Platinverbindung) ist eines der wichtigsten Zytostatika in der Krebstherapie.", facts:["Urokilogramm (bis 2019): Pt-Ir-Zylinder","Cisplatin: wichtiges Krebsmedikament","Mehr Platin im Einschlag-Asteroiden als je gefördert"] },
+  { n:79, sym:"Au", name:"Gold", latin:"Aurum", cat:"transition", period:6, group:11, mass:"197.0", melt:"1064.2°C", boil:"2856°C", density:"19.32 g/cm³", discovery:"Urzeit", config:"[Xe] 4f¹⁴ 5d¹⁰ 6s¹", electronegativity:"2.54", oxidation:"+3, +1", uses:["Schmuck","Elektronik","Medizin","Finanzwesen"], desc:"Gold ist das Symbol für Beständigkeit und Wert. Alles Gold der Erde stammt aus dem Einschlag von Neutronensternen. Golddraht ist in jedem Computer verbaut. Dickes Gold lässt Licht grünlich erscheinen – wegen relativistischer Effekte.", facts:["Alles Gold: aus Neutronenstern-Kollisionen","Relativistische Effekte geben Gold seine Farbe","Kölner Dom hat ~100g Gold im Dach"] },
+  { n:80, sym:"Hg", name:"Quecksilber", latin:"Hydrargyrum", cat:"transition", period:6, group:12, mass:"200.6", melt:"−38.8°C", boil:"356.7°C", density:"13.53 g/cm³", discovery:"Urzeit", config:"[Xe] 4f¹⁴ 5d¹⁰ 6s²", electronegativity:"2.00", oxidation:"+2, +1", uses:["Thermometer","Amalgam","Leuchtstoffröhren","Elektrochemie"], desc:"Quecksilber ist das einzige Metall, das bei Raumtemperatur flüssig ist. Die Römer nannten es 'argentum vivum' (lebendiges Silber). Hg-Vergiftungen ('Mad Hatter Disease') plagten Hutmacher, die Quecksilber zur Filzbearbeitung nutzten.", facts:["Einziges flüssiges Metall bei Raumtemperatur","'Mad Hatter': Hutmacher-Quecksilber-Vergiftung","Symbol Hg von 'Hydrargyrum' = Wassersilber"] },
+  { n:81, sym:"Tl", name:"Thallium", latin:"Thallium", cat:"post-transition", period:6, group:13, mass:"204.4", melt:"304°C", boil:"1473°C", density:"11.85 g/cm³", discovery:"1861 (Crookes)", config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹", electronegativity:"1.62", oxidation:"+3, +1", uses:["Elektronik","Optik","Herzscanning","Forschung"], desc:"Thallium ist hochgiftig und wurde als 'Giftmord-Metall' berüchtigt. Agatha Christie beschrieb eine Thalliumvergiftung in 'Mausefalle'. ²⁰¹Tl wird in der Herzszintigraphie eingesetzt. Der Name kommt vom griechischen 'thallos' (grüner Trieb) – wegen seiner grünen Flamme.", facts:["Berüchtigtes Mordgift (Agatha Christie)","²⁰¹Tl für Herzszintigraphie","Griech. 'thallos' = grüner Trieb (wegen Spektrum)"] },
+  { n:82, sym:"Pb", name:"Blei", latin:"Plumbum", cat:"post-transition", period:6, group:14, mass:"207.2", melt:"327.5°C", boil:"1749°C", density:"11.34 g/cm³", discovery:"Urzeit", config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²", electronegativity:"2.33", oxidation:"+4, +2", uses:["Akkus","Strahlenabschirmung","Lots","Munition"], desc:"Blei wurde jahrtausendlang verwendet – von römischen Wasserleitungen bis Bleiglasfenster. Bleiakkus starten heute noch Autos. Blei-206 ist das stabile Endprodukt der Uran-238-Zerfallsreihe, was zur radiometrischen Datierung genutzt wird.", facts:["Bleiakkus: in >1 Mrd. Fahrzeugen weltweit","Pb-206: Endprodukt des Uran-238-Zerfalls","Symbol Pb von 'plumbum' → englisch 'plumber'"] },
+  { n:83, sym:"Bi", name:"Bismut", latin:"Bismuthum", cat:"post-transition", period:6, group:15, mass:"209.0", melt:"271.4°C", boil:"1564°C", density:"9.79 g/cm³", discovery:"1753 (Geoffroy)", config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³", electronegativity:"2.02", oxidation:"+3", uses:["Medizin","Kosmetik","Legierungen","Feuerlöschsysteme"], desc:"Bismut-209 galt lange als schwerster stabiler Kern – 2003 wurde festgestellt, dass es leicht radioaktiv ist, mit einer Halbwertszeit von 10¹⁹ Jahren (1 Milliarde mal länger als das Universum alt ist). Pepto-Bismol enthält Bismutsubsalicylat.", facts:["Bi-209: Halbwertszeit = 10¹⁹ Jahre","'Praktisch stabil' – radioaktiver als das Universum alt","Pepto-Bismol: Bismutsubsalicylat"] },
+  { n:84, sym:"Po", name:"Polonium", latin:"Polonium", cat:"post-transition", period:6, group:16, mass:"[209]", melt:"254°C", boil:"962°C", density:"9.20 g/cm³", discovery:"1898 (Curie/Curie)", config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴", electronegativity:"2.00", oxidation:"+4, +2", uses:["Antistatik","Neutronenquellen","Forschung"], desc:"Polonium wurde von Marie und Pierre Curie entdeckt und nach Marie Curies Heimat Polen benannt – das erste Element zu Ehren eines Landes. ²¹⁰Po ist hochradioaktiv und war das mutmaßliche Mordmittel im Fall Litvinenko (2006).", facts:["Von Marie Curie nach Polen benannt","Mordmittel: Alexander Litvinenko (2006)","Stärkste natürliche Alpha-Quelle"] },
+  { n:85, sym:"At", name:"Astat", latin:"Astatinum", cat:"halogen", period:6, group:17, mass:"[210]", melt:"302°C", boil:"337°C", density:"7 g/cm³ (geschätzt)", discovery:"1940 (Corson/MacKenzie/Segrè)", config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵", electronegativity:"2.20", oxidation:"+7 bis −1", uses:["Krebstherapie (Forschung)"], desc:"Astat ist das seltenste natürlich vorkommende Element – weniger als 30 Gramm existieren zu jedem Zeitpunkt in der Erdkruste. Es hat keine stabilen Isotope. ²¹¹At wird für zielgerichtete Alpha-Therapie bei Krebs untersucht.", facts:["Seltenste natürliches Element: <30g in der Erdkruste","²¹¹At: Forschung für Alpha-Krebstherapie","Name kommt von griech. 'astatos' = instabil"] },
+  { n:86, sym:"Rn", name:"Radon", latin:"Radon", cat:"noble", period:6, group:18, mass:"[222]", melt:"−71°C", boil:"−61.7°C", density:"9.73 g/L", discovery:"1900 (Dorn)", config:"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶", electronegativity:"2.20", oxidation:"0", uses:["Geologie","Erdbebenforschung","Krebstherapie (hist.)"], desc:"Radon ist ein radioaktives Gas, das aus dem Zerfall von Uran in der Erde entsteht und in Kellerräumen gefährliche Konzentrationen erreichen kann. Es ist die zweitgrößte Ursache für Lungenkrebs nach dem Rauchen in Deutschland.", facts:["Zweitgrößte Ursache für Lungenkrebs","Bildet sich aus Uran in Boden und Fels","Radon-222: Halbwertszeit 3,8 Tage"] },
+  { n:87, sym:"Fr", name:"Francium", latin:"Francium", cat:"alkali", period:7, group:1, mass:"[223]", melt:"27°C", boil:"677°C", density:"1.87 g/cm³ (geschätzt)", discovery:"1939 (Perey)", config:"[Rn] 7s¹", electronegativity:"0.70", oxidation:"+1", uses:["Forschung"], desc:"Francium ist das zweitselteste natürlich vorkommende Element. Es gibt zu jedem Zeitpunkt schätzungsweise nur 30 Gramm in der gesamten Erdkruste. Es wurde 1939 von Marguerite Perey entdeckt – der ersten Frau, die ein Element entdeckte.", facts:["Von Marguerite Perey entdeckt – erste Frau","Schätzungsweise nur 30g auf der Erde","Niedrigste Elektronegativität aller Elemente"] },
+  { n:88, sym:"Ra", name:"Radium", latin:"Radium", cat:"alkaline", period:7, group:2, mass:"[226]", melt:"696°C", boil:"1737°C", density:"5.50 g/cm³", discovery:"1898 (Curie/Curie)", config:"[Rn] 7s²", electronegativity:"0.90", oxidation:"+2", uses:["Historisch: Leuchtzifferblätter","Krebstherapie (hist.)","Forschung"], desc:"Radium wurde von den Curies entdeckt und leuchtet im Dunkeln blaugrün. Es war Jahrzehnte ein Symbol für Radioaktivität und Lebenskraft – Radiumhaltige 'Wundermittel' wurden verkauft, bis die Gefährlichkeit klar wurde. Marie Curie starb wahrscheinlich an Strahlenbelastung.", facts:["Marie Curie starb wahrscheinlich durch Radium","Leuchtet blaugrün im Dunkeln","'Radium Girls': vergiftete Uhrmalerinnen 1920er"] },
+  { n:89, sym:"Ac", name:"Actinium", latin:"Actinium", cat:"actinide", period:9, group:3, mass:"[227]", melt:"1050°C", boil:"3200°C", density:"10.07 g/cm³", discovery:"1899 (Debierne)", config:"[Rn] 6d¹ 7s²", electronegativity:"1.10", oxidation:"+3", uses:["Krebstherapie","Neutronenquellen","Forschung"], desc:"Actinium ist der Namensgeber der Actinoide. ²²⁵Ac wird für gezielte Alpha-Therapie bei Krebs eingesetzt. Es ist etwa 150-mal strahlungsaktiver als Radium und leuchtet im Dunkeln blau durch Ionisation der umgebenden Luft.", facts:["Namensgeber der Actinoide","¹⁵⁰× strahlungsaktiver als Radium","Leuchtet blau im Dunkeln (ionisiert Luft)"] },
+  { n:90, sym:"Th", name:"Thorium", latin:"Thorium", cat:"actinide", period:9, group:4, mass:"232.0", melt:"1750°C", boil:"4788°C", density:"11.72 g/cm³", discovery:"1829 (Berzelius)", config:"[Rn] 6d² 7s²", electronegativity:"1.30", oxidation:"+4", uses:["Kernenergie","Glühstrümpfe (hist.)","Legierungen","Linsen"], desc:"Thorium-232 kann in Kernreaktoren zu spaltbarem Uran-233 umgewandelt werden – ein alternativer Kernbrennstoffkreislauf. Indien besitzt enorme Thoriumvorkommen und forscht intensiv an Thoriumreaktoren. Es ist nach dem Donnergott Thor benannt.", facts:["Benannt nach dem Gott Thor","Thorium-Reaktoren: intensiv erforscht (vor allem Indien)","Thorium-Glühstrümpfe: frühere Campingbeleuchtung"] },
+  { n:91, sym:"Pa", name:"Protactinium", latin:"Protactinium", cat:"actinide", period:9, group:5, mass:"231.0", melt:"1568°C", boil:"4027°C", density:"15.37 g/cm³", discovery:"1917 (Hahn/Meitner/Soddy/Cranston)", config:"[Rn] 5f² 6d¹ 7s²", electronegativity:"1.50", oxidation:"+5, +4", uses:["Forschung","Paläozeanographie"], desc:"Protactinium ist hochradioaktiv und eines der seltensten natürlichen Elemente. Es wurde von Lise Meitner (und anderen) entdeckt. ²³¹Pa wird zur Datierung ozeanischer Sedimente genutzt ('Pa/Th-Verhältnis'). Der Name bedeutet 'vor dem Actinium'.", facts:["Bedeutet 'vor dem Actinium'","Mitentdeckt von Lise Meitner (1917)","²³¹Pa für Meeressediment-Datierung"] },
+  { n:92, sym:"U", name:"Uran", latin:"Uranium", cat:"actinide", period:9, group:6, mass:"238.0", melt:"1132°C", boil:"4131°C", density:"19.05 g/cm³", discovery:"1789 (Klaproth)", config:"[Rn] 5f³ 6d¹ 7s²", electronegativity:"1.38", oxidation:"+6, +4", uses:["Kernenergie","Waffen (historisch)","Datierung","Glas"], desc:"Uran-235 ist der wichtigste Kernbrennstoff – durch Neutroneninduzierte Spaltung setzt es enorme Energie frei. Uranium-Glas ('Vaselin-Glas') leuchtet unter UV-Licht grün. Uran war vor der Entdeckung seiner Radioaktivität v.a. als Glasfärber verwendet.", facts:["U-235: Kernbrennstoff in Reaktoren & Bomben","Uranium-Glas leuchtet grün unter UV","Hat 92 Elektronen: schwerstes Naturatom mit stabilen Orbitalen"] },
+  { n:93, sym:"Np", name:"Neptunium", latin:"Neptunium", cat:"actinide", period:9, group:7, mass:"[237]", melt:"637°C", boil:"4000°C", density:"20.45 g/cm³", discovery:"1940 (McMillan/Abelson)", config:"[Rn] 5f⁴ 6d¹ 7s²", electronegativity:"1.36", oxidation:"+5, +4, +3", uses:["Neutronendetektoren","Forschung"], desc:"Neptunium war das erste Transuran-Element, künstlich hergestellt (1940) nach der Bestrahlung von Uran mit Neutronen. Es ist nach dem Planeten Neptun benannt (Uran benannt nach Uranus). ²³⁷Np ist der längstlebige Neptunium-Isotop.", facts:["Erstes künstlich hergestelltes Transuranelement","Nach dem Planeten Neptun benannt","²³⁷Np: Halbwertszeit 2,1 Millionen Jahre"] },
+  { n:94, sym:"Pu", name:"Plutonium", latin:"Plutonium", cat:"actinide", period:9, group:8, mass:"[244]", melt:"640°C", boil:"3228°C", density:"19.86 g/cm³", discovery:"1940 (Seaborg et al.)", config:"[Rn] 5f⁶ 7s²", electronegativity:"1.28", oxidation:"+6, +5, +4, +3", uses:["Kernwaffen","Kernenergie","Raumsonden (RTG)"], desc:"Plutonium-239 ist das wichtigste Spaltmaterial für Kernwaffen. Es hat die ungewöhnliche Eigenschaft, bei Raumtemperatur in mehreren Phasen zu existieren und sich ausgedehnt anders zu verhalten als erwartet. ²³⁸Pu-Batterien versorgen Raumsonden wie Voyager.", facts:["Kritische Masse: ~10 kg für Kettenreaktion","²³⁸Pu-RTG: Energiequelle von Voyager & New Horizons","6 verschiedene Kristallphasen bei Raumtemperatur"] },
+  { n:95, sym:"Am", name:"Americium", latin:"Americium", cat:"actinide", period:9, group:9, mass:"[243]", melt:"1176°C", boil:"2607°C", density:"13.69 g/cm³", discovery:"1944 (Seaborg et al.)", config:"[Rn] 5f⁷ 7s²", electronegativity:"1.13", oxidation:"+3", uses:["Rauchmelder","Forschung"], desc:"Americium findet sich in fast jedem Haushalt – in Ionisationsrauchmeldern. ²⁴¹Am sendet Alpha-Teilchen aus, die eine Ionisationskammer überbrücken; Rauch unterbricht diesen Strom und löst den Alarm aus.", facts:["In Ionisationsrauchmeldern weltweit","²⁴¹Am: Halbwertszeit 432 Jahre","Nach Amerika benannt (Seaborg, 1944)"] },
+  { n:96, sym:"Cm", name:"Curium", latin:"Curium", cat:"actinide", period:9, group:10, mass:"[247]", melt:"1340°C", boil:"3110°C", density:"13.51 g/cm³", discovery:"1944 (Seaborg et al.)", config:"[Rn] 5f⁷ 6d¹ 7s²", electronegativity:"1.28", oxidation:"+3", uses:["Raumsonden","Forschung"], desc:"Curium wurde nach Marie und Pierre Curie benannt. ²⁴²Cm wurde auf dem Mars Rover Curiosity als Alpha-Partikel-Quelle für die APXS-Spektrometer eingesetzt. Curium ist stark strahlungsaktiv und gefährlich.", facts:["Nach Marie & Pierre Curie benannt","Im Mars-Rover Curiosity verbaut (APXS)","Einer der stärksten radioaktiven Emitter"] },
+  { n:97, sym:"Bk", name:"Berkelium", latin:"Berkelium", cat:"actinide", period:9, group:11, mass:"[247]", melt:"986°C", boil:"2627°C", density:"14.78 g/cm³", discovery:"1949 (Thompson/Ghiorso/Seaborg)", config:"[Rn] 5f⁹ 7s²", electronegativity:"1.30", oxidation:"+4, +3", uses:["Forschung","Herstellung schwerer Elemente"], desc:"Berkelium wurde nach der Stadt Berkeley (Kalifornien) benannt, wo es am Cyclotron hergestellt wurde. Es hat nur radioaktive Isotope und findet keine praktische Anwendung. ²⁴⁹Bk wird als Targetmaterial für die Synthese noch schwererer Elemente genutzt.", facts:["Nach Berkeley, Kalifornien benannt","²⁴⁹Bk: Zielscheibe für Tennessine-Synthese","Nur radioaktive Isotope, keine Anwendungen"] },
+  { n:98, sym:"Cf", name:"Californium", latin:"Californium", cat:"actinide", period:9, group:12, mass:"[251]", melt:"900°C", boil:"1745°C", density:"15.10 g/cm³", discovery:"1950 (Thompson et al.)", config:"[Rn] 5f¹⁰ 7s²", electronegativity:"1.30", oxidation:"+3", uses:["Neutronen-Brachytherapie","Sprengstoff-Detektion","Kernreaktoren-Start"], desc:"Californium-252 ist eine intensive Neutronenquelle – eine winzige Menge emittiert Milliarden Neutronen pro Sekunde. Es wird für Neutronenbrachytherapie bei Gebärmutterhalskrebs und für Neutronenmesslogs in der Ölexploration eingesetzt.", facts:["²⁵²Cf: Milliarden Neutronen/Sekunde","Für Gebärmutterhals-Brachytherapie","Extrem teuer: ~27 Millionen $/Gramm"] },
+  { n:99, sym:"Es", name:"Einsteinium", latin:"Einsteinium", cat:"actinide", period:9, group:13, mass:"[252]", melt:"860°C", boil:"996°C", density:"8.84 g/cm³", discovery:"1952 (Ghiorso et al.)", config:"[Rn] 5f¹¹ 7s²", electronegativity:"1.30", oxidation:"+3", uses:["Forschung"], desc:"Einsteinium wurde in den Trümmern des ersten Wasserstoffbomben-Tests (Ivy Mike, 1952) entdeckt – ein makabrer Ursprung für ein nach Einstein benanntes Element. Es ist nur in kleinsten Mengen erhältlich und daher kaum untersucht.", facts:["Im Atombomben-Test 'Ivy Mike' entdeckt (1952)","Nach Albert Einstein benannt","Nur Mikrogramm-Mengen je produziert"] },
+  { n:100, sym:"Fm", name:"Fermium", latin:"Fermium", cat:"actinide", period:9, group:14, mass:"[257]", melt:"1527°C", boil:"—", density:"—", discovery:"1952 (Ghiorso et al.)", config:"[Rn] 5f¹² 7s²", electronegativity:"1.30", oxidation:"+3", uses:["Forschung"], desc:"Fermium wurde ebenfalls im Ivy-Mike-Bombentest entdeckt und nach Enrico Fermi benannt – dem Erbauer des ersten Kernreaktors. Das schwerste durch Neutronenbestrahlung erreichbare Element. Nur für Grundlagenforschung zugänglich.", facts:["Nach Enrico Fermi benannt","Ebenfalls in Ivy Mike entdeckt","Schwerste neutronenerzeugte Element"] },
+  { n:101, sym:"Md", name:"Mendelevium", latin:"Mendelevium", cat:"actinide", period:9, group:15, mass:"[258]", melt:"827°C", boil:"—", density:"—", discovery:"1955 (Ghiorso et al.)", config:"[Rn] 5f¹³ 7s²", electronegativity:"1.30", oxidation:"+3, +2", uses:["Forschung"], desc:"Mendelevium wurde nach Dmitri Mendeleev benannt – dem Schöpfer des Periodensystems. Als erstes Element durch einzelne Ionen synthetisiert. Nur wenige Atome wurden je produziert.", facts:["Nach Dmitri Mendeleev benannt","Erstes via Einzel-Ion-Methode hergestellt","Halbwertszeit ²⁵⁸Md: 51,5 Tage"] },
+  { n:102, sym:"No", name:"Nobelium", latin:"Nobelium", cat:"actinide", period:9, group:16, mass:"[259]", melt:"827°C", boil:"—", density:"—", discovery:"1966 (Dubna)", config:"[Rn] 5f¹⁴ 7s²", electronegativity:"1.30", oxidation:"+2, +3", uses:["Forschung"], desc:"Nobelium ist nach Alfred Nobel benannt. Die Entdeckungsgeschichte war umstritten: amerikanische, schwedische und sowjetische Teams beanspruchten sie. Die Synthese erfolgt durch Beschuss von Curium mit Kohlenstoff-Ionen.", facts:["Langwierige Entdeckungsgeschichte (USA, Schweden, UdSSR)","Nach Alfred Nobel benannt","Nur wenige Atome je gemessen"] },
+  { n:103, sym:"Lr", name:"Lawrencium", latin:"Lawrencium", cat:"actinide", period:9, group:17, mass:"[266]", melt:"1627°C", boil:"—", density:"—", discovery:"1961 (Ghiorso et al.)", config:"[Rn] 5f¹⁴ 7s² 7p¹", electronegativity:"1.30", oxidation:"+3", uses:["Forschung"], desc:"Lawrencium ist das letzte der Actinoide, benannt nach Ernest O. Lawrence, dem Erfinder des Zyklotrons. Seine Elektronenkonfiguration verhält sich interessanterweise unerwarteter als bei den anderen Actinoiden – Relativitätseffekte spielen eine Rolle.", facts:["Nach Ernest O. Lawrence (Zyklotron-Erfinder)","Letztes Actinoid","Elektronenkonfiguration durch Relativitätseffekte ungewöhnlich"] },
+  { n:104, sym:"Rf", name:"Rutherfordium", latin:"Rutherfordium", cat:"transition", period:7, group:4, mass:"[267]", melt:"2100°C", boil:"5500°C", density:"23 g/cm³ (geschätzt)", discovery:"1964/1969", config:"[Rn] 5f¹⁴ 6d² 7s²", electronegativity:"—", oxidation:"+4", uses:["Forschung"], desc:"Rutherfordium ist nach Ernest Rutherford benannt – dem Entdecker des Atomkerns. Es ist das schwerste Element, das Chemiker gut untersuchen konnten. Die Synthese durch Kernfusion erzeugt nur wenige Atome.", facts:["Nach Ernest Rutherford benannt","Chemisch untersucht trotz extremer Seltenheit","Halbwertszeit: ~13 Stunden"] },
+  { n:105, sym:"Db", name:"Dubnium", latin:"Dubnium", cat:"transition", period:7, group:5, mass:"[268]", melt:"—", boil:"—", density:"29 g/cm³ (geschätzt)", discovery:"1968/1970", config:"[Rn] 5f¹⁴ 6d³ 7s²", electronegativity:"—", oxidation:"+5", uses:["Forschung"], desc:"Dubnium ist nach der russischen Stadt Dubna benannt – dem Standort des Kernforschungszentrums JINR. Die Synthese war lange Gegenstand politischer Kontroversen zwischen US-amerikanischen und sowjetischen Wissenschaftlern.", facts:["Nach Dubna (Russland) benannt","US-sowjetischer Namensstreit über Jahre","Nur via schwere Ionenbeschleuniger herstellbar"] },
+  { n:106, sym:"Sg", name:"Seaborgium", latin:"Seaborgium", cat:"transition", period:7, group:6, mass:"[269]", melt:"—", boil:"—", density:"35 g/cm³ (geschätzt)", discovery:"1974", config:"[Rn] 5f¹⁴ 6d⁴ 7s²", electronegativity:"—", oxidation:"+6", uses:["Forschung"], desc:"Glenn T. Seaborg ist der einzige Mensch, nach dem ein Element benannt wurde, während er noch lebte. Er selbst synthetisierte 10 Transuranelemente. Seaborgium verhält sich chemisch erwartungsgemäß wie Wolfram.", facts:["Einziges Element benannt nach einer lebenden Person (Seaborg)","Seaborg selbst synthetisierte 10 Transurane","Verhält sich wie Wolfram in Verbindungen"] },
+  { n:107, sym:"Bh", name:"Bohrium", latin:"Bohrium", cat:"transition", period:7, group:7, mass:"[270]", melt:"—", boil:"—", density:"37 g/cm³ (geschätzt)", discovery:"1981 (GSI Darmstadt)", config:"[Rn] 5f¹⁴ 6d⁵ 7s²", electronegativity:"—", oxidation:"+7", uses:["Forschung"], desc:"Bohrium wurde am GSI Helmholtzzentrum für Schwerionenforschung in Darmstadt synthetisiert und nach Niels Bohr benannt. Es ist ein echter Triumph der deutschen Kernphysik.", facts:["Am GSI Darmstadt synthetisiert (1981)","Nach Niels Bohr benannt","Längstes Isotop: ²⁷⁰Bh mit ~61s Halbwertszeit"] },
+  { n:108, sym:"Hs", name:"Hassium", latin:"Hassium", cat:"transition", period:7, group:8, mass:"[277]", melt:"—", boil:"—", density:"41 g/cm³ (geschätzt)", discovery:"1984 (GSI Darmstadt)", config:"[Rn] 5f¹⁴ 6d⁶ 7s²", electronegativity:"—", oxidation:"+8", uses:["Forschung"], desc:"Hassium ist nach dem deutschen Bundesland Hessen benannt (lat. Hassia). Es wurde am GSI Darmstadt entdeckt. Hassiumtetroxid (HsO₄) ist flüchtig und wurde chemisch untersucht – trotz Herstellung von nur wenigen Atomen!", facts:["Nach Hessen (lat. Hassia) benannt","HsO₄: flüchtig und chemisch untersucht","Ebenfalls am GSI Darmstadt entdeckt"] },
+  { n:109, sym:"Mt", name:"Meitnerium", latin:"Meitnerium", cat:"transition", period:7, group:9, mass:"[278]", melt:"—", boil:"—", density:"37 g/cm³ (geschätzt)", discovery:"1982 (GSI Darmstadt)", config:"[Rn] 5f¹⁴ 6d⁷ 7s²", electronegativity:"—", oxidation:"+6, +3", uses:["Forschung"], desc:"Meitnerium ist nach Lise Meitner benannt – der Physikerin, die die Kernspaltung erklärte und dafür den Nobelpreis verdient hätte, ihn aber nie erhielt. Eine späte Ehre für eine der größten Physikerinnen der Geschichte.", facts:["Nach Lise Meitner benannt (die 'vergessene' Nobelpreisträgerin)","Lise Meitner erklärte die Kernspaltung (1938)","Am GSI Darmstadt 1982 entdeckt"] },
+  { n:110, sym:"Ds", name:"Darmstadtium", latin:"Darmstadtium", cat:"transition", period:7, group:10, mass:"[281]", melt:"—", boil:"—", density:"34 g/cm³ (geschätzt)", discovery:"1994 (GSI Darmstadt)", config:"[Rn] 5f¹⁴ 6d⁸ 7s²", electronegativity:"—", oxidation:"+6, +4, +2", uses:["Forschung"], desc:"Darmstadtium ist nach der deutschen Stadt Darmstadt benannt, wo das GSI Helmholtzzentrum für Schwerionenforschung steht, das es synthetisierte. Damit ist Darmstadt die einzige deutsche Stadt, nach der ein Element benannt ist.", facts:["Nach Darmstadt, Deutschland benannt","GSI Darmstadt: führend in der Entdeckung schwerer Elemente","Nur wenige Atome in seiner Geschichte produziert"] },
+  { n:111, sym:"Rg", name:"Roentgenium", latin:"Roentgenium", cat:"transition", period:7, group:11, mass:"[282]", melt:"—", boil:"—", density:"28 g/cm³ (geschätzt)", discovery:"1994 (GSI Darmstadt)", config:"[Rn] 5f¹⁴ 6d¹⁰ 7s¹", electronegativity:"—", oxidation:"+5, +3, +1", uses:["Forschung"], desc:"Roentgenium ist nach Wilhelm Conrad Röntgen benannt – dem Entdecker der Röntgenstrahlung und ersten Träger des Physik-Nobelpreises (1901). Es wurde ebenfalls am GSI Darmstadt synthetisiert.", facts:["Nach Wilhelm Conrad Röntgen benannt","Röntgen erhielt ersten Physik-Nobelpreis (1901)","Darmstadt hat damit 3 Elemente entdeckt"] },
+  { n:112, sym:"Cn", name:"Copernicium", latin:"Copernicium", cat:"transition", period:7, group:12, mass:"[285]", melt:"—", boil:"10°C (geschätzt)", density:"23 g/cm³ (geschätzt)", discovery:"1996 (GSI Darmstadt)", config:"[Rn] 5f¹⁴ 6d¹⁰ 7s²", electronegativity:"—", oxidation:"+2", uses:["Forschung"], desc:"Copernicium ist nach Nikolaus Kopernikus benannt. Theoretische Berechnungen sagen voraus, dass es bei Raumtemperatur gasförmig sein könnte – was es zu einem 'Edelgas-ähnlichen Metall' machen würde. Relativistische Effekte dominieren seine Chemie.", facts:["Möglicherweise gasförmig bei Raumtemperatur","Relativistische Quanteneffekte dominieren seine Chemie","Nach Nikolaus Kopernikus benannt"] },
+  { n:113, sym:"Nh", name:"Nihonium", latin:"Nihonium", cat:"post-transition", period:7, group:13, mass:"[286]", melt:"430°C (geschätzt)", boil:"1130°C (geschätzt)", density:"16 g/cm³ (geschätzt)", discovery:"2004 (RIKEN, Japan)", config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹", electronegativity:"—", oxidation:"+1, +3", uses:["Forschung"], desc:"Nihonium ist das erste Element, das in Asien offiziell entdeckt wurde. Es wurde am RIKEN-Institut in Japan synthetisiert und nach Japan (nihon = Japan auf Japanisch) benannt. Die Entdeckung war ein nationaler Stolz für Japan.", facts:["Erstes asiatisch entdecktes Element (RIKEN, Japan 2004)","'Nihon' = Japan auf Japanisch","Nationaler Stolz für Japan"] },
+  { n:114, sym:"Fl", name:"Flerovium", latin:"Flerovium", cat:"post-transition", period:7, group:14, mass:"[289]", melt:"—", boil:"−60°C (geschätzt)", density:"14 g/cm³ (geschätzt)", discovery:"1999 (Dubna, Russland)", config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²", electronegativity:"—", oxidation:"0, +2", uses:["Forschung"], desc:"Flerovium ist nach dem Flerov Laboratory in Dubna benannt, das nach dem Kernphysiker Georgi Flyorov benannt ist. Trotz seiner Position unter Blei könnte es sich wegen Relativitätseffekten wie ein Edelgas verhalten.", facts:["Verhält sich möglicherweise wie ein Edelgas","Nach Flerov Lab (Dubna) benannt","Nahe an der vorhergesagten 'Insel der Stabilität'"] },
+  { n:115, sym:"Mc", name:"Moscovium", latin:"Moscovium", cat:"post-transition", period:7, group:15, mass:"[290]", melt:"400°C (geschätzt)", boil:"1100°C (geschätzt)", density:"13.5 g/cm³ (geschätzt)", discovery:"2003 (Dubna/Livermore)", config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³", electronegativity:"—", oxidation:"+1, +3", uses:["Forschung"], desc:"Moscovium ist nach dem Moskauer Oblast benannt und wurde in Dubna (Russland) in Zusammenarbeit mit dem Lawrence Livermore National Laboratory (USA) synthetisiert. Es ist Teil der Region nahe der vorhergesagten 'Insel der Stabilität'.", facts:["Nach Oblast Moskau benannt","Russisch-amerikanische Zusammenarbeit","Nahe der 'Insel der Stabilität' (Theorie)"] },
+  { n:116, sym:"Lv", name:"Livermorium", latin:"Livermorium", cat:"post-transition", period:7, group:16, mass:"[293]", melt:"364–507°C (geschätzt)", boil:"762–862°C (geschätzt)", density:"12.9 g/cm³ (geschätzt)", discovery:"2000 (Dubna/Livermore)", config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴", electronegativity:"—", oxidation:"−2, +2, +4", uses:["Forschung"], desc:"Livermorium ist nach dem Lawrence Livermore National Laboratory in Livermore, Kalifornien benannt. Es wurde durch Beschuss von Curium-248 mit Calcium-48-Ionen hergestellt. Nur wenige Atome wurden je produziert.", facts:["Nach Lawrence Livermore National Lab benannt","Californium-Curium-Beschuss erzeugt Livermorium","Zerfällt innerhalb von Millisekunden"] },
+  { n:117, sym:"Ts", name:"Tennessin", latin:"Tennessine", cat:"halogen", period:7, group:17, mass:"[294]", melt:"400–500°C (geschätzt)", boil:"610°C (geschätzt)", density:"7.17 g/cm³ (geschätzt)", discovery:"2010 (Dubna/Oak Ridge)", config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵", electronegativity:"—", oxidation:"−1, +1, +3, +5", uses:["Forschung"], desc:"Tennessin wurde nach dem US-Bundesstaat Tennessee benannt – Standort des Oak Ridge National Laboratory, Vanderbilt University und University of Tennessee. Es ist das zweitschwere Element und wurde durch Beschuss von Berkelium-249 hergestellt.", facts:["Nach Tennessee, USA benannt","Hergestellt durch Beschuss von ²⁴⁹Bk mit ⁴⁸Ca","Halbwertszeit nur ~51 Millisekunden"] },
+  { n:118, sym:"Og", name:"Oganesson", latin:"Oganesson", cat:"noble", period:7, group:18, mass:"[294]", melt:"5±4°C (geschätzt)", boil:"177±10°C (geschätzt)", density:"7 g/cm³ (geschätzt)", discovery:"2002 (Dubna/Livermore)", config:"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶", electronegativity:"—", oxidation:"−1, 0, +2, +4, +6", uses:["Forschung"], desc:"Oganesson, das bisher schwerste bekannte Element, ist nach dem russischen Kernphysiker Yuri Oganessian benannt – dem einzigen lebenden Menschen außer Seaborg, nach dem ein Element benannt wurde. Obwohl ein Edelgas, sagen Berechnungen voraus, dass es fest und sehr reaktiv wäre.", facts:["Schwerste bekannte Element (118 Protonen)","Nach lebendem Physiker Yuri Oganessian benannt","Obwohl Edelgas: vorhergesagt reaktiv und fest"] }
+];
+
+// Grid positions: [period, group]
+const GRID_POSITIONS = {
+  1:[1,1], 2:[1,18],
+  3:[2,1], 4:[2,2], 5:[2,13], 6:[2,14], 7:[2,15], 8:[2,16], 9:[2,17], 10:[2,18],
+  11:[3,1], 12:[3,2], 13:[3,13], 14:[3,14], 15:[3,15], 16:[3,16], 17:[3,17], 18:[3,18],
+  19:[4,1], 20:[4,2], 21:[4,3], 22:[4,4], 23:[4,5], 24:[4,6], 25:[4,7], 26:[4,8], 27:[4,9], 28:[4,10], 29:[4,11], 30:[4,12], 31:[4,13], 32:[4,14], 33:[4,15], 34:[4,16], 35:[4,17], 36:[4,18],
+  37:[5,1], 38:[5,2], 39:[5,3], 40:[5,4], 41:[5,5], 42:[5,6], 43:[5,7], 44:[5,8], 45:[5,9], 46:[5,10], 47:[5,11], 48:[5,12], 49:[5,13], 50:[5,14], 51:[5,15], 52:[5,16], 53:[5,17], 54:[5,18],
+  55:[6,1], 56:[6,2], 57:[6,3], 72:[6,4], 73:[6,5], 74:[6,6], 75:[6,7], 76:[6,8], 77:[6,9], 78:[6,10], 79:[6,11], 80:[6,12], 81:[6,13], 82:[6,14], 83:[6,15], 84:[6,16], 85:[6,17], 86:[6,18],
+  87:[7,1], 88:[7,2], 89:[7,3], 104:[7,4], 105:[7,5], 106:[7,6], 107:[7,7], 108:[7,8], 109:[7,9], 110:[7,10], 111:[7,11], 112:[7,12], 113:[7,13], 114:[7,14], 115:[7,15], 116:[7,16], 117:[7,17], 118:[7,18],
+  // Lanthanides row 8
+  58:[8,4], 59:[8,5], 60:[8,6], 61:[8,7], 62:[8,8], 63:[8,9], 64:[8,10], 65:[8,11], 66:[8,12], 67:[8,13], 68:[8,14], 69:[8,15], 70:[8,16], 71:[8,17],
+  // Actinides row 9
+  90:[9,4], 91:[9,5], 92:[9,6], 93:[9,7], 94:[9,8], 95:[9,9], 96:[9,10], 97:[9,11], 98:[9,12], 99:[9,13], 100:[9,14], 101:[9,15], 102:[9,16], 103:[9,17]
+};
+
+const CAT_NAMES = {
+  alkali: 'Alkalimetall', alkaline: 'Erdalkalimetall', transition: 'Übergangsmetall',
+  'post-transition': 'Unedles Metall', metalloid: 'Halbmetall', nonmetal: 'Nichtmetall',
+  halogen: 'Halogen', noble: 'Edelgas', lanthanide: 'Lanthanoid', actinide: 'Actinoid', unknown: 'Unbekannt'
+};
+
+let activeCategory = null;
+
+function buildGrid() {
+  const grid = document.getElementById('periodicGrid');
+  // Label row (groups) - row 1
+  const cells = {};
+  
+  // Place elements
+  ELEMENTS.forEach(el => {
+    const pos = GRID_POSITIONS[el.n];
+    if (!pos) return;
+    const [row, col] = pos;
+    
+    const div = document.createElement('div');
+    div.className = `element cat-${el.cat}`;
+    div.style.gridRow = row;
+    div.style.gridColumn = col;
+    div.dataset.n = el.n;
+    div.dataset.cat = el.cat;
+    div.dataset.name = el.name.toLowerCase();
+    div.dataset.sym = el.sym.toLowerCase();
+    div.innerHTML = `
+      <div class="el-number">${el.n}</div>
+      <div class="el-symbol">${el.sym}</div>
+      <div class="el-name">${el.name}</div>
+      <div class="el-mass">${el.mass}</div>
+    `;
+    div.addEventListener('click', () => {
+      if (quizActive) handleQuizAnswer(el, div);
+      else openModal(el);
+    });
+    grid.appendChild(div);
+  });
+
+  // Lanthanide gap indicator
+  const lgap = document.createElement('div');
+  lgap.style.gridRow = 6; lgap.style.gridColumn = 3;
+  lgap.style.display = 'flex'; lgap.style.alignItems = 'center'; lgap.style.justifyContent = 'center';
+  lgap.style.fontSize = '0.5rem'; lgap.style.color = 'var(--lanthanide)';
+  lgap.style.fontFamily = 'Space Mono, monospace';
+  lgap.innerHTML = '57–71';
+  grid.appendChild(lgap);
+
+  const agap = document.createElement('div');
+  agap.style.gridRow = 7; agap.style.gridColumn = 3;
+  agap.style.display = 'flex'; agap.style.alignItems = 'center'; agap.style.justifyContent = 'center';
+  agap.style.fontSize = '0.5rem'; agap.style.color = 'var(--actinide)';
+  agap.style.fontFamily = 'Space Mono, monospace';
+  agap.innerHTML = '89–103';
+  grid.appendChild(agap);
+
+  // Spacer rows 8 and 9
+  const sp1 = document.createElement('div');
+  sp1.style.gridRow = '8'; sp1.style.gridColumn = '1/19'; sp1.style.height = '8px';
+  grid.appendChild(sp1);
+  // Fix: lanthanide La (57) row is 8, col 3
+  const la = document.createElement('div');
+  la.style.gridRow = 8; la.style.gridColumn = 2;
+  la.style.display = 'flex'; la.style.alignItems = 'center'; la.style.justifyContent = 'flex-end';
+  la.style.paddingRight = '4px'; la.style.fontSize = '0.55rem'; la.style.color = 'var(--text-dim)';
+  la.style.fontFamily = 'Space Mono';
+  la.innerHTML = 'Ln';
+  grid.appendChild(la);
+
+  const ac2 = document.createElement('div');
+  ac2.style.gridRow = 9; ac2.style.gridColumn = 2;
+  ac2.style.display = 'flex'; ac2.style.alignItems = 'center'; ac2.style.justifyContent = 'flex-end';
+  ac2.style.paddingRight = '4px'; ac2.style.fontSize = '0.55rem'; ac2.style.color = 'var(--text-dim)';
+  ac2.style.fontFamily = 'Space Mono';
+  ac2.innerHTML = 'An';
+  grid.appendChild(ac2);
+}
+
+function filterElements(query) {
+  const q = query.toLowerCase().trim();
+  const els = document.querySelectorAll('.element');
+  els.forEach(el => {
+    if (!q) {
+      el.classList.remove('highlighted', 'dimmed');
+      return;
+    }
+    const match = el.dataset.name.includes(q) || el.dataset.sym === q || el.dataset.n === q;
+    if (match) {
+      el.classList.add('highlighted');
+      el.classList.remove('dimmed');
+    } else {
+      el.classList.add('dimmed');
+      el.classList.remove('highlighted');
+    }
+  });
+  if (!q) activeCategory = null;
+}
+
+function filterByCategory(cat, btn) {
+  if (quizActive) return;
+  const btns = document.querySelectorAll('.legend-item');
+  if (activeCategory === cat) {
+    activeCategory = null;
+    btns.forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.element').forEach(el => el.classList.remove('highlighted','dimmed'));
+    document.getElementById('searchInput').value = '';
+    return;
+  }
+  activeCategory = cat;
+  btns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.element').forEach(el => {
+    if (el.dataset.cat === cat) {
+      el.classList.add('highlighted'); el.classList.remove('dimmed');
+    } else {
+      el.classList.add('dimmed'); el.classList.remove('highlighted');
+    }
+  });
+}
+
+function openModal(el) {
+  const catColor = `var(--${el.cat === 'post-transition' ? 'post-transition' : el.cat === 'nonmetal' ? 'nonmetal' : el.cat === 'noble' ? 'noble' : el.cat === 'halogen' ? 'halogen' : el.cat === 'metalloid' ? 'metalloid' : el.cat === 'transition' ? 'transition-metal' : el.cat === 'alkali' ? 'alkali' : el.cat === 'alkaline' ? 'alkaline' : el.cat === 'lanthanide' ? 'lanthanide' : el.cat === 'actinide' ? 'actinide' : 'unknown'})`;
+
+  document.getElementById('modalNumber').textContent = el.n;
+  document.getElementById('modalSymbol').textContent = el.sym;
+  document.getElementById('modalSymbol').style.color = catColor;
+  document.getElementById('modalName').textContent = el.name;
+  document.getElementById('modalLatin').textContent = el.latin;
+  document.getElementById('modalCatBadge').textContent = CAT_NAMES[el.cat] || el.cat;
+  document.getElementById('modalSymbolBlock').querySelector('.modal-symbol').style.color = catColor;
+
+  const body = document.getElementById('modalBody');
+  body.innerHTML = `
+    <div class="modal-desc">${el.desc}</div>
+    <div class="props-grid">
+      <div class="prop-item">
+        <div class="prop-label">Atommasse</div>
+        <div class="prop-value highlight">${el.mass} u</div>
+      </div>
+      <div class="prop-item">
+        <div class="prop-label">Elektroneg. (Pauling)</div>
+        <div class="prop-value">${el.electronegativity}</div>
+      </div>
+      <div class="prop-item">
+        <div class="prop-label">Schmelzpunkt</div>
+        <div class="prop-value">${el.melt}</div>
+      </div>
+      <div class="prop-item">
+        <div class="prop-label">Siedepunkt</div>
+        <div class="prop-value">${el.boil}</div>
+      </div>
+      <div class="prop-item">
+        <div class="prop-label">Dichte</div>
+        <div class="prop-value">${el.density}</div>
+      </div>
+      <div class="prop-item">
+        <div class="prop-label">Oxidationsstufen</div>
+        <div class="prop-value">${el.oxidation}</div>
+      </div>
+    </div>
+    <div class="prop-item" style="margin-bottom:16px">
+      <div class="prop-label">Elektronenkonfiguration</div>
+      <div class="electron-config">${el.config}</div>
+    </div>
+    <div class="section-title">Elektronenschalen</div>
+    ${buildShellDiagram(el.n, CAT_HEX[el.cat] || '#888')}
+    <div class="section-title">Entdeckung</div>
+    <div class="fact-item" style="margin-bottom:14px">✦ ${el.discovery}</div>
+    <div class="section-title">Wissenswertes</div>
+    <div class="fact-list">
+      ${el.facts.map(f => `<div class="fact-item">${f}</div>`).join('')}
+    </div>
+    <div class="section-title">Anwendungen</div>
+    <div class="uses-tags">
+      ${el.uses.map(u => `<span class="use-tag">${u}</span>`).join('')}
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ===== KATEGORIE-FARBEN FÜR SVG =====
+const CAT_HEX = {
+  alkali:'#ff6b6b', alkaline:'#ffa94d', transition:'#4dabf7',
+  'post-transition':'#74c0fc', metalloid:'#63e6be', nonmetal:'#a9e34b',
+  halogen:'#dee2e6', noble:'#e599f7', lanthanide:'#ffd43b',
+  actinide:'#ff8787', unknown:'#868e96'
+};
+
+// ===== ELEKTRONENSCHALEN =====
+function getElectronShells(n) {
+  const maxPerShell = [2, 8, 18, 32, 32, 18, 8];
+  const shells = [];
+  let remaining = n;
+  for (let i = 0; i < maxPerShell.length && remaining > 0; i++) {
+    const fill = Math.min(remaining, maxPerShell[i]);
+    shells.push(fill);
+    remaining -= fill;
+  }
+  return shells;
+}
+
+function buildShellDiagram(atomicNum, color) {
+  const shells = getElectronShells(atomicNum);
+  const numShells = shells.length;
+  const svgSize = 180;
+  const cx = svgSize / 2, cy = svgSize / 2;
+  const nucleusR = Math.max(11, 16 - numShells);
+  const maxR = svgSize / 2 - 6;
+  const spacing = (maxR - nucleusR) / numShells;
+
+  let svg = `<svg viewBox="0 0 ${svgSize} ${svgSize}" width="160" height="160" xmlns="http://www.w3.org/2000/svg">`;
+
+  shells.forEach((_, i) => {
+    const r = nucleusR + (i + 1) * spacing;
+    svg += `<circle cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="3 3"/>`;
+  });
+
+  svg += `<circle cx="${cx}" cy="${cy}" r="${nucleusR}" fill="${color}22" stroke="${color}99" stroke-width="1.5"/>`;
+  svg += `<text x="${cx}" y="${cy + 4}" text-anchor="middle" fill="${color}" font-size="${nucleusR > 13 ? 10 : 8}" font-family="Space Mono, monospace" font-weight="700">${atomicNum}</text>`;
+
+  shells.forEach((count, i) => {
+    const r = nucleusR + (i + 1) * spacing;
+    const eR = Math.max(2, Math.min(4, 12 / Math.sqrt(count + 1)));
+    for (let j = 0; j < count; j++) {
+      const angle = (j / count) * 2 * Math.PI - Math.PI / 2;
+      const ex = (cx + r * Math.cos(angle)).toFixed(1);
+      const ey = (cy + r * Math.sin(angle)).toFixed(1);
+      svg += `<circle cx="${ex}" cy="${ey}" r="${eR}" fill="${color}" opacity="0.85"/>`;
+    }
+  });
+
+  svg += '</svg>';
+
+  const shellNames = ['K','L','M','N','O','P','Q'];
+  const rows = shells.map((count, i) => {
+    const dots = Array(Math.min(count, 32)).fill(0).map(() =>
+      `<div class="shell-dot" style="background:${color}"></div>`).join('');
+    const extra = count > 32 ? `+${count-32}` : '';
+    return `<div class="shell-row">
+      <span class="shell-name">${shellNames[i]}</span>
+      <div class="shell-dots">${dots}</div>
+      ${extra ? `<span class="shell-count">${extra}</span>` : ''}
+      <span class="shell-count">${count}</span>
+    </div>`;
+  }).join('');
+
+  return `<div class="shell-diagram-wrap">${svg}<div class="shell-info">${rows}</div></div>`;
+}
+
+// ===== HEATMAP =====
+let activeHeatmap = null;
+
+function parseHeatmapVal(el, prop) {
+  const raw = el[prop];
+  if (!raw || raw === '—') return null;
+  if (prop === 'mass') {
+    const v = parseFloat(raw.replace(/[\[\]]/g, ''));
+    return isNaN(v) ? null : v;
+  }
+  if (prop === 'electronegativity') {
+    const v = parseFloat(raw);
+    return isNaN(v) ? null : v;
+  }
+  if (prop === 'melt' || prop === 'boil') {
+    const s = raw.replace(/\(.*?\)/g, '').replace(/°C/g, '').trim();
+    const part = s.split('±')[0].split('–')[0].split('…')[0].trim();
+    const v = parseFloat(part.replace('−', '-').replace(/[^\d.\-]/g, ''));
+    return isNaN(v) ? null : v;
+  }
+  if (prop === 'density') {
+    const v = parseFloat(raw.split(' ')[0].replace(',', '.'));
+    return isNaN(v) ? null : v;
+  }
+  return null;
+}
+
+function fmtHeatmapVal(val, prop) {
+  if (prop === 'melt' || prop === 'boil') return Math.round(val) + '°C';
+  if (prop === 'density') return val.toFixed(2);
+  if (prop === 'mass') return Math.round(val) + ' u';
+  return parseFloat(val.toFixed(2)).toString();
+}
+
+function toggleHeatmap(prop, btn) {
+  const btns = document.querySelectorAll('.heatmap-btn');
+  if (activeHeatmap === prop) {
+    activeHeatmap = null;
+    btns.forEach(b => b.classList.remove('active'));
+    clearHeatmap();
+    document.getElementById('heatmapScale').style.display = 'none';
+    return;
+  }
+  activeHeatmap = prop;
+  btns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyHeatmap(prop);
+}
+
+function applyHeatmap(prop) {
+  const mapped = ELEMENTS.map(el => ({ n: el.n, v: parseHeatmapVal(el, prop) }));
+  const nums = mapped.filter(x => x.v !== null).map(x => x.v);
+  if (!nums.length) return;
+  const min = Math.min(...nums), max = Math.max(...nums);
+  const range = max - min || 1;
+
+  document.getElementById('heatmapMin').textContent = fmtHeatmapVal(min, prop);
+  document.getElementById('heatmapMax').textContent = fmtHeatmapVal(max, prop);
+  document.getElementById('heatmapScale').style.display = 'flex';
+
+  document.querySelectorAll('.element').forEach(domEl => {
+    const n = parseInt(domEl.dataset.n);
+    const entry = mapped.find(x => x.n === n);
+    if (!entry || entry.v === null) {
+      domEl.style.background = '#14161e';
+      return;
+    }
+    const ratio = (entry.v - min) / range;
+    const hue = Math.round(220 - ratio * 220);
+    domEl.style.background = `hsl(${hue}, 70%, 22%)`;
+  });
+}
+
+function clearHeatmap() {
+  document.querySelectorAll('.element').forEach(el => { el.style.background = ''; });
+}
+
+// ===== QUIZ =====
+let quizActive = false, quizCorrect = 0, quizTotal = 0, quizCurrentEl = null, quizAnswered = false;
+
+function startQuiz() {
+  if (activeHeatmap) {
+    const activeBtn = document.querySelector('.heatmap-btn.active');
+    if (activeBtn) toggleHeatmap(activeHeatmap, activeBtn);
+  }
+  closeModal();
+  quizActive = true; quizCorrect = 0; quizTotal = 0; quizAnswered = false;
+  document.getElementById('quizBar').classList.add('active');
+  document.getElementById('periodicGrid').classList.add('quiz-mode');
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchInput').disabled = true;
+  document.querySelectorAll('.element').forEach(el => el.classList.remove('highlighted','dimmed'));
+  document.querySelectorAll('.legend-item').forEach(b => b.classList.remove('active'));
+  activeCategory = null;
+  updateQuizScore();
+  nextQuestion();
+}
+
+function stopQuiz() {
+  quizActive = false;
+  document.getElementById('quizBar').classList.remove('active');
+  document.getElementById('periodicGrid').classList.remove('quiz-mode');
+  document.getElementById('searchInput').disabled = false;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  document.querySelectorAll('.element').forEach(el => el.classList.remove('quiz-flash-ok','quiz-flash-err'));
+  quizCurrentEl = null;
+}
+
+function nextQuestion() {
+  quizAnswered = false;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  quizCurrentEl = ELEMENTS[Math.floor(Math.random() * ELEMENTS.length)];
+  document.getElementById('quizTarget').textContent = quizCurrentEl.name;
+}
+
+function handleQuizAnswer(el, domEl) {
+  if (!quizActive || quizAnswered) return;
+  quizAnswered = true;
+  quizTotal++;
+  const fb = document.getElementById('quizFeedback');
+  if (el.n === quizCurrentEl.n) {
+    quizCorrect++;
+    domEl.classList.add('quiz-flash-ok');
+    fb.textContent = '✓ Richtig!';
+    fb.className = 'quiz-feedback correct';
+    setTimeout(() => { domEl.classList.remove('quiz-flash-ok'); updateQuizScore(); nextQuestion(); }, 800);
+  } else {
+    domEl.classList.add('quiz-flash-err');
+    const correctDom = document.querySelector(`[data-n="${quizCurrentEl.n}"]`);
+    if (correctDom) correctDom.classList.add('quiz-flash-ok');
+    fb.textContent = `✗ Falsch – gesucht: ${quizCurrentEl.name} (${quizCurrentEl.sym})`;
+    fb.className = 'quiz-feedback wrong';
+    setTimeout(() => {
+      domEl.classList.remove('quiz-flash-err');
+      if (correctDom) correctDom.classList.remove('quiz-flash-ok');
+      updateQuizScore();
+      nextQuestion();
+    }, 1800);
+  }
+}
+
+function updateQuizScore() {
+  document.getElementById('quizCorrectCount').textContent = quizCorrect;
+  document.getElementById('quizTotalCount').textContent = quizTotal;
+}
+
+buildGrid();
+
+function applyScale() {
+  var root = document.getElementById('scale-root');
+  root.style.zoom = '';
+  var natural = root.scrollWidth;
+  var scale = Math.min(1, window.innerWidth / natural);
+  root.style.zoom = scale;
+  root.style.height = Math.ceil(window.innerHeight / scale) + 'px';
+}
+applyScale();
+window.addEventListener('resize', applyScale);
+</script>
+</body>
+</html>
