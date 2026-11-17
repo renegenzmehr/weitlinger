@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 5 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <span>Probearbeit 5</span></div>
+  <h1>Probearbeit 5 · Mathematik Klasse 9 <span class="niveau schwer">🔥 Niveau: Schwer</span></h1>
+  <p>Daten &amp; Statistik · Wahrscheinlichkeitsrechnung</p>
+</header>
+
+<main>
+<section>
+  <div class="card" style="border-left:5px solid #c53030">
+    <p style="margin:0"><strong>🔥 Achtung, diese Arbeit ist deutlich schwerer als eine normale Klassenarbeit.</strong>
+    Sie enthält Aufgaben zum Rückwärtsrechnen, mit drei Stufen und zum Begründen. Nimm sie dir erst vor, wenn die Probearbeiten 1–4 gut klappen.</p>
+  </div>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, Geodreieck &nbsp;·&nbsp; <strong>Gesamt:</strong> 45 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 1 – Detektivarbeit <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>Fünf natürliche Zahlen haben folgende Eigenschaften:<br>
+    Median = 6 &nbsp;·&nbsp; Modalwert = 8 (kommt als einzige Zahl mehrfach vor) &nbsp;·&nbsp; arithmetisches Mittel = 5 &nbsp;·&nbsp; Spannweite = 7</p>
+    <p>a) Bestimme die fünf Zahlen. Schreibe auf, wie du vorgegangen bist. <em>(5 P.)</em><br>
+    b) Verändere genau eine Zahl so, dass der Mittelwert 7 wird, der Median aber 6 bleibt. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Ordne die Zahlen: a ≤ b ≤ c ≤ d ≤ e.<br>
+      • Median = 6 → c = 6.<br>
+      • Modalwert 8 → die 8 kommt mindestens zweimal vor. Sie muss über dem Median stehen → d = e = 8.<br>
+      • Spannweite 7 → a = 8 − 7 = 1.<br>
+      • Mittelwert 5 → Summe = 5 · 5 = 25 → b = 25 − 1 − 6 − 8 − 8 = 2.<br>
+      Lösung: <strong>1, 2, 6, 8, 8</strong> (Probe: alle vier Bedingungen erfüllt ✓)</p>
+      <p>b) Neue Summe: 5 · 7 = 35, also muss die Summe um 10 steigen. Wird die größte Zahl um 10 erhöht, bleibt die Mitte unverändert:<br>
+      z. B. <strong>1, 2, 6, 8, 18</strong> → Mittelwert 35 : 5 = 7, Median 6 ✓<br>
+      <span style="color:var(--muted)">(Auch 1, 2, 6, 18, 8 → geordnet 1, 2, 6, 8, 18 ist richtig.)</span></p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 2 – Die Nachschreiber <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p>20 Schüler schrieben eine Arbeit, der Durchschnitt war 2,6. Danach schrieben 4 Schüler nach. Der Durchschnitt aller 24 Arbeiten beträgt jetzt 2,75.</p>
+    <p>a) Berechne die Durchschnittsnote der vier Nachschreiber. <em>(4 P.)</em><br>
+    b) Gib zwei verschiedene Möglichkeiten an, welche Noten die vier Nachschreiber gehabt haben könnten. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Notensumme vorher: 20 · 2,6 = 52.<br>
+      Notensumme nachher: 24 · 2,75 = 66.<br>
+      Die Nachschreiber haben zusammen 66 − 52 = 14 → Durchschnitt 14 : 4 = <strong>3,5</strong></p>
+      <p>b) Vier ganze Noten mit der Summe 14, z. B. <strong>3, 3, 4, 4</strong> oder <strong>2, 4, 4, 4</strong> oder <strong>1, 4, 4, 5</strong> oder <strong>2, 3, 4, 5</strong>.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 3 – Lückentabelle <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>In einer Arztpraxis wurde die Wartezeit von 40 Patienten erfasst. Leider ist die Tabelle unvollständig:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Wartezeit (min)</th><td>0–&lt;5</td><td>5–&lt;10</td><td>10–&lt;15</td><td>15–&lt;20</td><td>20–&lt;25</td></tr>
+      <tr><th>abs. H.</th><td>?</td><td>8</td><td>?</td><td>?</td><td>?</td></tr>
+      <tr><th>rel. H.</th><td>10 %</td><td>?</td><td>35 %</td><td>20 %</td><td>?</td></tr>
+    </table></div>
+    <p>a) Vervollständige die Tabelle. <em>(3 P.)</em><br>
+    b) Berechne die mittlere Wartezeit näherungsweise. <em>(3 P.)</em><br>
+    c) In welcher Klasse liegt der Median? Begründe. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th>Wartezeit (min)</th><td>0–&lt;5</td><td>5–&lt;10</td><td>10–&lt;15</td><td>15–&lt;20</td><td>20–&lt;25</td><th>Σ</th></tr>
+        <tr><th>abs. H.</th><td>4</td><td>8</td><td>14</td><td>8</td><td>6</td><td>40</td></tr>
+        <tr><th>rel. H.</th><td>10 %</td><td>20 %</td><td>35 %</td><td>20 %</td><td>15 %</td><td>100 %</td></tr>
+      </table></div>
+      <p>a) 1. Klasse: 10 % von 40 = 4<br>
+      2. Klasse: 8 : 40 = 20 %<br>
+      3. Klasse: 35 % von 40 = 14<br>
+      4. Klasse: 20 % von 40 = 8<br>
+      5. Klasse: Rest 40 − 4 − 8 − 14 − 8 = 6 → 6 : 40 = 15 %</p>
+      <p>b) (2,5·4 + 7,5·8 + 12,5·14 + 17,5·8 + 22,5·6) : 40 = (10 + 60 + 175 + 140 + 135) : 40 = 520 : 40 = <strong>13 min</strong></p>
+      <p>c) Der Median liegt zwischen dem 20. und 21. Wert. Bis 10 min sind es 4 + 8 = 12 Werte, bis 15 min 12 + 14 = 26 Werte. Also liegt der Median in der Klasse <strong>10 bis unter 15 min</strong>.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 4 – Augensumme <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Zwei Würfel werden gleichzeitig geworfen und die Augenzahlen addiert.</p>
+    <p>a) Wie viele mögliche Ergebnisse (Zahlenpaare) gibt es? <em>(1 P.)</em><br>
+    b) Berechne P(Augensumme 7) und P(Augensumme mindestens 10). <em>(2 P.)</em><br>
+    c) Berechne P(Pasch, also zwei gleiche Zahlen). <em>(1 P.)</em><br>
+    d) Berechne P(Augensumme ist eine Primzahl). <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 6 · 6 = <strong>36</strong> gleich wahrscheinliche Paare.</p>
+      <p>b) Summe 7: (1|6), (2|5), (3|4), (4|3), (5|2), (6|1) → 6/36 = <strong>1/6 ≈ 16,7 %</strong><br>
+      Summe ≥ 10: Summe 10 (3 Paare), 11 (2 Paare), 12 (1 Paar) → 6/36 = <strong>1/6 ≈ 16,7 %</strong></p>
+      <p>c) (1|1) bis (6|6) → 6/36 = <strong>1/6 ≈ 16,7 %</strong></p>
+      <p>d) Primzahlen als Summe: 2 (1 Paar), 3 (2), 5 (4), 7 (6), 11 (2) → 15/36 = <strong>5/12 ≈ 41,7 %</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 5 – Drei Kugeln (dreistufig, ohne Zurücklegen) <span style="color:var(--muted);font-weight:400">(9 P.)</span></h3>
+  <div class="card">
+    <p>In einer Urne liegen 4 rote (r) und 2 weiße (w) Kugeln. Es werden nacheinander <strong>drei</strong> Kugeln ohne Zurücklegen gezogen.</p>
+    <p>a) Berechne P(drei rote Kugeln). <em>(2 P.)</em><br>
+    b) Berechne P(genau eine weiße Kugel). <em>(3 P.)</em><br>
+    c) Berechne P(beide weißen Kugeln werden gezogen). <em>(2 P.)</em><br>
+    d) Berechne P(die <em>dritte</em> gezogene Kugel ist weiß). Was fällt dir auf? <em>(2 P.)</em></p>
+    <p style="color:var(--muted);margin:0">Tipp: Ein Baumdiagramm mit drei Stufen hilft. Nach zwei weißen Kugeln gibt es keine weiße mehr.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th>Pfad</th><td>rrr</td><td>rrw</td><td>rwr</td><td>rww</td><td>wrr</td><td>wrw</td><td>wwr</td></tr>
+        <tr><th>Rechnung</th><td>4/6·3/5·2/4</td><td>4/6·3/5·2/4</td><td>4/6·2/5·3/4</td><td>4/6·2/5·1/4</td><td>2/6·4/5·3/4</td><td>2/6·4/5·1/4</td><td>2/6·1/5·4/4</td></tr>
+        <tr><th>P</th><td>24/120</td><td>24/120</td><td>24/120</td><td>8/120</td><td>24/120</td><td>8/120</td><td>8/120</td></tr>
+      </table></div>
+      <p>a) P(rrr) = 4/6 · 3/5 · 2/4 = 24/120 = <strong>1/5 = 20 %</strong></p>
+      <p>b) Drei Pfade: rrw, rwr, wrr mit je 24/120 → 72/120 = <strong>3/5 = 60 %</strong></p>
+      <p>c) Drei Pfade: rww, wrw, wwr mit je 8/120 → 24/120 = <strong>1/5 = 20 %</strong><br>
+      Kontrolle: 1/5 + 3/5 + 1/5 = 1 ✓</p>
+      <p>d) Pfade mit w an dritter Stelle: rrw (24/120) + rww (8/120) + wrw (8/120) = 40/120 = <strong>1/3</strong><br>
+      Auffällig: Das ist genau so groß wie die Wahrscheinlichkeit, beim <em>ersten</em> Zug Weiß zu ziehen (2/6 = 1/3). Ohne weitere Informationen ist jede Position gleich wahrscheinlich.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 6 – Rückwärts gedacht <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p>Ein Glücksrad hat ein rotes Feld. Es wird zweimal gedreht. Die Wahrscheinlichkeit, <strong>zweimal Rot</strong> zu erhalten, beträgt 16 %.</p>
+    <p>a) Wie groß ist die Wahrscheinlichkeit für Rot bei einer Drehung? <em>(2 P.)</em><br>
+    b) Berechne P(genau einmal Rot) bei zwei Drehungen. <em>(2 P.)</em><br>
+    c) Wie oft muss man mindestens drehen, damit die Wahrscheinlichkeit für „mindestens einmal Rot“ über 90 % liegt? <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) p · p = 0,16 → p = √0,16 = <strong>0,4 = 40 %</strong></p>
+      <p>b) 0,4 · 0,6 + 0,6 · 0,4 = <strong>0,48 = 48 %</strong></p>
+      <p>c) P(mindestens einmal Rot) = 1 − P(nie Rot) = 1 − 0,6<sup>n</sup>. Ausprobieren:</p>
+      <div class="tablewrap"><table>
+        <tr><th>n</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+        <tr><th>0,6<sup>n</sup></th><td>0,6</td><td>0,36</td><td>0,216</td><td>0,1296</td><td>0,0778</td></tr>
+        <tr><th>1 − 0,6<sup>n</sup></th><td>40 %</td><td>64 %</td><td>78,4 %</td><td>87,04 %</td><td>92,22 %</td></tr>
+      </table></div>
+      <p>Bei 4 Drehungen sind es erst 87,04 %, bei 5 Drehungen 92,22 % → mindestens <strong>5 Drehungen</strong>.</p>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>45–42</td><td>41–37</td><td>36–31</td><td>30–23</td><td>22–12</td><td>11–0</td></tr>
+  </table></div>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+</body>
+</html>

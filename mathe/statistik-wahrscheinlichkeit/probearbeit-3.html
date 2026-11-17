@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 3 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <span>Probearbeit 3</span></div>
+  <h1>Probearbeit 3 · Mathematik Klasse 9 <span class="niveau">Niveau: Standard</span></h1>
+  <p>Daten &amp; Statistik · Wahrscheinlichkeitsrechnung</p>
+</header>
+
+<main>
+<section>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, Geodreieck &nbsp;·&nbsp; <strong>Gesamt:</strong> 44 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 1 – Schuhgrößen <span style="color:var(--muted);font-weight:400">(10 P.)</span></h3>
+  <div class="card">
+    <p>Die Schuhgrößen von 18 Schülern:<br><strong>38, 40, 42, 39, 41, 38, 43, 40, 40, 44, 39, 42, 40, 41, 37, 40, 42, 39</strong></p>
+    <p>a) Erstelle eine Häufigkeitstabelle mit absoluter und relativer Häufigkeit (in %, auf eine Nachkommastelle). <em>(4 P.)</em><br>
+    b) Bestimme Mittelwert, Median, Modalwert und Spannweite. <em>(4 P.)</em><br>
+    c) Ein Schuhgeschäft möchte wissen, welche Größe es am häufigsten bestellen soll. Welcher Kennwert hilft hier? Begründe. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th>Größe</th><td>37</td><td>38</td><td>39</td><td>40</td><td>41</td><td>42</td><td>43</td><td>44</td><th>Σ</th></tr>
+        <tr><th>abs. H.</th><td>1</td><td>2</td><td>3</td><td>5</td><td>2</td><td>3</td><td>1</td><td>1</td><td>18</td></tr>
+        <tr><th>rel. H.</th><td>5,6 %</td><td>11,1 %</td><td>16,7 %</td><td>27,8 %</td><td>11,1 %</td><td>16,7 %</td><td>5,6 %</td><td>5,6 %</td><td>≈ 100 %</td></tr>
+      </table></div>
+      <p>b) Mittelwert: 725 : 18 ≈ <strong>40,28</strong><br>
+      Median: n = 18 → 9. und 10. Wert, beide 40 → <strong>40</strong><br>
+      Modalwert: <strong>40</strong> (5-mal) &nbsp;·&nbsp; Spannweite: 44 − 37 = <strong>7</strong></p>
+      <p>c) Der <strong>Modalwert</strong>: Er gibt die Größe an, die am häufigsten vorkommt. Der Mittelwert (≈ 40,28) ist gar keine echte Schuhgröße.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 2 – Schulweg <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Fahrtzeiten zur Schule in Minuten:<br><strong>5 · 12 · 25 · 8 · 15 · 32 · 18 · 22 · 10 · 7 · 28 · 14 · 35 · 19 · 9 · 24 · 16 · 11 · 30 · 21</strong></p>
+    <p>a) Teile in die Klassen 0 bis unter 10 · 10 bis unter 20 · 20 bis unter 30 · 30 bis unter 40 ein und gib die absoluten Häufigkeiten an. <em>(3 P.)</em><br>
+    b) Berechne den Mittelwert näherungsweise mit den Klassenmitten. <em>(2 P.)</em><br>
+    c) Wie viel Prozent brauchen 20 Minuten oder länger? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th>Klasse (min)</th><td>0–&lt;10</td><td>10–&lt;20</td><td>20–&lt;30</td><td>30–&lt;40</td><th>Σ</th></tr>
+        <tr><th>Klassenmitte</th><td>5</td><td>15</td><td>25</td><td>35</td><td></td></tr>
+        <tr><th>abs. H.</th><td>4</td><td>8</td><td>5</td><td>3</td><td>20</td></tr>
+      </table></div>
+      <p>Achtung: 10 gehört in die 2. Klasse, 30 in die 4. Klasse.</p>
+      <p>b) (5·4 + 15·8 + 25·5 + 35·3) : 20 = 370 : 20 = <strong>18,5 min</strong><br>
+      c) (5 + 3) : 20 = <strong>40 %</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 3 – Zwei Klassen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>Klasse 9a (24 Schüler) hat in einer Arbeit den Durchschnitt 2,5. Klasse 9b (26 Schüler) hat den Durchschnitt 2,9.</p>
+    <p>a) Berechne die Durchschnittsnote aller 50 Schüler. <em>(3 P.)</em><br>
+    b) Warum darf man nicht einfach (2,5 + 2,9) : 2 rechnen? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Notensumme 9a: 24 · 2,5 = 60. Notensumme 9b: 26 · 2,9 = 75,4.<br>
+      (60 + 75,4) : 50 = 135,4 : 50 ≈ <strong>2,71</strong></p>
+      <p>b) Die Klassen sind <strong>unterschiedlich groß</strong>. Die größere Klasse 9b muss stärker zählen, deshalb liegt das Ergebnis etwas über 2,7.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 4 – Achterwürfel <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>Ein Würfel hat 8 gleich große Flächen mit den Zahlen 1 bis 8. Berechne die Wahrscheinlichkeit für:</p>
+    <p>a) eine Zahl größer als 5 &nbsp; b) eine ungerade Zahl &nbsp; c) eine Quadratzahl &nbsp; d) <em>nicht</em> die 8</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) {6; 7; 8} → <strong>3/8 = 37,5 %</strong><br>
+      b) {1; 3; 5; 7} → <strong>1/2 = 50 %</strong><br>
+      c) {1; 4} → 2/8 = <strong>1/4 = 25 %</strong><br>
+      d) 1 − 1/8 = <strong>7/8 = 87,5 %</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 5 – Glücksrad mit drei Farben <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>Ein Glücksrad ist zur Hälfte rot (R), zu einem Drittel blau (B) und zu einem Sechstel gelb (G). Es wird zweimal gedreht.</p>
+    <p>a) Zeichne ein vollständiges Baumdiagramm. <em>(2 P.)</em><br>
+    b) Berechne P(zweimal dieselbe Farbe). <em>(3 P.)</em><br>
+    c) Berechne P(kein Gelb). <em>(1 P.)</em><br>
+    d) Berechne P(mindestens einmal Gelb). <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <svg viewBox="0 0 440 300" style="max-width:540px" role="img" aria-label="Baumdiagramm Glücksrad drei Farben">
+        <g class="ln" fill="none"><line x1="20" y1="150" x2="140" y2="55"/><line x1="162" y1="55" x2="280" y2="25"/><line x1="162" y1="55" x2="280" y2="55"/><line x1="162" y1="55" x2="280" y2="85"/><line x1="20" y1="150" x2="140" y2="150"/><line x1="162" y1="150" x2="280" y2="120"/><line x1="162" y1="150" x2="280" y2="150"/><line x1="162" y1="150" x2="280" y2="180"/><line x1="20" y1="150" x2="140" y2="245"/><line x1="162" y1="245" x2="280" y2="215"/><line x1="162" y1="245" x2="280" y2="245"/><line x1="162" y1="245" x2="280" y2="275"/></g>
+        <g><text x="150" y="60" text-anchor="middle" font-weight="700" font-size="15" fill="var(--wk)">R</text><text x="60" y="96" font-size="12">1/2</text><text x="290" y="30" text-anchor="middle" font-weight="700" font-size="14" fill="var(--wk)">R</text><text x="215" y="36" font-size="11">1/2</text><text x="310" y="30" font-size="12">RR: 1/4</text><text x="290" y="60" text-anchor="middle" font-weight="700" font-size="14" fill="var(--accent)">B</text><text x="215" y="51" font-size="11">1/3</text><text x="310" y="60" font-size="12">RB: 1/6</text><text x="290" y="90" text-anchor="middle" font-weight="700" font-size="14" fill="var(--warn)">G</text><text x="215" y="83" font-size="11">1/6</text><text x="310" y="90" font-size="12">RG: 1/12</text><text x="150" y="155" text-anchor="middle" font-weight="700" font-size="15" fill="var(--accent)">B</text><text x="70" y="144" font-size="12">1/3</text><text x="290" y="125" text-anchor="middle" font-weight="700" font-size="14" fill="var(--wk)">R</text><text x="215" y="131" font-size="11">1/2</text><text x="310" y="125" font-size="12">BR: 1/6</text><text x="290" y="155" text-anchor="middle" font-weight="700" font-size="14" fill="var(--accent)">B</text><text x="215" y="146" font-size="11">1/3</text><text x="310" y="155" font-size="12">BB: 1/9</text><text x="290" y="185" text-anchor="middle" font-weight="700" font-size="14" fill="var(--warn)">G</text><text x="215" y="178" font-size="11">1/6</text><text x="310" y="185" font-size="12">BG: 1/18</text><text x="150" y="250" text-anchor="middle" font-weight="700" font-size="15" fill="var(--warn)">G</text><text x="60" y="213" font-size="12">1/6</text><text x="290" y="220" text-anchor="middle" font-weight="700" font-size="14" fill="var(--wk)">R</text><text x="215" y="226" font-size="11">1/2</text><text x="310" y="220" font-size="12">GR: 1/12</text><text x="290" y="250" text-anchor="middle" font-weight="700" font-size="14" fill="var(--accent)">B</text><text x="215" y="241" font-size="11">1/3</text><text x="310" y="250" font-size="12">GB: 1/18</text><text x="290" y="280" text-anchor="middle" font-weight="700" font-size="14" fill="var(--warn)">G</text><text x="215" y="273" font-size="11">1/6</text><text x="310" y="280" font-size="12">GG: 1/36</text></g>
+      </svg>
+      <p>b) RR + BB + GG = 1/4 + 1/9 + 1/36 = 9/36 + 4/36 + 1/36 = 14/36 = <strong>7/18 ≈ 38,9 %</strong><br>
+      c) Bei jeder Drehung „nicht gelb“ = 5/6 → 5/6 · 5/6 = <strong>25/36 ≈ 69,4 %</strong><br>
+      d) 1 − 25/36 = <strong>11/36 ≈ 30,6 %</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 6 – Klassensprecher (ohne Zurücklegen) <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>In einer Klasse sind 12 Mädchen (M) und 8 Jungen (J). Zwei Klassensprecher werden nacheinander ausgelost.</p>
+    <p>a) Zeichne ein Baumdiagramm. <em>(2 P.)</em><br>
+    b) Berechne P(zwei Mädchen). <em>(2 P.)</em><br>
+    c) Berechne P(ein Mädchen und ein Junge). <em>(2 P.)</em><br>
+    d) Berechne P(zwei Jungen) und überprüfe, ob alle Ergebnisse zusammen 1 ergeben. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm Klassensprecher">
+        <g class="ln" fill="none">
+          <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+          <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+          <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+        </g>
+        <g font-size="15" font-weight="700" text-anchor="middle">
+          <text x="160" y="70" fill="var(--wk)">M</text><text x="160" y="200" fill="var(--accent)">J</text>
+          <text x="300" y="35" fill="var(--wk)">M</text><text x="300" y="105" fill="var(--accent)">J</text>
+          <text x="300" y="165" fill="var(--wk)">M</text><text x="300" y="235" fill="var(--accent)">J</text>
+        </g>
+        <g font-size="12">
+          <text x="70" y="88">12/20</text><text x="70" y="180">8/20</text>
+          <text x="215" y="40">11/19</text><text x="215" y="98">8/19</text>
+          <text x="215" y="170">12/19</text><text x="215" y="228">7/19</text>
+          <text x="320" y="35">MM: 132/380</text><text x="320" y="105">MJ: 96/380</text>
+          <text x="320" y="165">JM: 96/380</text><text x="320" y="235">JJ: 56/380</text>
+        </g>
+      </svg>
+      <p>b) 12/20 · 11/19 = 132/380 = <strong>33/95 ≈ 34,7 %</strong><br>
+      c) 96/380 + 96/380 = 192/380 = <strong>48/95 ≈ 50,5 %</strong><br>
+      d) 8/20 · 7/19 = 56/380 = <strong>14/95 ≈ 14,7 %</strong><br>
+      Kontrolle: 132 + 192 + 56 = 380 → 380/380 = 1 ✓</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 7 – Lohnt sich das Spiel? <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>Auf dem Schulfest gibt es ein Würfelspiel: Man zahlt 1 € Einsatz und würfelt einmal. Bei einer 6 bekommt man 4 € ausgezahlt, sonst nichts.</p>
+    <p>a) Etwa wie oft fällt bei 600 Spielen eine 6? <em>(1 P.)</em><br>
+    b) Berechne, wie viel Geld die Spieler bei 600 Spielen ungefähr gewinnen oder verlieren. <em>(2 P.)</em><br>
+    c) Lohnt sich das Spiel für die Spieler? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 600 · 1/6 = <strong>etwa 100-mal</strong><br>
+      b) Einsatz: 600 · 1 € = 600 €. Auszahlung: 100 · 4 € = 400 €. → Die Spieler verlieren zusammen <strong>etwa 200 €</strong> (≈ 0,33 € pro Spiel).<br>
+      c) <strong>Nein</strong>, auf lange Sicht verliert man. Für die Schulkasse lohnt es sich.</p>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>44–41</td><td>40–36</td><td>35–30</td><td>29–22</td><td>21–11</td><td>10–0</td></tr>
+  </table></div>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+</body>
+</html>

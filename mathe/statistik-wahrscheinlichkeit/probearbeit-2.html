@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 2 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <span>Probearbeit 2</span></div>
+  <h1>Probearbeit 2 · Mathematik Klasse 9 <span class="niveau">Niveau: Standard</span></h1>
+  <p>Daten &amp; Statistik · Wahrscheinlichkeitsrechnung</p>
+</header>
+
+<main>
+<section>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, Geodreieck &nbsp;·&nbsp; <strong>Gesamt:</strong> 42 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 1 – Notenspiegel <span style="color:var(--muted);font-weight:400">(10 P.)</span></h3>
+  <div class="card">
+    <p>Der Notenspiegel einer Mathearbeit der Klasse 9b:</p>
+    <div class="tablewrap"><table><tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Anzahl</th><td>3</td><td>6</td><td>8</td><td>5</td><td>2</td><td>1</td></tr></table></div>
+    <p>a) Berechne die relativen Häufigkeiten in Prozent. <em>(3 P.)</em><br>
+    b) Berechne die Durchschnittsnote und bestimme den Median. <em>(4 P.)</em><br>
+    c) Berechne die Winkel für ein Kreisdiagramm. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><th>Σ</th></tr>
+        <tr><th>rel. H.</th><td>12 %</td><td>24 %</td><td>32 %</td><td>20 %</td><td>8 %</td><td>4 %</td><td>100 %</td></tr>
+        <tr><th>Winkel</th><td>43,2°</td><td>86,4°</td><td>115,2°</td><td>72°</td><td>28,8°</td><td>14,4°</td><td>360°</td></tr>
+      </table></div>
+      <p>b) Durchschnitt: (1·3 + 2·6 + 3·8 + 4·5 + 5·2 + 6·1) : 25 = 75 : 25 = <strong>3</strong><br>
+      Median: n = 25 ist ungerade → 13. Wert. Noten 1 und 2 belegen Platz 1–9, Note 3 belegt Platz 10–17 → Median = <strong>3</strong></p>
+      <p>c) Winkel = rel. Häufigkeit · 360°, z. B. Note 1: 3/25 · 360° = 43,2° (siehe Tabelle).</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 2 – Temperaturen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card">
+    <p>Von Montag bis Samstag wurden mittags diese Temperaturen gemessen: <strong>12 °C, 15 °C, 9 °C, 14 °C, 11 °C, 13 °C</strong>.</p>
+    <p>a) Wie warm muss es am Sonntag sein, damit der Wochendurchschnitt genau 13 °C beträgt? <em>(3 P.)</em><br>
+    b) Bestimme den Median der sieben Temperaturen. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Benötigte Summe: 7 · 13 = 91. Bisherige Summe: 74. → Sonntag: 91 − 74 = <strong>17 °C</strong></p>
+      <p>b) Geordnet: 9, 11, 12, <strong>13</strong>, 14, 15, 17 → Median = <strong>13 °C</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 3 – Freibad <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Das Liniendiagramm zeigt die Besucherzahlen eines Freibads.</p>
+    <svg viewBox="0 0 360 200" style="max-width:480px" role="img" aria-label="Liniendiagramm Freibadbesucher"><line class="ln" x1="40" y1="170" x2="340" y2="170"/><line class="ln" x1="40" y1="170" x2="40" y2="20"/><line x1="40" x2="340" y1="170" y2="170" stroke="var(--line)"/><text x="34" y="174" font-size="10" text-anchor="end">0</text><line x1="40" x2="340" y1="147" y2="147" stroke="var(--line)"/><text x="34" y="151" font-size="10" text-anchor="end">1000</text><line x1="40" x2="340" y1="123" y2="123" stroke="var(--line)"/><text x="34" y="127" font-size="10" text-anchor="end">2000</text><line x1="40" x2="340" y1="100" y2="100" stroke="var(--line)"/><text x="34" y="104" font-size="10" text-anchor="end">3000</text><line x1="40" x2="340" y1="77" y2="77" stroke="var(--line)"/><text x="34" y="81" font-size="10" text-anchor="end">4000</text><line x1="40" x2="340" y1="53" y2="53" stroke="var(--line)"/><text x="34" y="57" font-size="10" text-anchor="end">5000</text><line x1="40" x2="340" y1="30" y2="30" stroke="var(--line)"/><text x="34" y="34" font-size="10" text-anchor="end">6000</text><polyline points="60,142 125,88 190,49 255,58 320,128" fill="none" stroke="var(--stat)" stroke-width="2.5"/><circle cx="60" cy="142" r="4" fill="var(--stat)"/><text x="60" y="188" font-size="11" text-anchor="middle">Mai</text><circle cx="125" cy="88" r="4" fill="var(--stat)"/><text x="125" y="188" font-size="11" text-anchor="middle">Juni</text><circle cx="190" cy="49" r="4" fill="var(--stat)"/><text x="190" y="188" font-size="11" text-anchor="middle">Juli</text><circle cx="255" cy="58" r="4" fill="var(--stat)"/><text x="255" y="188" font-size="11" text-anchor="middle">Aug.</text><circle cx="320" cy="128" r="4" fill="var(--stat)"/><text x="320" y="188" font-size="11" text-anchor="middle">Sep.</text></svg>
+    <p>a) In welchem Monat kamen die meisten Besucher? <em>(1 P.)</em><br>
+    b) Um wie viel Prozent stieg die Besucherzahl von Mai bis Juni? <em>(2 P.)</em><br>
+    c) Berechne die durchschnittliche Besucherzahl pro Monat. <em>(2 P.)</em><br>
+    d) Welcher Anteil aller Besucher kam im Juli? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>Abgelesen: Mai 1200, Juni 3500, Juli 5200, Aug. 4800, Sep. 1800</p>
+      <p>a) <strong>Juli</strong> (5200 Besucher)<br>
+      b) Zunahme: 3500 − 1200 = 2300. 2300 : 1200 ≈ 1,9167 → <strong>≈ 191,7 %</strong><br>
+      c) 16500 : 5 = <strong>3300 Besucher</strong><br>
+      d) 5200 : 16500 ≈ <strong>31,5 %</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 4 – Buchstabenkarten <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>Die Buchstaben des Wortes <strong>M A T H E M A T I K</strong> stehen auf 10 Karten. Eine Karte wird zufällig gezogen. Berechne die Wahrscheinlichkeit für:</p>
+    <p>a) ein M &nbsp; b) einen Vokal &nbsp; c) ein K &nbsp; d) <em>kein</em> T</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 2 von 10 Karten → <strong>1/5 = 20 %</strong><br>
+      b) Vokale A, E, A, I → 4/10 = <strong>2/5 = 40 %</strong><br>
+      c) <strong>1/10 = 10 %</strong><br>
+      d) Gegenereignis „T“: 2/10 → 1 − 2/10 = <strong>4/5 = 80 %</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 5 – Zweimal würfeln (mit Zurücklegen) <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p>Ein Würfel wird zweimal geworfen. Es interessiert nur, ob eine 6 fällt (6) oder nicht (keine 6, kurz: n).</p>
+    <p>a) Zeichne ein Baumdiagramm. <em>(2 P.)</em><br>
+    b) Berechne P(zwei Sechsen). <em>(1 P.)</em><br>
+    c) Berechne P(genau eine Sechs). <em>(2 P.)</em><br>
+    d) Berechne P(mindestens eine Sechs). <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm zweimal würfeln">
+        <g class="ln" fill="none">
+          <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+          <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+          <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+        </g>
+        <g font-size="15" font-weight="700" text-anchor="middle">
+          <text x="160" y="70" fill="var(--wk)">6</text><text x="160" y="200" fill="var(--accent)">n</text>
+          <text x="300" y="35" fill="var(--wk)">6</text><text x="300" y="105" fill="var(--accent)">n</text>
+          <text x="300" y="165" fill="var(--wk)">6</text><text x="300" y="235" fill="var(--accent)">n</text>
+        </g>
+        <g font-size="12">
+          <text x="70" y="88">1/6</text><text x="70" y="180">5/6</text>
+          <text x="215" y="40">1/6</text><text x="215" y="98">5/6</text>
+          <text x="215" y="170">1/6</text><text x="215" y="228">5/6</text>
+          <text x="320" y="35">66: 1/36</text><text x="320" y="105">6n: 5/36</text>
+          <text x="320" y="165">n6: 5/36</text><text x="320" y="235">nn: 25/36</text>
+        </g>
+      </svg>
+      <p>b) 1/6 · 1/6 = <strong>1/36 ≈ 2,8 %</strong><br>
+      c) 5/36 + 5/36 = 10/36 = <strong>5/18 ≈ 27,8 %</strong><br>
+      d) Gegenereignis „keine Sechs“: 25/36 → 1 − 25/36 = <strong>11/36 ≈ 30,6 %</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 6 – Bonbontüte (ohne Zurücklegen) <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p>In einer Tüte sind 4 Erdbeerbonbons (E) und 6 Zitronenbonbons (Z). Paul nimmt ohne hinzusehen nacheinander zwei Bonbons heraus.</p>
+    <p>a) Zeichne ein Baumdiagramm. <em>(2 P.)</em><br>
+    b) Berechne P(zwei Erdbeerbonbons). <em>(1 P.)</em><br>
+    c) Berechne P(zwei verschiedene Sorten). <em>(2 P.)</em><br>
+    d) Berechne P(mindestens ein Zitronenbonbon). <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm Bonbons">
+        <g class="ln" fill="none">
+          <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+          <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+          <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+        </g>
+        <g font-size="15" font-weight="700" text-anchor="middle">
+          <text x="160" y="70" fill="var(--wk)">E</text><text x="160" y="200" fill="var(--accent)">Z</text>
+          <text x="300" y="35" fill="var(--wk)">E</text><text x="300" y="105" fill="var(--accent)">Z</text>
+          <text x="300" y="165" fill="var(--wk)">E</text><text x="300" y="235" fill="var(--accent)">Z</text>
+        </g>
+        <g font-size="12">
+          <text x="70" y="88">4/10</text><text x="70" y="180">6/10</text>
+          <text x="215" y="40">3/9</text><text x="215" y="98">6/9</text>
+          <text x="215" y="170">4/9</text><text x="215" y="228">5/9</text>
+          <text x="320" y="35">EE: 12/90</text><text x="320" y="105">EZ: 24/90</text>
+          <text x="320" y="165">ZE: 24/90</text><text x="320" y="235">ZZ: 30/90</text>
+        </g>
+      </svg>
+      <p>b) 4/10 · 3/9 = 12/90 = <strong>2/15 ≈ 13,3 %</strong><br>
+      c) 24/90 + 24/90 = 48/90 = <strong>8/15 ≈ 53,3 %</strong><br>
+      d) Gegenereignis „zwei Erdbeer“: 1 − 2/15 = <strong>13/15 ≈ 86,7 %</strong><br>
+      Kontrolle: 12/90 + 48/90 + 30/90 = 1 ✓</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 7 – Reißzwecke <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p>Eine Reißzwecke wurde 500-mal geworfen. 310-mal landete sie mit der Spitze nach oben.</p>
+    <p>a) Schätze die Wahrscheinlichkeit für „Spitze nach oben“. <em>(1 P.)</em><br>
+    b) Wie oft erwartest du „Spitze nach oben“ bei 2000 Würfen? <em>(1 P.)</em><br>
+    c) Warum kann man hier nicht mit der Laplace-Formel rechnen? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) relative Häufigkeit 310 : 500 = <strong>0,62 = 62 %</strong><br>
+      b) 2000 · 0,62 = <strong>etwa 1240-mal</strong><br>
+      c) Die beiden Ergebnisse (Spitze oben / Spitze schräg unten) sind <strong>nicht gleich wahrscheinlich</strong>. Laplace gilt nur bei gleich wahrscheinlichen Ergebnissen.</p>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>42–39</td><td>38–35</td><td>34–29</td><td>28–21</td><td>20–11</td><td>10–0</td></tr>
+  </table></div>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+</body>
+</html>

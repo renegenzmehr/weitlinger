@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 4 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <span>Probearbeit 4</span></div>
+  <h1>Probearbeit 4 · Mathematik Klasse 9 <span class="niveau">Niveau: Standard</span></h1>
+  <p>Daten &amp; Statistik · Wahrscheinlichkeitsrechnung</p>
+</header>
+
+<main>
+<section>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, Geodreieck &nbsp;·&nbsp; <strong>Gesamt:</strong> 42 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 1 – Schulweg-Umfrage <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>30 Schüler wurden gefragt, wie sie zur Schule kommen: Bus: 12, Fahrrad: 9, zu Fuß: 6, Auto: 3.</p>
+    <p>a) Berechne die relativen Häufigkeiten in Prozent. <em>(2 P.)</em><br>
+    b) Berechne die Winkel und zeichne ein Kreisdiagramm (Radius 4 cm). <em>(4 P.)</em><br>
+    c) Tom sagt: „Mehr als doppelt so viele fahren Bus wie zu Fuß gehen.“ Stimmt das? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th></th><td>Bus</td><td>Fahrrad</td><td>zu Fuß</td><td>Auto</td><th>Σ</th></tr>
+        <tr><th>rel. H.</th><td>40 %</td><td>30 %</td><td>20 %</td><td>10 %</td><td>100 %</td></tr>
+        <tr><th>Winkel</th><td>144°</td><td>108°</td><td>72°</td><td>36°</td><td>360°</td></tr>
+      </table></div>
+      <svg viewBox="0 0 400 220" style="max-width:460px" role="img" aria-label="Kreisdiagramm Schulweg"><path d="M110,110 L110.0,20.0 A90,90 0 0 1 162.9,182.8 Z" fill="var(--stat)" stroke="var(--card)" stroke-width="2"/><rect x="230" y="40" width="14" height="14" fill="var(--stat)"/><text x="252" y="52" font-size="13">Bus (144°)</text><path d="M110,110 L162.9,182.8 A90,90 0 0 1 24.4,137.8 Z" fill="var(--accent)" stroke="var(--card)" stroke-width="2"/><rect x="230" y="68" width="14" height="14" fill="var(--accent)"/><text x="252" y="80" font-size="13">Fahrrad (108°)</text><path d="M110,110 L24.4,137.8 A90,90 0 0 1 57.1,37.2 Z" fill="var(--wk)" stroke="var(--card)" stroke-width="2"/><rect x="230" y="96" width="14" height="14" fill="var(--wk)"/><text x="252" y="108" font-size="13">zu Fuß (72°)</text><path d="M110,110 L57.1,37.2 A90,90 0 0 1 110.0,20.0 Z" fill="var(--warn)" stroke="var(--card)" stroke-width="2"/><rect x="230" y="124" width="14" height="14" fill="var(--warn)"/><text x="252" y="136" font-size="13">Auto (36°)</text></svg>
+      <p>c) Bus 12, zu Fuß 6 → 12 = 2 · 6. Es sind <strong>genau</strong> doppelt so viele, nicht mehr als doppelt so viele. Die Aussage ist <strong>falsch</strong>.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 2 – Wer fährt zum Wettkampf? <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p>Beim Schlagballwurf erzielten zwei Schüler diese Weiten (in m):<br>
+    Max: <strong>32, 35, 28, 34, 36</strong> &nbsp;&nbsp; Ben: <strong>25, 44, 30, 41, 26</strong></p>
+    <p>a) Berechne für beide den Mittelwert. <em>(2 P.)</em><br>
+    b) Bestimme für beide den Median. <em>(2 P.)</em><br>
+    c) Bestimme für beide die Spannweite. <em>(1 P.)</em><br>
+    d) Nur einer darf zum Wettkampf. Wen würdest du schicken? Begründe mit den Kennwerten. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Max: 165 : 5 = <strong>33 m</strong> &nbsp; Ben: 166 : 5 = <strong>33,2 m</strong><br>
+      b) Max geordnet: 28, 32, 34, 35, 36 → <strong>34 m</strong> &nbsp; Ben geordnet: 25, 26, 30, 41, 44 → <strong>30 m</strong><br>
+      c) Max: 36 − 28 = <strong>8 m</strong> &nbsp; Ben: 44 − 25 = <strong>19 m</strong></p>
+      <p>d) Beide Antworten sind möglich, wenn sie begründet sind. Zum Beispiel: <strong>Max</strong>, weil er konstanter wirft (kleine Spannweite, höherer Median). Ben hat zwar den etwas höheren Mittelwert und den weitesten Wurf, schwankt aber stark.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>Aufgabe 3 – Busfahrer <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p>Eine Schule hat 480 Schüler. 35 % von ihnen kommen mit dem Bus.</p>
+    <p>a) Wie viele Schüler fahren Bus? <em>(1 P.)</em><br>
+    b) 42 der Busfahrer sind in Klasse 9. Welcher Anteil der Busfahrer ist das? <em>(1 P.)</em><br>
+    c) Wie viel Prozent aller Schüler sind Busfahrer aus Klasse 9? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 480 · 0,35 = <strong>168</strong><br>
+      b) 42 : 168 = <strong>25 %</strong><br>
+      c) 42 : 480 = <strong>8,75 %</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 4 – Sicher, unmöglich, möglich <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>Ein normaler Würfel wird einmal geworfen. Gib die Wahrscheinlichkeit an und entscheide, ob das Ereignis <em>sicher</em>, <em>unmöglich</em> oder <em>möglich</em> ist:</p>
+    <p>a) Augenzahl 7 &nbsp; b) Augenzahl kleiner als 7 &nbsp; c) Augenzahl 1 &nbsp; d) Augenzahl ist keine 1</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) P = <strong>0</strong> → unmöglich<br>
+      b) P = <strong>1</strong> → sicher<br>
+      c) P = <strong>1/6 ≈ 16,7 %</strong> → möglich<br>
+      d) P = 1 − 1/6 = <strong>5/6 ≈ 83,3 %</strong> → möglich (Gegenereignis von c)</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 5 – Zwei Ampeln <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>Auf Lisas Schulweg liegen zwei Ampeln, die unabhängig voneinander schalten. Ampel 1 zeigt mit 60 % Wahrscheinlichkeit Grün, Ampel 2 nur mit 40 %.</p>
+    <p>a) Zeichne ein Baumdiagramm mit G (grün) und R (rot). <em>(2 P.)</em><br>
+    b) Berechne P(beide grün). <em>(1 P.)</em><br>
+    c) Berechne P(genau eine Ampel grün). <em>(2 P.)</em><br>
+    d) Berechne P(mindestens eine Ampel rot). <em>(1 P.)</em><br>
+    e) An wie vielen von 250 Schultagen kann Lisa damit rechnen, dass beide Ampeln grün sind? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm zwei Ampeln">
+        <g class="ln" fill="none">
+          <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+          <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+          <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+        </g>
+        <g font-size="15" font-weight="700" text-anchor="middle">
+          <text x="160" y="70" fill="var(--wk)">G</text><text x="160" y="200" fill="var(--accent)">R</text>
+          <text x="300" y="35" fill="var(--wk)">G</text><text x="300" y="105" fill="var(--accent)">R</text>
+          <text x="300" y="165" fill="var(--wk)">G</text><text x="300" y="235" fill="var(--accent)">R</text>
+        </g>
+        <g font-size="12">
+          <text x="70" y="88">0,6</text><text x="70" y="180">0,4</text>
+          <text x="215" y="40">0,4</text><text x="215" y="98">0,6</text>
+          <text x="215" y="170">0,4</text><text x="215" y="228">0,6</text>
+          <text x="320" y="35">GG: 0,24</text><text x="320" y="105">GR: 0,36</text>
+          <text x="320" y="165">RG: 0,16</text><text x="320" y="235">RR: 0,24</text>
+        </g>
+      </svg>
+      <p>Achtung: Auf der 2. Stufe stehen die Werte von Ampel 2 (0,4 / 0,6), egal was Ampel 1 zeigte.</p>
+      <p>b) 0,6 · 0,4 = <strong>0,24 = 24 %</strong><br>
+      c) GR + RG = 0,36 + 0,16 = <strong>0,52 = 52 %</strong><br>
+      d) Gegenereignis „beide grün“: 1 − 0,24 = <strong>0,76 = 76 %</strong><br>
+      e) 250 · 0,24 = <strong>etwa 60 Tage</strong></p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 6 – Batterien (ohne Zurücklegen) <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>In einer Schublade liegen 6 Batterien, davon sind 2 leer (L) und 4 voll (V). Jan nimmt zufällig nacheinander zwei Batterien heraus.</p>
+    <p>a) Zeichne ein Baumdiagramm. <em>(2 P.)</em><br>
+    b) Berechne P(beide voll). <em>(2 P.)</em><br>
+    c) Berechne P(genau eine leer). <em>(2 P.)</em><br>
+    d) Berechne P(beide leer) und mache die Kontrolle. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm Batterien">
+        <g class="ln" fill="none">
+          <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+          <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+          <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+        </g>
+        <g font-size="15" font-weight="700" text-anchor="middle">
+          <text x="160" y="70" fill="var(--wk)">V</text><text x="160" y="200" fill="var(--accent)">L</text>
+          <text x="300" y="35" fill="var(--wk)">V</text><text x="300" y="105" fill="var(--accent)">L</text>
+          <text x="300" y="165" fill="var(--wk)">V</text><text x="300" y="235" fill="var(--accent)">L</text>
+        </g>
+        <g font-size="12">
+          <text x="70" y="88">4/6</text><text x="70" y="180">2/6</text>
+          <text x="215" y="40">3/5</text><text x="215" y="98">2/5</text>
+          <text x="215" y="170">4/5</text><text x="215" y="228">1/5</text>
+          <text x="320" y="35">VV: 12/30</text><text x="320" y="105">VL: 8/30</text>
+          <text x="320" y="165">LV: 8/30</text><text x="320" y="235">LL: 2/30</text>
+        </g>
+      </svg>
+      <p>b) 4/6 · 3/5 = 12/30 = <strong>2/5 = 40 %</strong><br>
+      c) 8/30 + 8/30 = 16/30 = <strong>8/15 ≈ 53,3 %</strong><br>
+      d) 2/6 · 1/5 = 2/30 = <strong>1/15 ≈ 6,7 %</strong><br>
+      Kontrolle: 12/30 + 16/30 + 2/30 = 1 ✓</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 7 – Stimmt das? <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) Lea sagt: „Beim Lotto ist die Zahlenreihe 1 – 2 – 3 – 4 – 5 – 6 viel unwahrscheinlicher als eine gemischte Reihe wie 4 – 17 – 23 – 31 – 38 – 45.“ <em>(2 P.)</em><br>
+    b) Eine Münze zeigte dreimal hintereinander „Kopf“. Wie groß ist die Wahrscheinlichkeit für „Zahl“ beim vierten Wurf? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) <strong>Falsch.</strong> Jede einzelne Zahlenreihe ist genau gleich wahrscheinlich. Die Reihe 1–6 wirkt nur „besonders“, weil sie ein Muster hat.<br>
+      b) <strong>1/2 = 50 %</strong>. Die Münze hat kein Gedächtnis, jeder Wurf ist unabhängig von den vorherigen.</p>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>42–39</td><td>38–35</td><td>34–29</td><td>28–21</td><td>20–11</td><td>10–0</td></tr>
+  </table></div>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+</body>
+</html>
