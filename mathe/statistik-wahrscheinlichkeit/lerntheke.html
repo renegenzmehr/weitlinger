@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lerntheke Stochastik · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+
+:root{--l1:#2f855a;--l1s:#e7f4ec;--l2:#2b6cb0;--l2s:#e6eff9;--l3:#6b46c1;--l3s:#f0eafb;--mk:#c05621;--mks:#fdf1e6}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--l1:#68c08f;--l1s:#1b2e24;--l2:#6ea8e6;--l2s:#1d2a3a;--l3:#b39af0;--l3s:#2a2340;--mk:#f0a35e;--mks:#33261a}}
+:root[data-theme="dark"]{--l1:#68c08f;--l1s:#1b2e24;--l2:#6ea8e6;--l2s:#1d2a3a;--l3:#b39af0;--l3s:#2a2340;--mk:#f0a35e;--mks:#33261a}
+.sub{color:var(--muted);font-style:italic;margin:-4px 0 10px;font-size:.92rem}
+.merk{border:2px solid var(--mk);background:var(--mks)}
+.merk>strong:first-child{display:block;margin-bottom:6px;color:var(--mk)}
+.lv{border-left:6px solid}
+.lv h4{margin:0 0 10px;font-size:1.05rem}
+.lv1{border-color:var(--l1);background:var(--l1s)} .lv1 h4{color:var(--l1)}
+.lv2{border-color:var(--l2);background:var(--l2s)} .lv2 h4{color:var(--l2)}
+.lv3{border-color:var(--l3);background:var(--l3s)} .lv3 h4{color:var(--l3)}
+.lv ol{margin:0;padding-left:1.4rem} .lv li{margin:4px 0}
+.stars1{color:var(--l1)} .stars2{color:var(--l2)} .stars3{color:var(--l3)}
+td.l,th.l{text-align:left}
+.radio-cell input{transform:scale(1.2)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <span>Lerntheke</span></div>
+  <h1>Lerntheke Stochastik</h1>
+  <p>Fit für die Klassenarbeit – Klasse 9 (HS und RS)</p>
+</header>
+
+<nav><div class="inner"><a href="#start">So geht’s</a><a href="#laufzettel">Laufzettel</a><a href="#selbst">Selbsteinschätzung</a><a href="#s1">Station 1</a><a href="#s2">Station 2</a><a href="#s3">Station 3</a><a href="#s4">Station 4</a><a href="#s5">Station 5</a><a href="#s6">Station 6</a><a href="#s7">Station 7</a><a href="#s8">Station 8</a><a href="#fitcheck">Fit-Check</a><a href="#lehrkraft">Lehrkraft</a></div></nav>
+
+<main>
+<section id="start">
+  <h2>So arbeitest du</h2>
+  <div class="card">
+    <p style="margin-top:0">Wähle eine Station → löse die Aufgaben im Heft → klappe die Lösung auf und kontrolliere → korrigiere Fehler mit einer anderen Farbe → hake im Laufzettel ab.<br>
+    Erst alle <strong>Pflicht</strong>stationen, dann die <strong>Wahl</strong>stationen.</p>
+    <div class="tablewrap"><table><tr><th>Karte</th><th>Niveau</th><th>Für wen?</th></tr><tr><td class="l"><span class="stars1">★</span> Basis</td><td>grundlegende Aufgaben, Schritt für Schritt</td><td>HS: Pflicht · RS: Einstieg, wenn unsicher</td></tr><tr><td class="l"><span class="stars2">★★</span> Erweitert</td><td>Niveau der RS-Klassenarbeit</td><td>RS: Pflicht · HS: Zusatz</td></tr><tr><td class="l"><span class="stars3">★★★</span> Profi</td><td>Begründen und Bewerten</td><td>RS: Wahl · HS: für Schnelle</td></tr></table></div>
+  </div>
+</section>
+
+<section id="laufzettel">
+  <h2>Laufzettel</h2>
+  <p>Hake ab, was du erledigt und kontrolliert hast. Die Haken werden in diesem Browser gespeichert.</p>
+  <h3>Hauptschule (HS)</h3>
+  <div class="tablewrap"><table><tr><th>Station</th><th class="l">Thema</th><th>Karte</th><th>Pflicht / Wahl</th><th>erledigt</th><th>kontrolliert ✓</th></tr><tr><td><a href="#s1">1</a></td><td class="l">Kopfrechnen ohne Taschenrechner</td><td class="stars1">★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="hs-e0" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k0" aria-label="kontrolliert"></td></tr><tr><td><a href="#s2">2</a></td><td class="l">Häufigkeitstabelle und Diagramme</td><td class="stars1">★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="hs-e1" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k1" aria-label="kontrolliert"></td></tr><tr><td><a href="#s3">3</a></td><td class="l">Rangliste, Median, Mittelwert</td><td class="stars1">★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="hs-e2" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k2" aria-label="kontrolliert"></td></tr><tr><td><a href="#s4">4</a></td><td class="l">Laplace-Experimente, Würfel, Urne</td><td class="stars1">★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="hs-e3" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k3" aria-label="kontrolliert"></td></tr><tr><td><a href="#s5">5</a></td><td class="l">Kartenspiel (32 Karten)</td><td class="stars1">★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="hs-e4" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k4" aria-label="kontrolliert"></td></tr><tr><td><a href="#s8">8</a></td><td class="l">Säulendiagramm lesen und ergänzen</td><td class="stars1">★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="hs-e5" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k5" aria-label="kontrolliert"></td></tr><tr><td><a href="#s2">2</a></td><td class="l">Häufigkeiten – Kreisdiagramm</td><td class="stars2">★★</td><td>Wahl</td><td><input type="checkbox" data-k="hs-e6" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k6" aria-label="kontrolliert"></td></tr><tr><td><a href="#s3">3</a></td><td class="l">Kenngrößen mit Kommazahlen</td><td class="stars2">★★</td><td>Wahl</td><td><input type="checkbox" data-k="hs-e7" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k7" aria-label="kontrolliert"></td></tr><tr><td><a href="#s4">4</a></td><td class="l">Glücksrad</td><td class="stars2">★★</td><td>Wahl</td><td><input type="checkbox" data-k="hs-e8" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k8" aria-label="kontrolliert"></td></tr><tr><td><a href="#s6">6</a></td><td class="l">Baumdiagramm: Münze zweimal werfen</td><td class="stars1">★</td><td>Wahl</td><td><input type="checkbox" data-k="hs-e9" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k9" aria-label="kontrolliert"></td></tr><tr><td><a href="#fitcheck">–</a></td><td class="l">Fit-Check HS (Tag 6)</td><td class=""></td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="hs-e10" aria-label="erledigt"></td><td><input type="checkbox" data-k="hs-k10" aria-label="kontrolliert"></td></tr></table></div>
+  <h3>Realschule (RS)</h3>
+  <div class="tablewrap"><table><tr><th>Station</th><th class="l">Thema</th><th>Karte</th><th>Pflicht / Wahl</th><th>erledigt</th><th>kontrolliert ✓</th></tr><tr><td><a href="#s1">1</a></td><td class="l">Kopfrechnen ohne Taschenrechner</td><td class="stars2">★★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="rs-e0" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k0" aria-label="kontrolliert"></td></tr><tr><td><a href="#s2">2</a></td><td class="l">Häufigkeitstabelle und Kreisdiagramm</td><td class="stars2">★★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="rs-e1" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k1" aria-label="kontrolliert"></td></tr><tr><td><a href="#s3">3</a></td><td class="l">Kenngrößen, Abweichung</td><td class="stars2">★★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="rs-e2" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k2" aria-label="kontrolliert"></td></tr><tr><td><a href="#s4">4</a></td><td class="l">Laplace-Experimente, Glücksrad</td><td class="stars2">★★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="rs-e3" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k3" aria-label="kontrolliert"></td></tr><tr><td><a href="#s5">5</a></td><td class="l">Kartenspiel: zwei Karten ohne Zurücklegen</td><td class="stars2">★★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="rs-e4" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k4" aria-label="kontrolliert"></td></tr><tr><td><a href="#s6">6</a></td><td class="l">Baumdiagramm mit Zurücklegen</td><td class="stars2">★★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="rs-e5" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k5" aria-label="kontrolliert"></td></tr><tr><td><a href="#s7">7</a></td><td class="l">Ohne Zurücklegen, „mindestens“</td><td class="stars2">★★</td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="rs-e6" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k6" aria-label="kontrolliert"></td></tr><tr><td><a href="#s2">2</a></td><td class="l">Rückwärts rechnen am Kreisdiagramm</td><td class="stars3">★★★</td><td>Wahl</td><td><input type="checkbox" data-k="rs-e7" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k7" aria-label="kontrolliert"></td></tr><tr><td><a href="#s3">3</a></td><td class="l">Ausreißer: Median oder Mittelwert?</td><td class="stars3">★★★</td><td>Wahl</td><td><input type="checkbox" data-k="rs-e8" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k8" aria-label="kontrolliert"></td></tr><tr><td><a href="#s4">4</a></td><td class="l">Urne konstruieren</td><td class="stars3">★★★</td><td>Wahl</td><td><input type="checkbox" data-k="rs-e9" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k9" aria-label="kontrolliert"></td></tr><tr><td><a href="#s7">7</a></td><td class="l">Aussagen bewerten</td><td class="stars3">★★★</td><td>Wahl</td><td><input type="checkbox" data-k="rs-e10" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k10" aria-label="kontrolliert"></td></tr><tr><td><a href="#s8">8</a></td><td class="l">Säulendiagramm lesen und ergänzen</td><td class="stars2">★★</td><td>Wahl</td><td><input type="checkbox" data-k="rs-e11" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k11" aria-label="kontrolliert"></td></tr><tr><td><a href="#fitcheck">–</a></td><td class="l">Fit-Check RS (Tag 6)</td><td class=""></td><td><strong>Pflicht</strong></td><td><input type="checkbox" data-k="rs-e12" aria-label="erledigt"></td><td><input type="checkbox" data-k="rs-k12" aria-label="kontrolliert"></td></tr></table></div>
+</section>
+
+<section id="selbst">
+  <h2>Selbsteinschätzung: Was kann ich schon?</h2>
+  <p>Kreuze am Anfang an und dann noch einmal vor der Klassenarbeit. Deine Auswahl wird in diesem Browser gespeichert.</p>
+  <div class="tablewrap"><table><tr><th class="l">Ich kann …</th><th>Station</th><th>für</th><th>sicher 😊</th><th>teilweise 😐</th><th>noch nicht 😟</th></tr><tr><td class="l">Ich kann ohne Taschenrechner Quadratzahlen, Prozente und Brüche/Dezimalzahlen rechnen.</td><td><a href="#s1">1</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se0" value="sicher" data-k="se0-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se0" value="teilweise" data-k="se0-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se0" value="noch nicht" data-k="se0-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann eine Häufigkeitstabelle (absolute H., relative H., Prozent) erstellen.</td><td><a href="#s2">2</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se1" value="sicher" data-k="se1-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se1" value="teilweise" data-k="se1-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se1" value="noch nicht" data-k="se1-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann ein Säulendiagramm zeichnen und Diagrammarten nennen.</td><td><a href="#s2">2</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se2" value="sicher" data-k="se2-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se2" value="teilweise" data-k="se2-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se2" value="noch nicht" data-k="se2-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann Winkel für ein Kreisdiagramm berechnen und es zeichnen.</td><td><a href="#s2">2</a></td><td>HS (Wahl) + RS</td><td class="radio-cell"><input type="radio" name="se3" value="sicher" data-k="se3-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se3" value="teilweise" data-k="se3-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se3" value="noch nicht" data-k="se3-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann eine Rangliste erstellen und Minimum, Maximum und Spannweite bestimmen.</td><td><a href="#s3">3</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se4" value="sicher" data-k="se4-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se4" value="teilweise" data-k="se4-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se4" value="noch nicht" data-k="se4-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann den Median und das arithmetische Mittel bestimmen.</td><td><a href="#s3">3</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se5" value="sicher" data-k="se5-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se5" value="teilweise" data-k="se5-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se5" value="noch nicht" data-k="se5-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann die absolute Abweichung vom Mittelwert berechnen.</td><td><a href="#s3">3</a></td><td>RS</td><td class="radio-cell"><input type="radio" name="se6" value="sicher" data-k="se6-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se6" value="teilweise" data-k="se6-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se6" value="noch nicht" data-k="se6-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann begründen, ob ein Zufallsexperiment ein Laplace-Experiment ist.</td><td><a href="#s4">4</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se7" value="sicher" data-k="se7-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se7" value="teilweise" data-k="se7-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se7" value="noch nicht" data-k="se7-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann Wahrscheinlichkeiten beim Würfel, bei der Urne und beim Glücksrad angeben.</td><td><a href="#s4">4</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se8" value="sicher" data-k="se8-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se8" value="teilweise" data-k="se8-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se8" value="noch nicht" data-k="se8-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann Wahrscheinlichkeiten beim Kartenspiel (32 Karten) berechnen.</td><td><a href="#s5">5</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se9" value="sicher" data-k="se9-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se9" value="teilweise" data-k="se9-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se9" value="noch nicht" data-k="se9-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann ein Baumdiagramm zeichnen und die Pfadregeln anwenden.</td><td><a href="#s6">6</a></td><td>RS (HS Wahl)</td><td class="radio-cell"><input type="radio" name="se10" value="sicher" data-k="se10-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se10" value="teilweise" data-k="se10-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se10" value="noch nicht" data-k="se10-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann Wahrscheinlichkeiten ohne Zurücklegen und für „mindestens einmal“ berechnen.</td><td><a href="#s7">7</a></td><td>RS</td><td class="radio-cell"><input type="radio" name="se11" value="sicher" data-k="se11-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se11" value="teilweise" data-k="se11-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se11" value="noch nicht" data-k="se11-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann Aussagen mit Wahrscheinlichkeiten bewerten und begründen.</td><td><a href="#s7">7</a></td><td>RS</td><td class="radio-cell"><input type="radio" name="se12" value="sicher" data-k="se12-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se12" value="teilweise" data-k="se12-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se12" value="noch nicht" data-k="se12-noch nicht" aria-label="noch nicht"></td></tr><tr><td class="l">Ich kann Werte aus einem Säulendiagramm ablesen, eine fehlende Säule ergänzen und den Durchschnitt berechnen.</td><td><a href="#s8">8</a></td><td>HS + RS</td><td class="radio-cell"><input type="radio" name="se13" value="sicher" data-k="se13-sicher" aria-label="sicher"></td><td class="radio-cell"><input type="radio" name="se13" value="teilweise" data-k="se13-teilweise" aria-label="teilweise"></td><td class="radio-cell"><input type="radio" name="se13" value="noch nicht" data-k="se13-noch nicht" aria-label="noch nicht"></td></tr></table></div>
+</section>
+
+<section id="s1">
+  <h2 class="stat">Station 1: Kopfrechnen ohne Taschenrechner</h2>
+  <p class="sub">Klassenarbeit: Teil A · Hilfsmittel: keine · Lege den Taschenrechner weg!</p>
+  <div class="card merk"><strong>💡 Merkkarte Station 1</strong>
+    <p style="margin:4px 0"><strong>Quadratzahlen:</strong> 11² = 121, 12² = 144, 13² = 169, 14² = 196, 15² = 225, 16² = 256, 20² = 400</p>
+    <p style="margin:4px 0"><strong>Brüche ↔ Dezimalzahlen:</strong> <span class="frac"><span>1</span><span>2</span></span> = 0,5 &nbsp; <span class="frac"><span>1</span><span>4</span></span> = 0,25 &nbsp; <span class="frac"><span>3</span><span>4</span></span> = 0,75 &nbsp; <span class="frac"><span>1</span><span>5</span></span> = 0,2 &nbsp; <span class="frac"><span>1</span><span>10</span></span> = 0,1</p>
+    <p style="margin:4px 0"><strong>Prozent:</strong> 10 % = Wert : 10 · 25 % = Wert : 4 · 50 % = Wert : 2 · 1 km = 1000 m</p>
+    <p style="margin:4px 0"><strong>Temperatur:</strong> Von −8 °C bis 0 °C sind es 8 Grad, von 0 °C bis 5 °C noch 5 Grad → zusammen 13 Grad.</p>
+    <p style="margin:4px 0"><strong>Antiproportional:</strong> doppelt so viele Pumpen/Maler → halb so viel Zeit.</p>
+    <p style="margin:4px 0"><strong>Durch 0 teilen</strong> ist nicht definiert (n. d.). · <strong>Kleinstes pythagoreisches Zahlentripel:</strong> 3; 4; 5 (3² + 4² = 5²)</p>
+  </div>
+  <div class="card lv lv1">
+    <h4>★ Basis · Kopfrechnen</h4>
+    <ol>
+      <li>Berechne: a) 6² &nbsp; b) 9² &nbsp; c) 12² &nbsp; d) 15²</li>
+      <li>Berechne: a) 2,5 + <span class="frac"><span>1</span><span>2</span></span> &nbsp; b) 1,5 − <span class="frac"><span>1</span><span>4</span></span> &nbsp; c) <span class="frac"><span>3</span><span>4</span></span> + 0,25</li>
+      <li>Berechne: a) 10 % von 250 € &nbsp; b) 25 % von 80 € &nbsp; c) 50 % von 64 kg</li>
+      <li>Rechne um: a) 0,75 km = ___ m &nbsp; b) 2,4 km = ___ m &nbsp; c) 350 m = ___ km</li>
+      <li>Wie viel Grad liegen zwischen a) −6 °C und 4 °C &nbsp; b) −3,5 °C und 7,5 °C?</li>
+      <li>3 Maler streichen einen Zaun in 8 Stunden. Wie lange brauchen 6 Maler?</li>
+      <li>Nenne alle Primzahlen bis 20. Welche ist die kleinste?</li>
+      <li>Das kleinste pythagoreische Zahlentripel ist 3; 4; 5. Verdopple es. Ist das wieder ein Tripel?</li></ol>
+    <details><summary>Lösung anzeigen</summary>
+      <ol><li>a) 36 &nbsp; b) 81 &nbsp; c) 144 &nbsp; d) 225</li><li>a) 3 &nbsp; b) 1,25 &nbsp; c) 1</li><li>a) 25 € &nbsp; b) 20 € &nbsp; c) 32 kg</li>
+      <li>a) 750 m &nbsp; b) 2 400 m &nbsp; c) 0,35 km</li><li>a) 10 Grad &nbsp; b) 11 Grad</li><li>doppelt so viele Maler → halbe Zeit: 4 Stunden</li>
+      <li>2, 3, 5, 7, 11, 13, 17, 19 – die kleinste Primzahl ist 2.</li><li>6; 8; 10 – ja, denn 6² + 8² = 36 + 64 = 100 = 10²</li></ol>
+    </details>
+  </div>
+  <div class="card lv lv2">
+    <h4>★★ Erweitert · Kopfrechnen</h4>
+    <ol>
+      <li>Berechne: a) 14² &nbsp; b) 1,2² &nbsp; c) √169</li>
+      <li>Berechne: a) <span class="frac"><span>1</span><span>2</span></span> + 2,75 &nbsp; b) 2<span class="frac"><span>1</span><span>4</span></span> − 0,75 &nbsp; c) <span class="frac"><span>3</span><span>4</span></span> · 8</li>
+      <li>Berechne: a) 15 % von 360 € &nbsp; b) 120 % von 50 € &nbsp; c) 5 % von 3 000 €</li>
+      <li>Im Dreieck ist α = 50° und β = 60°. Berechne γ. Wie groß ist die Innenwinkelsumme im Viereck?</li>
+      <li>Wie heißt eine Gerade, die einen Kreis a) zweimal &nbsp; b) genau einmal &nbsp; c) gar nicht schneidet?</li>
+      <li>4 Pumpen leeren ein Becken in 9 Stunden. Wie lange brauchen 6 Pumpen?</li>
+      <li>Berechne, wenn möglich: a) 17 : 0 &nbsp; b) 0 : 17</li>
+      <li>Nenne zwei Beispiele für ein Laplace-Experiment.</li></ol>
+    <details><summary>Lösung anzeigen</summary>
+      <ol><li>a) 196 &nbsp; b) 1,44 &nbsp; c) 13</li><li>a) 3,25 &nbsp; b) 1,5 &nbsp; c) 6</li><li>a) 54 € &nbsp; b) 60 € &nbsp; c) 150 €</li>
+      <li>γ = 180° − 50° − 60° = 70°; Innenwinkelsumme im Viereck: 360°</li><li>a) Sekante &nbsp; b) Tangente &nbsp; c) Passante</li>
+      <li>4 · 9 h = 36 h; 36 h : 6 = 6 Stunden</li><li>a) nicht definiert (durch 0 kann man nicht teilen) &nbsp; b) 0</li>
+      <li>z. B. Würfel werfen, Münze werfen, Glücksrad mit gleich großen Feldern drehen</li></ol>
+    </details>
+  </div>
+  <div class="card lv lv3">
+    <h4>★★★ Profi · Mittelwert-Aussagen (wie Teil A i)</h4>
+    <p>Das durchschnittliche Alter der Mitglieder eines Fußballvereins beträgt 30 Jahre. Welche Aussage ist <strong>sicher wahr</strong>, welche <strong>sicher falsch</strong>, welche <strong>kann sein</strong>? Begründe.</p>
+      <p>(1) Im Verein sind nur Erwachsene.<br>(2) Im Verein sind nicht nur Kinder.<br>(3) Alle Mitglieder sind genau 30 Jahre alt.<br>(4) Im Verein sind nur Rentner (über 65 Jahre).</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>(1) <strong>kann sein</strong> – es könnten auch Kinder dabei sein, wenn andere älter sind.<br>
+      (2) <strong>sicher wahr</strong> – wären alle Kinder (unter 18), läge der Durchschnitt unter 18 Jahren.<br>
+      (3) <strong>kann sein</strong> – auch 20 und 40 Jahre ergeben im Durchschnitt 30.<br>
+      (4) <strong>sicher falsch</strong> – dann müsste der Durchschnitt über 65 Jahre liegen.</p>
+    </details>
+  </div>
+</section>
+
+<section id="s2">
+  <h2 class="stat">Station 2: Häufigkeitstabelle und Diagramme</h2>
+  <p class="sub">Klassenarbeit: Teil B, Aufgabe 1 (HS und RS) und Wahlaufgabe 1 (HS) · Taschenrechner erlaubt</p>
+  <div class="card merk"><strong>💡 Merkkarte Station 2</strong>
+    <p style="margin:4px 0"><strong>absolute Häufigkeit</strong> = wie oft etwas vorkommt (Anzahl)</p>
+    <p style="margin:4px 0"><strong>relative Häufigkeit</strong> = absolute Häufigkeit : Gesamtzahl → als Dezimalzahl → mal 100 = <strong>Prozent</strong></p>
+    <p style="margin:4px 0"><strong>Winkel im Kreisdiagramm</strong> = relative Häufigkeit · 360° (Kontrolle: alle Winkel zusammen = 360°)</p>
+    <div class="tablewrap"><table><tr><th></th><th>absolute H.</th><th>relative H.</th><th>Dezimalzahl</th><th>Prozent</th><th>Winkel</th></tr><tr><td class="l">Beispiel: 6 von 24</td><td>6</td><td><span class="frac"><span>6</span><span>24</span></span></td><td>0,25</td><td>25 %</td><td>0,25 · 360° = 90°</td></tr></table></div>
+    <p style="margin:4px 0"><strong>Diagrammarten:</strong> Säulendiagramm, Balkendiagramm, Kreisdiagramm, Streifendiagramm</p>
+  </div>
+  <div class="card lv lv1">
+    <h4>★ Basis · Lieblingssport</h4>
+    <p>In einer Klasse wurde nach dem Lieblingssport gefragt: <strong>Fußball 10 · Basketball 5 · Schwimmen 4 · Tanzen 6</strong></p>
+      <p>a) Wie viele Schüler wurden insgesamt befragt?<br>b) Übertrage die Tabelle ins Heft und fülle sie aus.</p><div class="tablewrap"><table><tr><th>Sportart</th><th>absolute H.</th><th>relative H.</th><th>Dezimalzahl</th><th>Prozent</th></tr><tr><td class="l">Fußball</td><td>10</td><td></td><td></td><td></td></tr><tr><td class="l">Basketball</td><td></td><td></td><td></td><td></td></tr><tr><td class="l">Schwimmen</td><td></td><td></td><td></td><td></td></tr><tr><td class="l">Tanzen</td><td></td><td></td><td></td><td></td></tr><tr><td class="l"><strong>Summe</strong></td><td></td><td></td><td></td><td></td></tr></table></div>
+      <p>c) Zeichne ein Säulendiagramm (1 Schüler = 0,5 cm). Beschrifte die Achsen.<br>d) Nenne zwei weitere Diagrammarten, die sich eignen.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 10 + 5 + 4 + 6 = <strong>25 Schüler</strong></p><p>b)</p><div class="tablewrap"><table><tr><th>Sportart</th><th>absolute H.</th><th>relative H.</th><th>Dezimalzahl</th><th>Prozent</th></tr><tr><td class="l">Fußball</td><td>10</td><td><span class="frac"><span>10</span><span>25</span></span></td><td>0,40</td><td>40 %</td></tr><tr><td class="l">Basketball</td><td>5</td><td><span class="frac"><span>5</span><span>25</span></span></td><td>0,20</td><td>20 %</td></tr><tr><td class="l">Schwimmen</td><td>4</td><td><span class="frac"><span>4</span><span>25</span></span></td><td>0,16</td><td>16 %</td></tr><tr><td class="l">Tanzen</td><td>6</td><td><span class="frac"><span>6</span><span>25</span></span></td><td>0,24</td><td>24 %</td></tr><tr><td class="l"><strong>Summe</strong></td><td>25</td><td><span class="frac"><span>25</span><span>25</span></span></td><td>1</td><td>100 %</td></tr></table></div>
+      <p>c) Säulen: Fußball 5 cm, Basketball 2,5 cm, Schwimmen 2 cm, Tanzen 3 cm; Achsen beschriftet (Sportart / Anzahl).<br>
+      d) z. B. Kreisdiagramm, Balkendiagramm, Streifendiagramm</p>
+    </details>
+  </div>
+  <div class="card lv lv2">
+    <h4>★★ Erweitert · Bildschirmzeit</h4>
+    <p>80 Schüler wurden nach ihrer täglichen Handyzeit gefragt: <strong>unter 1 h: 8 · 1–2 h: 20 · 2–3 h: 28 · über 3 h: 24</strong></p>
+      <p>a) Erstelle eine Häufigkeitstabelle mit absoluter H., relativer H., Prozent und Winkel.<br>
+      b) Zeichne ein Kreisdiagramm (Radius 4 cm). Beschrifte es.<br>
+      c) Wie viel Prozent der Schüler sind mehr als 2 Stunden am Handy?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table><tr><th>Handyzeit</th><th>absolute H.</th><th>relative H.</th><th>Prozent</th><th>Winkel</th></tr><tr><td class="l">unter 1 h</td><td>8</td><td><span class="frac"><span>8</span><span>80</span></span> = 0,10</td><td>10 %</td><td>36°</td></tr><tr><td class="l">1–2 h</td><td>20</td><td><span class="frac"><span>20</span><span>80</span></span> = 0,25</td><td>25 %</td><td>90°</td></tr><tr><td class="l">2–3 h</td><td>28</td><td><span class="frac"><span>28</span><span>80</span></span> = 0,35</td><td>35 %</td><td>126°</td></tr><tr><td class="l">über 3 h</td><td>24</td><td><span class="frac"><span>24</span><span>80</span></span> = 0,30</td><td>30 %</td><td>108°</td></tr><tr><td class="l"><strong>Summe</strong></td><td>80</td><td>1</td><td>100 %</td><td>360°</td></tr></table></div><p>b) Kreisdiagramm mit den Winkeln 36°, 90°, 126°, 108°, beschriftet.<br>c) 35 % + 30 % = <strong>65 %</strong></p>
+    </details>
+  </div>
+  <div class="card lv lv3">
+    <h4>★★★ Profi · Rückwärts rechnen</h4>
+    <p>An einer Schule mit <strong>240 Schülern</strong> wurde nach dem Schulweg gefragt. Im Kreisdiagramm sind die Winkel:<br>
+      <strong>Bus 162° · Fahrrad 108° · zu Fuß 54° · Auto 36°</strong></p>
+      <p>a) Berechne, wie viele Schüler jeweils so zur Schule kommen.<br>b) Berechne die Anteile in Prozent.<br>c) Prüfe: Warum müssen die Winkel zusammen 360° ergeben?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Bus: <span class="frac"><span>162</span><span>360</span></span> · 240 = 108 &nbsp; Fahrrad: <span class="frac"><span>108</span><span>360</span></span> · 240 = 72 &nbsp; zu Fuß: <span class="frac"><span>54</span><span>360</span></span> · 240 = 36 &nbsp; Auto: <span class="frac"><span>36</span><span>360</span></span> · 240 = 24 &nbsp; (Summe 240 ✓)<br>
+      b) Bus 45 %, Fahrrad 30 %, zu Fuß 15 %, Auto 10 %<br>
+      c) Alle Schüler zusammen sind 100 % – das entspricht dem ganzen Kreis mit 360°.</p>
+    </details>
+  </div>
+</section>
+
+<section id="s3">
+  <h2 class="stat">Station 3: Rangliste, Spannweite, Median und Mittelwert</h2>
+  <p class="sub">Klassenarbeit: Teil B, Aufgabe 2 und 3 (HS und RS) · Taschenrechner erlaubt</p>
+  <div class="card merk"><strong>💡 Merkkarte Station 3</strong>
+    <p style="margin:4px 0"><strong>Rangliste:</strong> alle Werte der Größe nach ordnen (vom kleinsten zum größten).</p>
+    <p style="margin:4px 0"><strong>Minimum</strong> = kleinster Wert · <strong>Maximum</strong> = größter Wert · <strong>Spannweite</strong> = Maximum − Minimum</p>
+    <p style="margin:4px 0"><strong>Median (Zentralwert)</strong> = der Wert in der Mitte der Rangliste. Bei einer <strong>geraden</strong> Anzahl: die beiden mittleren Werte addieren und durch 2 teilen.</p>
+    <p style="margin:4px 0"><strong>Arithmetisches Mittel (Durchschnitt)</strong> x̄ = Summe aller Werte : Anzahl der Werte</p>
+    <p style="margin:4px 0"><strong>Absolute Abweichung</strong> = Abstand eines Wertes vom Mittelwert, z. B. größter Wert − x̄</p>
+  </div>
+  <div class="card lv lv1">
+    <h4>★ Basis · Schulweg und Punkte</h4>
+    <p>Schulweg in km: <strong>4 &nbsp;7 &nbsp;2 &nbsp;9 &nbsp;4 &nbsp;6 &nbsp;3 &nbsp;4 &nbsp;6</strong></p>
+      <p>a) Erstelle eine Rangliste.<br>b) Bestimme Minimum und Maximum.<br>c) Berechne die Spannweite.<br>d) Gib den Median an.<br>e) Berechne das arithmetische Mittel.</p>
+      <p>Punkte im Test: <strong>12 &nbsp;15 &nbsp;9 &nbsp;18 &nbsp;15 &nbsp;11</strong> (Achtung: gerade Anzahl!)<br>f) Bestimme den Median und das arithmetische Mittel.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 2 – 3 – 4 – 4 – 4 – 6 – 6 – 7 – 9<br>b) Minimum 2 km, Maximum 9 km<br>c) 9 km − 2 km = 7 km<br>d) 9 Werte → 5. Wert: Median = 4 km<br>e) 45 : 9 = 5 km<br>
+      f) Rangliste 9 – 11 – 12 – 15 – 15 – 18; Median = (12 + 15) : 2 = 13,5 Punkte; Mittel = 80 : 6 ≈ 13,33 Punkte</p>
+    </details>
+  </div>
+  <div class="card lv lv2">
+    <h4>★★ Erweitert · Taschengeld</h4>
+    <p>Monatliches Taschengeld in €: <strong>25 &nbsp;30 &nbsp;15 &nbsp;50 &nbsp;20 &nbsp;35 &nbsp;10 &nbsp;25 &nbsp;40 &nbsp;20 &nbsp;30 &nbsp;24</strong></p>
+      <p>a) Bestimme Minimum, Maximum und Spannweite.<br>b) Bestimme den Median.<br>c) Berechne das durchschnittliche Taschengeld x̄.<br>
+      d) Gib die absolute Abweichung des größten und des kleinsten Wertes vom Mittelwert an.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>Rangliste: 10 – 15 – 20 – 20 – 24 – 25 – 25 – 30 – 30 – 35 – 40 – 50</p>
+      <p>a) Minimum 10 €, Maximum 50 €, Spannweite 40 €<br>b) Median = (25 + 25) : 2 = 25 €<br>c) Summe 324 € : 12 = 27 €<br>
+      d) größter Wert: 50 € − 27 € = 23 €; kleinster Wert: 27 € − 10 € = 17 €</p>
+    </details>
+  </div>
+  <div class="card lv lv3">
+    <h4>★★★ Profi · Ausreißer</h4>
+    <p>Zu den Daten der ★★-Karte kommt ein Schüler dazu, der <strong>120 €</strong> Taschengeld bekommt.</p>
+      <p>a) Berechne den neuen Mittelwert und den neuen Median.<br>b) Welcher Wert beschreibt das „typische“ Taschengeld jetzt besser? Begründe.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Mittelwert: (324 € + 120 €) : 13 = 444 € : 13 ≈ 34,15 €; Median: 13 Werte → 7. Wert = 25 € (bleibt gleich)<br>
+      b) Der Median (25 €), denn der Ausreißer 120 € zieht den Mittelwert stark nach oben – 10 von 13 Schülern bekommen weniger als 34,15 €.</p>
+    </details>
+  </div>
+</section>
+
+<section id="s4">
+  <h2 class="stat">Station 4: Laplace-Experimente und Wahrscheinlichkeiten</h2>
+  <p class="sub">Klassenarbeit: Teil B, Aufgabe 4, 5 und 6 · Taschenrechner erlaubt</p>
+  <div class="card merk"><strong>💡 Merkkarte Station 4</strong>
+    <p style="margin:4px 0"><strong>Laplace-Experiment:</strong> Alle Ergebnisse haben die <strong>gleiche</strong> Wahrscheinlichkeit (Würfel, Münze, Glücksrad mit gleich großen Feldern in unterschiedlichen Farben/Zahlen).</p>
+    <p style="margin:4px 0"><strong>Kein</strong> Laplace-Experiment: Ergebnisse sind unterschiedlich wahrscheinlich (z. B. Farben auf dem Glücksrad unterschiedlich groß, Reißzwecke werfen).</p>
+    <p style="margin:4px 0">P(E) = Anzahl günstige Ergebnisse : Anzahl aller Ergebnisse &nbsp;&nbsp; Beispiel Würfel: P(gerade) = <span class="frac"><span>3</span><span>6</span></span> = <span class="frac"><span>1</span><span>2</span></span> = 50 %</p>
+    <p style="margin:4px 0"><strong>Unmöglich:</strong> P = 0 &nbsp; <strong>Sicher:</strong> P = 1 = 100 % &nbsp; <strong>Gegenereignis:</strong> P(nicht E) = 1 − P(E)</p>
+  </div>
+  <div class="card lv lv1">
+    <h4>★ Basis · Würfel und Urne</h4>
+    <ol>
+      <li>🎲 Ein Würfel wird einmal geworfen. Gib die Wahrscheinlichkeit als Bruch und in Prozent an:<br>
+      a) Augenzahl 4 &nbsp; b) ungerade Augenzahl &nbsp; c) Augenzahl größer als 4 &nbsp; d) Augenzahl 7 &nbsp; e) Augenzahl kleiner als 7</li>
+      <li><svg viewBox="40 5 200 135" style="max-width:240px" role="img" aria-label="Urne mit 3 roten, 5 blauen und 2 gelben Kugeln"><rect x="55" y="10" width="170" height="125" rx="14" fill="none" stroke="var(--muted)" stroke-width="2.5"/><circle cx="140" cy="30" r="13" fill="#1c7ed6" stroke="#222" stroke-width="1.2"/><circle cx="95" cy="70" r="13" fill="#1c7ed6" stroke="#222" stroke-width="1.2"/><circle cx="125" cy="70" r="13" fill="#1c7ed6" stroke="#222" stroke-width="1.2"/><circle cx="155" cy="70" r="13" fill="#e03131" stroke="#222" stroke-width="1.2"/><circle cx="185" cy="70" r="13" fill="#fcc419" stroke="#222" stroke-width="1.2"/><circle cx="80" cy="110" r="13" fill="#e03131" stroke="#222" stroke-width="1.2"/><circle cx="110" cy="110" r="13" fill="#1c7ed6" stroke="#222" stroke-width="1.2"/><circle cx="140" cy="110" r="13" fill="#1c7ed6" stroke="#222" stroke-width="1.2"/><circle cx="170" cy="110" r="13" fill="#e03131" stroke="#222" stroke-width="1.2"/><circle cx="200" cy="110" r="13" fill="#fcc419" stroke="#222" stroke-width="1.2"/></svg>In der Urne liegen 3 rote, 5 blaue und 2 gelbe Kugeln. Es wird eine Kugel gezogen.<br>
+      a) Berechne P(rot), P(blau) und P(gelb). &nbsp; b) Verändere die Urne so, dass alle Farben die gleiche Chance haben.</li>
+      <li>Laplace-Experiment – ja oder nein? Begründe: a) Münze werfen &nbsp; b) Reißzwecke werfen &nbsp; c) Würfel werfen</li></ol>
+    <details><summary>Lösung anzeigen</summary>
+      <ol><li>a) <span class="frac"><span>1</span><span>6</span></span> ≈ 16,7 % &nbsp; b) <span class="frac"><span>3</span><span>6</span></span> = 50 % &nbsp; c) <span class="frac"><span>2</span><span>6</span></span> ≈ 33,3 % &nbsp; d) 0 (unmöglich) &nbsp; e) <span class="frac"><span>6</span><span>6</span></span> = 1 = 100 % (sicher)</li>
+      <li>a) P(rot) = <span class="frac"><span>3</span><span>10</span></span> = 30 % &nbsp; P(blau) = <span class="frac"><span>5</span><span>10</span></span> = 50 % &nbsp; P(gelb) = <span class="frac"><span>2</span><span>10</span></span> = 20 %<br>
+      b) z. B. 2 rote und 3 gelbe Kugeln dazulegen (je 5) oder 3 blaue und 1 rote herausnehmen (je 2).</li>
+      <li>a) ja, Zahl und Wappen je <span class="frac"><span>1</span><span>2</span></span> &nbsp; b) nein, Spitze und Kopf sind unterschiedlich wahrscheinlich &nbsp; c) ja, jede Augenzahl <span class="frac"><span>1</span><span>6</span></span></li></ol>
+    </details>
+  </div>
+  <div class="card lv lv2">
+    <h4>★★ Erweitert · Glücksrad</h4>
+    <svg viewBox="0 0 200 200" style="max-width:200px" role="img" aria-label="Glücksrad mit 8 gleich großen Feldern: 3 rot, 2 blau, 2 grün, 1 gelb"><path d="M100,100 L100.0,15.0 A85,85 0 0 1 160.1,39.9 Z" fill="#e03131" stroke="#222" stroke-width="1.5"/><path d="M100,100 L160.1,39.9 A85,85 0 0 1 185.0,100.0 Z" fill="#1c7ed6" stroke="#222" stroke-width="1.5"/><path d="M100,100 L185.0,100.0 A85,85 0 0 1 160.1,160.1 Z" fill="#e03131" stroke="#222" stroke-width="1.5"/><path d="M100,100 L160.1,160.1 A85,85 0 0 1 100.0,185.0 Z" fill="#2f9e44" stroke="#222" stroke-width="1.5"/><path d="M100,100 L100.0,185.0 A85,85 0 0 1 39.9,160.1 Z" fill="#fcc419" stroke="#222" stroke-width="1.5"/><path d="M100,100 L39.9,160.1 A85,85 0 0 1 15.0,100.0 Z" fill="#1c7ed6" stroke="#222" stroke-width="1.5"/><path d="M100,100 L15.0,100.0 A85,85 0 0 1 39.9,39.9 Z" fill="#e03131" stroke="#222" stroke-width="1.5"/><path d="M100,100 L39.9,39.9 A85,85 0 0 1 100.0,15.0 Z" fill="#2f9e44" stroke="#222" stroke-width="1.5"/><circle cx="100" cy="100" r="5" fill="#222"/><path d="M100,2 L92,20 L108,20 Z" fill="var(--text)"/></svg>
+      <p>Das Glücksrad hat 8 gleich große Felder: 3 rote, 2 blaue, 2 grüne und 1 gelbes.</p>
+      <p>a) Ist das Drehen ein Laplace-Experiment, wenn man auf die <strong>Farbe</strong> achtet? Begründe.<br>
+      b) Berechne P(rot), P(gelb) und P(blau oder grün).<br>c) Berechne P(nicht rot) mit dem Gegenereignis.<br>
+      d) Wie muss man das Rad umfärben, damit Rot und Blau die gleiche Chance haben?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Nein – die Felder sind zwar gleich groß, aber die Farben kommen unterschiedlich oft vor.<br>
+      b) P(rot) = <span class="frac"><span>3</span><span>8</span></span> = 37,5 % &nbsp; P(gelb) = <span class="frac"><span>1</span><span>8</span></span> = 12,5 % &nbsp; P(blau oder grün) = <span class="frac"><span>4</span><span>8</span></span> = 50 %<br>
+      c) P(nicht rot) = 1 − <span class="frac"><span>3</span><span>8</span></span> = <span class="frac"><span>5</span><span>8</span></span> = 62,5 %<br>
+      d) z. B. ein rotes Feld gelb oder grün färben → 2 rote und 2 blaue Felder: P(rot) = P(blau) = <span class="frac"><span>2</span><span>8</span></span> = 25 %</p>
+    </details>
+  </div>
+  <div class="card lv lv3">
+    <h4>★★★ Profi · Urne konstruieren</h4>
+    <p>In einer Urne liegen <strong>20 Kugeln</strong>: rote, blaue und gelbe. Es gilt: P(rot) = 25 % und P(blau) = 40 %.</p>
+      <p>a) Wie viele Kugeln jeder Farbe liegen in der Urne?<br>b) Wie viele gelbe Kugeln muss man dazulegen, damit P(gelb) = 50 % ist?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) rot: 25 % von 20 = 5 &nbsp; blau: 40 % von 20 = 8 &nbsp; gelb: 20 − 5 − 8 = 7<br>
+      b) Gelb muss genauso oft vorkommen wie Rot und Blau zusammen (13): 13 − 7 = <strong>6 gelbe Kugeln</strong> dazulegen. Probe: <span class="frac"><span>13</span><span>26</span></span> = 50 %</p>
+    </details>
+  </div>
+</section>
+
+<section id="s5">
+  <h2 class="stat">Station 5: Das Kartenspiel mit 32 Karten</h2>
+  <p class="sub">Klassenarbeit: Teil B, Aufgabe 7 (HS: eine Karte, RS: zwei Karten ohne Zurücklegen)</p>
+  <div class="card merk"><strong>💡 Merkkarte Station 5</strong>
+    <p style="margin:4px 0">Ein Skatblatt hat <strong>32 Karten</strong>: 4 Farben (<strong>Kreuz ♣</strong> und <strong>Pik ♠</strong> sind schwarz, <strong>Herz <span style="color:#e03131">♥</span></strong> und <strong>Karo <span style="color:#e03131">♦</span></strong> sind rot) mit je 8 Karten: <strong>7, 8, 9, 10, Bube, Dame, König, Ass</strong>.</p>
+    <div class="tablewrap"><table><tr><th>Wie viele?</th><th>Anzahl</th><th>Wahrscheinlichkeit</th></tr><tr><td class="l">eine bestimmte Farbe (z. B. Herz)</td><td>8</td><td><span class="frac"><span>8</span><span>32</span></span> = 25 %</td></tr><tr><td class="l">ein bestimmter Wert (z. B. Dame)</td><td>4</td><td><span class="frac"><span>4</span><span>32</span></span> = 12,5 %</td></tr><tr><td class="l">rot oder schwarz</td><td>16</td><td><span class="frac"><span>16</span><span>32</span></span> = 50 %</td></tr><tr><td class="l">eine bestimmte Karte (z. B. Herz-Ass)</td><td>1</td><td><span class="frac"><span>1</span><span>32</span></span> ≈ 3,1 %</td></tr></table></div>
+    <p style="margin:4px 0"><strong>Zwei Karten ohne Zurücklegen:</strong> Beim 2. Zug sind nur noch 31 Karten im Stapel! P(zwei Damen) = <span class="frac"><span>4</span><span>32</span></span> · <span class="frac"><span>3</span><span>31</span></span></p>
+  </div>
+  <div class="card lv lv1">
+    <h4>★ Basis · Eine Karte ziehen</h4>
+    <p>Aus dem Skatblatt wird <strong>eine</strong> Karte zufällig gezogen. Berechne die Wahrscheinlichkeit als Bruch und in Prozent:</p>
+      <p>a) Es ist ein Ass.<br>b) Es ist eine Karo-Karte.<br>c) Es ist eine rote Karte.<br>d) Es ist der Herz-König.<br>e) Es ist ein Bild (Bube, Dame oder König).</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) <span class="frac"><span>4</span><span>32</span></span> = <span class="frac"><span>1</span><span>8</span></span> = 12,5 % &nbsp; b) <span class="frac"><span>8</span><span>32</span></span> = <span class="frac"><span>1</span><span>4</span></span> = 25 % &nbsp; c) <span class="frac"><span>16</span><span>32</span></span> = <span class="frac"><span>1</span><span>2</span></span> = 50 % &nbsp; d) <span class="frac"><span>1</span><span>32</span></span> ≈ 3,1 % &nbsp; e) <span class="frac"><span>12</span><span>32</span></span> = <span class="frac"><span>3</span><span>8</span></span> = 37,5 %</p>
+    </details>
+  </div>
+  <div class="card lv lv2">
+    <h4>★★ Erweitert · Zwei Karten ohne Zurücklegen</h4>
+    <p>Aus dem Skatblatt werden <strong>nacheinander zwei Karten ohne Zurücklegen</strong> gezogen. Berechne:</p>
+      <p>a) P(zwei Asse)<br>b) P(beide Karten sind Pik)<br>c) P(erst Herz, dann Karo)<br>d) P(einmal Herz und einmal Karo – Reihenfolge egal)</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) <span class="frac"><span>4</span><span>32</span></span> · <span class="frac"><span>3</span><span>31</span></span> = <span class="frac"><span>12</span><span>992</span></span> ≈ 1,2 %<br>b) <span class="frac"><span>8</span><span>32</span></span> · <span class="frac"><span>7</span><span>31</span></span> = <span class="frac"><span>56</span><span>992</span></span> ≈ 5,6 %<br>
+      c) <span class="frac"><span>8</span><span>32</span></span> · <span class="frac"><span>8</span><span>31</span></span> = <span class="frac"><span>64</span><span>992</span></span> ≈ 6,5 %<br>d) 2 · <span class="frac"><span>64</span><span>992</span></span> = <span class="frac"><span>128</span><span>992</span></span> ≈ 12,9 %</p>
+    </details>
+  </div>
+</section>
+
+<section id="s6">
+  <h2 class="stat">Station 6: Baumdiagramme mit Zurücklegen</h2>
+  <p class="sub">Klassenarbeit RS: Teil B, Aufgabe 6 · HS: Wahlstation</p>
+  <div class="card merk"><strong>💡 Merkkarte Station 6</strong>
+    <p style="margin:4px 0"><strong>Baumdiagramm:</strong> Jede Stufe ist ein Zug. An jeden Ast schreibt man die Wahrscheinlichkeit. Die Äste von einem Punkt ergeben zusammen 1.</p>
+    <p style="margin:4px 0"><strong>Mit Zurücklegen:</strong> Die Kugel kommt zurück → beim 2. Zug sind die Wahrscheinlichkeiten <strong>gleich</strong> wie beim 1. Zug.</p>
+    <p style="margin:4px 0"><strong>1. Pfadregel (Produktregel):</strong> Wahrscheinlichkeiten <strong>entlang eines Pfades multiplizieren</strong>. &nbsp; P(rot, rot) = <span class="frac"><span>2</span><span>10</span></span> · <span class="frac"><span>2</span><span>10</span></span> = <span class="frac"><span>4</span><span>100</span></span> = 4 %</p>
+    <p style="margin:4px 0"><strong>2. Pfadregel (Summenregel):</strong> Gehören mehrere Pfade zum Ereignis, ihre Wahrscheinlichkeiten <strong>addieren</strong>. Beispiel: P(einmal rot, einmal blau) = P(r, b) + P(b, r)</p>
+  </div>
+  <div class="card lv lv1">
+    <h4>★ Basis · Münze zweimal werfen</h4>
+    <p>🪙 Eine Münze wird zweimal geworfen (Z = Zahl, W = Wappen).</p>
+      <p>a) Zeichne das Baumdiagramm mit allen Wahrscheinlichkeiten.<br>b) Schreibe alle Ergebnisse auf (z. B. ZW).<br>c) Berechne P(zweimal Zahl).<br>d) Berechne P(einmal Zahl und einmal Wappen).</p>
+    <details><summary>Lösung anzeigen</summary>
+      <svg viewBox="0 0 440 260" style="max-width:500px" role="img" aria-label="Baumdiagramm">
+        <g class="ln" fill="none"><line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/></g>
+        <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" fill="var(--wk)">Z</text><text x="160" y="200" fill="var(--accent)">W</text>
+        <text x="300" y="35" fill="var(--wk)">Z</text><text x="300" y="105" fill="var(--accent)">W</text>
+        <text x="300" y="165" fill="var(--wk)">Z</text><text x="300" y="235" fill="var(--accent)">W</text></g>
+        <g font-size="12"><text x="70" y="88">1/2</text><text x="70" y="180">1/2</text>
+        <text x="215" y="40">1/2</text><text x="215" y="98">1/2</text><text x="215" y="170">1/2</text><text x="215" y="228">1/2</text>
+        <text x="320" y="35">ZZ: 1/4</text><text x="320" y="105">ZW: 1/4</text><text x="320" y="165">WZ: 1/4</text><text x="320" y="235">WW: 1/4</text></g></svg><p>a) 1. Wurf: Z <span class="frac"><span>1</span><span>2</span></span>, W <span class="frac"><span>1</span><span>2</span></span>; 2. Wurf an jedem Ast wieder Z <span class="frac"><span>1</span><span>2</span></span>, W <span class="frac"><span>1</span><span>2</span></span><br>b) ZZ, ZW, WZ, WW<br>
+      c) P(ZZ) = <span class="frac"><span>1</span><span>2</span></span> · <span class="frac"><span>1</span><span>2</span></span> = <span class="frac"><span>1</span><span>4</span></span> = 25 %<br>d) P(ZW) + P(WZ) = <span class="frac"><span>1</span><span>4</span></span> + <span class="frac"><span>1</span><span>4</span></span> = <span class="frac"><span>1</span><span>2</span></span> = 50 %</p>
+    </details>
+  </div>
+  <div class="card lv lv2">
+    <h4>★★ Erweitert · Urne mit Zurücklegen</h4>
+    <p>In einer Urne liegen <strong>4 rote, 1 gelbe und 5 grüne Kugeln</strong>. Es wird zweimal <strong>mit Zurücklegen</strong> gezogen.</p>
+      <p>a) Zeichne das vollständige Baumdiagramm mit den Wahrscheinlichkeiten.<br>b) Berechne die Wahrscheinlichkeit, zwei rote Kugeln zu ziehen.<br>
+      c) Berechne die Wahrscheinlichkeit, erst eine gelbe und dann eine grüne Kugel zu ziehen.<br>
+      d) Berechne die Wahrscheinlichkeit, einmal eine rote und einmal eine grüne Kugel zu ziehen.<br>
+      e) Berechne die Wahrscheinlichkeit, zwei Kugeln der gleichen Farbe zu ziehen.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Jede Stufe: rot <span class="frac"><span>4</span><span>10</span></span>, gelb <span class="frac"><span>1</span><span>10</span></span>, grün <span class="frac"><span>5</span><span>10</span></span> (9 Pfade)<br>
+      b) <span class="frac"><span>4</span><span>10</span></span> · <span class="frac"><span>4</span><span>10</span></span> = <span class="frac"><span>16</span><span>100</span></span> = 16 %<br>c) <span class="frac"><span>1</span><span>10</span></span> · <span class="frac"><span>5</span><span>10</span></span> = <span class="frac"><span>5</span><span>100</span></span> = 5 %<br>
+      d) <span class="frac"><span>4</span><span>10</span></span> · <span class="frac"><span>5</span><span>10</span></span> + <span class="frac"><span>5</span><span>10</span></span> · <span class="frac"><span>4</span><span>10</span></span> = <span class="frac"><span>40</span><span>100</span></span> = 40 %<br>
+      e) P(rot, rot) + P(gelb, gelb) + P(grün, grün) = <span class="frac"><span>16</span><span>100</span></span> + <span class="frac"><span>1</span><span>100</span></span> + <span class="frac"><span>25</span><span>100</span></span> = <span class="frac"><span>42</span><span>100</span></span> = 42 %</p>
+    </details>
+  </div>
+</section>
+
+<section id="s7">
+  <h2 class="stat">Station 7: Ohne Zurücklegen, „mindestens“ und Aussagen bewerten</h2>
+  <p class="sub">Klassenarbeit RS: Wahlpflichtteil (Aufgabe 8.1 und 8.2)</p>
+  <div class="card merk"><strong>💡 Merkkarte Station 7</strong>
+    <p style="margin:4px 0"><strong>Ohne Zurücklegen:</strong> Beim 2. Zug ist <strong>eine Kugel weniger</strong> in der Urne – Zähler und Nenner ändern sich!</p>
+    <p style="margin:4px 0">Beispiel: 3 rote von 10 Kugeln → P(rot, rot) = <span class="frac"><span>3</span><span>10</span></span> · <span class="frac"><span>2</span><span>9</span></span> = <span class="frac"><span>6</span><span>90</span></span></p>
+    <p style="margin:4px 0"><strong>„genau einer“:</strong> beide Pfade addieren, z. B. P(r, nr) + P(nr, r)</p>
+    <p style="margin:4px 0"><strong>„mindestens einer“:</strong> am schnellsten über das Gegenereignis: P(mindestens einer) = 1 − P(keiner)</p>
+    <p style="margin:4px 0"><strong>Aussage bewerten:</strong> 1. Wahrscheinlichkeit berechnen → 2. mit der Aussage vergleichen → 3. Antwortsatz: „Die Aussage ist richtig/falsch, weil …“</p>
+  </div>
+  <div class="card lv lv2">
+    <h4>★★ Erweitert · Lostrommel</h4>
+    <p>In einer Lostrommel sind <strong>12 Lose, davon 3 Gewinne</strong>. Lisa zieht <strong>2 Lose ohne Zurücklegen</strong>.</p>
+      <p>a) Zeichne das Baumdiagramm (G = Gewinn, N = Niete).<br>b) Berechne die Wahrscheinlichkeit für zwei Gewinne.<br>
+      c) Berechne die Wahrscheinlichkeit für genau einen Gewinn.<br>d) Berechne die Wahrscheinlichkeit für mindestens einen Gewinn.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 1. Zug: G <span class="frac"><span>3</span><span>12</span></span>, N <span class="frac"><span>9</span><span>12</span></span>; 2. Zug nach G: G <span class="frac"><span>2</span><span>11</span></span>, N <span class="frac"><span>9</span><span>11</span></span>; nach N: G <span class="frac"><span>3</span><span>11</span></span>, N <span class="frac"><span>8</span><span>11</span></span><br>
+      b) <span class="frac"><span>3</span><span>12</span></span> · <span class="frac"><span>2</span><span>11</span></span> = <span class="frac"><span>6</span><span>132</span></span> ≈ 4,5 %<br>
+      c) <span class="frac"><span>3</span><span>12</span></span> · <span class="frac"><span>9</span><span>11</span></span> + <span class="frac"><span>9</span><span>12</span></span> · <span class="frac"><span>3</span><span>11</span></span> = <span class="frac"><span>54</span><span>132</span></span> ≈ 40,9 %<br>
+      d) 1 − P(N, N) = 1 − <span class="frac"><span>9</span><span>12</span></span> · <span class="frac"><span>8</span><span>11</span></span> = 1 − <span class="frac"><span>72</span><span>132</span></span> = <span class="frac"><span>60</span><span>132</span></span> ≈ 45,5 %</p>
+    </details>
+  </div>
+  <div class="card lv lv3">
+    <h4>★★★ Profi · Aussagen bewerten</h4>
+    <ol>
+      <li>Lisas Bruder Tim sagt: „Die Chance, mit 2 Losen mindestens einen Gewinn zu ziehen, liegt über 50 %.“ Bewerte die Aussage und begründe.</li>
+      <li>In einer Schublade liegen 6 schwarze und 4 weiße Socken. Max zieht im Dunkeln 2 Socken ohne Zurücklegen.<br>
+      a) Berechne die Wahrscheinlichkeit, dass beide Socken die gleiche Farbe haben.<br>
+      b) Max behauptet: „In mehr als der Hälfte der Fälle bekomme ich ein passendes Paar.“ Bewerte die Aussage.</li></ol>
+    <details><summary>Lösung anzeigen</summary>
+      <ol><li><strong>Falsch:</strong> P(mindestens ein Gewinn) ≈ 45,5 % – das ist weniger als 50 %.</li>
+      <li>a) <span class="frac"><span>6</span><span>10</span></span> · <span class="frac"><span>5</span><span>9</span></span> + <span class="frac"><span>4</span><span>10</span></span> · <span class="frac"><span>3</span><span>9</span></span> = <span class="frac"><span>30</span><span>90</span></span> + <span class="frac"><span>12</span><span>90</span></span> = <span class="frac"><span>42</span><span>90</span></span> ≈ 46,7 %<br>
+      b) <strong>Falsch:</strong> Ein passendes Paar gibt es nur in ca. 46,7 % der Fälle, also in weniger als der Hälfte.</li></ol>
+    </details>
+  </div>
+</section>
+
+<section id="s8">
+  <h2 class="stat">Station 8: Säulendiagramme lesen und ergänzen</h2>
+  <p class="sub">Klassenarbeit HS: Wahlaufgabe 2 (Zusatzblatt) · RS: Wahlstation</p>
+  <div class="card merk"><strong>💡 Merkkarte Station 8</strong>
+    <p style="margin:4px 0"><strong>Fehlender Wert:</strong> Gesamtsumme − alle bekannten Werte</p>
+    <p style="margin:4px 0"><strong>Durchschnitt pro Monat/Tag:</strong> Gesamtsumme : Anzahl der Monate/Tage</p>
+    <p style="margin:4px 0"><strong>Säule ergänzen:</strong> Höhe an der senkrechten Achse ablesen, Säule genauso breit wie die anderen zeichnen.</p>
+  </div>
+  <div class="card lv lv1">
+    <h4>★ Basis · Eisverkauf</h4>
+    <svg viewBox="0 0 370 230" style="max-width:420px" role="img" aria-label="Säulendiagramm Eisverkauf Montag bis Donnerstag, Freitag fehlt"><line x1="50" x2="360" y1="200" y2="200" stroke="var(--line)" stroke-dasharray="3 3"/><text x="44" y="204" font-size="11" text-anchor="end">0</text><line x1="50" x2="360" y1="176" y2="176" stroke="var(--line)" stroke-dasharray="3 3"/><text x="44" y="180" font-size="11" text-anchor="end">25</text><line x1="50" x2="360" y1="151" y2="151" stroke="var(--line)" stroke-dasharray="3 3"/><text x="44" y="155" font-size="11" text-anchor="end">50</text><line x1="50" x2="360" y1="127" y2="127" stroke="var(--line)" stroke-dasharray="3 3"/><text x="44" y="131" font-size="11" text-anchor="end">75</text><line x1="50" x2="360" y1="103" y2="103" stroke="var(--line)" stroke-dasharray="3 3"/><text x="44" y="107" font-size="11" text-anchor="end">100</text><line x1="50" x2="360" y1="79" y2="79" stroke="var(--line)" stroke-dasharray="3 3"/><text x="44" y="83" font-size="11" text-anchor="end">125</text><line x1="50" x2="360" y1="54" y2="54" stroke="var(--line)" stroke-dasharray="3 3"/><text x="44" y="58" font-size="11" text-anchor="end">150</text><line x1="50" x2="360" y1="30" y2="30" stroke="var(--line)" stroke-dasharray="3 3"/><text x="44" y="34" font-size="11" text-anchor="end">175</text><line class="ln" x1="50" y1="200" x2="360" y2="200"/><line class="ln" x1="50" y1="200" x2="50" y2="25"/><rect x="70" y="113" width="40" height="87" fill="#5f7d8e"/><text x="90" y="108" font-size="12" font-weight="700" text-anchor="middle">90</text><text x="90" y="218" font-size="12" text-anchor="middle">Mo</text><rect x="130" y="83" width="40" height="117" fill="#5f7d8e"/><text x="150" y="78" font-size="12" font-weight="700" text-anchor="middle">120</text><text x="150" y="218" font-size="12" text-anchor="middle">Di</text><rect x="190" y="54" width="40" height="146" fill="#5f7d8e"/><text x="210" y="49" font-size="12" font-weight="700" text-anchor="middle">150</text><text x="210" y="218" font-size="12" text-anchor="middle">Mi</text><rect x="250" y="98" width="40" height="102" fill="#5f7d8e"/><text x="270" y="93" font-size="12" font-weight="700" text-anchor="middle">105</text><text x="270" y="218" font-size="12" text-anchor="middle">Do</text><text x="330" y="218" font-size="12" text-anchor="middle">Fr</text><text x="14" y="115" font-size="11" text-anchor="middle" transform="rotate(-90 14 115)">verkaufte Kugeln Eis</text></svg>
+      <p>Eine Eisdiele hat von Montag bis Freitag insgesamt <strong>600 Kugeln Eis</strong> verkauft.</p>
+      <p>a) Lies die Verkaufszahlen von Montag bis Donnerstag ab.<br>b) Berechne, wie viele Kugeln am Freitag verkauft wurden.<br>
+      c) Zeichne die Säule für Freitag (Skizze im Heft).<br>d) Berechne, wie viele Kugeln durchschnittlich pro Tag verkauft wurden.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Mo 90, Di 120, Mi 150, Do 105<br>b) 600 − 90 − 120 − 150 − 105 = <strong>135 Kugeln</strong><br>
+      c) Säule bis 135 (zwischen 125 und 150)<br>d) 600 : 5 = <strong>120 Kugeln pro Tag</strong></p>
+    </details>
+  </div>
+  <div class="card lv lv2">
+    <h4>★★ Erweitert · Eisverkauf – Samstag kommt dazu</h4>
+    <p>Am Samstag verkauft die Eisdiele <strong>doppelt so viele</strong> Kugeln wie am Montag.</p>
+      <p>a) Wie viele Kugeln wurden am Samstag verkauft?<br>b) Berechne den neuen Durchschnitt für Montag bis Samstag.<br>
+      c) An welchen Tagen lag der Verkauf über dem neuen Durchschnitt?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 2 · 90 = <strong>180 Kugeln</strong><br>b) (600 + 180) : 6 = 780 : 6 = <strong>130 Kugeln</strong><br>
+      c) über 130: Mittwoch (150), Freitag (135) und Samstag (180)</p>
+    </details>
+  </div>
+</section>
+
+
+<section id="fitcheck">
+  <h2>Fit-Check</h2>
+  <p>Am Ende der Lerntheke testest du dich selbst. Löse die Aufgaben im Heft, kontrolliere danach mit der Lösung und notiere, was du noch üben musst.</p>
+
+  <h3>Fit-Check Hauptschule (HS)</h3>
+  <div class="card lv lv1">
+    <p class="sub" style="margin:0 0 8px">Bearbeitungszeit: ca. 20 Minuten · Aufgabe 1 ohne Taschenrechner!</p>
+    <ol>
+      <li>a) 8² = &nbsp; b) 2,25 − <span class="frac"><span>1</span><span>2</span></span> = &nbsp; c) 20 % von 150 € = &nbsp; d) 0,62 km = ___ m &nbsp; e) Wie viel Grad liegen zwischen −4 °C und 9 °C?</li>
+      <li>40 Schüler wurden nach ihrem Lieblingsessen gefragt: Pizza 18, Nudeln 12, Döner 6, Salat 4.<br>
+      a) Erstelle eine Häufigkeitstabelle (absolute H., relative H., Prozent). &nbsp; b) Zeichne ein Säulendiagramm. &nbsp; c) Nenne eine weitere Diagrammart.</li>
+      <li>Anzahl gelesener Bücher im Jahr: 5 &nbsp;9 &nbsp;3 &nbsp;7 &nbsp;9 &nbsp;4 &nbsp;8<br>a) Rangliste &nbsp; b) Minimum, Maximum, Spannweite &nbsp; c) Median &nbsp; d) arithmetisches Mittel</li>
+      <li>Ein Würfel wird geworfen. Gib an: a) P(Augenzahl 1 oder 2) &nbsp; b) P(Augenzahl größer als 2)</li>
+      <li>Aus einem Skatblatt (32 Karten) wird eine Karte gezogen. Berechne: a) P(König) &nbsp; b) P(Pik) &nbsp; c) P(rote 7)</li>
+      <li>Laplace-Experiment – ja oder nein? Begründe. a) Würfel werfen &nbsp; b) Glücksrad mit einem großen roten und zwei kleinen blauen Feldern</li>
+    </ol>
+    <details><summary>Lösung anzeigen</summary>
+      <ol><li>a) 64 &nbsp; b) 1,75 &nbsp; c) 30 € &nbsp; d) 620 m &nbsp; e) 13 Grad</li>
+      <li>a) Pizza 18 | <span class="frac"><span>18</span><span>40</span></span> | 45 % &nbsp; Nudeln 12 | <span class="frac"><span>12</span><span>40</span></span> | 30 % &nbsp; Döner 6 | <span class="frac"><span>6</span><span>40</span></span> | 15 % &nbsp; Salat 4 | <span class="frac"><span>4</span><span>40</span></span> | 10 %<br>b) Säulendiagramm &nbsp; c) z. B. Kreisdiagramm</li>
+      <li>a) 3 – 4 – 5 – 7 – 8 – 9 – 9 &nbsp; b) Min 3, Max 9, Spannweite 6 &nbsp; c) Median 7 &nbsp; d) 45 : 7 ≈ 6,43</li>
+      <li>a) <span class="frac"><span>2</span><span>6</span></span> ≈ 33,3 % &nbsp; b) <span class="frac"><span>4</span><span>6</span></span> ≈ 66,7 %</li>
+      <li>a) <span class="frac"><span>4</span><span>32</span></span> = 12,5 % &nbsp; b) <span class="frac"><span>8</span><span>32</span></span> = 25 % &nbsp; c) <span class="frac"><span>2</span><span>32</span></span> = 6,25 % (Herz-7 und Karo-7)</li>
+      <li>a) ja, jede Augenzahl hat <span class="frac"><span>1</span><span>6</span></span> &nbsp; b) nein, die Felder sind unterschiedlich groß</li></ol>
+    </details>
+  </div>
+
+  <h3>Fit-Check Realschule (RS)</h3>
+  <div class="card lv lv2">
+    <p class="sub" style="margin:0 0 8px">Bearbeitungszeit: ca. 25 Minuten · Aufgabe 1 ohne Taschenrechner!</p>
+    <ol>
+      <li>a) 16² = &nbsp; b) <span class="frac"><span>3</span><span>4</span></span> + 1,5 = &nbsp; c) 35 % von 200 € = &nbsp; d) 3 Bagger brauchen 12 Tage. Wie lange brauchen 4 Bagger?</li>
+      <li>160 Schüler nennen ihr liebstes Hobby: Sport 56, Gaming 48, Musik 32, Lesen 24.<br>a) Erstelle eine Häufigkeitstabelle mit Prozent und Winkel. &nbsp; b) Zeichne ein Kreisdiagramm.</li>
+      <li>Schulweg in km: 1,2 &nbsp;2,5 &nbsp;0,8 &nbsp;3,0 &nbsp;1,5 &nbsp;2,5 &nbsp;0,9 &nbsp;1,6<br>a) Minimum, Maximum, Spannweite &nbsp; b) Median &nbsp; c) x̄ &nbsp; d) absolute Abweichung des größten Wertes von x̄</li>
+      <li>Urne: 6 rote, 3 blaue, 1 weiße Kugel. Zwei Züge <strong>mit Zurücklegen</strong>.<br>a) Baumdiagramm &nbsp; b) P(rot, rot) &nbsp; c) P(erst blau, dann weiß) &nbsp; d) P(einmal rot und einmal blau)</li>
+      <li>In einer Klasse mit 25 Schülern haben 5 die Hausaufgaben vergessen. Die Lehrerin kontrolliert 2 Schüler zufällig (ohne Zurücklegen).<br>
+      a) Berechne P(beide haben sie vergessen). &nbsp; b) Berechne P(mindestens einer wird erwischt).<br>
+      c) Jonas sagt: „Die Chance, dass keiner erwischt wird, liegt über <span class="frac"><span>2</span><span>3</span></span>.“ Bewerte die Aussage.</li>
+    </ol>
+    <details><summary>Lösung anzeigen</summary>
+      <ol><li>a) 256 &nbsp; b) 2,25 &nbsp; c) 70 € &nbsp; d) 3 · 12 = 36; 36 : 4 = 9 Tage</li>
+      <li>Sport 35 % → 126° &nbsp; Gaming 30 % → 108° &nbsp; Musik 20 % → 72° &nbsp; Lesen 15 % → 54° &nbsp; (Summe 100 % | 360°)</li>
+      <li>a) Min 0,8 km, Max 3,0 km, Spannweite 2,2 km &nbsp; b) (1,5 + 1,6) : 2 = 1,55 km &nbsp; c) 14,0 : 8 = 1,75 km &nbsp; d) 3,0 − 1,75 = 1,25 km</li>
+      <li>a) jede Stufe: rot <span class="frac"><span>6</span><span>10</span></span>, blau <span class="frac"><span>3</span><span>10</span></span>, weiß <span class="frac"><span>1</span><span>10</span></span> &nbsp; b) <span class="frac"><span>6</span><span>10</span></span> · <span class="frac"><span>6</span><span>10</span></span> = 36 % &nbsp; c) <span class="frac"><span>3</span><span>10</span></span> · <span class="frac"><span>1</span><span>10</span></span> = 3 % &nbsp;
+      d) <span class="frac"><span>6</span><span>10</span></span> · <span class="frac"><span>3</span><span>10</span></span> + <span class="frac"><span>3</span><span>10</span></span> · <span class="frac"><span>6</span><span>10</span></span> = <span class="frac"><span>36</span><span>100</span></span> = 36 %</li>
+      <li>a) <span class="frac"><span>5</span><span>25</span></span> · <span class="frac"><span>4</span><span>24</span></span> = <span class="frac"><span>20</span><span>600</span></span> ≈ 3,3 % &nbsp; b) 1 − <span class="frac"><span>20</span><span>25</span></span> · <span class="frac"><span>19</span><span>24</span></span> = 1 − <span class="frac"><span>380</span><span>600</span></span> = <span class="frac"><span>220</span><span>600</span></span> ≈ 36,7 %<br>
+      c) P(keiner) = <span class="frac"><span>380</span><span>600</span></span> ≈ 63,3 % &lt; <span class="frac"><span>2</span><span>3</span></span> ≈ 66,7 % → Die Aussage ist <strong>falsch</strong>.</li></ol>
+    </details>
+  </div>
+</section>
+
+
+<section id="lehrkraft">
+  <details class="card">
+    <summary>Hinweise für die Lehrkraft (Wochenplan, Zuordnung zur Klassenarbeit, Material)</summary>
+    <p>Die Lerntheke bereitet in <strong>5 Unterrichtstagen (+ optional Tag 6)</strong> auf die Klassenarbeiten „Stochastik“ (HS und RS) vor. Alle Stationen greifen genau die Aufgabentypen der Klassenarbeiten auf – aber mit anderen Zahlen.</p>
+    <p><strong>Aufbau:</strong> 8 Stationen mit je einer Merkkarte und Aufgabenkarten auf drei Niveaus. Die Schüler arbeiten im Heft und kontrollieren mit den Lösungen.</p>
+    <div class="tablewrap"><table><tr><th>Symbol</th><th>Niveau</th><th>Für wen?</th></tr><tr><td class="l"><span class="stars1">★</span> Basis</td><td>grundlegende Aufgaben, kleine Zahlen, Schritt-für-Schritt</td><td>HS: Pflicht | RS: Einstieg, wenn unsicher</td></tr><tr><td class="l"><span class="stars2">★★</span> Erweitert</td><td>Niveau der RS-Klassenarbeit</td><td>RS: Pflicht | HS: Wahl (Zusatz)</td></tr><tr><td class="l"><span class="stars3">★★★</span> Profi</td><td>Wahlpflichtteil der RS-Arbeit, Begründen und Bewerten</td><td>RS: Wahl | HS: für Schnelle</td></tr></table></div>
+    <h4>Wochenplan</h4>
+    <div class="tablewrap"><table><tr><th>Tag</th><th>Hauptschule (HS)</th><th>Realschule (RS)</th></tr><tr><td class="l">Tag 1</td><td>Selbsteinschätzung „Ich kann …“, Laufzettel erklären<br>Station 1 ★ (Kopfrechnen), Station 2 ★ beginnen</td><td>Selbsteinschätzung „Ich kann …“, Laufzettel erklären<br>Station 1 ★★ (Kopfrechnen), Station 2 ★★ beginnen</td></tr><tr><td class="l">Tag 2</td><td>Station 2 ★ (Häufigkeiten, Diagramme)<br>Station 3 ★ (Rangliste, Median, Mittelwert)</td><td>Station 2 ★★ (Häufigkeiten, Kreisdiagramm)<br>Station 3 ★★ (Kenngrößen, Abweichung)</td></tr><tr><td class="l">Tag 3</td><td>Station 3 ★ beenden<br>Station 4 ★ (Laplace, Würfel, Urne)</td><td>Station 4 ★★ (Laplace, Glücksrad)<br>Station 5 ★★ (Karten, ohne Zurücklegen)</td></tr><tr><td class="l">Tag 4</td><td>Station 5 ★ (Kartenspiel, einstufig)<br>Station 8 ★ (Diagramme lesen – wie Zusatzblatt)</td><td>Station 6 ★★ (Baumdiagramm mit Zurücklegen)<br>Wahl: Profi-Karten ★★★ von Station 2–4</td></tr><tr><td class="l">Tag 5</td><td>Restliche Pflichtstationen, dann Wahl:<br>Station 6 ★ (Münze, Baumdiagramm) oder ★★-Karten</td><td>Station 7 ★★/★★★ (ohne Zurücklegen, „mindestens“, Aussagen bewerten)<br>Wahl: Station 8</td></tr><tr><td class="l">Tag 6 (opt.)</td><td>Fit-Check HS (20 min) mit Selbstkontrolle, Selbsteinschätzung wiederholen, offene Fragen</td><td>Fit-Check RS (25 min) mit Selbstkontrolle, Selbsteinschätzung wiederholen, offene Fragen</td></tr></table></div>
+    <h4>Zuordnung Stationen ↔ Klassenarbeit</h4>
+    <div class="tablewrap"><table><tr><th>Station</th><th>Thema</th><th>Aufgabe in der KA (HS / RS)</th><th>HS</th><th>RS</th></tr><tr><td class="l">1</td><td>Kopfrechnen ohne Taschenrechner</td><td>Teil A / Teil A</td><td>Pflicht ★</td><td>Pflicht ★★</td></tr><tr><td class="l">2</td><td>Häufigkeitstabelle, Diagramme</td><td>B1, Wahlaufgabe 1 / B1</td><td>Pflicht ★</td><td>Pflicht ★★</td></tr><tr><td class="l">3</td><td>Rangliste, Spannweite, Median, Mittelwert</td><td>B2, B3 / B2, B3</td><td>Pflicht ★</td><td>Pflicht ★★</td></tr><tr><td class="l">4</td><td>Laplace-Experimente, einstufige Wahrscheinlichkeit</td><td>B4, B5, B6 / B4, B5</td><td>Pflicht ★</td><td>Pflicht ★★</td></tr><tr><td class="l">5</td><td>Kartenspiel (32 Karten)</td><td>B7 / B7</td><td>Pflicht ★</td><td>Pflicht ★★</td></tr><tr><td class="l">6</td><td>Baumdiagramm mit Zurücklegen</td><td>– / B6</td><td>Wahl ★</td><td>Pflicht ★★</td></tr><tr><td class="l">7</td><td>Ohne Zurücklegen, „mindestens“, bewerten</td><td>– / Wahlpflicht 8.1, 8.2</td><td>–</td><td>Pflicht ★★, Wahl ★★★</td></tr><tr><td class="l">8</td><td>Säulendiagramm lesen und ergänzen</td><td>Wahlaufgabe 2 / –</td><td>Pflicht ★</td><td>Wahl</td></tr></table></div>
+    <p><strong>Material:</strong> Laufzettel (je Schüler), Selbsteinschätzungsbogen, Stationskarten, Lösungskarten, Würfel, Münzen, ein Skatblatt (32 Karten) zum Anschauen, Geodreieck, Zirkel, Winkelmesser, Taschenrechner (außer Station 1).</p>
+  </details>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+<script>
+(function () {
+  var KEY = 'lerntheke-stochastik-v1', state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { state = {}; }
+  document.querySelectorAll('input[data-k]').forEach(function (el) {
+    if (state[el.dataset.k]) el.checked = true;
+    el.addEventListener('change', function () {
+      if (el.type === 'radio') document.querySelectorAll('input[name="' + el.name + '"]').forEach(function (o) { delete state[o.dataset.k]; });
+      if (el.checked) state[el.dataset.k] = 1; else delete state[el.dataset.k];
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>
