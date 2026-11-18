@@ -5,6 +5,7 @@
   --ma: #1f9d63; --ma-soft: #e3f6ed;
   --ge: #a33a3a; --ge-soft: #f8e7e7;
   --ch: #7c3aed; --ch-soft: #efe7fd;
+  --sk: #0e7479; --sk-soft: #dff2f2;
   --c: #2f6fdf; --c-soft: #e6eefc; --c-grad: linear-gradient(135deg, #2f6fdf, #6a4fd8);
 }
 @media (prefers-color-scheme: dark) {
@@ -14,12 +15,14 @@
     --ma: #4cc58c; --ma-soft: #1b3329;
     --ge: #e57d7d; --ge-soft: #3a2226;
     --ch: #b394f5; --ch-soft: #2c2342;
+    --sk: #4fc4c4; --sk-soft: #16343a;
   }
 }
 body.de { --c: var(--de); --c-soft: var(--de-soft); --c-grad: linear-gradient(135deg, #1f4fae, #2f6fdf); }
 body.ma { --c: var(--ma); --c-soft: var(--ma-soft); --c-grad: linear-gradient(135deg, #136b43, #1f9d63); }
 body.ch { --c: var(--ch); --c-soft: var(--ch-soft); --c-grad: linear-gradient(135deg, #4c1d95, #7c3aed); }
 body.ge { --c: var(--ge); --c-soft: var(--ge-soft); --c-grad: linear-gradient(135deg, #7a2b2b, #a33a3a 60%, #c06a3a); }
+body.sk { --c: var(--sk); --c-soft: var(--sk-soft); --c-grad: linear-gradient(135deg, #0a4f54, #0e7479 60%, #23897a); }
 
 * { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -42,6 +45,7 @@ a.tile:hover, a.tile:focus { transform: translateY(-2px); border-color: var(--c)
 .tile.ma { --c: var(--ma); --c-soft: var(--ma-soft); }
 .tile.ch { --c: var(--ch); --c-soft: var(--ch-soft); }
 .tile.ge { --c: var(--ge); --c-soft: var(--ge-soft); }
+.tile.sk { --c: var(--sk); --c-soft: var(--sk-soft); }
 .tile-head { padding: 1.3rem 1.4rem; flex: 1; }
 .icon { font-size: 2.4rem; line-height: 1; }
 .tag { display: inline-block; font-size: .8rem; font-weight: 700; padding: .15rem .6rem;

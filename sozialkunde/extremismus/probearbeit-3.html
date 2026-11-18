@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 3 · Sozialkunde 9</title>
+<style>
+:root{
+  --bg:#f5f8f8; --card:#ffffff; --text:#1f2430; --muted:#566170; --line:#d9e2e3;
+  --accent:#0e7479; --accent-soft:#dff2f2; --ok:#1d6b3b; --ok-soft:#e5f4ea; --bad:#a3262a; --bad-soft:#fbeaea;
+  --warn:#9a6411; --warn-soft:#fbf1df; --fire:#c53030;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121a1c; --card:#1b2427; --text:#e6eaec; --muted:#9fabb2; --line:#2f3d41;
+    --accent:#4fc4c4; --accent-soft:#16343a; --ok:#8fd8a9; --ok-soft:#1b2e22; --bad:#f2a3a5; --bad-soft:#36201f;
+    --warn:#e2b04f; --warn-soft:#33291a; --fire:#f07a7a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121a1c; --card:#1b2427; --text:#e6eaec; --muted:#9fabb2; --line:#2f3d41;
+  --accent:#4fc4c4; --accent-soft:#16343a; --ok:#8fd8a9; --ok-soft:#1b2e22; --bad:#f2a3a5; --bad-soft:#36201f;
+  --warn:#e2b04f; --warn-soft:#33291a; --fire:#f07a7a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(135deg,#0a4f54,#0e7479 60%,#23897a);color:#fff;padding:24px 16px 20px}
+header .inner{max-width:900px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.8rem;line-height:1.25}
+header p{margin:0;opacity:.92}
+.crumbs{font-size:.95rem;margin-bottom:.7rem;opacity:.92}
+.crumbs a{color:inherit;text-decoration:underline}
+main{max-width:900px;margin:0 auto;padding:16px}
+h2{font-size:1.45rem;margin:20px 0 12px;padding-bottom:6px;border-bottom:3px solid var(--accent)}
+h3{font-size:1.12rem;margin:0 0 10px;line-height:1.4}
+h3 .pkt{color:var(--muted);font-weight:400;white-space:nowrap}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.warnbox{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:10px}
+.meta label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;font-weight:600;color:var(--muted)}
+input[type=text],textarea,select{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;min-width:0}
+textarea{resize:vertical;margin-top:6px}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.afb{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--accent-soft);color:var(--accent);vertical-align:middle;white-space:nowrap}
+.part{margin:12px 0}
+.part p{margin:0 0 6px}
+.part.open label{display:block}
+ul.defs{margin:6px 0 10px;padding-left:1.2rem}
+ul.defs li{margin:3px 0}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;padding:8px 0;border-top:1px solid var(--line)}
+.row .q{flex:1 1 240px;min-width:0}
+.row .ctl{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.row.stack{display:block}
+.row.stack .ctl{margin:6px 0}
+.row select{width:auto;min-width:4.5rem}
+.opt{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.opt input{width:1.1rem;height:1.1rem;accent-color:var(--accent)}
+.hintline{color:var(--muted);font-size:.9rem;display:block;margin-top:4px}
+blockquote{margin:8px 0 12px;padding:10px 14px;background:var(--accent-soft);border-radius:8px;border-left:4px solid var(--accent)}
+.material{margin:8px 0 12px;padding:10px 14px;border:1px dashed var(--line);border-radius:8px}
+.lines{display:none}
+details.eh{border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:12px;background:var(--bg)}
+details.eh summary{cursor:pointer;font-weight:600;color:var(--accent)}
+details.eh ul{margin:4px 0 8px;padding-left:1.2rem}
+details.eh p{margin:6px 0}
+.hint{color:var(--muted);font-size:.9rem}
+.mark{font-weight:700;font-size:.85rem;padding:1px 8px;border-radius:999px}
+.mark.ok{background:var(--ok-soft);color:var(--ok)}
+.mark.bad{background:var(--bad-soft);color:var(--bad)}
+.correct{font-size:.9rem;color:var(--ok);flex-basis:100%}
+.rate{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--ok-soft)}
+.rate label{font-weight:600;font-size:.92rem}
+.rate select{width:auto}
+.buttons{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0}
+button{font:600 1rem system-ui,sans-serif;border-radius:8px;padding:10px 16px;border:1px solid var(--accent);cursor:pointer;background:transparent;color:var(--accent)}
+button.primary{background:var(--accent);color:#fff}
+:root[data-theme="dark"] button.primary{color:#0c1a1c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button.primary{color:#0c1a1c}}
+button:disabled{opacity:.55;cursor:default}
+.result{border:2px solid var(--accent)}
+.grade-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.grade{font-size:3.6rem;font-weight:800;line-height:1;color:var(--accent)}
+.bar{height:10px;background:var(--accent-soft);border-radius:999px;overflow:hidden;margin:10px 0}
+.bar>span{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+@media (prefers-reduced-motion: reduce){.bar>span{transition:none}}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+td.cur{background:var(--accent);color:#fff;font-weight:700}
+:root[data-theme="dark"] td.cur{color:#0c1a1c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) td.cur{color:#0c1a1c}}
+.tablewrap{overflow-x:auto}
+.result table td:first-child{text-align:left}
+.fire{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 9px;border-radius:999px;background:#c53030;color:#fff;vertical-align:middle}
+footer{max-width:900px;margin:0 auto;padding:16px 16px 48px;color:var(--muted);font-size:.9rem}
+footer a{color:var(--accent);font-weight:600;text-decoration:none}
+@media print{
+  header{background:none;color:#000;padding:0 0 8px}
+  .crumbs,.buttons,.result,.rate,.fb,.correct,.screen-only{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .card{break-inside:avoid;border-color:#999}
+  textarea{display:none}
+  .lines{display:block;margin-top:4px}
+  .lines span{display:block;height:1.9em;border-bottom:1px solid #888}
+  details.eh{display:none}
+  body.print-eh details.eh{display:block}
+  select{border:1px solid #666}
+}
+</style>
+</head>
+<body>
+
+<header><div class="inner">
+  <div class="crumbs"><a href="../../">Start</a> › <a href="../">Sozialkunde</a> › <a href="./">Fremdenfeindlichkeit und Extremismus</a> › <span>Probearbeit 3</span></div>
+  <h1>Probearbeit 3 · Sozialkunde Klasse 9 <span class="fire">🔥 Schwer</span></h1>
+  <p>Abgrenzen, vergleichen, prüfen, beurteilen – Fremdenfeindlichkeit und Extremismus</p>
+</div></header>
+
+<main>
+<section id="probearbeit">
+  <div class="card warnbox">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> keine &nbsp;·&nbsp; <strong>Gesamt:</strong> 43 Punkte</p>
+    <p class="screen-only" style="margin:.5rem 0 0">So geht's: Stell dir einen Timer auf 45 Minuten und bearbeite alles direkt hier (oder auf Papier). Dann „Abgeben“: Die Auswahlaufgaben werden automatisch bewertet, bei den offenen Aufgaben vergleichst du mit dem Erwartungshorizont und trägst deine Punkte ein. Die Note siehst du sofort. Operatoren und Anforderungsbereiche (AFB I–III) stehen an jeder Teilaufgabe.</p>
+    <div class="meta screen-only">
+      <label>Name<input type="text" id="f-name" autocomplete="off"></label>
+      <label>Klasse<input type="text" id="f-klasse" autocomplete="off"></label>
+    </div>
+  </div>
+<form id="ka" data-total="43" autocomplete="off" onsubmit="return false">
+  <section class="card task" id="aufgabe-1" data-pts="4">
+    <h3>Aufgabe 1 – Radikal oder extremistisch? <span class="pkt">(4 P.)</span></h3>
+    <div class="part" data-auto-pts="1"><p><span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Entscheide</strong> für jede (erfundene) Gruppe, ob sie nach der Unterscheidung des Verfassungsschutzes radikal oder extremistisch ist. <em>(4 P.)</em></p><div class="row auto-item stack" data-correct="radikal" data-solution="radikal"><span class="q">a) Gruppe A will die Wirtschaftsordnung grundlegend umbauen und Banken verstaatlichen. Sie will das nur über Wahlen und Gesetze erreichen und erkennt Gerichte und Grundrechte an.</span><span class="ctl"><label class="opt"><input type="radio" name="a1a-0" value="radikal"> radikal</label><label class="opt"><input type="radio" name="a1a-0" value="extremistisch"> extremistisch</label><span class="fb"></span></span></div><div class="row auto-item stack" data-correct="extremistisch" data-solution="extremistisch"><span class="q">b) Gruppe B will Wahlen abschaffen. Statt Gesetzen des Parlaments soll nur eine Ordnung gelten, die sie für göttlich vorgegeben hält.</span><span class="ctl"><label class="opt"><input type="radio" name="a1a-1" value="radikal"> radikal</label><label class="opt"><input type="radio" name="a1a-1" value="extremistisch"> extremistisch</label><span class="fb"></span></span></div><div class="row auto-item stack" data-correct="extremistisch" data-solution="extremistisch"><span class="q">c) Gruppe C will das Parlament abschaffen und einen „starken Führer“ einsetzen. Menschen anderer Herkunft sollen weniger Rechte haben.</span><span class="ctl"><label class="opt"><input type="radio" name="a1a-2" value="radikal"> radikal</label><label class="opt"><input type="radio" name="a1a-2" value="extremistisch"> extremistisch</label><span class="fb"></span></span></div><div class="row auto-item stack" data-correct="extremistisch" data-solution="extremistisch"><span class="q">d) Gruppe D will den Staat abschaffen und hält Anschläge auf Behörden für ein legitimes Mittel.</span><span class="ctl"><label class="opt"><input type="radio" name="a1a-3" value="radikal"> radikal</label><label class="opt"><input type="radio" name="a1a-3" value="extremistisch"> extremistisch</label><span class="fb"></span></span></div></div>
+    <details class="eh"><summary>Erwartungshorizont (4 P.)</summary><p><strong>(4 P.)</strong></p><ul><li>a) <strong>radikal</strong> – Zugespitzte Forderungen, aber die Grundprinzipien der Verfassung werden anerkannt.</li><li>b) <strong>extremistisch</strong> – Volkssouveränität und Demokratieprinzip sollen beseitigt werden.</li><li>c) <strong>extremistisch</strong> – Gleichheit der Menschen, Menschenwürde und Demokratie werden abgelehnt.</li><li>d) <strong>extremistisch</strong> – Die Ordnung soll beseitigt werden, Gewalt wird befürwortet.</li></ul><p class="hint">Je richtiger Entscheidung 1 P.</p></details>
+  </section>
+
+  <section class="card task" id="aufgabe-2" data-pts="6">
+    <h3>Aufgabe 2 – Erklärungsansätze vergleichen <span class="pkt">(6 P.)</span></h3>
+    <div class="material"><p><em>Erfundene Aussagen:</em></p><p><strong>Aussage 1 (Jonas, 15):</strong> „Unser Verein ist einfach der beste – die vom Nachbarverein sind doch alle Loser.“</p><p><strong>Aussage 2 (Frau K., 52):</strong> „Die Neuen nehmen uns die Ausbildungsplätze und Wohnungen weg.“</p></div>
+    <div class="part open" data-max="4" data-id="a2a"><label for="a2a">a) <span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Ordne</strong> jeder Aussage einen Erklärungsansatz für Vorurteile zu und <strong>begründe</strong> deine Zuordnung. <em>(4 P.)</em></label><textarea id="a2a" rows="5"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div></div>
+    <div class="part open" data-max="2" data-id="a2b"><label for="a2b">b) <span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Erkläre</strong> den wichtigsten Unterschied zwischen den beiden Ansätzen. <em>(2 P.)</em></label><textarea id="a2b" rows="3"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span></div></div>
+    <details class="eh"><summary>Erwartungshorizont (6 P.)</summary><div class="eh-part"><p><strong>a) (4 P.)</strong></p><ul><li><strong>Aussage 1 – Theorie der sozialen Identität (Wir-und-die-Anderen):</strong> Jonas wertet die eigene Gruppe auf, indem er die andere abwertet. Es geht nicht um Güter, sondern um das Gefühl, zu den „Besseren“ zu gehören.</li><li><strong>Aussage 2 – Konkurrenz / Theorie realer Gruppenkonflikte</strong> (auch: Sündenbock-Denken): Frau K. sieht die Neuen als Konkurrenz um knappe Güter (Ausbildungsplätze, Wohnungen) und lehnt sie deshalb ab.</li></ul><p class="hint">Bewertung: Je Aussage 1 P. für den passenden Ansatz und 1 P. für die Begründung am Text.</p></div><div class="eh-part"><p><strong>b) (2 P.)</strong></p><p>Nach der Theorie realer Gruppenkonflikte entstehen Vorurteile aus Konkurrenz um Macht, Ansehen und Einkommen. Nach der Theorie der sozialen Identität braucht es keine Konkurrenz: Schon die positive Bewertung der eigenen Gruppe reicht, um andere abzuwerten.</p><p class="hint">Bewertung: 1 P. je richtig beschriebenem Ansatz im Vergleich (Konkurrenz nötig / nicht nötig).</p></div></details>
+  </section>
+
+  <section class="card task" id="aufgabe-3" data-pts="8">
+    <h3>Aufgabe 3 – Die freiheitliche demokratische Grundordnung <span class="pkt">(8 P.)</span></h3>
+    <div class="material"><p><em>Auszug aus dem Programm der erfundenen „Partei X“:</em></p><ol><li>Richterinnen und Richter erhalten künftig Weisungen von der Regierung.</li><li>Nach unserem Wahlsieg werden alle anderen Parteien aufgelöst.</li><li>Zeitungen brauchen eine staatliche Erlaubnis und dürfen die Regierung nicht kritisieren.</li></ol></div>
+    <div class="part open" data-max="3" data-id="a3a"><label for="a3a">a) <span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Erkläre</strong> die drei Kernelemente der freiheitlichen demokratischen Grundordnung nach dem Urteil des Bundesverfassungsgerichts von 2017. <em>(3 P.)</em></label><textarea id="a3a" rows="4"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div>
+    <div class="part open" data-max="3" data-id="a3b"><label for="a3b">b) <span class="afb" title="Anforderungsbereich">AFB III</span> <strong>Prüfe</strong>, gegen welches Grundprinzip jeder der drei Programmpunkte verstößt. <em>(3 P.)</em></label><textarea id="a3b" rows="4"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div>
+    <div class="part open" data-max="2" data-id="a3c"><label for="a3c">c) <span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Erkläre</strong>, warum nach dem Bundesverfassungsgericht (2017) eine Partei mit verfassungsfeindlichen Zielen nicht automatisch verboten wird. <em>(2 P.)</em></label><textarea id="a3c" rows="3"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span></div></div>
+    <details class="eh"><summary>Erwartungshorizont (8 P.)</summary><div class="eh-part"><p><strong>a) (3 P.)</strong></p><ul><li><strong>Menschenwürde</strong> (Art. 1 Abs. 1 GG): Ausgangspunkt – jeder Mensch hat den gleichen Wert, der Staat muss die Würde achten und schützen.</li><li><strong>Demokratieprinzip:</strong> Alle Bürgerinnen und Bürger können gleichberechtigt an der politischen Willensbildung teilhaben; die Staatsgewalt geht vom Volk aus.</li><li><strong>Rechtsstaatsprinzip:</strong> Die öffentliche Gewalt ist an Recht und Gesetz gebunden und wird von unabhängigen Gerichten kontrolliert; Gewalt übt nur der Staat aus (Gewaltmonopol).</li></ul><p class="hint">Bewertung: 1 P. je richtig erklärtem Kernelement (nur Nennen: 0,5 P.).</p></div><div class="eh-part"><p><strong>b) (3 P.)</strong></p><ul><li>(1) Unabhängigkeit der Gerichte / Gewaltenteilung / Rechtsstaatsprinzip</li><li>(2) Mehrparteienprinzip, Chancengleichheit der Parteien und Recht auf Opposition / Demokratieprinzip</li><li>(3) Meinungs- und Pressefreiheit (Art. 5 GG) / Demokratieprinzip – ohne freie Presse keine Kontrolle der Regierung</li></ul><p class="hint">Bewertung: 1 P. je Programmpunkt mit passendem Grundprinzip und kurzer Begründung.</p></div><div class="eh-part"><p><strong>c) (2 P.)</strong></p><p>Für ein Verbot nach Art. 21 Abs. 2 GG reichen verfassungsfeindliche Ziele allein nicht. Es müssen konkrete Anhaltspunkte von Gewicht vorliegen, die es möglich erscheinen lassen, dass die Partei ihre Ziele auch erreichen kann („Potentialität“). Fehlt das, kommt ein Verbot nicht in Betracht; möglich ist dann aber der Ausschluss von der staatlichen Finanzierung (Art. 21 Abs. 3 GG). Entscheiden darf nur das Bundesverfassungsgericht.</p><p class="hint">Bewertung: 1 P. Ziele allein reichen nicht, 1 P. Erfolgsaussicht/Potentialität erklärt (Finanzierungsausschluss als Zusatz anerkennen).</p></div></details>
+  </section>
+
+  <section class="card task" id="aufgabe-4" data-pts="5">
+    <h3>Aufgabe 4 – Meinungsfreiheit und ihre Grenzen <span class="pkt">(5 P.)</span></h3>
+    <div class="material"><p><em>Zwei erfundene Kommentare unter einem Nachrichtenvideo:</em></p><p><strong>K1:</strong> „Die Regierung macht katastrophale Politik. Die gehört bei der nächsten Wahl abgewählt!“</p><p><strong>K2:</strong> „Alle Angehörigen dieser Religion sind minderwertig. Man sollte sie mit Gewalt aus unserer Stadt jagen!“</p></div>
+    <div class="part open" data-max="2" data-id="a4a"><label for="a4a">a) <span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Erkläre</strong> mithilfe von Art. 5 GG, dass die Meinungsfreiheit Grenzen hat. <em>(2 P.)</em></label><textarea id="a4a" rows="3"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span></div></div>
+    <div class="part open" data-max="3" data-id="a4b"><label for="a4b">b) <span class="afb" title="Anforderungsbereich">AFB III</span> <strong>Prüfe</strong> für beide Kommentare, ob sie noch von der Meinungsfreiheit gedeckt sind. <em>(3 P.)</em></label><textarea id="a4b" rows="5"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div></div>
+    <details class="eh"><summary>Erwartungshorizont (5 P.)</summary><div class="eh-part"><p><strong>a) (2 P.)</strong></p><p>Art. 5 Abs. 1 GG garantiert, die eigene Meinung frei zu äußern und zu verbreiten. Nach Art. 5 Abs. 2 GG findet dieses Recht seine Schranken in den allgemeinen Gesetzen, im Jugendschutz und im Recht der persönlichen Ehre – z. B. sind Beleidigung oder Volksverhetzung nicht erlaubt.</p><p class="hint">Bewertung: 1 P. Recht auf freie Meinungsäußerung, 1 P. Schranken nach Abs. 2 mit Beispiel.</p></div><div class="eh-part"><p><strong>b) (3 P.)</strong></p><p><strong>K1:</strong> erlaubt – scharfe Kritik an der Regierung und der Aufruf, sie abzuwählen, sind typische, geschützte Meinungsäußerungen in der Demokratie.</p><p><strong>K2:</strong> nicht gedeckt – der Kommentar stachelt gegen eine religiöse Gruppe zum Hass auf, fordert Gewalt und spricht den Menschen ihren Wert ab (Angriff auf die Menschenwürde). Das kann Volksverhetzung (§ 130 StGB) sein. Ob es strafbar ist, entscheidet am Ende ein Gericht.</p><p class="hint">Bewertung: 1 P. K1 richtig eingeordnet mit Begründung, 2 P. K2 (Einordnung + Bezug zu § 130 StGB bzw. Menschenwürde/Gewaltaufruf).</p></div></details>
+  </section>
+
+  <section class="card task" id="aufgabe-5" data-pts="8">
+    <h3>Aufgabe 5 – Freundlich verpackt <span class="pkt">(8 P.)</span></h3>
+    <div class="material"><p><em>Beschreibung eines erfundenen Kurzvideos:</em> Jugendliche sitzen lachend am Lagerfeuer, fröhliche Musik. Eingeblendeter Text: „Endlich eine Gemeinschaft, die zusammenhält. Bei uns bist du wer. Die anderen haben dich doch längst aufgegeben.“ In der Beschreibung steht: „Wer dazugehören will, schreibt uns privat. Mehr erfährst du nur in unserem geschlossenen Kanal.“ Wer hinter dem Kanal steht, wird nicht gesagt.</p></div>
+    <div class="part open" data-max="3" data-id="a5a"><label for="a5a">a) <span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Weise</strong> drei Merkmale <strong>nach</strong>, die darauf hindeuten, dass hier extremistisch angeworben werden könnte. <em>(3 P.)</em></label><textarea id="a5a" rows="4"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div>
+    <div class="part open" data-max="2" data-id="a5b"><label for="a5b">b) <span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Erläutere</strong>, warum solche Inhalte schwerer zu erkennen sind als offene Hetze. <em>(2 P.)</em></label><textarea id="a5b" rows="3"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span></div></div>
+    <div class="part open" data-max="3" data-id="a5c"><label for="a5c">c) <span class="afb" title="Anforderungsbereich">AFB III</span> Ein Freund hat das Video geteilt. <strong>Verfasse</strong> eine kurze, sachliche Nachricht an ihn (3–4 Sätze): Wende darin zwei kritische Prüffragen auf das Video an und gib ihm einen Rat. <em>(3 P.)</em></label><textarea id="a5c" rows="5"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div></div>
+    <details class="eh"><summary>Erwartungshorizont (8 P.)</summary><div class="eh-part"><p><strong>a) (3 P.)</strong></p><ul><li>Positive Gefühle als Köder: Zugehörigkeit, Gemeinschaft, Anerkennung („Bei uns bist du wer“)</li><li>Wir-gegen-die-Denken: „Die anderen haben dich doch längst aufgegeben.“</li><li>Harmlose Verpackung (Lagerfeuer, Musik) – Inhalte und Ziele bleiben unklar</li><li>Abschottung: Kontakt nur privat oder im geschlossenen Kanal</li><li>Unbekannter Absender</li></ul><p class="hint">Bewertung: 1 P. je Merkmal mit Beleg aus der Beschreibung, höchstens 3 P.</p></div><div class="eh-part"><p><strong>b) (2 P.)</strong></p><p>Es fallen keine Hassparolen, sondern es geht um Freundschaft und Zusammenhalt – das wirkt sympathisch. Gerade Jugendliche, die sich ausgegrenzt fühlen, suchen das. Die Ideologie kommt erst später im geschlossenen Kanal, wenn schon Vertrauen besteht.</p><p class="hint">Bewertung: 1 P. fehlende offene Hetze/positive Wirkung, 1 P. Anknüpfen an Bedürfnisse bzw. schrittweises Heranführen.</p></div><div class="eh-part"><p><strong>c) (3 P.)</strong></p><p>Beispiel: „Hey, ich hab mir das Video angeschaut. <strong>Wer steckt eigentlich dahinter?</strong> Das wird nirgends gesagt, es gibt keinen Namen und kein Impressum. <strong>Wem nützt es, dass du ihnen privat schreibst?</strong> Die wollen dich in ihren geschlossenen Kanal holen, bevor du weißt, worum es eigentlich geht. Schreib denen lieber nicht und lass uns mal drüber reden.“</p><p class="hint">Bewertung: Je 1 P. für zwei sinnvoll auf das Video angewendete Prüffragen (z. B. Absender, Belege/Inhalte, Wem nützt es?, Welche Gefühle sollen geweckt werden?), 1 P. für einen sinnvollen Rat in sachlichem, nicht beleidigendem Ton.</p></div></details>
+  </section>
+
+  <section class="card task" id="aufgabe-6" data-pts="6">
+    <h3>Aufgabe 6 – Maßnahmen abwägen <span class="pkt">(6 P.)</span></h3>
+    <p>Gegen Extremismus gibt es staatliche Maßnahmen (z. B. ein Parteiverbot durch das Bundesverfassungsgericht) und nichtstaatliche Maßnahmen (z. B. ein Präventionsprojekt an Schulen).</p>
+    <div class="part open" data-max="4" data-id="a6a"><label for="a6a">a) <span class="afb" title="Anforderungsbereich">AFB II</span> <strong>Erläutere</strong> für beide Maßnahmen je einen Vorteil und eine Grenze. <em>(4 P.)</em></label><textarea id="a6a" rows="6"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+    <div class="part open" data-max="2" data-id="a6b"><label for="a6b">b) <span class="afb" title="Anforderungsbereich">AFB III</span> <strong>Beurteile</strong>, ob eine der beiden Maßnahmen allein ausreicht. <em>(2 P.)</em></label><textarea id="a6b" rows="4"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span></div></div>
+    <details class="eh"><summary>Erwartungshorizont (6 P.)</summary><div class="eh-part"><p><strong>a) (4 P.)</strong></p><p><strong>Parteiverbot – Vorteil:</strong> Die Partei verliert Organisation, Geld und Bühne; der Staat zeigt klar, wo die Grenze der Demokratie liegt. <strong>Grenze:</strong> hohe Hürden (nur BVerfG, Potentialität), langes Verfahren; Einstellungen der Anhänger verschwinden nicht, sie können sich neu organisieren.</p><p><strong>Präventionsprojekt – Vorteil:</strong> setzt früh an, stärkt Wissen, Kritikfähigkeit und Zivilcourage, erreicht viele Jugendliche. <strong>Grenze:</strong> wirkt langsam, erreicht nicht alle (z. B. schon Überzeugte), hängt von Geld und Engagement ab.</p><p class="hint">Bewertung: 1 P. je passendem Vorteil bzw. passender Grenze (4 × 1 P.).</p></div><div class="eh-part"><p><strong>b) (2 P.)</strong></p><p>Erwartet wird ein begründetes Urteil, z. B.: Keine reicht allein – das Verbot bekämpft die Organisation, die Prävention die Ursachen in den Köpfen; beide ergänzen sich. Auch eine Gewichtung („Prävention ist wichtiger, weil …“) ist richtig, wenn sie begründet ist.</p><p class="hint">Bewertung: 1 P. klares Urteil, 1 P. Begründung mit Bezug auf Vorteile/Grenzen aus a).</p></div></details>
+  </section>
+
+  <section class="card task" id="aufgabe-7" data-pts="6">
+    <h3>Aufgabe 7 – Zivilcourage – Pflicht? <span class="pkt">(6 P.)</span></h3>
+    <p>Eine Mitschülerin sagt: „Zivilcourage ist Pflicht – wer bei Rassismus wegschaut, macht sich mitschuldig.“</p>
+    <div class="material"><p><strong>§ 323c Abs. 1 StGB (unterlassene Hilfeleistung, Auszug):</strong> „Wer bei Unglücksfällen oder gemeiner Gefahr oder Not nicht Hilfe leistet, obwohl dies erforderlich und ihm den Umständen nach zuzumuten, insbesondere ohne erhebliche eigene Gefahr und ohne Verletzung anderer wichtiger Pflichten möglich ist, wird mit Freiheitsstrafe bis zu einem Jahr oder mit Geldstrafe bestraft.“</p></div>
+    <div class="part open" data-max="6" data-id="a7a"><label for="a7a"><span class="afb" title="Anforderungsbereich">AFB III</span> <strong>Beurteile</strong> diese Aussage. Beziehe das Gesetz im Material ein und berücksichtige Möglichkeiten und Grenzen von Zivilcourage. <em>(6 P.)</em></label><textarea id="a7a" rows="6"></textarea><div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+    <details class="eh"><summary>Erwartungshorizont (6 P.)</summary><div class="eh-part"><p><strong>(6 P.)</strong></p><p><strong>Dafür (Beispiele):</strong> Wegschauen lässt Betroffene allein und kann Täter bestärken · Demokratie lebt davon, dass Menschen für die Würde anderer eintreten (Art. 1 GG) · Helfen geht oft ohne Risiko (Polizei rufen, Zeuge sein, Betroffene ansprechen).</p><p><strong>Dagegen / Grenzen (Beispiele):</strong> Rechtlich besteht eine Hilfspflicht nur bei Unglücksfällen, gemeiner Gefahr oder Not und nur, wenn Hilfe zumutbar ist – nicht bei erheblicher eigener Gefahr · nicht jede Beleidigung ist eine solche Notlage · Angst und Unsicherheit sind verständlich · „mitschuldig“ ist ein moralisches, kein rechtliches Urteil.</p><p><strong>Urteil:</strong> Beide Richtungen sind möglich, z. B. „Moralisch sollte jeder handeln, rechtlich verpflichtet ist man nur in Notlagen – und Hilfe holen reicht oft schon“.</p><p class="hint">Bewertung: 2 P. Argumente dafür (je 1 P.), 2 P. Argumente dagegen bzw. Grenzen, davon mindestens eins mit richtigem Bezug auf § 323c StGB (Zumutbarkeit, keine erhebliche eigene Gefahr), 2 P. begründetes Urteil, das die Argumente abwägt.</p></div></details>
+  </section>
+
+</form>
+
+  <div class="buttons">
+    <button type="button" class="primary" id="btn-abgeben">Abgeben und auswerten</button>
+    <button type="button" id="btn-neu">Neu starten</button>
+    <button type="button" id="btn-druck">Drucken (Aufgabenblatt)</button>
+    <button type="button" id="btn-druck-eh">Drucken mit Erwartungshorizont</button>
+  </div>
+
+  <section id="ergebnis" class="card result" hidden aria-live="polite"></section>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table id="schluessel">
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>43–40</td><td>39–33</td><td>32–26</td><td>25–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.2rem 0 0">Bei halben Punkten entscheidet der Prozentwert.</p>
+</section>
+</main>
+
+<footer><a href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a href="../">Sozialkunde</a> &nbsp;·&nbsp; <a href="../../">Alle Fächer</a></footer>
+<script>
+(function () {
+  "use strict";
+  var form = document.getElementById("ka");
+  var total = parseInt(form.getAttribute("data-total"), 10);
+  var keyRow = document.getElementById("schluessel").rows[1];
+  var cells = keyRow.querySelectorAll("td");
+  // Erlass Nr. 6.3 is percent based; the table shows the rounded-up whole-point bounds
+  var PROZENT = [93, 75, 60, 40, 20];
+  var lower = Array.prototype.map.call(cells, function (td) { var p = td.textContent.split("–"); return parseFloat(p[p.length - 1]); });
+  PROZENT.forEach(function (pc, i) { if (lower[i] !== Math.ceil(pc * total / 100)) console.warn("Notenschlüssel-Tabelle weicht vom Erlass ab (Note " + (i + 1) + ")"); });
+  var resultEl = document.getElementById("ergebnis");
+  var btnSubmit = document.getElementById("btn-abgeben");
+  var NOTENTEXT = ["sehr gut", "gut", "befriedigend", "ausreichend", "mangelhaft", "ungenügend"];
+  var autoPoints = 0, autoMax = 0, submitted = false;
+  var fmt = function (n) { return String(n).replace(".", ","); };
+
+  // integer comparison avoids float issues: p / total >= pc / 100
+  function gradeFor(p) { for (var i = 0; i < PROZENT.length; i++) if (p * 100 >= PROZENT[i] * total) return i + 1; return 6; }
+
+  function itemValue(item) {
+    var sel = item.querySelector("select");
+    if (sel) return sel.value;
+    var r = item.querySelector("input[type=radio]:checked");
+    return r ? r.value : "";
+  }
+
+  function submit() {
+    if (submitted) return;
+    submitted = true; autoPoints = 0; autoMax = 0;
+    Array.prototype.forEach.call(form.querySelectorAll(".auto-item"), function (item) {
+      var pts = parseFloat(item.closest(".part").getAttribute("data-auto-pts") || "1");
+      autoMax += pts;
+      var ok = itemValue(item) === item.getAttribute("data-correct");
+      if (ok) autoPoints += pts;
+      item.querySelector(".fb").innerHTML = '<span class="mark ' + (ok ? "ok" : "bad") + '">' + (ok ? "richtig" : "falsch") + "</span>";
+      if (!ok) item.insertAdjacentHTML("beforeend", '<div class="correct">Richtig ist: ' + item.getAttribute("data-solution") + "</div>");
+    });
+    Array.prototype.forEach.call(form.querySelectorAll(".part.open"), function (part) {
+      var max = parseFloat(part.getAttribute("data-max")), id = part.getAttribute("data-id"), opts = "";
+      for (var v = 0; v <= max * 2; v++) opts += '<option value="' + v / 2 + '">' + fmt(v / 2) + "</option>";
+      part.insertAdjacentHTML("beforeend", '<div class="rate"><label for="rate-' + id + '">Deine Punkte nach dem Erwartungshorizont (von ' + fmt(max) + '):</label><select id="rate-' + id + '" data-max="' + max + '">' + opts + "</select></div>");
+      document.getElementById("rate-" + id).addEventListener("change", render);
+    });
+    Array.prototype.forEach.call(form.querySelectorAll("input, select, textarea"), function (el) { if (el.id.indexOf("rate-") !== 0) el.disabled = true; });
+    Array.prototype.forEach.call(document.querySelectorAll("details.eh"), function (d) { d.open = true; });
+    btnSubmit.disabled = true;
+    resultEl.hidden = false;
+    render();
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    resultEl.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }
+
+  function render() {
+    var self = 0;
+    Array.prototype.forEach.call(form.querySelectorAll(".rate select"), function (s) { self += parseFloat(s.value); });
+    var sum = autoPoints + self, note = gradeFor(sum);
+    Array.prototype.forEach.call(cells, function (td, i) { td.classList.toggle("cur", i + 1 === note); });
+    var name = document.getElementById("f-name").value.trim();
+    resultEl.innerHTML = "<h2>Ergebnis" + (name ? " – " + name.replace(/[<>&"]/g, "") : "") + "</h2>" +
+      '<div class="grade-row"><div class="grade" aria-label="Note ' + note + '">' + note + "</div><div><strong>" + NOTENTEXT[note - 1] + "</strong><br>" + fmt(sum) + " von " + total + " Punkten</div></div>" +
+      '<div class="bar" role="img" aria-label="' + fmt(sum) + " von " + total + ' Punkten"><span style="width:' + Math.round(sum / total * 100) + '%"></span></div>' +
+      '<div class="tablewrap"><table><tr><th>Teil</th><th>Punkte</th><th>Maximal</th></tr>' +
+      "<tr><td>Auswahlaufgaben (automatisch)</td><td>" + fmt(autoPoints) + "</td><td>" + fmt(autoMax) + "</td></tr>" +
+      "<tr><td>Offene Aufgaben (Selbstbewertung)</td><td>" + fmt(self) + "</td><td>" + fmt(total - autoMax) + "</td></tr>" +
+      "<tr><th>Gesamt</th><th>" + fmt(sum) + "</th><th>" + total + "</th></tr></table></div>" +
+      '<p class="hint">Trage bei jeder offenen Aufgabe deine Punkte ein – die Note ändert sich sofort. Sei ehrlich zu dir: Die Lehrkraft bewertet in der echten Arbeit genauso streng wie der Erwartungshorizont.</p>';
+  }
+
+  function reset() {
+    submitted = false;
+    form.reset();
+    Array.prototype.forEach.call(form.querySelectorAll(".rate, .correct"), function (n) { n.remove(); });
+    Array.prototype.forEach.call(form.querySelectorAll(".fb"), function (n) { n.innerHTML = ""; });
+    Array.prototype.forEach.call(form.querySelectorAll("input, select, textarea"), function (el) { el.disabled = false; });
+    Array.prototype.forEach.call(document.querySelectorAll("details.eh"), function (d) { d.open = false; });
+    Array.prototype.forEach.call(cells, function (td) { td.classList.remove("cur"); });
+    btnSubmit.disabled = false; resultEl.hidden = true; resultEl.innerHTML = "";
+    window.scrollTo(0, 0);
+  }
+
+  function printWithEH() {
+    var closed = Array.prototype.filter.call(document.querySelectorAll("details.eh"), function (d) { return !d.open; });
+    closed.forEach(function (d) { d.open = true; });
+    document.body.classList.add("print-eh");
+    window.addEventListener("afterprint", function once() {
+      document.body.classList.remove("print-eh");
+      closed.forEach(function (d) { d.open = false; });
+      window.removeEventListener("afterprint", once);
+    });
+    window.print();
+  }
+
+  btnSubmit.addEventListener("click", submit);
+  document.getElementById("btn-neu").addEventListener("click", reset);
+  document.getElementById("btn-druck").addEventListener("click", function () { window.print(); });
+  document.getElementById("btn-druck-eh").addEventListener("click", printWithEH);
+})();
+</script>
+</body>
+</html>

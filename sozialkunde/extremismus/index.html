@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fremdenfeindlichkeit und Extremismus</title>
+<style>
+  :root {
+    --bg: #f4f8f8; --card: #ffffff; --text: #1f2430; --muted: #566170;
+    --accent: #0e7479; --accent-soft: #dff2f2;
+    --green: #1f8a57; --green-soft: #e3f4ea;
+    --orange: #b8681a; --orange-soft: #fcf0e1;
+    --red: #b33a3a; --red-soft: #f9e6e6;
+    --border: #d9e2e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121a1c; --card: #1b2427; --text: #e6eaec; --muted: #9fabb2;
+      --accent: #4fc4c4; --accent-soft: #16343a;
+      --green: #4cc58c; --green-soft: #1b3329;
+      --orange: #f0a557; --orange-soft: #3a2c1b;
+      --red: #f08c8c; --red-soft: #3a2226;
+      --border: #2f3d41;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { background: linear-gradient(135deg, #0a4f54, #0e7479 60%, #23897a); color: #fff;
+           padding: 2rem 1rem 1.5rem; text-align: center; }
+  header h1 { margin: 0 0 .3rem; font-size: 1.9rem; line-height: 1.25; }
+  header p { margin: 0; opacity: .9; }
+  nav { position: sticky; top: 0; z-index: 10; background: var(--card);
+        border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap;
+        justify-content: center; gap: .4rem; padding: .6rem .5rem; }
+  nav a { text-decoration: none; color: var(--accent); background: var(--accent-soft);
+          padding: .35rem .75rem; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+  /* narrow screens: one scrollable row instead of a tall wrapped block */
+  @media (max-width: 760px) {
+    nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
+    nav a { white-space: nowrap; flex-shrink: 0; }
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  section { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+            padding: 1.4rem 1.5rem; margin-bottom: 1.6rem; scroll-margin-top: 110px; }
+  h2 { margin-top: 0; font-size: 1.5rem; display: flex; align-items: center; gap: .6rem; line-height: 1.3; }
+  h2 .num { background: var(--accent); color: #fff; width: 2rem; height: 2rem; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  h3 { margin-bottom: .4rem; color: var(--accent); }
+  a { color: var(--accent); }
+  .box { border-left: 5px solid var(--accent); background: var(--accent-soft);
+         padding: .8rem 1rem; border-radius: 8px; margin: 1rem 0; }
+  .box.merke { border-color: var(--green); background: var(--green-soft); }
+  .box.tipp { border-color: var(--orange); background: var(--orange-soft); }
+  .box.achtung { border-color: var(--red); background: var(--red-soft); }
+  .box strong.label { display: block; margin-bottom: .3rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .card { border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.1rem; background: var(--bg); }
+  .card h4 { margin: 0 0 .5rem; font-size: 1.1rem; }
+  .card ul { margin: .3rem 0 0; padding-left: 1.2rem; }
+  .card p { margin: .3rem 0; }
+  .card dl { margin: .3rem 0 0; }
+  .card dt { font-weight: 700; margin-top: .5rem; }
+  .card dd { margin: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--border); padding: .5rem .6rem; text-align: left; vertical-align: top; }
+  th { background: var(--accent-soft); }
+  .table-wrap { overflow-x: auto; }
+  .gg { font-size: .85rem; color: var(--muted); }
+  q { font-style: italic; }
+
+  /* Test list */
+  .tests li { margin: .4rem 0; }
+  .pill { font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--green-soft); color: var(--green); white-space: nowrap; }
+  .pill.fire { background: #c53030; color: #fff; }
+
+  /* Chain stereotype -> prejudice -> discrimination */
+  .chain3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .6rem; margin: 1rem 0; }
+  .chain3 > div { border-radius: 10px; padding: .7rem .9rem; border: 1px solid var(--border); background: var(--bg); }
+  .chain3 b { display: block; color: var(--accent); }
+
+  /* Sorting exercise */
+  .sort-item { border-top: 1px solid var(--border); padding: .7rem 0; }
+  .sort-item p { margin: 0 0 .4rem; }
+  .sort-btns { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .sort-btns button, .btn { font: inherit; font-size: .92rem; font-weight: 600; cursor: pointer; border-radius: 8px;
+    padding: .35rem .8rem; border: 1px solid var(--accent); background: var(--card); color: var(--accent); }
+  .sort-btns button[aria-pressed="true"].ok { background: var(--green); border-color: var(--green); color: #fff; }
+  .sort-btns button[aria-pressed="true"].bad { background: var(--red); border-color: var(--red); color: #fff; }
+  .btn.primary { background: var(--accent); color: #fff; }
+  @media (prefers-color-scheme: dark) {
+    .btn.primary, .sort-btns button[aria-pressed="true"].ok, .sort-btns button[aria-pressed="true"].bad, h2 .num, .flow li::before { color: #0c1a1c; }
+  }
+  .sol { display: none; margin-top: .4rem; font-size: .92rem; padding: .4rem .7rem; border-radius: 8px; background: var(--accent-soft); }
+  .sort-item.done .sol { display: block; }
+  .score { font-weight: 700; color: var(--accent); }
+  button:focus-visible, summary:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Step flow: how a prejudice develops */
+  .flow { list-style: none; padding: 0; margin: 1rem 0; counter-reset: st; }
+  .flow li { counter-increment: st; position: relative; padding: .7rem 1rem .7rem 3.2rem; margin-bottom: .5rem;
+             border: 1px solid var(--border); border-radius: 10px; background: var(--bg); transition: opacity .35s, transform .35s; }
+  .flow li::before { content: counter(st); position: absolute; left: .8rem; top: .7rem; width: 1.8rem; height: 1.8rem;
+             border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+  .flow li b { color: var(--accent); }
+  .flow.js li.later { opacity: .18; transform: translateX(8px); }
+  .flow-ctl { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+
+  /* Post checker */
+  .post { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; background: var(--bg); }
+  .post .who { font-weight: 700; margin-bottom: .3rem; }
+  .post button.hl { font: inherit; text-align: left; display: inline; padding: 0 .15rem; cursor: pointer; color: var(--text);
+                    background: transparent; border: 0; border-bottom: 2px dashed var(--accent); border-radius: 0; }
+  .post button.hl[aria-expanded="true"] { background: var(--orange-soft); border-bottom-color: var(--orange); }
+  .notes { list-style: none; padding: 0; margin: .8rem 0 0; }
+  .notes li { display: none; padding: .45rem .7rem; margin: .35rem 0; border-left: 4px solid var(--orange); background: var(--orange-soft); border-radius: 6px; }
+  .notes li.show { display: block; }
+  .notes li b { margin-right: .3rem; }
+
+  details { border: 1px solid var(--border); border-radius: 10px; padding: .6rem 1rem; margin: .7rem 0; background: var(--bg); }
+  details summary { cursor: pointer; font-weight: 600; }
+  details .loesung { margin-top: .6rem; padding-top: .6rem; border-top: 1px dashed var(--border); }
+
+  .check li { list-style: none; margin-left: -1.2rem; }
+  .check label { cursor: pointer; }
+  .check input { transform: scale(1.2); margin-right: .5rem; accent-color: var(--green); }
+  .progress { height: 12px; background: var(--bg); border-radius: 999px; overflow: hidden;
+              border: 1px solid var(--border); margin: .5rem 0 1rem; }
+  .progress > div { height: 100%; width: 0; background: var(--green); transition: width .3s; }
+  .quellen li { margin: .3rem 0; overflow-wrap: anywhere; }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding-bottom: 2rem; }
+  @media (prefers-reduced-motion: reduce) {
+    .flow li, .progress > div { transition: none; }
+    .flow.js li.later { transform: none; }
+  }
+  @media print {
+    nav, .no-print { display: none !important; }
+    body { background: #fff; color: #000; }
+    header { background: none; color: #000; padding: 0 0 1rem; }
+    header a { color: #000 !important; }
+    section { break-inside: avoid-page; }
+    details > *:not(summary) { display: block !important; }
+    .sol, .notes li { display: block !important; }
+    .flow.js li.later { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Sozialkunde</a> › <span>Fremdenfeindlichkeit und Extremismus</span></div>
+  <h1>⚖️ Fremdenfeindlichkeit und Extremismus</h1>
+  <p>Sozialkunde · Klasse 9</p>
+</header>
+
+<nav>
+  <a href="#tests">📝 Probearbeiten</a>
+  <a href="#begriffe">1 Grundbegriffe</a>
+  <a href="#ursachen">2 Ursachen</a>
+  <a href="#demokratie">3 Demokratie</a>
+  <a href="#extremismus">4 Extremismus</a>
+  <a href="#internet">5 Internet</a>
+  <a href="#handeln">6 Handeln</a>
+  <a href="#recht">7 Recht</a>
+  <a href="#uebungen">Übungen</a>
+  <a href="#check">✅ Checkliste</a>
+</nav>
+
+<main>
+
+<!-- ============ PROBEARBEITEN ============ -->
+<section id="tests">
+  <h2><span class="num">📝</span> Probearbeiten (je 45 Minuten)</h2>
+  <p>Alle Probearbeiten kannst du direkt auf der Seite ausfüllen und abgeben. Auswahlaufgaben werden automatisch bewertet, bei offenen Aufgaben vergleichst du mit dem Erwartungshorizont und trägst deine Punkte ein – die Note erscheint sofort. Zum Üben auf Papier gibt es eine Druckansicht mit Schreiblinien.</p>
+  <ul class="tests">
+    <li><a href="probearbeit-1.html"><strong>Probearbeit 1</strong></a> <span class="pill">Standard</span> – Grundbegriffe, richtig/falsch, Vorurteil oder Diskriminierung, Ursachen, Extremismus und Demokratie, Botschaften im Internet, Fallbeispiel, Maßnahmen und Zivilcourage (40 P.)</li>
+    <li><a href="probearbeit-2.html"><strong>Probearbeit 2</strong></a> <span class="pill">Standard</span> – Begriffe zuordnen, Gewaltenteilung und Recht, Stereotyp → Vorurteil → Diskriminierung, Sündenbock und Kontakthypothese, Meinungs- und Pressefreiheit, Beitrag im Netz prüfen (Merkmale, Algorithmen, Reaktion mit Prüffrage), Zivilcourage, Beurteilung „Löschen?“ (42 P.)</li>
+    <li><a href="probearbeit-3.html"><strong>Probearbeit 3</strong></a> <span class="pill fire">🔥 Schwer</span> – radikal oder extremistisch, Erklärungsansätze vergleichen, FDGO prüfen, Grenzen der Meinungsfreiheit, „freundlich verpackte“ Anwerbung mit Prüffragen, Maßnahmen abwägen, Zivilcourage als Pflicht? (43 P.)</li>
+  </ul>
+  <div class="box tipp">
+    <strong class="label">💡 Was kommt dran?</strong>
+    Die vier Themen der Unterrichtsreihe: <strong>Grundbegriffe</strong> (Vorurteil, Diskriminierung, Fremdenfeindlichkeit, Rassismus) · <strong>Ursachen</strong> für Vorurteile und fremdenfeindliche Einstellungen · <strong>Extremismus und demokratische Grundprinzipien</strong> · <strong>Extremistische Botschaften im Internet</strong> (Erkennungsmerkmale, Prüffragen). Dazu laut Lehrplan (Stand 2019): Fremdenfeindlichkeit „in der analogen und digitalen Welt“, staatliche und nichtstaatliche Maßnahmen, Möglichkeiten und Grenzen von Zivilcourage „(z. B. in der Schule, in sozialen Netzwerken)“, Gewaltenteilung, Meinungs- und Pressefreiheit.
+  </div>
+</section>
+
+<!-- ============ 1 GRUNDBEGRIFFE ============ -->
+<section id="begriffe">
+  <h2><span class="num">1</span> Grundbegriffe</h2>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Begriff</th><th>Erklärung</th></tr>
+    <tr><td><strong>Stereotyp</strong></td><td>Vereinfachtes, schematisches Bild von einer Gruppe („die Deutschen sind pünktlich“). Es muss nicht unbedingt wertend sein und kann positiv oder negativ klingen.</td></tr>
+    <tr><td><strong>Vorurteil</strong></td><td>Eine Meinung über Menschen oder Gruppen, die ohne eigene Erfahrung und Prüfung übernommen wird. Anders als das Stereotyp enthält das Vorurteil eine <strong>Bewertung</strong> – meist eine Abwertung.</td></tr>
+    <tr><td><strong>Diskriminierung</strong></td><td>Einzelne Menschen oder Gruppen werden wegen eines Merkmals wie Herkunft, Hautfarbe, Religion oder Geschlecht <strong>benachteiligt</strong> oder ausgegrenzt. Oft stecken Vorurteile dahinter. Diskriminierung ist eine <strong>Handlung</strong>.</td></tr>
+    <tr><td><strong>Fremdenfeindlichkeit</strong> (Xenophobie)</td><td>Ablehnende, ausgrenzende und feindliche Haltung gegenüber Menschen, die als „fremd“ und deshalb bedrohlich empfunden werden. „Fremdsein“ ist keine feste Eigenschaft, sondern eine Zuschreibung – auch Deutsche können als „fremd“ abgestempelt werden.</td></tr>
+    <tr><td><strong>Rassismus</strong></td><td>Eine Ideologie der Ungleichwertigkeit: Menschen werden nach (vermeintlicher) Herkunft, Hautfarbe, Sprache oder Abstammung in Gruppen eingeteilt, ihnen werden feste – meist negative – Eigenschaften zugeschrieben, und ihre Ungleichbehandlung wird damit gerechtfertigt.</td></tr>
+    <tr><td><strong>Antisemitismus</strong></td><td>Sammelbegriff für alle Formen von Judenfeindlichkeit: Jüdinnen und Juden werden pauschal negative Eigenschaften zugeschrieben.</td></tr>
+  </table>
+  </div>
+
+  <h3>Vom Denken zum Handeln</h3>
+  <div class="chain3">
+    <div><b>Stereotyp</b>vereinfachtes Bild<br><em>„Die aus dem Dorf sind alle …“</em></div>
+    <div><b>Vorurteil</b>+ Bewertung, ungeprüft<br><em>„… und die sind faul.“</em></div>
+    <div><b>Diskriminierung</b>+ Handlung, Benachteiligung<br><em>„Dich nehmen wir nicht ins Team.“</em></div>
+  </div>
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    Stereotyp und Vorurteil spielen sich <strong>im Kopf</strong> ab, Diskriminierung ist eine <strong>Tat</strong>. Wer ein Vorurteil hat, diskriminiert nicht automatisch – aber Vorurteile sind oft die Grundlage für Diskriminierung. Vorurteile kann man überprüfen und ändern.
+  </div>
+
+  <h3>🎯 Übung: Stereotyp, Vorurteil oder Diskriminierung?</h3>
+  <p class="no-print">Tippe bei jeder Aussage auf den passenden Begriff. <span class="score" id="sort-score" aria-live="polite"></span></p>
+  <div id="sort">
+    <div class="sort-item" data-answer="Stereotyp"><p>a) „Mädchen spielen lieber mit Puppen.“</p>
+      <div class="sort-btns no-print"></div><div class="sol"><strong>Stereotyp:</strong> eine vereinfachende Verallgemeinerung über eine Gruppe – ohne offene Abwertung.</div></div>
+    <div class="sort-item" data-answer="Diskriminierung"><p>b) Ein Club lässt Jugendliche mit dunkler Hautfarbe nicht hinein, obwohl sie alle Regeln einhalten.</p>
+      <div class="sort-btns no-print"></div><div class="sol"><strong>Diskriminierung:</strong> eine Handlung, die Menschen wegen ihrer Hautfarbe benachteiligt.</div></div>
+    <div class="sort-item" data-answer="Vorurteil"><p>c) „Die aus dem Neubaugebiet sind doch alle asozial.“ (Die Sprecherin kennt dort niemanden.)</p>
+      <div class="sort-btns no-print"></div><div class="sol"><strong>Vorurteil:</strong> eine abwertende, ungeprüfte Meinung über eine ganze Gruppe.</div></div>
+    <div class="sort-item" data-answer="Diskriminierung"><p>d) Eine Vermieterin sagt einem Bewerber nur wegen seines ausländischen Namens ab.</p>
+      <div class="sort-btns no-print"></div><div class="sol"><strong>Diskriminierung:</strong> Benachteiligung wegen der (vermuteten) Herkunft.</div></div>
+    <div class="sort-item" data-answer="Vorurteil"><p>e) „Alte Leute verstehen doch eh nichts von Technik und sind nur im Weg.“</p>
+      <div class="sort-btns no-print"></div><div class="sol"><strong>Vorurteil:</strong> pauschale Abwertung („nur im Weg“) einer ganzen Gruppe.</div></div>
+    <div class="sort-item" data-answer="Stereotyp"><p>f) „Italiener können gut kochen.“</p>
+      <div class="sort-btns no-print"></div><div class="sol"><strong>Stereotyp:</strong> klingt positiv, ist aber trotzdem eine Verallgemeinerung über alle.</div></div>
+  </div>
+</section>
+
+<!-- ============ 2 URSACHEN ============ -->
+<section id="ursachen">
+  <h2><span class="num">2</span> Ursachen für Vorurteile und fremdenfeindliche Einstellungen</h2>
+
+  <h3>Wie entsteht ein Vorurteil? – Schritt für Schritt</h3>
+  <ol class="flow" id="flow">
+    <li><b>Kategorisieren:</b> Unser Gehirn sortiert Menschen in Gruppen („die Jungs“, „die Neuen“). Das vereinfacht die Welt – ist aber noch kein Vorurteil.</li>
+    <li><b>Verallgemeinern:</b> Einer Gruppe werden feste Eigenschaften zugeschrieben – es entsteht ein <strong>Stereotyp</strong>.</li>
+    <li><b>Bewerten:</b> Das Bild wird mit einer Abwertung verbunden und nicht geprüft – jetzt ist es ein <strong>Vorurteil</strong>.</li>
+    <li><b>Bestätigen:</b> Man achtet vor allem auf das, was zum Vorurteil passt, und übersieht Gegenbeispiele. Einseitige Medien und Freundeskreise verstärken das.</li>
+    <li><b>Handeln:</b> Wer nach dem Vorurteil handelt, benachteiligt andere – das ist <strong>Diskriminierung</strong>.</li>
+  </ol>
+  <div class="flow-ctl no-print">
+    <button type="button" class="btn primary" id="flow-next">Nächster Schritt</button>
+    <button type="button" class="btn" id="flow-all">Alle zeigen</button>
+    <span class="score" id="flow-state" aria-live="polite"></span>
+  </div>
+
+  <h3>Erklärungsansätze (Lehrplan: „Erklärungsansätze für Fremdenfeindlichkeit und Rechtsextremismus“)</h3>
+  <div class="grid">
+    <div class="card"><h4>👥 Wir und die Anderen</h4><p><strong>Theorie der sozialen Identität:</strong> Wer die eigene Gruppe gut finden will, wertet andere Gruppen ab. Dafür braucht es keinen Streit um Geld oder Güter – schon die Zugehörigkeit reicht.</p></div>
+    <div class="card"><h4>🐐 Sündenbock</h4><p>Wer sich benachteiligt fühlt (<strong>Deprivation</strong>), sucht Schuldige für die eigene Lage – oft eine schwächere oder leicht erkennbare Gruppe. Das Gefühl muss nicht der Wirklichkeit entsprechen.</p></div>
+    <div class="card"><h4>⚔️ Konkurrenz</h4><p><strong>Theorie realer Gruppenkonflikte:</strong> Negative Einstellungen entstehen aus Konkurrenz um Arbeit, Wohnungen, Ansehen, Macht und Einkommen („die nehmen uns etwas weg“).</p></div>
+    <div class="card"><h4>😟 Angst und Unsicherheit</h4><p><strong>Desintegration:</strong> Wenn gewohnte Lebensverhältnisse wegbrechen, suchen manche Halt in festen Kategorien wie „Volk“ oder „Nation“ und grenzen andere aus. Wie stark das wirkt, ist in der Forschung umstritten.</p></div>
+    <div class="card"><h4>🏠 Erziehung und Umfeld</h4><p>Vorurteile werden oft von Familie, Freundeskreis oder Clique übernommen – ohne sie zu prüfen. Gruppendruck macht es schwer, zu widersprechen.</p></div>
+    <div class="card"><h4>🤝 Fehlender Kontakt</h4><p><strong>Kontakthypothese:</strong> Wer Menschen anderer Herkunft in Familie, Schule oder Freundeskreis kennt, hat eher positive Einstellungen. Fehlt der Kontakt, haben Vorurteile freie Bahn.</p></div>
+  </div>
+  <div class="box">
+    <strong class="label">Fremdenfeindlichkeit in der Lebenswelt Jugendlicher</strong>
+    Sie beginnt oft klein: abwertende „Witze“ auf dem Schulhof, Sprüche im Klassenchat, Ausgrenzung beim Sport oder geteilte Memes. Wer solche Situationen erkennt, kann früh gegensteuern (→ Abschnitt 6).
+  </div>
+</section>
+
+<!-- ============ 3 DEMOKRATIE ============ -->
+<section id="demokratie">
+  <h2><span class="num">3</span> Demokratische Grundprinzipien</h2>
+
+  <h3>Die freiheitliche demokratische Grundordnung (FDGO)</h3>
+  <p>Das Grundgesetz nennt die FDGO mehrfach, definiert sie aber nicht selbst. Das <strong>Bundesverfassungsgericht</strong> hat sie beschrieben – zuerst 1952, zusammengefasst 2017.</p>
+  <div class="grid">
+    <div class="card">
+      <h4>Kernelemente nach dem Urteil von 2017</h4>
+      <dl>
+        <dt>1. Menschenwürde</dt><dd>Ausgangspunkt der FDGO (Art. 1 Abs. 1 GG): Jeder Mensch hat denselben Wert.</dd>
+        <dt>2. Demokratieprinzip</dt><dd>Alle Bürgerinnen und Bürger können gleichberechtigt an der politischen Willensbildung teilhaben.</dd>
+        <dt>3. Rechtsstaatsprinzip</dt><dd>Die öffentliche Gewalt ist an das Recht gebunden, unabhängige Gerichte kontrollieren sie, Gewalt übt nur der Staat aus (Gewaltmonopol).</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h4>Grundprinzipien nach dem Urteil von 1952</h4>
+      <ul>
+        <li>Achtung der im Grundgesetz konkretisierten Menschenrechte</li>
+        <li>Volkssouveränität</li>
+        <li>Gewaltenteilung</li>
+        <li>Verantwortlichkeit der Regierung</li>
+        <li>Gesetzmäßigkeit der Verwaltung</li>
+        <li>Unabhängigkeit der Gerichte</li>
+        <li>Mehrparteienprinzip, Chancengleichheit der Parteien, Recht auf Opposition</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Gewaltenteilung</h3>
+  <p><q>Alle Staatsgewalt geht vom Volke aus. Sie wird vom Volke in Wahlen und Abstimmungen und durch besondere Organe der Gesetzgebung, der vollziehenden Gewalt und der Rechtsprechung ausgeübt.</q> <span class="gg">(Art. 20 Abs. 2 GG)</span></p>
+  <div class="grid">
+    <div class="card"><h4>📜 Legislative</h4><p>Gesetzgebung – z. B. Bundestag, Bundesrat, Landtag</p></div>
+    <div class="card"><h4>🏢 Exekutive</h4><p>vollziehende Gewalt – z. B. Bundesregierung, Landesregierung, Verwaltung, Polizei</p></div>
+    <div class="card"><h4>⚖️ Judikative</h4><p>Rechtsprechung – unabhängige Gerichte, z. B. das Bundesverfassungsgericht</p></div>
+  </div>
+  <div class="box merke"><strong class="label">✔ Merke</strong>Die drei Gewalten kontrollieren sich gegenseitig. So kann niemand allein alle Macht an sich reißen – Schutz vor Machtmissbrauch.</div>
+
+  <h3>Meinungs- und Pressefreiheit</h3>
+  <p><q>Jeder hat das Recht, seine Meinung in Wort, Schrift und Bild frei zu äußern und zu verbreiten und sich aus allgemein zugänglichen Quellen ungehindert zu unterrichten.</q> <span class="gg">(Art. 5 Abs. 1 GG, Satz 1)</span> Auch die Pressefreiheit ist dort garantiert.</p>
+  <p>Ohne freie Information keine freie Wahl: Wer sich informieren und seine Meinung sagen kann, kann mitentscheiden. Die Presse kontrolliert die Mächtigen und deckt Missstände auf.</p>
+  <div class="box achtung"><strong class="label">⚠ Grenzen</strong>Diese Rechte <q>finden ihre Schranken in den Vorschriften der allgemeinen Gesetze, den gesetzlichen Bestimmungen zum Schutze der Jugend und in dem Recht der persönlichen Ehre</q> <span class="gg">(Art. 5 Abs. 2 GG)</span>. Beleidigung oder Volksverhetzung sind also keine erlaubte „Meinung“.</div>
+</section>
+
+<!-- ============ 4 EXTREMISMUS ============ -->
+<section id="extremismus">
+  <h2><span class="num">4</span> Extremismus</h2>
+
+  <h3>Radikal ist nicht gleich extremistisch</h3>
+  <div class="grid">
+    <div class="card"><h4>Radikalismus</h4><p>Zugespitzte Denk- und Handlungsweise, die gesellschaftliche Probleme „an der Wurzel“ (lat. <em>radix</em>) anpacken will. Der demokratische Verfassungsstaat und seine Grundprinzipien sollen dabei <strong>nicht</strong> beseitigt werden. Radikale Meinungen haben in einer pluralistischen Gesellschaft ihren legitimen Platz.</p></div>
+    <div class="card"><h4>Extremismus</h4><p>Bestrebungen, die darauf abzielen, die <strong>Grundwerte der freiheitlichen Demokratie zu beseitigen</strong>. Extremistinnen und Extremisten lehnen die Regeln ab, nach denen unser demokratischer Staat funktioniert – oft auch mit Gewalt.</p></div>
+  </div>
+  <div class="box tipp"><strong class="label">💡 Beispiel</strong>Wer die Wirtschaftsordnung grundlegend kritisiert und ändern will, ist deshalb noch kein Extremist – solange er die Grundprinzipien der Verfassung anerkennt (Unterscheidung des Bundesamts für Verfassungsschutz).</div>
+
+  <h3>Populismus</h3>
+  <p>Populismus ist ein politischer Stil: „Wir, das Volk“ gegen „die da oben“, einfache Antworten auf komplexe Probleme, der Anspruch, als Einzige den „wahren Volkswillen“ zu kennen, und Ablehnung von Kompromissen. Populismus ist nicht automatisch Extremismus, kann aber Feindbilder und Vorurteile verstärken. Er kommt in unterschiedlichen politischen Richtungen vor.</p>
+
+  <h3>Formen von Extremismus (nach den Beschreibungen des Verfassungsschutzes)</h3>
+  <div class="grid">
+    <div class="card"><h4>Rechtsextremismus</h4><dl>
+      <dt>Kerngedanke</dt><dd>Nicht alle Menschen seien gleich viel wert; entscheidend sei die Abstammung. Dazu gehören Rassismus, Antisemitismus und Chauvinismus (übersteigerter Nationalstolz, der andere Völker abwertet).</dd>
+      <dt>Angestrebte Ordnung</dt><dd>Ein autoritärer Staat ohne echte Mitbestimmung, in dem Staat und „Volk“ eine Einheit bilden sollen. Der Einzelne zählt nur als Teil dieses nach Abstammung bestimmten „Volkes“ (Fachbegriff: völkischer Kollektivismus).</dd>
+      <dt>Gegen die FDGO, weil …</dt><dd>Menschenwürde und Gleichheit (Art. 1, 3 GG) abgelehnt werden.</dd></dl></div>
+    <div class="card"><h4>Linksextremismus</h4><dl>
+      <dt>Kerngedanke</dt><dd>Der heutige Staat und unsere Wirtschafts- und Gesellschaftsordnung seien nur ein System, das Menschen zwingt, ausbeutet und unterdrückt – deshalb müsse es weg.</dd>
+      <dt>Angestrebte Ordnung</dt><dd>Ein kommunistisches System oder eine anarchistische Gesellschaft, also ganz ohne Staat und ohne Herrschaft („herrschaftsfrei“).</dd>
+      <dt>Gegen die FDGO, weil …</dt><dd>die bestehende Staats- und Gesellschaftsordnung und damit die demokratische Grundordnung beseitigt werden soll.</dd></dl></div>
+    <div class="card"><h4>Islamismus (religiös begründeter Extremismus)</h4><dl>
+      <dt>Kerngedanke</dt><dd>Unter Berufung auf den Islam: Eine angeblich von Gott gewollte Ordnung stehe über allen Gesetzen, die Menschen machen. Judenfeindschaft (Antisemitismus) ist ein wesentlicher Teil.</dd>
+      <dt>Angestrebte Ordnung</dt><dd>Gesellschaft und Politik sollen ganz von dieser religiös begründeten Ordnung bestimmt werden.</dd>
+      <dt>Gegen die FDGO, weil …</dt><dd>die Volkssouveränität abgelehnt wird: Nicht das Volk über gewählte Parlamente soll die Gesetze machen.</dd></dl></div>
+  </div>
+  <div class="box merke"><strong class="label">✔ Merke</strong>Alle drei Formen wollen die freiheitliche demokratische Grundordnung ganz oder teilweise beseitigen – sie unterscheiden sich in Begründung und Ziel. <strong>Islamismus ist nicht dasselbe wie der Islam:</strong> Islamismus ist eine politische Ideologie, die sich auf die Religion beruft.</div>
+
+  <h3>Der Verfassungsschutz</h3>
+  <ul>
+    <li>Es gibt <strong>17 Verfassungsschutzbehörden</strong>: das Bundesamt für Verfassungsschutz (gegründet 1950) und 16 Landesbehörden.</li>
+    <li>Aufgabe: <strong>Sammlung und Auswertung von Informationen</strong> über Bestrebungen gegen die freiheitliche demokratische Grundordnung (§ 3 BVerfSchG) – er ist ein Nachrichtendienst und warnt früh, bevor Straftaten passieren.</li>
+    <li><strong>Keine Polizei:</strong> <q>Polizeiliche Befugnisse oder Weisungsbefugnisse stehen dem Bundesamt für Verfassungsschutz nicht zu; …</q> (§ 8 Abs. 3 BVerfSchG). Er darf also niemanden festnehmen oder durchsuchen.</li>
+    <li>Über seine Erkenntnisse informiert das <strong>Bundesinnenministerium</strong> mindestens einmal im Jahr im <strong>Verfassungsschutzbericht</strong> (§ 16 Abs. 2 BVerfSchG); für die Länder geben die Landesinnenministerien eigene Berichte heraus.</li>
+  </ul>
+
+  <h3>Wehrhafte Demokratie: Vereins- und Parteiverbot</h3>
+  <ul>
+    <li>Vereinigungen, die sich gegen die verfassungsmäßige Ordnung richten, sind verboten (Art. 9 Abs. 2 GG).</li>
+    <li>Parteien, die die FDGO beeinträchtigen oder beseitigen wollen, sind verfassungswidrig (Art. 21 Abs. 2 GG). Darüber entscheidet <strong>nur das Bundesverfassungsgericht</strong> (Art. 21 Abs. 4 GG).</li>
+    <li>Ziele allein reichen für ein Verbot nicht: Laut Bundesverfassungsgericht (2017) muss es konkrete Anhaltspunkte geben, dass die Partei ihre Ziele auch erreichen <em>kann</em>. Statt eines Verbots ist auch ein Ausschluss von staatlicher Finanzierung möglich (Art. 21 Abs. 3 GG).</li>
+  </ul>
+</section>
+
+<!-- ============ 5 INTERNET ============ -->
+<section id="internet">
+  <h2><span class="num">5</span> Extremistische Botschaften im Internet</h2>
+  <p>Extremistinnen und Extremisten aller Richtungen nutzen soziale Netzwerke, um Anhänger zu gewinnen. Ihre Beiträge sind oft nicht als Hetze erkennbar, sondern wirken witzig, modern oder sogar sympathisch.</p>
+
+  <h3>Erkennungsmerkmale</h3>
+  <div class="grid">
+    <div class="card"><h4>🎯 Feindbilder</h4><p>Eine Gruppe („die da oben“, „die Fremden“, „das System“) ist an allem schuld – Sündenböcke statt echter Ursachen.</p></div>
+    <div class="card"><h4>⚫⚪ Schwarz-Weiß-Denken</h4><p>Nur „wir“ und „die“. Wer widerspricht, ist ein „Verräter“. Kompromisse gibt es nicht.</p></div>
+    <div class="card"><h4>🔊 Verallgemeinerungen</h4><p>„Alle“, „immer“, „nie“ – Einzelfälle werden auf ganze Gruppen übertragen.</p></div>
+    <div class="card"><h4>❤️‍🔥 Starke Gefühle</h4><p>Wut und Angst – aber auch positive Gefühle wie Stolz, Gemeinschaft und Zugehörigkeit sollen ködern.</p></div>
+    <div class="card"><h4>🕵️ Alleinige Wahrheit</h4><p>„Nur wir sagen euch die Wahrheit“, „die Medien lügen“ – Verschwörungserzählungen ersetzen Belege.</p></div>
+    <div class="card"><h4>🎭 Harmlose Verpackung</h4><p>Humor, Memes, Musik, Trends und Jugendsprache tarnen die Botschaft. Es gibt auch versteckte Zahlen-, Buchstaben- und Emoji-Codes – sie werden hier bewusst nicht abgebildet.</p></div>
+    <div class="card"><h4>⏰ Druck</h4><p>„Teilt das sofort, bevor es gelöscht wird!“ – Zeitdruck verhindert Nachdenken.</p></div>
+    <div class="card"><h4>🔁 Algorithmus</h4><p>Plattformen zeigen mehr von dem, was man angesehen oder geliked hat. So kann eine Filterblase bzw. Echokammer entstehen, in der extreme Sichtweisen normal wirken.</p></div>
+  </div>
+
+  <h3>🔍 Übung: Prüf den Beitrag!</h3>
+  <p class="no-print">Der Beitrag ist erfunden. Tippe auf die unterstrichenen Stellen – welche Merkmale stecken darin? <span class="score" id="post-score" aria-live="polite"></span></p>
+  <div class="post">
+    <div class="who">@klartext_echt · gesponsert</div>
+    <p style="margin:0">
+      <button type="button" class="hl" data-note="n1" aria-expanded="false">😂 Wer glaubt eigentlich noch den Nachrichten?</button>
+      <button type="button" class="hl" data-note="n2" aria-expanded="false">Nur wir zeigen euch, was wirklich passiert.</button>
+      <button type="button" class="hl" data-note="n3" aria-expanded="false">Die da oben und die Neuen machen unser Land kaputt.</button>
+      <button type="button" class="hl" data-note="n4" aria-expanded="false">Wer jetzt schweigt, ist mitschuldig.</button>
+      <button type="button" class="hl" data-note="n5" aria-expanded="false">Teilt das, solange es noch geht!</button>
+    </p>
+  </div>
+  <ul class="notes">
+    <li id="n1"><b>Humor + Medienmisstrauen:</b> Das Lach-Emoji macht es locker, gleichzeitig werden seriöse Nachrichten pauschal abgewertet.</li>
+    <li id="n2"><b>Alleiniger Wahrheitsanspruch:</b> Nur die eigene Gruppe soll die Wahrheit kennen – typisch für Verschwörungsdenken.</li>
+    <li id="n3"><b>Feindbild und Verallgemeinerung:</b> Zwei Gruppen werden pauschal zu Schuldigen gemacht (Sündenbock).</li>
+    <li id="n4"><b>Schwarz-Weiß-Denken und Druck:</b> Wer nicht mitmacht, gehört zu den „Bösen“.</li>
+    <li id="n5"><b>Zeitdruck und Aufforderung zum Teilen:</b> Man soll verbreiten, ohne zu prüfen.</li>
+  </ul>
+
+  <h3>Kritische Prüffragen</h3>
+  <ol>
+    <li><strong>Wer</strong> ist der Absender? Gibt es ein Impressum, eine erkennbare Person oder Organisation?</li>
+    <li>Welche <strong>Quellen und Belege</strong> werden genannt? Kann ich sie nachprüfen?</li>
+    <li><strong>Wann</strong> wurde der Beitrag veröffentlicht? Ist er aktuell oder aus dem Zusammenhang gerissen?</li>
+    <li>Welche <strong>Gefühle</strong> soll der Beitrag bei mir auslösen?</li>
+    <li><strong>Wem nützt</strong> die Botschaft?</li>
+    <li>Was berichten <strong>andere, unabhängige Quellen</strong>?</li>
+    <li>Passt das <strong>Bild</strong> zur Nachricht? (Rückwärts-Bildersuche)</li>
+  </ol>
+
+  <h3>Wie reagiere ich?</h3>
+  <ul>
+    <li><strong>Nicht teilen, nicht liken</strong> – auch nicht „zum Spaß“. Jede Reaktion erhöht die Reichweite.</li>
+    <li><strong>Melden:</strong> bei der Plattform oder bei <a href="https://www.jugendschutz.net/verstoss-melden">jugendschutz.net</a> (Kategorie „Politischer Extremismus“).</li>
+    <li><strong>Beweise sichern:</strong> Screenshot mit Datum und Link, bevor gemeldet wird.</li>
+    <li>Bei <strong>strafbaren Inhalten</strong> (z. B. Volksverhetzung, Gewaltaufrufe) Anzeige bei der Polizei.</li>
+    <li><strong>Darüber reden:</strong> mit Eltern, Lehrkräften oder Freunden.</li>
+    <li><strong>Sachliche Gegenrede</strong>, wenn du dich sicher fühlst – ohne Beleidigungen.</li>
+  </ul>
+</section>
+
+<!-- ============ 6 HANDELN ============ -->
+<section id="handeln">
+  <h2><span class="num">6</span> Was hilft? Maßnahmen, Zivilcourage, Hilfe</h2>
+
+  <h3>Staatliche und nichtstaatliche Maßnahmen</h3>
+  <div class="grid">
+    <div class="card"><h4>🏛️ Staatlich</h4><ul>
+      <li>Strafverfolgung, z. B. wegen Volksverhetzung (§ 130 StGB)</li>
+      <li>Beobachtung durch den Verfassungsschutz</li>
+      <li>Vereinsverbote (Art. 9 Abs. 2 GG), Parteiverbote durch das Bundesverfassungsgericht (Art. 21 GG)</li>
+      <li>Schutz vor Benachteiligung durch Gesetze (Art. 3 GG, AGG)</li>
+      <li>Politische Bildung in der Schule und durch die Bundeszentrale für politische Bildung</li></ul></div>
+    <div class="card"><h4>🙋 Nichtstaatlich</h4><ul>
+      <li>Vereine, Initiativen und Bündnisse, Demonstrationen</li>
+      <li>Beratung für Betroffene rechter, rassistischer und antisemitischer Gewalt</li>
+      <li>Aussteigerhilfe, z. B. EXIT-Deutschland (unabhängig von Behörden)</li>
+      <li>Schulnetzwerk „Schule ohne Rassismus – Schule mit Courage“ (rund 5 000 Schulen)</li>
+      <li>Jeder Einzelne: widersprechen, melden, helfen</li></ul></div>
+  </div>
+
+  <h3>Zivilcourage – Möglichkeiten und Grenzen</h3>
+  <p><strong>Zivilcourage</strong> (von lat. <em>civis</em> = Bürger, frz. <em>courage</em> = Mut) heißt: öffentlich für die eigene Überzeugung und für andere eintreten – auch wenn es unbequem ist.</p>
+  <div class="grid">
+    <div class="card"><h4>✅ Möglichkeiten</h4><ul>
+      <li>Hinsehen statt wegsehen</li>
+      <li>Betroffene ansprechen, ihnen beistehen</li>
+      <li>Andere gezielt und persönlich um Hilfe bitten („Sie mit der roten Jacke …“) – wenn einer anfängt, machen andere eher mit</li>
+      <li>Polizei über <strong>110</strong> rufen</li>
+      <li>Als Zeugin oder Zeuge aussagen</li>
+      <li>Abwertende „Witze“ und Sprüche deutlich ablehnen</li></ul></div>
+    <div class="card"><h4>⛔ Grenzen</h4><ul>
+      <li><strong>Eigene Sicherheit geht vor:</strong> Hilf, ohne dich selbst in Gefahr zu bringen.</li>
+      <li>Man muss nicht immer selbst eingreifen – oft ist es klüger, Hilfe zu holen.</li>
+      <li>Angst und Unsicherheit sind normal.</li>
+      <li>Zivilcourage ersetzt keine Polizei und keine staatlichen Maßnahmen.</li></ul></div>
+  </div>
+  <div class="box"><strong class="label">§ 323c StGB – unterlassene Hilfeleistung</strong>Wer bei Unglücksfällen, gemeiner Gefahr oder Not nicht hilft, obwohl es erforderlich und zumutbar ist – <q>insbesondere ohne erhebliche eigene Gefahr</q> –, macht sich strafbar. Hilfe holen (110) ist fast immer möglich.</div>
+
+  <h3>Hilfsangebote (bundesweit)</h3>
+  <ul>
+    <li><strong>Notruf Polizei: 110</strong> – bei Gefahr sofort.</li>
+    <li><strong>Nummer gegen Kummer – Kinder- und Jugendtelefon: 116 111</strong>, kostenlos und anonym, Mo–Sa 14–20 Uhr – <a href="https://www.nummergegenkummer.de/">nummergegenkummer.de</a></li>
+    <li><strong>Antidiskriminierungsstelle des Bundes</strong> – Beratung für alle, die Diskriminierung erlebt haben – <a href="https://www.antidiskriminierungsstelle.gov.de/">antidiskriminierungsstelle.gov.de</a></li>
+    <li><strong>HateAid</strong> – kostenlose Beratung bei digitaler Gewalt und Hass im Netz – <a href="https://hateaid.org/betroffenenberatung/">hateaid.org</a></li>
+    <li><strong>jugendschutz.net</strong> – Meldestelle für gefährdende Inhalte im Netz – <a href="https://www.jugendschutz.net/verstoss-melden">jugendschutz.net/verstoss-melden</a></li>
+    <li><strong>VBRG</strong> – Verband der Beratungsstellen für Betroffene rechter, rassistischer und antisemitischer Gewalt, mit Beratungsstellen in den Bundesländern – <a href="https://www.verband-brg.de/">verband-brg.de</a></li>
+    <li><strong>EXIT-Deutschland</strong> – Hilfe beim Ausstieg aus extremistischen Szenen – <a href="https://www.exit-deutschland.de/">exit-deutschland.de</a></li>
+    <li><strong>Beratungsstelle Radikalisierung (BAMF)</strong> – für Eltern, Angehörige, Freunde und Lehrkräfte, die sich um islamistische Radikalisierung sorgen: <strong>0911 943 43 43</strong> – <a href="https://www.bamf.de/DE/Behoerde/Beratungsstelle/beratungsstelle-node.html">bamf.de</a></li>
+  </ul>
+</section>
+
+<!-- ============ 7 RECHT ============ -->
+<section id="recht">
+  <h2><span class="num">7</span> Rechtliche Grundlagen</h2>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Gesetz</th><th>Inhalt (vereinfacht, Zitate wörtlich)</th></tr>
+    <tr><td><strong>Art. 1 Abs. 1 GG</strong></td><td><q>Die Würde des Menschen ist unantastbar. Sie zu achten und zu schützen ist Verpflichtung aller staatlichen Gewalt.</q></td></tr>
+    <tr><td><strong>Art. 3 GG</strong></td><td><q>Alle Menschen sind vor dem Gesetz gleich.</q> (Abs. 1) – Niemand darf wegen Geschlecht, Abstammung, „Rasse“, Sprache, Heimat und Herkunft, Glauben, religiöser oder politischer Anschauungen benachteiligt oder bevorzugt werden; niemand wegen einer Behinderung benachteiligt werden (Abs. 3).</td></tr>
+    <tr><td><strong>Art. 5 GG</strong></td><td>Meinungs- und Pressefreiheit – mit Schranken durch die allgemeinen Gesetze, den Jugendschutz und das Recht der persönlichen Ehre.</td></tr>
+    <tr><td><strong>Art. 20 GG</strong></td><td>Demokratie, Volkssouveränität, Gewaltenteilung (Abs. 2).</td></tr>
+    <tr><td><strong>Art. 21 GG</strong></td><td>Parteien, die die FDGO beeinträchtigen oder beseitigen wollen, sind verfassungswidrig (Abs. 2) bzw. von staatlicher Finanzierung ausgeschlossen (Abs. 3). Entscheidung nur durch das Bundesverfassungsgericht (Abs. 4).</td></tr>
+    <tr><td><strong>§ 130 StGB</strong> Volksverhetzung</td><td>Strafbar ist, wer – in einer Weise, die den öffentlichen Frieden stören kann – gegen eine nationale, rassische, religiöse oder ethnische Gruppe oder Teile der Bevölkerung zum Hass aufstachelt, zu Gewalt- oder Willkürmaßnahmen auffordert oder ihre Menschenwürde durch Beschimpfen, böswilliges Verächtlichmachen oder Verleumden angreift. Strafe: <q>Freiheitsstrafe von drei Monaten bis zu fünf Jahren</q> (Abs. 1).</td></tr>
+    <tr><td><strong>§ 86a StGB</strong></td><td>Verboten ist, Kennzeichen verbotener Parteien und Vereinigungen zu verbreiten oder öffentlich zu verwenden. Kennzeichen sind z. B. Fahnen, Abzeichen, Uniformstücke, Parolen und Grußformen – auch zum Verwechseln ähnliche. Strafe: Freiheitsstrafe bis zu drei Jahren oder Geldstrafe.</td></tr>
+    <tr><td><strong>AGG</strong></td><td>Allgemeines Gleichbehandlungsgesetz: soll Benachteiligungen aus Gründen der „Rasse“ oder wegen der ethnischen Herkunft, des Geschlechts, der Religion oder Weltanschauung, einer Behinderung, des Alters oder der sexuellen Identität verhindern oder beseitigen (§ 1) – z. B. bei Bewerbung, Arbeit oder Wohnungssuche.</td></tr>
+  </table>
+  </div>
+  <p class="gg">Das Grundgesetz bindet vor allem den Staat. Für Arbeitgeber, Vermieter oder Geschäfte gilt beim Schutz vor Diskriminierung vor allem das AGG.</p>
+</section>
+
+<!-- ============ ÜBUNGEN ============ -->
+<section id="uebungen">
+  <h2><span class="num">✎</span> Übungen mit Lösungen</h2>
+
+  <details><summary>1. Erkläre den Unterschied zwischen Stereotyp, Vorurteil und Diskriminierung.</summary>
+    <div class="loesung">Ein <strong>Stereotyp</strong> ist ein vereinfachtes Bild einer Gruppe, das nicht wertend sein muss. Ein <strong>Vorurteil</strong> verbindet dieses Bild mit einer ungeprüften (meist negativen) Bewertung. <strong>Diskriminierung</strong> ist eine Handlung, bei der Menschen deswegen benachteiligt werden.</div></details>
+
+  <details><summary>2. Nenne drei Erklärungsansätze für Vorurteile und erkläre einen davon.</summary>
+    <div class="loesung">Z. B. soziale Identität (Wir und die Anderen), Sündenbock/Deprivation, Konkurrenz, Angst und Unsicherheit, Erziehung und Umfeld, fehlender Kontakt. <em>Sündenbock:</em> Wer sich benachteiligt fühlt, sucht Schuldige – oft eine schwächere Gruppe – statt der wirklichen Ursachen.</div></details>
+
+  <details><summary>3. Nenne die drei Kernelemente der FDGO nach dem Bundesverfassungsgericht (2017).</summary>
+    <div class="loesung">Menschenwürde, Demokratieprinzip, Rechtsstaatsprinzip.</div></details>
+
+  <details><summary>4. Ordne zu: Bundestag · Bundesverfassungsgericht · Polizei.</summary>
+    <div class="loesung">Bundestag = Legislative (Gesetzgebung) · Bundesverfassungsgericht = Judikative (Rechtsprechung) · Polizei = Exekutive (vollziehende Gewalt).</div></details>
+
+  <details><summary>5. Ist jede radikale Meinung extremistisch? Begründe.</summary>
+    <div class="loesung"><strong>Nein.</strong> Radikale wollen Probleme an der Wurzel packen, erkennen aber den demokratischen Verfassungsstaat an. Extremistisch ist erst, wer die Grundwerte der freiheitlichen Demokratie beseitigen will.</div></details>
+
+  <details><summary>6. Vergleiche Rechtsextremismus, Linksextremismus und Islamismus: Was haben sie gemeinsam, worin unterscheiden sie sich?</summary>
+    <div class="loesung"><strong>Gemeinsam:</strong> Alle wollen die FDGO ganz oder teilweise beseitigen. <strong>Unterschied:</strong> Rechtsextremismus lehnt die Gleichheit der Menschen ab und will einen autoritären, völkischen Staat; Linksextremismus will die bestehende Ordnung durch ein kommunistisches oder anarchistisches System ersetzen; Islamismus stellt eine angeblich gottgewollte Ordnung über die Gesetze gewählter Parlamente.</div></details>
+
+  <details><summary>7. Darf der Verfassungsschutz Personen festnehmen?</summary>
+    <div class="loesung"><strong>Nein.</strong> Er sammelt und wertet Informationen aus; polizeiliche Befugnisse hat er nicht (§ 8 Abs. 3 BVerfSchG).</div></details>
+
+  <details><summary>8. Nenne vier Erkennungsmerkmale extremistischer Botschaften im Internet.</summary>
+    <div class="loesung">Feindbilder, Schwarz-Weiß-Denken, Verallgemeinerungen, starke Gefühle (auch Zugehörigkeit und Stolz), alleiniger Wahrheitsanspruch, harmlose Verpackung durch Humor/Memes, Zeitdruck, fehlende Quellen.</div></details>
+
+  <details><summary>9. Formuliere drei Prüffragen für einen verdächtigen Beitrag.</summary>
+    <div class="loesung">Wer ist der Absender? Welche Belege gibt es? Wem nützt die Botschaft? (auch: Wann veröffentlicht? Welche Gefühle soll er auslösen? Was sagen andere Quellen?)</div></details>
+
+  <details><summary>10. Ist „Ich finde die Politik der Regierung schlecht“ von der Meinungsfreiheit gedeckt? Und ein Aufruf zur Gewalt gegen eine religiöse Gruppe?</summary>
+    <div class="loesung">Die Kritik an der Regierung ist geschützt (Art. 5 GG). Der Gewaltaufruf gegen eine religiöse Gruppe ist es nicht – er kann Volksverhetzung (§ 130 StGB) sein.</div></details>
+
+  <details><summary>11. Nenne je eine staatliche und eine nichtstaatliche Maßnahme gegen Fremdenfeindlichkeit.</summary>
+    <div class="loesung">Staatlich: z. B. Strafverfolgung wegen Volksverhetzung, Verfassungsschutz, Vereins- oder Parteiverbot, politische Bildung. Nichtstaatlich: z. B. Initiativen und Bündnisse, Opferberatung, Aussteigerhilfe, „Schule ohne Rassismus – Schule mit Courage“.</div></details>
+
+  <details><summary>12. Beurteile: „Wenn ich sehe, dass jemand rassistisch beleidigt wird, muss ich mich sofort dazwischenstellen.“</summary>
+    <div class="loesung">Hinsehen und Helfen ist wichtig – aber die eigene Sicherheit geht vor. Man muss sich nicht körperlich dazwischenstellen; oft ist es klüger, andere um Hilfe zu bitten, die Polizei zu rufen und Zeuge zu sein. Beide Urteile („Eingreifen ist Pflicht“ / „Hilfe holen reicht“) sind möglich, wenn sie mit Möglichkeiten und Grenzen von Zivilcourage begründet werden.</div></details>
+</section>
+
+<!-- ============ CHECKLISTE ============ -->
+<section id="check">
+  <h2><span class="num">✅</span> Checkliste – Kann ich das?</h2>
+  <div class="progress no-print"><div id="bar"></div></div>
+  <p id="ptext" class="no-print" style="margin-top:-.6rem;color:var(--muted)"></p>
+  <ul class="check" id="checklist">
+    <li><label><input type="checkbox"> Ich kann Stereotyp, Vorurteil und Diskriminierung erklären und unterscheiden.</label></li>
+    <li><label><input type="checkbox"> Ich kann Fremdenfeindlichkeit, Rassismus und Antisemitismus erklären.</label></li>
+    <li><label><input type="checkbox"> Ich kann erklären, wie ein Vorurteil entsteht.</label></li>
+    <li><label><input type="checkbox"> Ich kenne mindestens drei Erklärungsansätze (z. B. Sündenbock, soziale Identität, Konkurrenz, Kontakthypothese).</label></li>
+    <li><label><input type="checkbox"> Ich kenne die Kernelemente der FDGO und weitere demokratische Grundprinzipien.</label></li>
+    <li><label><input type="checkbox"> Ich kann die Gewaltenteilung mit Beispielen erklären.</label></li>
+    <li><label><input type="checkbox"> Ich weiß, warum Meinungs- und Pressefreiheit wichtig sind und wo ihre Grenzen liegen.</label></li>
+    <li><label><input type="checkbox"> Ich kann Radikalismus und Extremismus unterscheiden.</label></li>
+    <li><label><input type="checkbox"> Ich kann Rechts-, Linksextremismus und Islamismus mit Merkmalen beschreiben.</label></li>
+    <li><label><input type="checkbox"> Ich weiß, was der Verfassungsschutz tut und was er nicht darf.</label></li>
+    <li><label><input type="checkbox"> Ich erkenne Merkmale extremistischer Botschaften im Internet.</label></li>
+    <li><label><input type="checkbox"> Ich kann kritische Prüffragen anwenden und weiß, wie ich reagiere.</label></li>
+    <li><label><input type="checkbox"> Ich kenne staatliche und nichtstaatliche Maßnahmen.</label></li>
+    <li><label><input type="checkbox"> Ich kann Möglichkeiten und Grenzen von Zivilcourage beurteilen.</label></li>
+    <li><label><input type="checkbox"> Ich kenne Art. 1, 3, 5, 20, 21 GG und § 130 StGB.</label></li>
+  </ul>
+</section>
+
+<!-- ============ QUELLEN ============ -->
+<section id="quellen">
+  <h2><span class="num">📚</span> Quellen</h2>
+  <p class="gg">Alle Seiten abgerufen am 18.11.2026. Begriffserklärungen sind vereinfacht nach diesen Quellen formuliert; wörtliche Zitate stehen in Anführungszeichen.</p>
+  <ul class="quellen">
+    <li>Fachlehrplan Sekundarschule Sozialkunde Sachsen-Anhalt, Stand 01.08.2019, Schuljahrgänge 9/10, S. 18: <a href="https://edumedia-depot.gei.de/bitstream/handle/11163/6468/1694325385.pdf?sequence=1">edumedia-depot.gei.de</a></li>
+    <li>bpb, Grafstat Rechtsextremismus – Glossar (Stereotyp, Diskriminierung, Fremdenfeindlichkeit, Rassismus, Antisemitismus, Rechtsextremismus): <a href="https://www.bpb.de/lernen/angebote/grafstat/rechtsextremismus/173103/glossar/">bpb.de/…/173103/glossar</a></li>
+    <li>bpb, M 01.10 Vom Stereotyp zum Vorurteil: <a href="https://www.bpb.de/lernen/angebote/grafstat/rechtsextremismus/176220/m-01-10-vom-stereotyp-zum-vorurteil/">bpb.de/…/176220</a></li>
+    <li>bpb, Das junge Politik-Lexikon: Vorurteil – <a href="https://www.bpb.de/kurz-knapp/lexika/das-junge-politik-lexikon/321363/vorurteil/">bpb.de/…/321363</a>; Zivilcourage – <a href="https://www.bpb.de/kurz-knapp/lexika/das-junge-politik-lexikon/321489/zivilcourage/">bpb.de/…/321489</a></li>
+    <li>bpb, Dossier Rechtsextremismus: Fremdenfeindlichkeit – <a href="https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/500779/fremdenfeindlichkeit/">bpb.de/…/500779</a>; Streitbare Demokratie – <a href="https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/41891/streitbare-demokratie/">bpb.de/…/41891</a>; TikTok und Rechtsextremismus – <a href="https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/541511/tiktok-und-rechtsextremismus/">bpb.de/…/541511</a></li>
+    <li>bpb, M 03.07 Einflüsse gesellschaftlicher Entwicklungen (Deprivation, Desintegration): <a href="https://www.bpb.de/lernen/grafstat/rechtsextremismus/172893/m-03-07-einfluesse-gesellschaftlicher-entwicklungen">bpb.de/…/172893</a></li>
+    <li>bpb, APuZ: Ursachen fremdenfeindlicher Einstellungen in Westeuropa (soziale Identität, Gruppenkonflikte, Kontakthypothese): <a href="https://www.bpb.de/shop/zeitschriften/apuz/27568/ursachen-fremdenfeindlicher-einstellungen-in-westeuropa/">bpb.de/…/27568</a></li>
+    <li>bpb, Was versteht man unter „Populismus“?: <a href="https://www.bpb.de/themen/parteien/rechtspopulismus/192118/was-versteht-man-unter-populismus/">bpb.de/…/192118</a></li>
+    <li>Bundesamt für Verfassungsschutz, Glossar: Extremismus/Radikalismus – <a href="https://www.verfassungsschutz.de/SharedDocs/glossareintraege/DE/E/extremismus.html">verfassungsschutz.de/…/extremismus</a>; Rechtsextremismus – <a href="https://www.verfassungsschutz.de/SharedDocs/glossareintraege/DE/R/rechtsextremismus.html">…/rechtsextremismus</a>; Linksextremismus – <a href="https://www.verfassungsschutz.de/SharedDocs/glossareintraege/DE/L/linksextremismus.html">…/linksextremismus</a>; Islamismus – <a href="https://www.verfassungsschutz.de/SharedDocs/glossareintraege/DE/I/islamismus.html">…/islamismus</a>; Verfassungsschutzbehörden – <a href="https://www.verfassungsschutz.de/SharedDocs/glossareintraege/DE/V/verfassungsschutzbehoerden.html">…/verfassungsschutzbehoerden</a></li>
+    <li>Bundesverfassungsgericht, Pressemitteilung Nr. 4/2017 zum Urteil vom 17.01.2017 (2 BvB 1/13): <a href="https://www.bundesverfassungsgericht.de/SharedDocs/Pressemitteilungen/DE/2017/bvg17-004.html">bundesverfassungsgericht.de</a></li>
+    <li>Gesetze im Internet: <a href="https://www.gesetze-im-internet.de/gg/art_1.html">Art. 1</a>, <a href="https://www.gesetze-im-internet.de/gg/art_3.html">Art. 3</a>, <a href="https://www.gesetze-im-internet.de/gg/art_5.html">Art. 5</a>, <a href="https://www.gesetze-im-internet.de/gg/art_9.html">Art. 9</a>, <a href="https://www.gesetze-im-internet.de/gg/art_20.html">Art. 20</a>, <a href="https://www.gesetze-im-internet.de/gg/art_21.html">Art. 21 GG</a>; <a href="https://www.gesetze-im-internet.de/stgb/__130.html">§ 130</a>, <a href="https://www.gesetze-im-internet.de/stgb/__86a.html">§ 86a</a>, <a href="https://www.gesetze-im-internet.de/stgb/__323c.html">§ 323c StGB</a>; <a href="https://www.gesetze-im-internet.de/bverfschg/__3.html">§ 3</a>, <a href="https://www.gesetze-im-internet.de/bverfschg/__4.html">§ 4</a>, <a href="https://www.gesetze-im-internet.de/bverfschg/__8.html">§ 8</a>, <a href="https://www.gesetze-im-internet.de/bverfschg/__16.html">§ 16 BVerfSchG</a>; <a href="https://www.gesetze-im-internet.de/agg/__1.html">§ 1 AGG</a></li>
+    <li>Hilfsangebote: Webseiten der genannten Stellen (Abschnitt 6), Schulnetzwerk: <a href="https://www.schule-ohne-rassismus.org/">schule-ohne-rassismus.org</a></li>
+  </ul>
+</section>
+
+</main>
+
+<footer><a href="../" style="color:inherit">← zurück zu Sozialkunde</a> &nbsp;·&nbsp; <a href="../../" style="color:inherit">Alle Fächer</a></footer>
+
+<script>
+  (function () {
+    // Sorting exercise: stereotype / prejudice / discrimination
+    var LABELS = ["Stereotyp", "Vorurteil", "Diskriminierung"];
+    var items = document.querySelectorAll("#sort .sort-item");
+    var score = document.getElementById("sort-score");
+    function updateScore() {
+      var done = 0, right = 0;
+      items.forEach(function (it) { if (it.classList.contains("done")) { done++; if (it.dataset.ok === "1") right++; } });
+      score.textContent = done ? right + " von " + done + " beim ersten Versuch richtig" + (done === items.length ? " – alle bearbeitet!" : "") : "";
+    }
+    items.forEach(function (it) {
+      var box = it.querySelector(".sort-btns");
+      LABELS.forEach(function (l) {
+        var b = document.createElement("button");
+        b.type = "button"; b.textContent = l; b.setAttribute("aria-pressed", "false");
+        b.addEventListener("click", function () {
+          var ok = l === it.dataset.answer;
+          box.querySelectorAll("button").forEach(function (o) { o.setAttribute("aria-pressed", "false"); o.classList.remove("ok", "bad"); });
+          b.setAttribute("aria-pressed", "true"); b.classList.add(ok ? "ok" : "bad");
+          // only the first attempt counts for the score
+          if (it.dataset.ok === undefined) { it.dataset.ok = ok ? "1" : "0"; }
+          if (ok) it.classList.add("done");
+          updateScore();
+        });
+        box.appendChild(b);
+      });
+    });
+
+    // Step flow: reveal one step at a time (print and no-JS show all steps)
+    var flow = document.getElementById("flow");
+    var steps = flow.querySelectorAll("li");
+    var shown = 1;
+    var state = document.getElementById("flow-state");
+    flow.classList.add("js");
+    function paint() {
+      steps.forEach(function (s, i) { s.classList.toggle("later", i >= shown); });
+      state.textContent = "Schritt " + shown + " von " + steps.length;
+      document.getElementById("flow-next").disabled = shown >= steps.length;
+    }
+    document.getElementById("flow-next").addEventListener("click", function () { if (shown < steps.length) { shown++; paint(); } });
+    document.getElementById("flow-all").addEventListener("click", function () { shown = steps.length; paint(); });
+    paint();
+
+    // Post checker: reveal the feature behind each highlighted phrase
+    var hls = document.querySelectorAll(".post .hl");
+    var pscore = document.getElementById("post-score");
+    function updatePost() {
+      var n = document.querySelectorAll(".post .hl[aria-expanded='true']").length;
+      pscore.textContent = n + " von " + hls.length + " Merkmalen aufgedeckt" + (n === hls.length ? " – gut geprüft! 🎉" : "");
+    }
+    hls.forEach(function (h) {
+      var note = document.getElementById(h.dataset.note);
+      h.setAttribute("aria-controls", h.dataset.note);
+      h.addEventListener("click", function () {
+        var open = h.getAttribute("aria-expanded") !== "true";
+        h.setAttribute("aria-expanded", open ? "true" : "false");
+        note.classList.toggle("show", open);
+        updatePost();
+      });
+    });
+    updatePost();
+
+    // Checklist with progress (per-viewer convenience only)
+    var boxes = document.querySelectorAll("#checklist input");
+    var bar = document.getElementById("bar");
+    var ptext = document.getElementById("ptext");
+    var KEY = "sozialkunde9-extremismus-check";
+    var saved = [];
+    try { saved = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) {}
+    boxes.forEach(function (b, i) { b.checked = !!saved[i]; b.addEventListener("change", update); });
+    function update() {
+      var st = [], done = 0;
+      boxes.forEach(function (b) { st.push(b.checked); if (b.checked) done++; });
+      bar.style.width = (done / boxes.length * 100) + "%";
+      ptext.textContent = done + " von " + boxes.length + " erledigt" + (done === boxes.length ? " – super! 🎉" : "");
+      try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {}
+    }
+    update();
+  })();
+</script>
+</body>
+</html>
