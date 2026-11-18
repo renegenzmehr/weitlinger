@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probearbeit 1 · Geschichte 9</title>
+<style>
+  :root {
+    --bg: #f7f5f3; --card: #ffffff; --text: #1f2430; --muted: #5f6472;
+    --accent: #a33a3a; --accent-soft: #f8e7e7;
+    --green: #1f9d63; --green-soft: #e3f6ed;
+    --orange: #c97a22; --orange-soft: #fdf0e1;
+    --blue: #2f6fdf; --blue-soft: #e6eefc;
+    --border: #e2ddd8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16151a; --card: #201f26; --text: #e8e6ea; --muted: #a29fab;
+      --accent: #e57d7d; --accent-soft: #3a2226;
+      --green: #4cc58c; --green-soft: #1b3329;
+      --orange: #f0a557; --orange-soft: #3a2c1b;
+      --blue: #7a9ff0; --blue-soft: #222d45;
+      --border: #34323c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { background: linear-gradient(135deg, #7a2b2b, #a33a3a 60%, #c06a3a); color: #fff;
+           padding: 2rem 1rem 1.5rem; text-align: center; }
+  header h1 { margin: 0 0 .3rem; font-size: 1.7rem; }
+  header p { margin: 0; opacity: .9; }
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  h2 { font-size: 1.5rem; margin: 0 0 12px; }
+  h3 { font-size: 1.15rem; margin: 26px 0 8px; }
+  h3 .pkt { color: var(--muted); font-weight: 400; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .card.warn { border-left: 5px solid var(--orange); background: var(--orange-soft); }
+  .tag { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-right: 6px; vertical-align: middle; }
+  .tag.afb { background: var(--orange-soft); color: var(--orange); }
+  .tag.imp { background: var(--green-soft); color: var(--green); }
+  .tag.wk { background: var(--accent-soft); color: var(--accent); }
+  .tag.beide { background: var(--blue-soft); color: var(--blue); }
+  .op { font-weight: 700; }
+  .material { border-left: 5px solid var(--muted); background: var(--bg); border-radius: 8px; padding: .7rem 1rem; margin: .6rem 0; }
+  .material .mt { font-weight: 700; display: block; margin-bottom: .3rem; }
+  .material cite { display: block; margin-top: .4rem; font-size: .85rem; color: var(--muted); font-style: normal; }
+  .zuordnung { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .4rem 1.2rem; margin: .5rem 0; }
+  details { background: var(--card); border: 1px dashed var(--border); border-radius: 8px; padding: 8px 12px; margin-top: 8px; }
+  summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+  ul.eh { margin: .5rem 0 0; padding-left: 1.2rem; }
+  ul.eh li { margin: .25rem 0; }
+  ul.eh .p { font-weight: 700; color: var(--green); white-space: nowrap; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--border); padding: 6px 8px; text-align: center; }
+  th { background: var(--accent-soft); }
+  .tablewrap { overflow-x: auto; }
+  a { color: var(--accent); }
+  a.back { display: inline-block; margin-bottom: 8px; font-weight: 600; text-decoration: none; }
+  footer { max-width: 960px; margin: 0 auto; padding: 0 16px 48px; color: var(--muted); font-size: .85rem; }
+  @media print {
+    body { background: #fff; color: #000; }
+    header { background: none; color: #000; }
+    header a { color: #000 !important; }
+    details { border: none; padding: 0; } details > * { display: block; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Geschichte</a> › <a href="./" style="color:inherit;text-decoration:underline">Imperialismus</a> › <span>Probearbeit 1</span></div>
+  <h1>Probearbeit 1 · Geschichte Klasse 9</h1>
+  <p>Imperialismus und 1. Weltkrieg</p>
+</header>
+
+<main>
+<!--KURZ: Daten zuordnen, Begriff und Motive, Bülow-Quelle „Platz an der Sonne“, Herero und Nama, Kettenreaktion 1914, Schlieffenplan und Materialschlacht, Beurteilung Imperialismus als Kriegsursache-->
+<section id="probearbeit">
+  <h2>Probearbeit 1 <span class="tag imp" style="font-size:.8rem">Standard</span></h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> keine &nbsp;·&nbsp; <strong>Gesamt:</strong> 32 Punkte<br>
+    Themen: Imperialismus und 1. Weltkrieg. Tipp: Stelle dir einen Timer, schreibe auf Papier und schau erst danach in den Erwartungshorizont. Achte auf die <strong>Operatoren</strong> (fett gedruckt) und den Anforderungsbereich (AFB).</p>
+  </div>
+
+  <h3><span class="tag afb">AFB I</span><span class="tag beide">beide Themen</span>Aufgabe 1 – Daten zuordnen <span class="pkt">(6 P.)</span></h3>
+  <div class="card">
+    <p><span class="op">Ordne</span> den Jahreszahlen das passende Ereignis zu.</p>
+    <div class="zuordnung">
+      <div>① 1884/85<br>② 1904–1908<br>③ 1907<br>④ 28.06.1914<br>⑤ 1917<br>⑥ 1918</div>
+      <div>A Kriegseintritt der USA<br>B Attentat von Sarajevo<br>C Berliner Konferenz („Kongokonferenz“)<br>D Ende des 1. Weltkrieges<br>E Völkermord an den Herero und Nama<br>F Triple Entente</div>
+    </div>
+    <p style="margin:.3rem 0 0">Imperialismus ①–③ <em data-t="imp">(3 P.)</em> &nbsp;·&nbsp; 1. Weltkrieg ④–⑥ <em data-t="wk">(3 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>① C – Berliner Konferenz 1884/85 <span class="p">(1 P.)</span></li>
+        <li>② E – Völkermord an den Herero und Nama 1904–1908 <span class="p">(1 P.)</span></li>
+        <li>③ F – Triple Entente 1907 <span class="p">(1 P.)</span></li>
+        <li>④ B – Attentat von Sarajevo 28.06.1914 <span class="p">(1 P.)</span></li>
+        <li>⑤ A – Kriegseintritt der USA 1917 <span class="p">(1 P.)</span></li>
+        <li>⑥ D – Ende des 1. Weltkrieges 1918 <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I</span><span class="tag imp">Imperialismus</span>Aufgabe 2 – Imperialismus und seine Motive <span class="pkt">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Beschreibe</span> mit eigenen Worten, was man unter Imperialismus versteht. <em data-t="imp">(1 P.)</em><br>
+    b) <span class="op">Nenne</span> je ein wirtschaftliches, ein politisches und ein ideologisches Motiv für den Erwerb von Kolonien. <em data-t="imp">(3 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Streben eines Staates, seine Macht und Herrschaft über andere Länder und Völker auszudehnen (z. B. durch Kolonien) <span class="p">(1 P.)</span></li>
+        <li>b) wirtschaftlich: Rohstoffe / Absatzmärkte / Kapitalanlage <span class="p">(1 P.)</span></li>
+        <li>b) politisch: Macht und Ansehen als Großmacht / Flottenstützpunkte / Nationalismus <span class="p">(1 P.)</span></li>
+        <li>b) ideologisch: Sozialdarwinismus / Rassismus / Sendungsbewusstsein, Mission <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I–II</span><span class="tag imp">Imperialismus</span>Aufgabe 3 – Ein „Platz an der Sonne“ <span class="pkt">(5 P.)</span></h3>
+  <div class="card">
+    <div class="material"><span class="mt">M1 – Aus einer Rede im Reichstag</span>
+      „Wir müssen verlangen, daß der deutsche Missionar und der deutsche Unternehmer, die deutschen Waren, die deutsche Flagge und das deutsche Schiff in China geradeso geachtet werden wie diejenigen anderer Mächte. […] Mit einem Worte: wir wollen niemand in den Schatten stellen, aber wir verlangen auch unseren Platz an der Sonne.“
+      <cite>Bernhard von Bülow (Staatssekretär des Auswärtigen Amts), Rede im Reichstag am 6. Dezember 1897. In: Fürst Bülows Reden nebst urkundlichen Beiträgen zu seiner Politik, hrsg. von Johannes Penzler, Bd. I: 1897–1903, Berlin 1907, S. 6–8. Zwischenrufe der Abgeordneten weggelassen […].</cite>
+    </div>
+    <p>a) <span class="op">Nenne</span> den Redner, das Jahr und den Ort der Rede. <em data-t="imp">(2 P.)</em><br>
+    b) <span class="op">Erkläre</span>, was der Redner mit dem „Platz an der Sonne“ fordert. <em data-t="imp">(2 P.)</em><br>
+    c) <span class="op">Erkläre</span>, warum Großbritannien diese Politik als Bedrohung empfand. <em data-t="imp">(1 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Bernhard von Bülow (Staatssekretär des Auswärtigen Amts) <span class="p">(1 P.)</span></li>
+        <li>a) 1897 im Deutschen Reichstag in Berlin <span class="p">(1 P.)</span></li>
+        <li>b) Deutschland will wie die anderen Großmächte Kolonien und weltweiten Einfluss („Weltpolitik“) <span class="p">(1 P.)</span></li>
+        <li>b) deutsche Händler, Missionare, Waren und Schiffe sollen überall gleich geachtet werden – Deutschland will nicht hinter anderen Mächten zurückstehen <span class="p">(1 P.)</span></li>
+        <li>c) Weltpolitik bedeutete Flottenbau (Flottengesetze ab 1898); Großbritannien als größte Seemacht sah sich herausgefordert → Flottenwettrüsten <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I–II</span><span class="tag imp">Imperialismus</span>Aufgabe 4 – Herero und Nama <span class="pkt">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Nenne</span> zwei Ursachen für den Aufstand der Herero 1904. <em data-t="imp">(1 P.)</em><br>
+    b) <span class="op">Beschreibe</span> das Vorgehen der deutschen Truppen. <em data-t="imp">(2 P.)</em><br>
+    c) <span class="op">Erkläre</span>, warum man von einem Völkermord spricht. <em data-t="imp">(1 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Landraub und Verlust des Viehs an deutsche Siedler / Entrechtung, Misshandlung, Betrug durch Händler (zwei Ursachen) <span class="p">(1 P.)</span></li>
+        <li>b) nach der Schlacht am Waterberg (1904) Flucht der Herero in die Omaheke-Wüste, deutsche Truppen sperren die Wasserstellen ab / Vernichtungsbefehl Trothas (1904): auch Frauen und Kinder sollen getötet oder vertrieben werden <span class="p">(1 P.)</span></li>
+        <li>b) Überlebende in Konzentrationslagern mit Zwangsarbeit, Hunger, Krankheit; bis 1908 starben nach Schätzungen bis zu 100 000 Herero und Nama <span class="p">(1 P.)</span></li>
+        <li>c) Die deutsche Führung wollte die Herero als Volk gezielt vernichten (Vernichtungsbefehl) – die Absicht, eine Gruppe ganz oder teilweise zu vernichten, kennzeichnet einen Völkermord <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I–II</span><span class="tag wk">1. Weltkrieg</span>Aufgabe 5 – Vom Attentat zum Weltkrieg <span class="pkt">(5 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Nenne</span> den Anlass des 1. Weltkrieges mit Datum. <em data-t="wk">(1 P.)</em><br>
+    b) <span class="op">Erkläre</span>, wie aus diesem Ereignis innerhalb weniger Wochen ein Weltkrieg wurde. <em data-t="wk">(4 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Attentat von Sarajevo am 28.06.1914 auf den österreichisch-ungarischen Thronfolger Franz Ferdinand und seine Frau Sophie <span class="p">(1 P.)</span></li>
+        <li>b) Österreich-Ungarn erklärt Serbien den Krieg (28.07.1914) <span class="p">(1 P.)</span></li>
+        <li>b) Deutschland erklärt Russland (01.08.1914) und Frankreich (03.08.1914 – Hinweis: Im Arbeitsblatt steht der 04.08.; an diesem Tag erklärte Großbritannien Deutschland den Krieg. Beide Angaben werden gewertet) den Krieg <span class="p">(1 P.)</span></li>
+        <li>b) weitere Staaten treten wegen ihrer <strong>Bündnisverpflichtungen</strong> in den Krieg ein: Mittelmächte (Deutsches Reich, Österreich-Ungarn) gegen die Entente (Frankreich, Russland, Großbritannien). Hinweis: Italien blieb bei Kriegsbeginn trotz Dreibund neutral und trat im Folgejahr auf Seiten der Entente in den Krieg ein <span class="p">(1 P.)</span></li>
+        <li>b) Fazit: Durch das Bündnissystem wird aus einem Konflikt zwischen Österreich-Ungarn und Serbien ein Krieg mit Staaten aus vielen Teilen der Welt – ein Weltkrieg <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I–II</span><span class="tag wk">1. Weltkrieg</span>Aufgabe 6 – Kriegsführung <span class="pkt">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Beschreibe</span> das Ziel des Schlieffenplans. <em data-t="wk">(1 P.)</em><br>
+    b) <span class="op">Erkläre</span>, warum der Plan scheiterte und welche Art der Kriegsführung danach folgte. <em data-t="wk">(2 P.)</em><br>
+    c) <span class="op">Nenne</span> zwei Waffen, die in Materialschlachten eingesetzt wurden. <em data-t="wk">(1 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Zweifrontenkrieg vermeiden: erst schneller Sieg über Frankreich (Einmarsch durch das neutrale Belgien und Luxemburg), dann Feldzug gegen Russland <span class="p">(1 P.)</span></li>
+        <li>b) Niederlage in der Schlacht an der Marne 1914 / Russland griff schneller an als erwartet <span class="p">(1 P.)</span></li>
+        <li>b) Aus dem Bewegungskrieg wurde ein <strong>Stellungskrieg</strong>: Die Front erstarrte, die Soldaten lagen sich in Schützengräben gegenüber <span class="p">(1 P.)</span></li>
+        <li>c) zwei von: Geschütze, Granaten, Minen, Tanks (Panzer), Flugzeuge, Giftgas <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB III</span><span class="tag beide">beide Themen</span>Aufgabe 7 – Beurteilen <span class="pkt">(4 P.)</span></h3>
+  <div class="card">
+    <p>„Ohne den Imperialismus wäre es 1914 nicht zu einem Weltkrieg gekommen.“<br>
+    <span class="op">Beurteile</span> diese Aussage. Beziehe dich auf mindestens zwei Ursachen <em data-t="imp">(2 P.)</em> und auf den Anlass des Krieges <em data-t="wk">(1 P.)</em> und begründe dein Urteil <em data-t="wk">(1 P.)</em>.</p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>Ursache 1 mit Bezug zum Imperialismus, z. B. Konkurrenz um Kolonien → Marokkokrisen, Deutschland isoliert <span class="p">(1 P.)</span></li>
+        <li>Ursache 2, z. B. Flottenwettrüsten mit Großbritannien / Nationalismus / zwei feindliche Bündnisblöcke <span class="p">(1 P.)</span></li>
+        <li>Anlass: Das Attentat von Sarajevo löste den Krieg aus; ohne die Spannungen und Bündnisse wäre es vermutlich ein regionaler Konflikt geblieben <span class="p">(1 P.)</span></li>
+        <li>begründetes eigenes Urteil, z. B.: Der Imperialismus war eine wichtige, aber nicht die einzige Ursache – auch Nationalismus, Bündnissystem und Balkankonflikte spielten eine Rolle; die Aussage ist deshalb zu einfach <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>32–30</td><td>29–24</td><td>23–20</td><td>19–13</td><td>12–7</td><td>6–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite Imperialismus</a> &nbsp;·&nbsp; <a class="back" href="../erster-weltkrieg/">⚔️ Lernseite 1. Weltkrieg</a></footer>
+</body>
+</html>

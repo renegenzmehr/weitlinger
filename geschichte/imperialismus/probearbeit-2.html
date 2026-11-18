@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probearbeit 2 · Geschichte 9</title>
+<style>
+  :root {
+    --bg: #f7f5f3; --card: #ffffff; --text: #1f2430; --muted: #5f6472;
+    --accent: #a33a3a; --accent-soft: #f8e7e7;
+    --green: #1f9d63; --green-soft: #e3f6ed;
+    --orange: #c97a22; --orange-soft: #fdf0e1;
+    --blue: #2f6fdf; --blue-soft: #e6eefc;
+    --border: #e2ddd8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16151a; --card: #201f26; --text: #e8e6ea; --muted: #a29fab;
+      --accent: #e57d7d; --accent-soft: #3a2226;
+      --green: #4cc58c; --green-soft: #1b3329;
+      --orange: #f0a557; --orange-soft: #3a2c1b;
+      --blue: #7a9ff0; --blue-soft: #222d45;
+      --border: #34323c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { background: linear-gradient(135deg, #7a2b2b, #a33a3a 60%, #c06a3a); color: #fff;
+           padding: 2rem 1rem 1.5rem; text-align: center; }
+  header h1 { margin: 0 0 .3rem; font-size: 1.7rem; }
+  header p { margin: 0; opacity: .9; }
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  h2 { font-size: 1.5rem; margin: 0 0 12px; }
+  h3 { font-size: 1.15rem; margin: 26px 0 8px; }
+  h3 .pkt { color: var(--muted); font-weight: 400; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .card.warn { border-left: 5px solid var(--orange); background: var(--orange-soft); }
+  .tag { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-right: 6px; vertical-align: middle; }
+  .tag.afb { background: var(--orange-soft); color: var(--orange); }
+  .tag.imp { background: var(--green-soft); color: var(--green); }
+  .tag.wk { background: var(--accent-soft); color: var(--accent); }
+  .tag.beide { background: var(--blue-soft); color: var(--blue); }
+  .op { font-weight: 700; }
+  .material { border-left: 5px solid var(--muted); background: var(--bg); border-radius: 8px; padding: .7rem 1rem; margin: .6rem 0; }
+  .material .mt { font-weight: 700; display: block; margin-bottom: .3rem; }
+  .material cite { display: block; margin-top: .4rem; font-size: .85rem; color: var(--muted); font-style: normal; }
+  .zuordnung { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .4rem 1.2rem; margin: .5rem 0; }
+  details { background: var(--card); border: 1px dashed var(--border); border-radius: 8px; padding: 8px 12px; margin-top: 8px; }
+  summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+  ul.eh { margin: .5rem 0 0; padding-left: 1.2rem; }
+  ul.eh li { margin: .25rem 0; }
+  ul.eh .p { font-weight: 700; color: var(--green); white-space: nowrap; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--border); padding: 6px 8px; text-align: center; }
+  th { background: var(--accent-soft); }
+  .tablewrap { overflow-x: auto; }
+  a { color: var(--accent); }
+  a.back { display: inline-block; margin-bottom: 8px; font-weight: 600; text-decoration: none; }
+  footer { max-width: 960px; margin: 0 auto; padding: 0 16px 48px; color: var(--muted); font-size: .85rem; }
+  @media print {
+    body { background: #fff; color: #000; }
+    header { background: none; color: #000; }
+    header a { color: #000 !important; }
+    details { border: none; padding: 0; } details > * { display: block; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Geschichte</a> › <a href="./" style="color:inherit;text-decoration:underline">Imperialismus</a> › <span>Probearbeit 2</span></div>
+  <h1>Probearbeit 2 · Geschichte Klasse 9</h1>
+  <p>Imperialismus und 1. Weltkrieg</p>
+</header>
+
+<main>
+<!--KURZ: Begriffe zuordnen, Kolonialmächte in Afrika 1914, Darstellungstext Berliner Konferenz, Bündnisse, Flottenwettrüsten, U-Boot-Krieg und USA, Materialschlacht, Beurteilung „Welt“-Krieg-->
+<section id="probearbeit">
+  <h2>Probearbeit 2 <span class="tag imp" style="font-size:.8rem">Standard</span></h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> keine &nbsp;·&nbsp; <strong>Gesamt:</strong> 32 Punkte<br>
+    Themen: Imperialismus und 1. Weltkrieg. Tipp: Stelle dir einen Timer, schreibe auf Papier und schau erst danach in den Erwartungshorizont. Achte auf die <strong>Operatoren</strong> (fett gedruckt) und den Anforderungsbereich (AFB).</p>
+  </div>
+
+  <h3><span class="tag afb">AFB I</span><span class="tag beide">beide Themen</span>Aufgabe 1 – Begriffe <span class="pkt">(6 P.)</span></h3>
+  <div class="card">
+    <p><span class="op">Ordne</span> jedem Begriff die richtige Erklärung zu.</p>
+    <div class="zuordnung">
+      <div>① Sozialdarwinismus<br>② Schutzgebiet<br>③ Weltpolitik<br>④ Stellungskrieg<br>⑤ Materialschlacht<br>⑥ Blockade</div>
+      <div>A Absperren von Häfen, damit keine Waren mehr ankommen<br>B Schlacht mit Einsatz riesiger Mengen an Kriegsgerät<br>C Politik Wilhelms II.: Deutschland soll Weltmacht mit Kolonien und Flotte werden<br>D falsche Übertragung des „Kampfes ums Dasein“ auf Völker<br>E Front bewegt sich kaum noch; Soldaten in Schützengräben<br>F offizieller, beschönigender Name für deutsche Kolonien</div>
+    </div>
+    <p style="margin:.3rem 0 0">Imperialismus ①–③ <em data-t="imp">(3 P.)</em> &nbsp;·&nbsp; 1. Weltkrieg ④–⑥ <em data-t="wk">(3 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>① D <span class="p">(1 P.)</span></li>
+        <li>② F <span class="p">(1 P.)</span></li>
+        <li>③ C <span class="p">(1 P.)</span></li>
+        <li>④ E <span class="p">(1 P.)</span></li>
+        <li>⑤ B <span class="p">(1 P.)</span></li>
+        <li>⑥ A <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I</span><span class="tag imp">Imperialismus</span>Aufgabe 2 – Afrika um 1914 <span class="pkt">(5 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Nenne</span> für jedes Gebiet die Kolonialmacht um 1914: Deutsch-Ostafrika · Algerien · Belgisch-Kongo · Angola. <em data-t="imp">(4 P.)</em><br>
+    b) <span class="op">Nenne</span> die zwei afrikanischen Staaten, die um 1914 unabhängig waren. <em data-t="imp">(1 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Deutsch-Ostafrika – Deutsches Reich <span class="p">(1 P.)</span></li>
+        <li>a) Algerien – Frankreich <span class="p">(1 P.)</span></li>
+        <li>a) Belgisch-Kongo – Belgien <span class="p">(1 P.)</span></li>
+        <li>a) Angola – Portugal <span class="p">(1 P.)</span></li>
+        <li>b) Äthiopien (Abessinien) und Liberia <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB II–III</span><span class="tag imp">Imperialismus</span>Aufgabe 3 – Die Berliner Konferenz <span class="pkt">(5 P.)</span></h3>
+  <div class="card">
+    <div class="material"><span class="mt">M1 – Darstellungstext (selbst verfasst)</span>
+      Im November 1884 lud Reichskanzler Otto von Bismarck Vertreter von 13 weiteren Staaten nach Berlin ein. Bis Februar 1885 berieten sie über Afrika. Sie beschlossen: Wer ein Gebiet in Afrika für sich beanspruchen will, muss es tatsächlich („effektiv“) besetzen. Seit der Konferenz galt das riesige Gebiet am Kongo als „Kongo-Freistaat“ – eine Privatkolonie des belgischen Königs Leopold II. Kein Afrikaner war eingeladen. In den folgenden Jahrzehnten teilten die europäischen Mächte fast den ganzen Kontinent unter sich auf.
+    </div>
+    <p>a) <span class="op">Arbeite</span> aus M1 <span class="op">heraus</span>, welche Regeln die Konferenz beschloss. <em data-t="imp">(2 P.)</em><br>
+    b) <span class="op">Beurteile</span>, dass an der Konferenz keine Afrikanerinnen und Afrikaner teilnahmen. <em data-t="imp">(3 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Ein beanspruchtes Gebiet muss tatsächlich besetzt werden („effektive Besetzung“) <span class="p">(1 P.)</span></li>
+        <li>a) Das Kongogebiet wird als Kongo-Freistaat zur Privatkolonie Leopolds II. <span class="p">(1 P.)</span></li>
+        <li>b) Feststellung: Über Land und Menschen Afrikas entschieden allein fremde Staaten <span class="p">(1 P.)</span></li>
+        <li>b) Folgen: Grenzen ohne Rücksicht auf Völker und Siedlungsgebiete, Unterdrückung und Ausbeutung wurden „geregelt“ statt verhindert <span class="p">(1 P.)</span></li>
+        <li>b) begründetes Urteil, z. B.: zutiefst ungerecht und rassistisch, weil Afrikaner wie Menschen ohne Rechte behandelt wurden <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I–II</span><span class="tag beide">beide Themen</span>Aufgabe 4 – Die Bündnisse <span class="pkt">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Nenne</span> die Mitglieder des Dreibundes und der Triple Entente. <em data-t="imp">(2 P.)</em><br>
+    b) <span class="op">Erkläre</span>, warum die Bündnisse im Sommer 1914 gefährlich wurden. <em data-t="wk">(2 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Dreibund: Deutsches Reich, Österreich-Ungarn, Italien <span class="p">(1 P.)</span></li>
+        <li>a) Triple Entente: Frankreich, Russland, Großbritannien <span class="p">(1 P.)</span></li>
+        <li>b) Die Staaten hatten sich versprochen, sich im Krieg zu helfen (Bündnisverpflichtung) <span class="p">(1 P.)</span></li>
+        <li>b) Deshalb wurde der Konflikt Österreich-Ungarn–Serbien nach dem Attentat zur Kettenreaktion: ein Staat nach dem anderen trat in den Krieg ein <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB II</span><span class="tag imp">Imperialismus</span>Aufgabe 5 – Flottenwettrüsten <span class="pkt">(3 P.)</span></h3>
+  <div class="card">
+    <p><span class="op">Erkläre</span>, wie der deutsche Flottenbau das Verhältnis zu Großbritannien veränderte. <em data-t="imp">(3 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>Deutschland baute ab 1898 (Flottengesetze, Tirpitz) eine große Schlachtflotte <span class="p">(1 P.)</span></li>
+        <li>Großbritannien sah seine Vorherrschaft auf See bedroht und rüstete selbst auf (Dreadnought ab 1906) <span class="p">(1 P.)</span></li>
+        <li>Großbritannien suchte Partner: Entente cordiale mit Frankreich (1904), Abkommen mit Russland (1907) → Triple Entente, Deutschland zunehmend isoliert <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I–II</span><span class="tag wk">1. Weltkrieg</span>Aufgabe 6 – U-Boot-Krieg <span class="pkt">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Beschreibe</span> die britische Blockade und die deutsche Antwort darauf. <em data-t="wk">(2 P.)</em><br>
+    b) <span class="op">Erkläre</span> die Folgen des uneingeschränkten U-Boot-Krieges für den Kriegsverlauf. <em data-t="wk">(2 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Großbritannien blockierte die deutschen Häfen, damit keine Waren mehr ankamen <span class="p">(1 P.)</span></li>
+        <li>a) Deutschland antwortete mit einer Gegenblockade und dem uneingeschränkten U-Boot-Krieg – auch gegen neutrale und zivile Schiffe <span class="p">(1 P.)</span></li>
+        <li>b) Der U-Boot-Krieg war Anlass für den Kriegseintritt der USA 1917 <span class="p">(1 P.)</span></li>
+        <li>b) Mit frischen Soldaten und viel Geld/Material der USA kam die Wende – Deutschland konnte den Krieg nicht mehr gewinnen <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB I</span><span class="tag wk">1. Weltkrieg</span>Aufgabe 7 – Materialschlacht <span class="pkt">(2 P.)</span></h3>
+  <div class="card">
+    <p><span class="op">Beschreibe</span> am Beispiel der Schlacht von Verdun (1916), was eine Materialschlacht ist. <em data-t="wk">(2 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>riesige Mengen an Kriegsgerät (Geschütze, Granaten, Minen, Giftgas …), Trommelfeuer der Artillerie <span class="p">(1 P.)</span></li>
+        <li>Verdun als bekannteste Materialschlacht: Kämpfe von Februar bis Dezember 1916, sehr hohe Verluste auf beiden Seiten, kaum Geländegewinn (Zahlen sind nicht gefordert; die Schätzungen schwanken stark – die Werte vom Arbeitsblatt und die Angaben der Lernseite werden gewertet) <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB III</span><span class="tag wk">1. Weltkrieg</span>Aufgabe 8 – Ein „Welt“-Krieg? <span class="pkt">(3 P.)</span></h3>
+  <div class="card">
+    <p><span class="op">Beurteile</span>, ob die Bezeichnung „Weltkrieg“ für den Krieg von 1914 bis 1918 gerechtfertigt ist. Nutze auch dein Wissen über die Kolonien. <em data-t="wk">(3 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>Argument: sehr viele Staaten aus mehreren Kontinenten beteiligt, ab 1917 auch die USA <span class="p">(1 P.)</span></li>
+        <li>Argument mit Kolonienbezug: Kämpfe auch in Afrika und Asien, z. B. in Deutsch-Ostafrika (Kapitulation erst am 25.11.1918); Hunderttausende Soldaten aus den Kolonien kämpften für Frankreich und Großbritannien <span class="p">(1 P.)</span></li>
+        <li>begründetes Urteil, z. B.: gerechtfertigt, weil der Krieg nicht auf Europa beschränkt blieb – auch wenn die Hauptkämpfe in Europa stattfanden <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>32–30</td><td>29–24</td><td>23–20</td><td>19–13</td><td>12–7</td><td>6–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite Imperialismus</a> &nbsp;·&nbsp; <a class="back" href="../erster-weltkrieg/">⚔️ Lernseite 1. Weltkrieg</a></footer>
+</body>
+</html>

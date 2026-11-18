@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probearbeit 3 · Geschichte 9</title>
+<style>
+  :root {
+    --bg: #f7f5f3; --card: #ffffff; --text: #1f2430; --muted: #5f6472;
+    --accent: #a33a3a; --accent-soft: #f8e7e7;
+    --green: #1f9d63; --green-soft: #e3f6ed;
+    --orange: #c97a22; --orange-soft: #fdf0e1;
+    --blue: #2f6fdf; --blue-soft: #e6eefc;
+    --border: #e2ddd8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16151a; --card: #201f26; --text: #e8e6ea; --muted: #a29fab;
+      --accent: #e57d7d; --accent-soft: #3a2226;
+      --green: #4cc58c; --green-soft: #1b3329;
+      --orange: #f0a557; --orange-soft: #3a2c1b;
+      --blue: #7a9ff0; --blue-soft: #222d45;
+      --border: #34323c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { background: linear-gradient(135deg, #7a2b2b, #a33a3a 60%, #c06a3a); color: #fff;
+           padding: 2rem 1rem 1.5rem; text-align: center; }
+  header h1 { margin: 0 0 .3rem; font-size: 1.7rem; }
+  header p { margin: 0; opacity: .9; }
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  h2 { font-size: 1.5rem; margin: 0 0 12px; }
+  h3 { font-size: 1.15rem; margin: 26px 0 8px; }
+  h3 .pkt { color: var(--muted); font-weight: 400; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .card.warn { border-left: 5px solid var(--orange); background: var(--orange-soft); }
+  .tag { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-right: 6px; vertical-align: middle; }
+  .tag.afb { background: var(--orange-soft); color: var(--orange); }
+  .tag.imp { background: var(--green-soft); color: var(--green); }
+  .tag.wk { background: var(--accent-soft); color: var(--accent); }
+  .tag.beide { background: var(--blue-soft); color: var(--blue); }
+  .op { font-weight: 700; }
+  .material { border-left: 5px solid var(--muted); background: var(--bg); border-radius: 8px; padding: .7rem 1rem; margin: .6rem 0; }
+  .material .mt { font-weight: 700; display: block; margin-bottom: .3rem; }
+  .material cite { display: block; margin-top: .4rem; font-size: .85rem; color: var(--muted); font-style: normal; }
+  .zuordnung { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .4rem 1.2rem; margin: .5rem 0; }
+  details { background: var(--card); border: 1px dashed var(--border); border-radius: 8px; padding: 8px 12px; margin-top: 8px; }
+  summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+  ul.eh { margin: .5rem 0 0; padding-left: 1.2rem; }
+  ul.eh li { margin: .25rem 0; }
+  ul.eh .p { font-weight: 700; color: var(--green); white-space: nowrap; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--border); padding: 6px 8px; text-align: center; }
+  th { background: var(--accent-soft); }
+  .tablewrap { overflow-x: auto; }
+  a { color: var(--accent); }
+  a.back { display: inline-block; margin-bottom: 8px; font-weight: 600; text-decoration: none; }
+  footer { max-width: 960px; margin: 0 auto; padding: 0 16px 48px; color: var(--muted); font-size: .85rem; }
+  @media print {
+    body { background: #fff; color: #000; }
+    header { background: none; color: #000; }
+    header a { color: #000 !important; }
+    details { border: none; padding: 0; } details > * { display: block; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Geschichte</a> › <a href="./" style="color:inherit;text-decoration:underline">Imperialismus</a> › <span>Probearbeit 3</span></div>
+  <h1>Probearbeit 3 · Geschichte Klasse 9</h1>
+  <p>Imperialismus und 1. Weltkrieg</p>
+</header>
+
+<main>
+<!--KURZ: Fachbegriffe erklären, Quellenanalyse Bülow-Rede, Darstellungstext Völkermord an Herero und Nama mit Urteil, Ursachen-Schema Imperialismus → Spannungen → Krieg, Schlieffenplan und Belgien, These zum Kriegseintritt der USA-->
+<section id="probearbeit">
+  <h2>Probearbeit 3 <span class="tag" style="font-size:.8rem;background:#c53030;color:#fff">🔥 Schwer</span></h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> keine &nbsp;·&nbsp; <strong>Gesamt:</strong> 32 Punkte<br>
+    Themen: Imperialismus und 1. Weltkrieg. Diese Probearbeit hat mehr Aufgaben aus AFB II und III – hier zählen Begründungen und Zusammenhänge. Schreibe in ganzen Sätzen.</p>
+  </div>
+
+  <h3><span class="tag afb">AFB I–II</span><span class="tag beide">beide Themen</span>Aufgabe 1 – Fachbegriffe <span class="pkt">(4 P.)</span></h3>
+  <div class="card">
+    <p><span class="op">Erkläre</span> die Begriffe in je einem Satz:<br>
+    a) Imperialismus &nbsp; b) Sozialdarwinismus <em data-t="imp">(2 P.)</em><br>
+    c) Schlieffenplan &nbsp; d) Stellungskrieg <em data-t="wk">(2 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Streben eines Staates nach Herrschaft über andere Länder und Völker (Zeitalter ca. 1880–1914) <span class="p">(1 P.)</span></li>
+        <li>b) falsche Übertragung von Darwins „Kampf ums Dasein“ auf Völker; der „Stärkere“ habe das Recht zu herrschen – Rechtfertigung für Rassismus und Kolonialherrschaft <span class="p">(1 P.)</span></li>
+        <li>c) deutscher Kriegsplan (1905) gegen einen Zweifrontenkrieg: erst schneller Sieg über Frankreich durch Belgien und Luxemburg, dann Krieg gegen Russland <span class="p">(1 P.)</span></li>
+        <li>d) Kriegsführung, bei der die Front erstarrt und sich die Soldaten in Schützengräben gegenüberliegen <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB II</span><span class="tag imp">Imperialismus</span>Aufgabe 2 – Quellenanalyse <span class="pkt">(7 P.)</span></h3>
+  <div class="card">
+    <div class="material"><span class="mt">M1 – Rede im Deutschen Reichstag (Rechtschreibung der Ausgabe von 1907)</span>
+      „Wir empfinden auch durchaus nicht das Bedürfnis, unsere Finger in jeden Topf zu stecken. Aber allerdings sind wir der Ansicht, daß es sich nicht empfiehlt, Deutschland in zukunftsreichen Ländern von vornherein auszuschließen vom Mitbewerb anderer Völker. […] Die Zeiten, wo der Deutsche dem einen seiner Nachbarn die Erde überließ, dem anderen das Meer und sich selbst den Himmel reservierte, wo die reine Doktrin thront […] – diese Zeiten sind vorüber. Wir betrachten es als eine unserer vornehmsten Aufgaben, gerade in Ostasien die Interessen unserer Schiffahrt, unseres Handels und unserer Industrie zu fördern und zu pflegen. […] Wir müssen verlangen, daß der deutsche Missionar und der deutsche Unternehmer, die deutschen Waren, die deutsche Flagge und das deutsche Schiff in China geradeso geachtet werden wie diejenigen anderer Mächte. […] Mit einem Worte: wir wollen niemand in den Schatten stellen, aber wir verlangen auch unseren Platz an der Sonne.“
+      <cite>Bernhard von Bülow (Staatssekretär des Auswärtigen Amts), Rede im Reichstag am 6. Dezember 1897. In: Fürst Bülows Reden nebst urkundlichen Beiträgen zu seiner Politik, hrsg. von Johannes Penzler, Bd. I: 1897–1903, Berlin 1907, S. 6–8. Zwischenrufe der Abgeordneten weggelassen […].</cite>
+    </div>
+    <p>a) <span class="op">Ordne</span> die Quelle <span class="op">ein</span>: Redner und seine Funktion, Zeitpunkt, Ort, Adressaten. <em data-t="imp">(2 P.)</em><br>
+    b) <span class="op">Fasse</span> die Forderungen des Redners <span class="op">zusammen</span>. <em data-t="imp">(2 P.)</em><br>
+    c) <span class="op">Erkläre</span>, warum diese Rede als Beginn der deutschen „Weltpolitik“ gilt, und welche Folgen diese Politik für das Verhältnis zu Großbritannien hatte. <em data-t="imp">(3 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Bernhard von Bülow, Staatssekretär des Auswärtigen Amts (später Reichskanzler); Rede vom 06.12.1897 <span class="p">(1 P.)</span></li>
+        <li>a) im Reichstag in Berlin; Adressaten: Abgeordnete und – über die Zeitungen – die deutsche Öffentlichkeit und das Ausland <span class="p">(1 P.)</span></li>
+        <li>b) Deutsche Missionare, Unternehmer, Waren, Flagge und Schiffe sollen in China (Ostasien) wie die anderer Mächte geachtet werden <span class="p">(1 P.)</span></li>
+        <li>b) Deutschland will niemanden verdrängen, verlangt aber gleichberechtigt einen „Platz an der Sonne“ – Kolonien und Weltgeltung <span class="p">(1 P.)</span></li>
+        <li>c) Die Rede formuliert öffentlich den Anspruch, Weltmacht zu werden, statt wie unter Bismarck vor allem Europa im Blick zu haben (im selben Zeitraum: Besetzung von Kiautschou in China) <span class="p">(1 P.)</span></li>
+        <li>c) Weltpolitik verlangte eine große Flotte → Flottengesetze ab 1898 <span class="p">(1 P.)</span></li>
+        <li>c) Flottenwettrüsten vor allem mit Großbritannien; Großbritannien schloss sich Frankreich (1904) und Russland (1907) an → deutsche Isolation <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB II–III</span><span class="tag imp">Imperialismus</span>Aufgabe 3 – Der Völkermord an den Herero und Nama <span class="pkt">(6 P.)</span></h3>
+  <div class="card">
+    <div class="material"><span class="mt">M2 – Darstellungstext (selbst verfasst)</span>
+      Im Januar 1904 erhoben sich die Herero in Deutsch-Südwestafrika gegen die deutschen Kolonialherren, die ihnen Land und Vieh genommen hatten. General Lothar von Trotha schlug den Aufstand nieder: Nach der Schlacht am Waterberg im August 1904 flohen die meisten Herero in die Omaheke-Wüste. Die Deutschen riegelten die Wasserstellen ab. Im Oktober 1904 befahl Trotha, jeden Herero zu erschießen oder zu vertreiben – auch Frauen und Kinder. Im selben Monat begannen auch die Nama den Kampf; 1905 befahl Trotha auch ihre Vernichtung. Wer überlebte, kam in Konzentrationslager, wo Tausende an Zwangsarbeit, Hunger und Krankheiten starben. Bis 1908 kamen nach Schätzungen bis zu 100 000 Herero und Nama ums Leben. Im Jahr 2021 erkannte die Bundesregierung diese Verbrechen als Völkermord an.
+    </div>
+    <p>a) <span class="op">Arbeite</span> aus M2 die Phasen des Krieges <span class="op">heraus</span>. <em data-t="imp">(2 P.)</em><br>
+    b) <span class="op">Erkläre</span>, warum die Verbrechen heute als Völkermord bezeichnet werden. <em data-t="imp">(2 P.)</em><br>
+    c) <span class="op">Nimm Stellung</span>: Warum ist es wichtig, dass Deutschland diese Verbrechen über 100 Jahre später als Völkermord anerkannt hat? <em data-t="imp">(2 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Aufstand der Herero im Januar 1904 → Schlacht am Waterberg im August 1904, Flucht in die Omaheke-Wüste, Wasserstellen abgeriegelt <span class="p">(1 P.)</span></li>
+        <li>a) Vernichtungsbefehl Oktober 1904, Kampf der Nama ab Oktober 1904 (Vernichtungsbefehl 1905) → Konzentrationslager bis zum Ende 1908 <span class="p">(1 P.)</span></li>
+        <li>b) Es gab die erklärte <strong>Absicht</strong>, die Herero als Volk zu vernichten (Vernichtungsbefehl) <span class="p">(1 P.)</span></li>
+        <li>b) Die Menschen wurden getötet oder unter Lebensbedingungen gezwungen, die zum Tod führten (Wüste, Lager) – das erfüllt die Merkmale eines Völkermordes <span class="p">(1 P.)</span></li>
+        <li>c) Anerkennung heißt: Verantwortung übernehmen, die Opfer und ihre Nachkommen ernst nehmen, die Geschichte nicht verharmlosen <span class="p">(1 P.)</span></li>
+        <li>c) begründete eigene Stellungnahme, z. B. zur späten Anerkennung oder zur Frage, ob Nachkommen der Opfer stärker beteiligt werden müssen <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB II</span><span class="tag beide">beide Themen</span>Aufgabe 4 – Vom Imperialismus zum Krieg <span class="pkt">(6 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Erkläre</span> an drei Beispielen, wie die Konkurrenz der Großmächte vor 1914 zu Spannungen führte. <em data-t="imp">(3 P.)</em><br>
+    b) <span class="op">Unterscheide</span> Ursache und Anlass des 1. Weltkrieges. <em data-t="wk">(1 P.)</em><br>
+    c) <span class="op">Erkläre</span>, warum aus einem Konflikt auf dem Balkan ein Weltkrieg wurde. <em data-t="wk">(2 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Flottenwettrüsten: deutscher Flottenbau ab 1898 → Großbritannien fühlt sich bedroht <span class="p">(1 P.)</span></li>
+        <li>a) Marokkokrisen 1905/06 und 1911: Deutschland stellt sich gegen Frankreichs Einfluss in Marokko und muss 1911 die französische Vorherrschaft anerkennen → Misstrauen zwischen Deutschland und der Entente wächst <span class="p">(1 P.)</span></li>
+        <li>a) Bündnissystem / Balkan: zwei feindliche Blöcke (Dreibund – Triple Entente); Bosnische Annexionskrise 1908, Balkankriege 1912/13 (je ein schlüssiges Beispiel) <span class="p">(1 P.)</span></li>
+        <li>b) Ursachen = langfristige Gründe (Imperialismus, Nationalismus, Wettrüsten, Bündnisse); Anlass = Auslöser (Attentat von Sarajevo, 28.06.1914) <span class="p">(1 P.)</span></li>
+        <li>c) Österreich-Ungarn erklärt Serbien den Krieg; Russland steht zu Serbien, Deutschland zu Österreich-Ungarn (Bündnisverpflichtungen) <span class="p">(1 P.)</span></li>
+        <li>c) Deutschland erklärt Russland und Frankreich den Krieg, Großbritannien tritt ein → Kettenreaktion, Kämpfe auch in den Kolonien → Weltkrieg <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB II</span><span class="tag wk">1. Weltkrieg</span>Aufgabe 5 – Der Schlieffenplan <span class="pkt">(5 P.)</span></h3>
+  <div class="card">
+    <p>a) <span class="op">Erkläre</span> Ziel und geplanten Ablauf des Schlieffenplans. <em data-t="wk">(2 P.)</em><br>
+    b) <span class="op">Erkläre</span>, warum der Einmarsch in Belgien den Krieg ausweitete. <em data-t="wk">(1 P.)</em><br>
+    c) <span class="op">Erkläre</span>, warum der Plan scheiterte und welche Folgen das für die Kriegsführung hatte. <em data-t="wk">(2 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>a) Ziel: einen Zweifrontenkrieg gegen Frankreich und Russland vermeiden <span class="p">(1 P.)</span></li>
+        <li>a) Ablauf: erst Blitzkrieg im Westen durch das neutrale Belgien und Luxemburg mit schnellem Sieg über Frankreich, dann Feldzug gegen Russland <span class="p">(1 P.)</span></li>
+        <li>b) Deutsche Truppen marschierten am 04.08.1914 in das neutrale Belgien ein; am selben Tag erklärte Großbritannien Deutschland den Krieg <span class="p">(1 P.)</span></li>
+        <li>c) Niederlage in der Schlacht an der Marne 1914; Russland griff schneller an als erwartet <span class="p">(1 P.)</span></li>
+        <li>c) Folge: Übergang vom Bewegungs- zum Stellungskrieg in Schützengräben, Materialschlachten (z. B. Verdun 1916) – ein langer Abnutzungskrieg <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3><span class="tag afb">AFB III</span><span class="tag wk">1. Weltkrieg</span>Aufgabe 6 – These beurteilen <span class="pkt">(4 P.)</span></h3>
+  <div class="card">
+    <p>„Der Kriegseintritt der USA 1917 hat den 1. Weltkrieg entschieden.“<br>
+    <span class="op">Beurteile</span> diese These. Berücksichtige Gründe für den Kriegseintritt und seine Folgen. <em data-t="wk">(4 P.)</em></p>
+    <details><summary>Erwartungshorizont anzeigen</summary>
+      <ul class="eh">
+        <li>Grund: uneingeschränkter U-Boot-Krieg Deutschlands auch gegen neutrale und zivile Schiffe → Anlass für den Kriegseintritt der USA 1917 <span class="p">(1 P.)</span></li>
+        <li>Pro: Die USA brachten bis Sommer 1918 rund 2 Millionen Soldaten nach Europa, dazu Geld, Waffen und Nahrungsmittel → Wende im Kriegsverlauf <span class="p">(1 P.)</span></li>
+        <li>Contra/Einschränkung: Deutschland war schon vorher durch Stellungskrieg, Materialschlachten und die britische Blockade (Hunger, Mangel) stark geschwächt <span class="p">(1 P.)</span></li>
+        <li>begründetes Urteil, z. B.: Der Kriegseintritt war entscheidend für den Zeitpunkt des Kriegsendes 1918, aber nicht die einzige Ursache der deutschen Niederlage <span class="p">(1 P.)</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>32–30</td><td>29–24</td><td>23–20</td><td>19–13</td><td>12–7</td><td>6–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite Imperialismus</a> &nbsp;·&nbsp; <a class="back" href="../erster-weltkrieg/">⚔️ Lernseite 1. Weltkrieg</a></footer>
+</body>
+</html>

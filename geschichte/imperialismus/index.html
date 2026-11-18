@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imperialismus</title>
+<style>
+  :root {
+    --bg: #f7f5f3; --card: #ffffff; --text: #1f2430; --muted: #5f6472;
+    --accent: #a33a3a; --accent-soft: #f8e7e7;
+    --green: #1f9d63; --green-soft: #e3f6ed;
+    --orange: #c97a22; --orange-soft: #fdf0e1;
+    --border: #e2ddd8;
+    /* colonial powers on the map */
+    --m-de: #6d4c2f; --m-gb: #d14b4b; --m-fr: #3f6fd6; --m-be: #d9a400;
+    --m-pt: #2a9a5f; --m-it: #8e4fc0; --m-es: #e07a1f; --m-frei: #f7f5f3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16151a; --card: #201f26; --text: #e8e6ea; --muted: #a29fab;
+      --accent: #e57d7d; --accent-soft: #3a2226;
+      --green: #4cc58c; --green-soft: #1b3329;
+      --orange: #f0a557; --orange-soft: #3a2c1b;
+      --border: #34323c;
+      --m-de: #b08560; --m-gb: #e57373; --m-fr: #7a9ff0; --m-be: #e8c140;
+      --m-pt: #52c48a; --m-it: #b98ae0; --m-es: #f0a057; --m-frei: #2c2b33;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { background: linear-gradient(135deg, #7a2b2b, #a33a3a 60%, #c06a3a); color: #fff;
+           padding: 2rem 1rem 1.5rem; text-align: center; }
+  header h1 { margin: 0 0 .3rem; font-size: 1.9rem; }
+  header p { margin: 0; opacity: .9; }
+  nav { position: sticky; top: 0; z-index: 10; background: var(--card);
+        border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap;
+        justify-content: center; gap: .4rem; padding: .6rem .5rem; }
+  nav a { text-decoration: none; color: var(--accent); background: var(--accent-soft);
+          padding: .35rem .75rem; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+  @media (max-width: 760px) {
+    /* one scrollable row instead of a tall sticky block on phones */
+    nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
+    nav a { white-space: nowrap; flex-shrink: 0; }
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  section { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+            padding: 1.4rem 1.5rem; margin-bottom: 1.6rem; scroll-margin-top: 70px; }
+  h2 { margin-top: 0; font-size: 1.5rem; display: flex; align-items: center; gap: .6rem; }
+  h2 .num { background: var(--accent); color: #fff; width: 2rem; height: 2rem; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  h3 { margin-bottom: .4rem; color: var(--accent); }
+  a { color: var(--accent); }
+  .datum { color: var(--accent); font-weight: 700; white-space: nowrap; }
+  .box { border-left: 5px solid var(--accent); background: var(--accent-soft);
+         padding: .8rem 1rem; border-radius: 8px; margin: 1rem 0; }
+  .box.merke { border-color: var(--green); background: var(--green-soft); }
+  .box.tipp { border-color: var(--orange); background: var(--orange-soft); }
+  .box strong.label { display: block; margin-bottom: .3rem; }
+
+  /* timeline */
+  .timeline { position: relative; margin: 1rem 0 0; padding-left: 1.6rem; }
+  .timeline::before { content: ""; position: absolute; left: .45rem; top: .3rem; bottom: .3rem;
+                      width: 3px; background: var(--accent); border-radius: 2px; }
+  .tl-item { position: relative; margin-bottom: 1rem; }
+  .tl-item::before { content: ""; position: absolute; left: -1.4rem; top: .45rem; width: .85rem; height: .85rem;
+                     border-radius: 50%; background: var(--card); border: 3px solid var(--accent); }
+  .tl-item .d { font-weight: 700; color: var(--accent); }
+  .tl-item.krieg::before { background: var(--accent); }
+
+  /* cause-effect chain */
+  .chain { display: flex; flex-direction: column; gap: .5rem; margin: 1rem 0; }
+  .chain .step { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: .7rem 1rem; }
+  .chain .arrow { text-align: center; color: var(--accent); font-weight: 700; line-height: 1; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .card { border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.1rem; background: var(--bg); }
+  .card h4 { margin: 0 0 .5rem; font-size: 1.15rem; }
+  .card ul { margin: .3rem 0 0; padding-left: 1.2rem; }
+
+  /* cause scheme imperialism -> tensions -> war */
+  .schema { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: .6rem; align-items: stretch; margin: 1rem 0; }
+  .schema .col { border: 2px solid var(--border); border-radius: 12px; padding: .8rem 1rem; background: var(--bg); }
+  .schema .col h4 { margin: 0 0 .4rem; }
+  .schema .col ul { margin: 0; padding-left: 1.1rem; }
+  .schema .col.c1 { border-color: var(--orange); }
+  .schema .col.c2 { border-color: var(--accent); }
+  .schema .col.c3 { border-color: var(--accent); background: var(--accent-soft); }
+  .schema .pfeil { display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: var(--accent); font-weight: 700; }
+  @media (max-width: 760px) {
+    .schema { grid-template-columns: 1fr; }
+    .schema .pfeil { transform: rotate(90deg); line-height: 1; }
+  }
+
+  blockquote { margin: 1rem 0; padding: .8rem 1rem; border-left: 5px solid var(--muted); background: var(--bg); border-radius: 8px; }
+  blockquote cite { display: block; margin-top: .4rem; font-size: .85rem; color: var(--muted); font-style: normal; }
+
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--border); padding: .5rem .6rem; text-align: left; vertical-align: top; }
+  th { background: var(--accent-soft); }
+  .table-wrap { overflow-x: auto; }
+
+  details { border: 1px solid var(--border); border-radius: 10px; padding: .6rem 1rem; margin: .7rem 0; background: var(--bg); }
+  details summary { cursor: pointer; font-weight: 600; }
+  details .loesung { margin-top: .6rem; padding-top: .6rem; border-top: 1px dashed var(--border); }
+
+  .check li { list-style: none; margin-left: -1.2rem; }
+  .check label { cursor: pointer; }
+  .check input { transform: scale(1.2); margin-right: .5rem; accent-color: var(--green); }
+  .progress { height: 12px; background: var(--bg); border-radius: 999px; overflow: hidden;
+              border: 1px solid var(--border); margin: .5rem 0 1rem; }
+  .progress > div { height: 100%; width: 0; background: var(--green); transition: width .3s; }
+
+  /* list of practice exams */
+  .ka-liste { margin: .6rem 0 0; padding-left: 1.2rem; }
+  .ka-liste li { margin: .4rem 0; }
+  .badge { font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .badge.std { background: var(--green-soft); color: var(--green); }
+  .badge.schwer { background: #c53030; color: #fff; }
+
+  /* map */
+  .karte-wrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
+  @media (max-width: 760px) { .karte-wrap { grid-template-columns: 1fr; } }
+  #karte { width: 100%; max-width: 460px; height: auto; display: block; margin: 0 auto; }
+  #karte .land { stroke: var(--card); stroke-width: 1; stroke-linejoin: round; cursor: pointer;
+                 transition: opacity .25s, stroke-width .25s; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #karte .m-de { fill: var(--m-de); } #karte .m-gb { fill: var(--m-gb); } #karte .m-fr { fill: var(--m-fr); }
+  #karte .m-be { fill: var(--m-be); } #karte .m-pt { fill: var(--m-pt); } #karte .m-it { fill: var(--m-it); }
+  #karte .m-es { fill: var(--m-es); }
+  #karte .m-frei { fill: var(--m-frei); stroke: var(--text); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  #karte.aktiv .land { opacity: .18; }
+  #karte.aktiv .land.an { opacity: 1; stroke: var(--text); stroke-width: 1.6; }
+  .legende { display: flex; flex-direction: column; gap: .35rem; margin: 0; padding: 0; list-style: none; }
+  .legende button { width: 100%; display: flex; align-items: center; gap: .6rem; text-align: left; font: inherit; color: var(--text);
+                    background: var(--bg); border: 2px solid var(--border); border-radius: 10px; padding: .4rem .7rem; cursor: pointer; }
+  .legende button[aria-pressed="true"] { border-color: var(--text); font-weight: 700; }
+  .legende button:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+  .legende .farbe { width: 1.2rem; height: 1.2rem; border-radius: 4px; flex-shrink: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .legende .farbe.frei { border: 2px dashed var(--text); }
+  #karte-info { min-height: 3.2rem; margin-top: .6rem; padding: .6rem .8rem; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); }
+  .karte-hinweis { font-size: .85rem; color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) {
+    #karte .land, .progress > div { transition: none; }
+  }
+
+  .quellen { font-size: .9rem; }
+  .quellen li { margin: .3rem 0; overflow-wrap: anywhere; }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding-bottom: 2rem; }
+  @media print {
+    nav, .no-print { display: none; }
+    body { background: #fff; color: #000; }
+    section { break-inside: avoid-page; }
+    details > *:not(summary) { display: block !important; }
+    #karte.aktiv .land { opacity: 1 !important; stroke-width: 1 !important; }
+    .legende button { border-color: #ccc !important; font-weight: 400 !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Geschichte</a> › <span>Imperialismus</span></div>
+  <h1>🌍 Imperialismus <span style="opacity:.85">(ca. 1880–1914)</span></h1>
+  <p>Geschichte · Klasse 9 · Vorgeschichte des 1. Weltkrieges</p>
+</header>
+
+<nav>
+  <a href="#ka">📝 Probe-KAs</a>
+  <a href="#zeitstrahl">Zeitstrahl</a>
+  <a href="#begriff">1 Begriff</a>
+  <a href="#motive">2 Motive</a>
+  <a href="#afrika">3 Afrika</a>
+  <a href="#kolonien">4 Deutsche Kolonien</a>
+  <a href="#herero">5 Herero und Nama</a>
+  <a href="#krieg">6 Weg in den Krieg</a>
+  <a href="#ausblick">Ausblick</a>
+  <a href="#begriffe">Begriffe</a>
+  <a href="#uebungen">Übungen</a>
+  <a href="#check">✅ Checkliste</a>
+  <a href="#quellen">Quellen</a>
+</nav>
+
+<main>
+
+<!-- ============ PRACTICE EXAMS ============ -->
+<section id="ka">
+  <h2><span class="num">📝</span> Klassenarbeit: Imperialismus und 1. Weltkrieg</h2>
+  <p>Die Klassenarbeit prüft <strong>beide Themen</strong>: diese Seite (Imperialismus) und die Lernseite <a href="../erster-weltkrieg/">⚔️ Der 1. Weltkrieg</a>. Die Probe-Klassenarbeiten mischen beide Themen etwa zur Hälfte. Bearbeitungszeit je 45 Minuten, Erwartungshorizont und Notenschlüssel zum Aufklappen.</p>
+  <ul class="ka-liste">
+    <li><a href="probearbeit-1.html"><strong>Probearbeit 1</strong></a> <span class="badge std">Standard</span> – Daten zuordnen, Begriff und Motive, Bülow-Quelle „Platz an der Sonne“, Herero und Nama, Kettenreaktion 1914, Schlieffenplan und Materialschlacht, Beurteilung Imperialismus als Kriegsursache (32 P.)</li>
+    <li><a href="probearbeit-2.html"><strong>Probearbeit 2</strong></a> <span class="badge std">Standard</span> – Begriffe zuordnen, Kolonialmächte in Afrika 1914, Darstellungstext Berliner Konferenz, Bündnisse, Flottenwettrüsten, U-Boot-Krieg und USA, Materialschlacht, Beurteilung „Welt“-Krieg (32 P.)</li>
+    <li><a href="probearbeit-3.html"><strong>Probearbeit 3</strong></a> <span class="badge schwer">🔥 Schwer</span> – Fachbegriffe erklären, Quellenanalyse Bülow-Rede, Darstellungstext Völkermord an Herero und Nama mit Urteil, Ursachen-Schema Imperialismus → Spannungen → Krieg, Schlieffenplan und Belgien, These zum Kriegseintritt der USA (32 P.)</li>
+  </ul>
+  <div class="box tipp">
+    <strong class="label">💡 So übst du</strong>
+    Erst diese Seite und die <a href="../erster-weltkrieg/">Seite zum 1. Weltkrieg</a> lernen, dann eine Probe-KA mit Timer auf Papier schreiben – erst danach den Erwartungshorizont aufklappen. Achte auf die <strong>Operatoren</strong>: „nennen“ heißt aufzählen, „erklären“ heißt Gründe und Zusammenhänge darstellen, „beurteilen“ heißt eine eigene, begründete Meinung bilden.
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section id="zeitstrahl">
+  <h2><span class="num">⏱</span> Zeitstrahl – die wichtigsten Daten</h2>
+  <div class="timeline">
+    <div class="tl-item"><span class="d">1879</span> – Zweibund: Deutsches Reich und Österreich-Ungarn</div>
+    <div class="tl-item"><span class="d">1882</span> – Dreibund: Italien tritt dem Zweibund bei</div>
+    <div class="tl-item"><span class="d">1884</span> – Erste deutsche Kolonien in Afrika (Deutsch-Südwestafrika, Togo, Kamerun)</div>
+    <div class="tl-item"><span class="d">1884/85</span> – Berliner Konferenz („Kongokonferenz“): Europäische Mächte legen Regeln für die Aufteilung Afrikas fest</div>
+    <div class="tl-item"><span class="d">1888</span> – Wilhelm II. wird Deutscher Kaiser</div>
+    <div class="tl-item"><span class="d">1890</span> – Bismarck wird entlassen; der Rückversicherungsvertrag mit Russland wird nicht verlängert</div>
+    <div class="tl-item"><span class="d">1897</span> – Bernhard von Bülow fordert im Reichstag einen „Platz an der Sonne“ für Deutschland</div>
+    <div class="tl-item"><span class="d">1898</span> – Erstes Flottengesetz: Beginn des Flottenbaus unter Tirpitz</div>
+    <div class="tl-item"><span class="d">1904</span> – Entente cordiale: Großbritannien und Frankreich legen ihre Kolonialstreitigkeiten bei</div>
+    <div class="tl-item"><span class="d">1904–1908</span> – Krieg gegen Herero und Nama in Deutsch-Südwestafrika: <strong>Völkermord</strong></div>
+    <div class="tl-item"><span class="d">1905/06</span> – Erste Marokkokrise</div>
+    <div class="tl-item"><span class="d">1905–1907</span> – Maji-Maji-Krieg in Deutsch-Ostafrika</div>
+    <div class="tl-item"><span class="d">1907</span> – Abkommen Großbritannien–Russland → Triple Entente</div>
+    <div class="tl-item"><span class="d">1911</span> – Zweite Marokkokrise („Panthersprung nach Agadir“)</div>
+    <div class="tl-item"><span class="d">1912/13</span> – Balkankriege</div>
+    <div class="tl-item krieg"><span class="d">1914</span> – Beginn des 1. Weltkrieges → <a href="../erster-weltkrieg/">weiter auf der Lernseite 1. Weltkrieg</a></div>
+  </div>
+</section>
+
+<!-- ============ 1 TERM ============ -->
+<section id="begriff">
+  <h2><span class="num">1</span> Was ist Imperialismus?</h2>
+  <p>Das Wort kommt vom lateinischen <em>imperium</em> (Herrschaft, Reich). <strong>Imperialismus</strong> nennt man das Streben eines Staates, seine <strong>Macht und Herrschaft über andere Länder und Völker</strong> auszudehnen – durch Eroberung, Kolonien, wirtschaftliche Abhängigkeit oder politischen Druck.</p>
+  <p>Als <strong>Zeitalter des Imperialismus</strong> bezeichnet man die Zeit von etwa <strong>1880 bis 1914</strong>. In diesen Jahrzehnten teilten die europäischen Großmächte (dazu die USA und Japan) große Teile der Welt unter sich auf – vor allem Afrika und Teile Asiens.</p>
+  <div class="grid">
+    <div class="card">
+      <h4>🗺️ Kolonie</h4>
+      Gebiet in einem anderen Erdteil, das ein fremder Staat unterworfen hat, beherrscht und wirtschaftlich ausbeutet.
+    </div>
+    <div class="card">
+      <h4>⛓️ Kolonialismus</h4>
+      Ausdehnung der Herrschaft europäischer Staaten auf außereuropäische Gebiete, vor allem um sie wirtschaftlich auszubeuten. Er begann im 15. Jahrhundert (Zeitalter der „Entdeckungen“) und erreichte im 19. und 20. Jahrhundert seinen Höhepunkt.
+    </div>
+  </div>
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    <strong>Imperialismus</strong> = Streben eines Staates nach Herrschaft über andere Länder und Völker. Das <strong>Zeitalter des Imperialismus</strong> reicht von etwa <strong>1880 bis 1914</strong>. Die Konkurrenz der Großmächte um Kolonien führte zu Spannungen – eine Ursache des 1. Weltkrieges.
+  </div>
+</section>
+
+<!-- ============ 2 MOTIVES ============ -->
+<section id="motive">
+  <h2><span class="num">2</span> Motive – warum wollten die Staaten Kolonien?</h2>
+  <div class="grid">
+    <div class="card">
+      <h4>💰 Wirtschaftliche Motive</h4>
+      <ul>
+        <li>billige <strong>Rohstoffe</strong> (z. B. Baumwolle, Kautschuk, Kupfer, Gold, Diamanten)</li>
+        <li>neue <strong>Absatzmärkte</strong> für Industriewaren</li>
+        <li>Möglichkeiten, Geld gewinnbringend anzulegen</li>
+        <li>Siedlungsland für Auswanderer</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>👑 Politische Motive</h4>
+      <ul>
+        <li><strong>Macht und Ansehen</strong> (Prestige): Kolonien galten als Zeichen einer Großmacht</li>
+        <li>Stützpunkte für Flotte und Handel</li>
+        <li><strong>Nationalismus</strong>: die eigene Nation sollte größer und stärker sein als andere</li>
+        <li>Ablenkung von Problemen im eigenen Land</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>📜 Ideologische Motive</h4>
+      <ul>
+        <li><strong>Sozialdarwinismus</strong>: Darwins Idee vom Überleben im „Kampf ums Dasein“ wurde auf Menschen und Völker übertragen – der „Stärkere“ habe das Recht, zu herrschen</li>
+        <li><strong>Rassismus</strong>: Europäer werteten sich selbst auf und andere Menschen ab</li>
+        <li>„Sendungsbewusstsein“: Glaube, man müsse anderen Völkern die eigene Kultur und das Christentum bringen (Mission)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="box">
+    <strong class="label">⚠ Kritisch betrachtet</strong>
+    Sozialdarwinismus und Rassismus sind <strong>wissenschaftlich falsch</strong>. Sie dienten dazu, Unterdrückung, Landraub und Gewalt zu rechtfertigen. Die Menschen in den Kolonien wurden nicht gefragt – sie verloren Land, Rechte und oft ihr Leben.
+  </div>
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    Drei Arten von Motiven: <strong>wirtschaftlich</strong> (Rohstoffe, Absatzmärkte), <strong>politisch</strong> (Macht, Prestige, Nationalismus) und <strong>ideologisch</strong> (Sozialdarwinismus, Rassismus, Sendungsbewusstsein).
+  </div>
+</section>
+
+<!-- ============ 3 AFRICA ============ -->
+<section id="afrika">
+  <h2><span class="num">3</span> Der Wettlauf um Afrika</h2>
+  <p>Um 1880 kontrollierten Europäer vor allem Küstengebiete Afrikas. Danach begann ein regelrechter <strong>Wettlauf</strong>: Innerhalb von gut 30 Jahren teilten die europäischen Mächte fast den ganzen Kontinent unter sich auf.</p>
+
+  <h3>Berliner Konferenz („Kongokonferenz“) <span class="datum">(15.11.1884 – 26.02.1885)</span></h3>
+  <p>Auf Einladung von Reichskanzler <strong>Otto von Bismarck</strong> trafen sich in Berlin Vertreter von 14 Staaten. Sie legten Regeln fest, wie Gebiete in Afrika „in Besitz genommen“ werden dürfen: Wer ein Gebiet beanspruchen wollte, musste es <strong>tatsächlich („effektiv“) besetzen</strong>. Seit der Konferenz galt das riesige Kongogebiet als „Kongo-Freistaat“ – eine Privatkolonie des belgischen Königs <strong>Leopold II.</strong> Erst 1908 übernahm der Staat Belgien die Kolonie.</p>
+  <div class="box">
+    <strong class="label">⚠ Wichtig</strong>
+    An der Konferenz nahm <strong>kein einziger Afrikaner</strong> teil. Über das Land und die Menschen Afrikas entschieden allein fremde Staaten. Die neuen Grenzen wurden oft mit dem Lineal gezogen – quer durch Siedlungsgebiete von Völkern.
+  </div>
+
+  <h3>Karte: Kolonialreiche in Afrika um 1914</h3>
+  <p class="no-print" style="margin-top:0">Tippe auf eine Kolonialmacht (oder ein Gebiet in der Karte), um ihre Gebiete hervorzuheben.</p>
+  <div class="karte-wrap">
+    <div>
+<svg id="karte" viewBox="0 0 420 438" role="img" aria-labelledby="karte-titel">
+<title id="karte-titel">Kolonialreiche in Afrika um 1914 (vereinfacht, heutige Staatsgrenzen)</title>
+<path class="land m-gb" data-macht="gb" d="M295.7 362.4L284.2 361.2L276.1 357.3L274.2 351.2L265 345.2L259.6 334.8L270.1 335.8L275.6 329.4L280.6 327.2L281.5 323.9L286.4 321.9L305.7 328.3L304.2 341.6L306 347.9L302.6 355.8L295.7 362.4Z"><title>Südrhodesien (heute Simbabwe)</title></path>
+<path class="land m-gb" data-macht="gb" d="M290.4 321.9L281.5 323.9L280.6 327.2L268.7 336.2L256.4 333.1L248.3 333.8L240.2 325.6L239.9 306L251.8 305.9L251.8 293.2L254.3 296.5L259.7 295.3L260.1 297.7L264.2 299.3L268.9 299.8L271 297.5L282.1 308.2L286.7 308.6L286.8 300.9L282.4 302.1L278.3 297.4L279.9 291.3L278.4 283.3L281.4 278.9L292.5 277.2L307.2 285.8L310 291.3L307.6 293.4L309.1 302.1L306.1 303.8L304 309.5L307.2 312.1L289.4 317.9L290.4 321.9Z"><title>Nordrhodesien (heute Sambia)</title></path>
+<path class="land m-gb" data-macht="gb" d="M311.4 234L292.9 234L285.5 236.3L287.7 223.1L295.5 215.7L292.4 213.3L294.3 205.6L300.8 206.9L308.9 205.5L311.9 202.7L314.6 206.1L317.9 217.7L311.7 227L311.4 234Z"><title>Uganda</title></path>
+<path class="land m-fr" data-macht="fr" d="M177 28.9L177 33.5L169.6 37.9L169.3 43.3L165.1 46.6L162.3 35.6L153 25L157.5 19.6L157.2 8.9L159.5 6.4L166.1 4L170.5 7.6L174.3 5.6L170.9 10.9L174.7 16.6L168.3 23.7L177 28.9Z"><title>Tunesien (Protektorat)</title></path>
+<path class="land m-de" data-macht="de" d="M113.4 162L112.6 165.7L116 168L117.6 173.7L118.7 190.2L115.1 191.5L111.2 186.9L111.2 171.6L109.4 171.2L110.3 166.2L107.5 163.7L107.6 161.3L113.4 162Z"><title>Togo</title></path>
+<path class="land m-de" data-macht="de" d="M305.5 284.4L293.8 279.3L285.2 265.9L284.4 254.7L287.7 253.8L292.9 247.2L290.5 244.9L293.3 240.9L291.1 234.4L311.9 234L333.9 246.3L333.6 249L343.3 256.2L340.8 264.4L345.3 270.1L343.8 278.7L346.4 288L350.8 290.8L347.9 292.9L332.2 298.3L317.8 297.5L313.9 286.4L305.5 284.4Z"><title>Deutsch-Ostafrika (heute Tansania)</title></path>
+<path class="land m-gb" data-macht="gb" d="M299.7 383.7L299.8 391.8L294.4 390.7L292.7 386.7L294.5 383.9L299.7 383.7Z"><title>Swasiland (heute Eswatini)</title></path>
+<path class="land m-gb" data-macht="gb" d="M311.9 202.7L308.9 205.5L300.8 206.9L294.9 205.3L293 207.1L285.3 200.2L277.2 201.9L253 175.8L258.4 166.2L262.8 165.5L268 171.1L281.1 172L288 166.3L294.9 169.4L302.5 161.5L300.4 156L307.2 154.7L306.8 163.5L311.4 166.9L312.6 175.9L307.7 177.4L306 180.6L316.3 188L319.6 195L311.9 202.7Z"><title>Anglo-Ägyptischer Sudan (heute Südsudan)</title></path>
+<path class="land m-gb" data-macht="gb" d="M312.5 171.2L311.4 166.9L306.8 163.5L307.2 154.7L304.3 154.7L300.4 156L302.5 161.5L294.9 169.4L288 166.3L281.1 172L268 171.1L262.8 165.5L258.4 166.2L255.2 174.7L249.2 175.1L249.9 169.1L245.2 162.5L242.1 152L239 151.3L245.6 134.8L251.8 133.7L251.9 108L257.9 108L257.9 96L329.2 96L332.8 115.1L339.7 120L330.1 125.6L324.8 151.5L318.7 157.1L317.6 162.8L314.1 164L312.5 171.2Z"><title>Anglo-Ägyptischer Sudan</title></path>
+<path class="land m-gb" data-macht="gb" d="M284.2 361.2L295.7 362.4L299.8 374.3L299.7 383.7L295.2 383.1L292.8 388.7L298.5 391.9L300 388.9L305.3 389.1L302.3 399L289.7 413.8L275.2 426.3L261.4 432.2L243.3 432.1L228.1 436.7L220.5 432.5L218.8 434.1L215.1 425L218 423L217.3 418.5L206.7 399.7L209.3 396.8L212.2 397.6L212.7 400.2L223.5 401.4L227.9 398.7L227.9 376.7L232.8 383.5L232.1 388.9L238.2 389L246.3 379.9L260.7 382.3L270.5 369.5L284.2 361.2Z"><title>Südafrikanische Union (britisches Dominion)</title></path>
+<path class="land m-it" data-macht="it" d="M357.2 238.2L353.9 233.2L353.9 210.9L360.1 203.2L369.5 198.9L377.6 198.5L395.9 180L401.6 171.3L401.6 160.4L412.8 156.1L415.5 157L414.2 165.3L416.3 165.7L413.6 166L413 171.4L395.9 201L384.3 213.1L368.8 224.3L357.2 238.2Z"><title>Italienisch-Somaliland</title></path>
+<path class="land m-gb" data-macht="gb" d="M401.6 160.4L401.6 171.3L395.9 180L389.9 180L372.1 174.1L363.9 164.4L367.5 159L374.3 165.4L401.6 160.4Z"><title>Britisch-Somaliland</title></path>
+<path class="land m-gb" data-macht="gb" d="M46.3 177.1L39 186.6L30.9 181.1L28.4 177.4L30.6 176.2L28.9 176.5L28.2 173.7L33.4 168.6L40.4 168L43.9 172.1L43.7 178L46.3 177.1Z"><title>Sierra Leone</title></path>
+<path class="land m-fr" data-macht="fr" d="M34.3 139.1L39.7 153.1L34.3 154L25.6 152L7.7 153.9L9.3 152.3L7.4 152.2L8.1 149.1L17.1 146.7L25 147.6L17.3 145.1L8.6 146.5L8.3 143.8L2.8 139.5L6.9 136.2L10.6 128.8L18.2 127.9L27 131.2L34.3 139.1Z"><title>Französisch-Westafrika (heute Senegal)</title></path>
+<path class="land m-de" data-macht="de" d="M285.5 236.3L291.1 234.4L293 242L287.6 242L286.2 244.8L281.5 244.1L285.5 236.3Z"><title>Deutsch-Ostafrika (heute Ruanda)</title></path>
+<path class="land m-gb" data-macht="gb" d="M189.6 145.8L195.7 155.1L195.5 158.8L190.2 162.8L176.4 188.8L168.9 186L162.4 191.9L157.8 200.7L150.5 199.7L149.5 201.7L148.6 199.7L149.2 201.8L145 202.3L141.5 200.1L141.3 195.2L139.2 194.8L140.7 194.3L134.6 189.9L128.9 189.5L130.3 188.4L124.2 189.8L124.6 173.7L130.7 165.4L129.9 152.8L134.5 146.1L141 144.8L149.6 150L155 148L165.7 151.1L170.9 148L182.8 149.4L189.6 145.8Z"><title>Nigeria</title></path>
+<path class="land m-fr" data-macht="fr" d="M189.6 145.8L182.8 149.4L170.9 148L165.7 151.1L155 148L149.6 150L145.8 146L136 145.6L129.9 152.8L129.6 157.8L124.8 153.7L122.3 156.6L120.6 151.8L113.9 149.7L115.2 147.9L109 141L109.4 138.2L115.8 136.4L129 135.9L133.1 128.5L133.4 113.1L143 111.1L152.9 102.8L179.8 86.9L188.9 88.9L193.3 92.3L197.9 90L199.1 98.9L203.8 105.9L200.8 126.5L188.7 141.7L189.6 145.8Z"><title>Französisch-Westafrika (heute Niger)</title></path>
+<path class="land m-de" data-macht="de" d="M248.3 333.8L259.6 334.8L249.9 338.7L247.3 336L233.8 337.9L233.8 360L227.9 360L227.9 398.7L223 401.6L216.6 401.2L212.7 400.2L210.3 396.2L206.7 399.7L199.7 391.7L195 373.2L194.8 362.7L178.7 336L178.5 331.5L186.6 329.8L192.1 332.5L218.4 332.4L221.7 334.8L232.5 336.1L248.3 333.8Z"><title>Deutsch-Südwestafrika (heute Namibia)</title></path>
+<path class="land m-pt" data-macht="pt" d="M295.7 362.4L302.6 355.8L306 347.9L304.2 341.6L305.7 328.3L290.5 323.9L289.4 317.9L307.2 312.1L309.8 315.4L314.3 314.5L315.3 318.8L313.5 323.3L319.6 330.7L319 327.4L322.5 324.3L323.4 317.4L315.4 308.2L314.1 301L315.7 297.7L332.2 298.3L350.8 290.8L350.6 305.9L353.1 316.3L351.4 320.8L347.1 326.6L333.1 333.4L326.4 340.6L317.7 346.9L315.9 346.2L319.9 362.4L321.2 361.8L319.5 374.6L305.8 380.9L303.5 384L305.7 384.5L305.3 389.1L300.7 389L299.9 374.8L295.7 362.4Z"><title>Mosambik</title></path>
+<path class="land m-fr" data-macht="fr" d="M94.7 17.4L97.2 19.5L100.6 35.4L90.8 35.6L85 38L86 42.2L56 55.7L55.9 62L29 62L38.7 58.1L46.8 51.7L50 47.3L49.1 39.5L52.5 32.6L66.6 24.2L72.5 13.3L76.3 12.6L80.2 16.8L90.2 15.6L94.7 17.4Z"><title>Marokko (Protektorat seit 1912, Norden spanisch)</title></path>
+<path class="land m-fr" data-macht="fr" d="M34.3 139.1L27.5 131.6L20.8 128.1L10.6 128.8L8.8 133L11.7 118.7L8.9 111.8L10.7 106.6L6.7 101.5L5.7 103.2L6.2 100L29.9 100L29.1 91.1L35.9 87.2L35.9 72L55.9 72L55.9 64.3L79.1 78L68.4 78L75.8 130.3L74.9 135L51.9 133.9L42.3 137.1L39 134.2L34.3 139.1Z"><title>Französisch-Westafrika (heute Mauretanien)</title></path>
+<path class="land m-fr" data-macht="fr" d="M39.7 153.6L34.3 139.1L39 134.2L42.3 137.1L51.9 133.9L74.9 135L75.8 130.3L68.4 78L79.1 78L114.9 101.4L118.5 106L126.8 108.9L127.5 113.9L133.4 113.1L133.1 128.5L129 135.9L104 137.6L95.3 143L92.5 142.6L88.2 148.3L82 149.3L81.4 154L76.3 157L74.9 165.4L71.8 166.8L70.4 163.7L65.9 167.1L63 165.4L60.1 167L53.3 153.3L43.7 156.6L42.4 154.8L40.2 155.9L39.7 153.6Z"><title>Französisch-Westafrika (heute Mali)</title></path>
+<path class="land m-gb" data-macht="gb" d="M307.2 312.1L304 309.5L306.1 303.8L309.1 302.1L307.6 293.4L310 291.3L305.8 284.4L312 285L315.1 288.2L317.8 297.5L314.1 301L315.4 308.2L323.4 317.4L322.7 323.8L319.7 325.5L318.7 330.8L313.5 323.3L315 315.6L309.8 315.4L307.2 312.1Z"><title>Njassaland (heute Malawi)</title></path>
+<path class="land m-fr" data-macht="fr" d="M405.2 302.6L410.4 321.8L409.1 323.7L406 321.1L407 326.9L404.2 338L391.1 376.7L378.7 381.3L372.2 378L367.6 362.3L374.4 347.5L371.9 332.3L374.9 325.3L386.4 323.5L392.1 316.6L392.9 318.1L395.8 316L395.6 310L400.8 307.6L400.7 302.8L403.2 300.5L405.2 302.6Z"><title>Madagaskar</title></path>
+<path class="land m-it" data-macht="it" d="M165.1 46.6L169.3 43.3L169.6 37.9L177 33.5L177 28.9L199.1 33.7L202.2 39.4L222.7 46.4L228.7 42.2L228.2 35.4L234.4 31.3L241.1 30.5L246.5 32.3L247.7 34.7L257.7 36.3L258.9 38.1L256.2 46.8L257.9 52.9L257.9 108L251.9 108L251.9 111L203.9 87.3L193.3 92.3L188.9 88.9L179.8 86.9L177 82.1L170 80.8L164.5 71.1L167.4 66.9L165.1 46.6Z"><title>Libyen</title></path>
+<path class="land m-frei" data-macht="frei" d="M39 186.6L46.3 177.1L50 177.2L51.2 183.5L54.7 184.4L56.5 181.9L58.2 185.6L56.4 189L63.3 193L62.7 201.9L53.2 197.7L39 186.6Z"><title>Liberia (unabhängig)</title></path>
+<path class="land m-gb" data-macht="gb" d="M280.4 408.6L274.5 411.6L270.3 405.8L279.8 399.5L284.3 403.6L280.4 408.6Z"><title>Basutoland (heute Lesotho)</title></path>
+<path class="land m-gb" data-macht="gb" d="M311.4 234L311.7 227L317.9 217.4L311.9 202.7L319.6 195L322.5 195.9L324.1 201.2L329.4 201.5L336.5 206.1L345 207.3L352.6 202.4L359.3 204.1L353.8 211.1L353.9 233.2L357.2 238.2L349.3 244.1L344.3 255.8L334.8 250L333.9 246.3L311.4 234Z"><title>Britisch-Ostafrika (heute Kenia)</title></path>
+<path class="land m-pt" data-macht="pt" d="M7.7 153.9L25.6 152L25.6 157.6L19.9 158.9L17.7 162.4L15.1 159.5L17.6 158.4L15 157.7L17.5 156.2L12.3 157.3L7.7 153.9Z"><title>Portugiesisch-Guinea (heute Guinea-Bissau)</title></path>
+<path class="land m-fr" data-macht="fr" d="M46.3 177.1L43.7 178L45 175.9L40.8 168.1L33.4 168.6L28.2 173.7L25.9 168.4L21.4 166.5L19.3 162.4L17.7 163L19.9 158.9L25.6 157.6L25.6 152L39.7 153.6L40.2 155.9L42.4 154.8L43.7 156.6L53.7 153.6L57.6 159.8L56 161.9L60.1 166.3L59.2 171L61.9 177.5L58.7 177.1L58.8 182.5L56 181.9L53.3 184.7L51.2 183.5L50.9 177.9L46.3 177.1Z"><title>Französisch-Westafrika (heute Guinea)</title></path>
+<path class="land m-gb" data-macht="gb" d="M107.6 161.3L112.1 177.9L111.2 186.9L115.1 191.5L96 199.4L89.3 197.5L91.5 195.4L88.6 187.2L93 178.7L91 162L107.6 161.3Z"><title>Goldküste (heute Ghana)</title></path>
+<path class="land m-gb" data-macht="gb" d="M8.6 146.5L17.3 145.1L25 147.6L17.1 146.7L7.4 149.6L8 147.1L15.4 147.2L8.6 146.5Z"><title>Gambia</title></path>
+<path class="land m-fr" data-macht="fr" d="M187.8 215L187.3 220.5L193.1 219.8L194.6 222.6L191.2 229.2L194.8 231.4L194.3 239.3L192 242.9L190.4 240.8L186 241.9L183.5 239L182.7 242L177.6 242.1L179.3 250L177 249.1L174.8 251.5L165.7 242.2L162.2 235.9L165 237.3L160.2 231.5L163.8 230.1L164.1 225.9L168 226.8L163.9 224.7L165.7 224.5L165.5 221.8L176 222L176.1 214.2L187.8 215Z"><title>Französisch-Äquatorialafrika (heute Gabun)</title></path>
+<path class="land m-frei" data-macht="frei" d="M319.6 195L316.3 188L306.1 180.3L307.7 177.4L312.6 176.5L313.7 164.8L317.6 162.8L318.7 157.1L324.6 151.6L327.1 142.5L331.5 141.3L333.4 143.1L335.3 138.9L338.6 141.4L342.4 140.2L352.9 143.3L362.3 153.2L358.8 157.9L358.8 162.1L365.5 162L365 166.8L371.9 173.9L389.9 180L395.9 180L377.6 198.5L369.5 198.9L359.3 204.1L352.6 202.4L345 207.3L324.1 201.2L322.5 195.9L319.6 195Z"><title>Abessinien/Äthiopien (unabhängig)</title></path>
+<path class="land m-it" data-macht="it" d="M327.1 142.5L326.6 137.2L330.1 125.6L339.7 120L346.7 137.3L347.2 135.2L355.1 140.3L366.7 151.7L362.3 153.2L348.8 141.3L338.6 141.4L335.3 138.9L333.4 143.1L331.5 141.3L327.1 142.5Z"><title>Eritrea</title></path>
+<path class="land m-es" data-macht="es" d="M176 215L176 222L164.3 221.2L166.8 214.2L176 215Z"><title>Spanisch-Guinea (heute Äquatorialguinea)</title></path>
+<path class="land m-gb" data-macht="gb" d="M329.2 96L257.9 96L257.1 40L263.4 38.3L282.4 43L294.5 38.4L299.3 38.8L300.6 41.4L313.2 40.1L317.4 51.1L313.3 61.4L307.5 56.6L303.4 48.2L302.2 50.2L322.7 84.4L321 85.3L322.2 90.3L329.2 96Z"><title>Ägypten (britisch besetzt seit 1882, britisches Protektorat 1914)</title></path>
+<path class="land m-fr" data-macht="fr" d="M367.5 159L365.5 162L358.8 162.1L358.8 157.9L362.7 152.9L366.7 151.7L368.3 155.5L363.1 158.6L367.5 159Z"><title>Französisch-Somaliland (heute Dschibuti)</title></path>
+<path class="land m-fr" data-macht="fr" d="M60.1 167L63 165.4L65.9 167.1L70.4 163.7L71.3 166.8L74.7 165.4L80.2 169.7L88.7 168.6L91.8 171.1L93 178.7L88.5 188.1L91.1 197.1L76.3 196.7L62.7 201.9L63.3 193L56.4 189L58.2 186.1L57.1 182.6L59.9 179.5L58.6 177.3L61.9 177.5L59.2 171L60.1 167Z"><title>Französisch-Westafrika (heute Elfenbeinküste)</title></path>
+<path class="land m-be" data-macht="be" d="M292.5 277.2L281.4 278.9L278.4 283.3L278.9 298.9L282.4 302.1L286.8 300.9L286.7 308.6L282.7 308.4L271 297.5L268.9 299.8L264.2 299.3L260.1 297.7L259.7 295.3L254.3 296.5L251.8 293.2L241.7 295.2L241.6 289.6L238.9 284.8L238.7 271.9L227.3 269.9L224 275.8L213.5 276.6L206.6 263.4L183.1 264L181.3 262.6L185 256.4L188.5 257L194.1 253.8L196.2 257.3L203.9 250.6L205.3 241.1L214.5 231.3L219.4 202.5L222.4 198.7L226.1 197.3L231.3 201.2L242.5 203.2L245.2 199.7L258.4 198.2L261.2 196.1L270.7 196.8L277.2 201.9L286.1 200.5L293.4 207.2L292.4 213.3L295.6 215.1L287.7 223.1L285.5 236.3L281.1 242.7L283.3 246.3L285.2 265.9L292.5 277.2Z"><title>Belgisch-Kongo</title></path>
+<path class="land m-fr" data-macht="fr" d="M174.8 251.5L177 249.1L179.3 250L177.6 242.1L182.7 242L183.5 239L186 241.9L190.4 240.8L192 242.9L194.3 239.3L194.8 231.4L191.2 229.2L194.6 222.6L193.1 219.8L187.3 220.5L187.8 215L195.5 214.8L204.4 217.9L207.7 207L219 206.4L214.5 231.3L205.3 241.1L203.2 251.6L196.2 257.3L194.1 253.8L188.5 257L184.8 254.6L180.1 258L174.8 251.5Z"><title>Französisch-Äquatorialafrika (heute Republik Kongo)</title></path>
+<path class="land m-fr" data-macht="fr" d="M251.9 111L251.8 133.7L245.6 134.8L239 151.3L242.1 152L245.2 162.5L238.6 164.1L230.1 173.2L221.7 174.4L222.7 176.1L219.4 179.7L200.9 182.9L198.7 176.7L191.9 169.9L193.5 168.1L201.9 168L198.8 164.1L197.1 153L192.4 149.5L188.7 141.7L200.8 126.5L203.8 105.9L199.1 98.9L197.9 90L203.9 87.3L251.9 111Z"><title>Französisch-Äquatorialafrika (heute Tschad)</title></path>
+<path class="land m-fr" data-macht="fr" d="M252.9 176L266.2 188.2L272.4 197.3L261.2 196.1L258.4 198.2L245.2 199.7L242.5 203.2L231.3 201.2L225 197.2L219.6 201.9L219.7 207.1L207.7 207L205.1 214.4L204.4 210.5L196.4 200.4L194.6 191.5L200.9 182.9L219.4 179.7L222.7 176.1L221.3 174.7L231.8 172.2L240.3 163.1L245.2 162.5L249.9 169.1L249.2 175.1L252.9 176Z"><title>Französisch-Äquatorialafrika (heute Zentralafrikanische Republik)</title></path>
+<path class="land m-de" data-macht="de" d="M159.3 199.5L166.7 187.4L171.6 185.6L175.4 189.3L179.2 185.3L190.2 162.8L195.4 159L195.7 155.1L193.2 153.7L192.4 149.5L194.8 149.9L198.5 156.9L198.8 164.1L201.9 168L193.5 168.1L191.9 169.9L201.3 181.6L194.6 191.8L198.4 204.3L204.4 210.5L204.8 217.7L195.5 214.8L167.9 215L166.1 203.7L162 203.5L159.3 199.5Z"><title>Kamerun</title></path>
+<path class="land m-de" data-macht="de" d="M291.3 242.4L290.6 245.2L292.7 247.6L287.7 253.8L284.4 254.7L282.4 243.6L286.2 244.8L287.6 242L291.3 242.4Z"><title>Deutsch-Ostafrika (heute Burundi)</title></path>
+<path class="land m-fr" data-macht="fr" d="M113.4 162L91 162L91.4 171.5L88.7 168.6L80.2 169.7L74.9 165.4L76.3 157L81.4 154L83.1 148.2L88.2 148.3L92.5 142.6L95.3 143L104 137.6L109.3 138.5L110.6 144.2L115.2 147.9L113.9 149.7L121.3 152.8L121.7 157.9L113.4 162Z"><title>Französisch-Westafrika (heute Burkina Faso)</title></path>
+<path class="land m-gb" data-macht="gb" d="M259.6 334.8L265 345.2L274.2 351.2L276.1 357.3L284.2 361.2L270.5 369.5L260.7 382.3L246.9 379.7L238.2 389L232.1 388.9L232.8 383.5L227.9 376.7L227.9 360L233.8 360L233.8 337.9L247.3 336L249.6 338.8L259.6 334.8Z"><title>Betschuanaland (heute Botswana)</title></path>
+<path class="land m-fr" data-macht="fr" d="M117.7 190.7L117.6 173.7L112.7 163.7L124.8 153.7L129.6 157.8L131 164.4L124.6 173.7L124.2 189.8L117.7 190.7Z"><title>Französisch-Westafrika (Dahomey, heute Benin)</title></path>
+<path class="land m-pt" data-macht="pt" d="M251.8 293.2L251.8 305.9L239.9 306L240.2 325.6L248.3 333.8L232.5 336.1L221.7 334.8L218.4 332.4L192.1 332.5L186.6 329.8L178.5 331.5L178.5 323L183.3 308.6L189.6 301.7L191.1 294.3L186 282.3L188.3 278.2L181.8 264.6L206.6 263.4L213.5 276.6L224 275.8L227.3 269.9L238.7 271.9L241.4 294.7L251.8 293.2Z"><title>Angola</title></path>
+<path class="land m-fr" data-macht="fr" d="M159.5 6.4L157.2 8.9L157.5 19.6L153 25L162.3 35.6L163.9 47.3L166.8 52.9L167.3 68.2L164.5 71.1L169.5 80.5L177 82.1L179.8 86.9L152.9 102.8L143 111.1L127.5 113.9L126.8 108.9L118.5 106L114.9 101.4L55.9 64.3L55.9 55.9L58.4 54.1L86 42.2L85.4 37.9L90.8 35.6L100.6 35.4L97.2 19.5L94.7 17.4L115.5 8.9L130.7 6.6L139.8 8.1L146.9 5.5L159.5 6.4Z"><title>Algerien</title></path>
+<path class="land m-es" data-macht="es" d="M55.9 62L55.2 65.3L39.6 66.7L33.4 79L24.7 85.9L19.5 99L6 99.5L12.6 84.9L18.6 79.7L21.2 71L26.5 67.6L29 62ZM55.1 62.1L55.9 72L35.9 72L35.9 87.2L29.1 91.1L29.9 100L6.2 100L5.4 102.9L6 99.5L19.5 99L24.7 85.9L33.4 79L39.6 66.7L55.2 65.3L55.1 62.1Z"><title>Spanisch-Sahara (Río de Oro)</title></path>
+</svg>
+      <p class="karte-hinweis">Vereinfachte Karte mit <strong>heutigen</strong> Staatsgrenzen. Die Grenzen von 1914 wichen teilweise ab: Der Osten des heutigen Ghana gehörte zu Togo, der Norden Marokkos war spanisch, Kamerun war 1911 nach Osten und Süden vergrößert worden („Neukamerun“). Kleine Inseln sind weggelassen. Kartengrundlage: Natural Earth (gemeinfrei).</p>
+    </div>
+    <div>
+      <ul class="legende" id="legende">
+        <li><button type="button" data-macht="gb" aria-pressed="false"><span class="farbe" style="background:var(--m-gb)"></span>Großbritannien</button></li>
+        <li><button type="button" data-macht="fr" aria-pressed="false"><span class="farbe" style="background:var(--m-fr)"></span>Frankreich</button></li>
+        <li><button type="button" data-macht="de" aria-pressed="false"><span class="farbe" style="background:var(--m-de)"></span>Deutsches Reich</button></li>
+        <li><button type="button" data-macht="be" aria-pressed="false"><span class="farbe" style="background:var(--m-be)"></span>Belgien</button></li>
+        <li><button type="button" data-macht="pt" aria-pressed="false"><span class="farbe" style="background:var(--m-pt)"></span>Portugal</button></li>
+        <li><button type="button" data-macht="it" aria-pressed="false"><span class="farbe" style="background:var(--m-it)"></span>Italien</button></li>
+        <li><button type="button" data-macht="es" aria-pressed="false"><span class="farbe" style="background:var(--m-es)"></span>Spanien</button></li>
+        <li><button type="button" data-macht="frei" aria-pressed="false"><span class="farbe frei" style="background:var(--m-frei)"></span>unabhängig</button></li>
+      </ul>
+      <div id="karte-info" aria-live="polite">Wähle eine Kolonialmacht aus.</div>
+    </div>
+  </div>
+
+  <h3>Afrikanischer Widerstand</h3>
+  <p>Die Menschen in Afrika wehrten sich – oft über Jahre. Die meisten Aufstände wurden von den Kolonialmächten mit überlegenen Waffen blutig niedergeschlagen. <strong>Äthiopien</strong> (damals Abessinien) besiegte <span class="datum">1896</span> in der Schlacht von Adua die italienische Armee und blieb unabhängig. Um 1914 waren nur noch <strong>Äthiopien und Liberia</strong> nicht unter europäischer Herrschaft.</p>
+
+  <h3>Folgen für die Menschen in den Kolonien</h3>
+  <div class="grid">
+    <div class="card">
+      <ul>
+        <li>Verlust von Land und Vieh, Vertreibung</li>
+        <li><strong>Zwangsarbeit</strong>, hohe Steuern, Prügelstrafen</li>
+        <li>Ausbeutung der Rohstoffe für Europa</li>
+      </ul>
+    </div>
+    <div class="card">
+      <ul>
+        <li>Zerstörung von Kultur, Sprache und Herrschaftsordnung</li>
+        <li>künstliche Grenzen, die bis heute Konflikte auslösen können</li>
+        <li>sehr viele Tote durch Kriege, Hunger, Zwangsarbeit und Gewalt – z. B. im Kongo unter Leopold II.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    Auf der <strong>Berliner Konferenz 1884/85</strong> legten die europäischen Mächte Regeln für die Aufteilung Afrikas fest – ohne Afrikaner. Um <strong>1914</strong> waren nur noch <strong>Äthiopien und Liberia</strong> unabhängig. Die größten Kolonialreiche hatten <strong>Großbritannien</strong> und <strong>Frankreich</strong>.
+  </div>
+</section>
+
+<!-- ============ 4 GERMAN COLONIES ============ -->
+<section id="kolonien">
+  <h2><span class="num">4</span> Deutsche Kolonien</h2>
+  <p>Bismarck war lange gegen Kolonien. <span class="datum">1884/85</span> stellte das Deutsche Reich dann aber Gebiete in Afrika und im Pazifik unter seinen „Schutz“. Die offizielle Bezeichnung war <strong>„Schutzgebiete“</strong> – ein beschönigender Begriff: Die Gebiete wurden nicht beschützt, sondern beherrscht.</p>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Kolonie</th><th>heute</th><th>deutsch seit</th></tr>
+    <tr><td><strong>Deutsch-Südwestafrika</strong></td><td>Namibia</td><td>1884</td></tr>
+    <tr><td><strong>Togo</strong></td><td>Togo, Teil von Ghana</td><td>1884</td></tr>
+    <tr><td><strong>Kamerun</strong></td><td>Kamerun, Teile der Nachbarstaaten</td><td>1884</td></tr>
+    <tr><td><strong>Deutsch-Ostafrika</strong></td><td>Tansania (Festland), Ruanda, Burundi</td><td>1885</td></tr>
+    <tr><td><strong>Deutsch-Neuguinea</strong> (Pazifik)</td><td>Teil von Papua-Neuguinea, Inseln im Pazifik</td><td>1884/85</td></tr>
+    <tr><td><strong>Kiautschou</strong> (China)</td><td>Teil der Provinz Shandong</td><td>1897/98</td></tr>
+    <tr><td><strong>Samoa</strong> (Pazifik)</td><td>Samoa</td><td>1899/1900</td></tr>
+  </table>
+  </div>
+  <p>Kaiser <strong>Wilhelm II.</strong> (ab 1888) wollte mit einer „<strong>Weltpolitik</strong>“ mehr Kolonien und eine große Flotte. Den Auftakt machte <span class="datum">1897</span> Bernhard von Bülow, damals Staatssekretär des Auswärtigen Amts, mit einer Rede im Reichstag. Viele Deutsche fanden, das Reich sei bei der Verteilung der Welt „zu spät gekommen“.</p>
+  <blockquote>
+    „Wir müssen verlangen, daß der deutsche Missionar und der deutsche Unternehmer, die deutschen Waren, die deutsche Flagge und das deutsche Schiff in China geradeso geachtet werden wie diejenigen anderer Mächte. […] Mit einem Worte: wir wollen niemand in den Schatten stellen, aber wir verlangen auch unseren Platz an der Sonne.“
+    <cite>Bernhard von Bülow, Rede im Reichstag am 6. Dezember 1897. In: Fürst Bülows Reden, hrsg. von Johannes Penzler, Bd. I, Berlin 1907, S. 8 (Zwischenruf weggelassen).</cite>
+  </blockquote>
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    Deutschland erwarb seine Kolonien vor allem <strong>1884/85</strong>. Die größten lagen in Afrika: <strong>Deutsch-Südwestafrika, Deutsch-Ostafrika, Kamerun, Togo</strong>. Mit der Forderung nach einem „<strong>Platz an der Sonne</strong>“ (Bülow, 1897) begann die deutsche <strong>Weltpolitik</strong>.
+  </div>
+</section>
+
+<!-- ============ 5 HERERO AND NAMA ============ -->
+<section id="herero">
+  <h2><span class="num">5</span> Der Völkermord an den Herero und Nama <span class="datum">(1904–1908)</span></h2>
+  <p>In Deutsch-Südwestafrika nahmen deutsche Siedler den <strong>Herero</strong> und <strong>Nama</strong> immer mehr Land und Vieh. Die Menschen wurden entrechtet, misshandelt und betrogen.</p>
+  <div class="chain">
+    <div class="step"><span class="datum">Januar 1904</span> – Die <strong>Herero</strong> erheben sich gegen die deutsche Kolonialherrschaft und greifen Farmen und Stationen an.</div>
+    <div class="arrow">▼</div>
+    <div class="step"><span class="datum">11.08.1904</span> – <strong>Schlacht am Waterberg</strong>: Deutsche Truppen unter General <strong>Lothar von Trotha</strong> kreisen die Herero ein. Die meisten fliehen in die wasserarme <strong>Omaheke-Wüste</strong>; die Deutschen riegeln die Wasserstellen ab.</div>
+    <div class="arrow">▼</div>
+    <div class="step"><span class="datum">02.10.1904</span> – Trothas <strong>Vernichtungsbefehl</strong>: Jeder Herero soll erschossen oder vertrieben werden, auch Frauen und Kinder.</div>
+    <div class="arrow">▼</div>
+    <div class="step">Ab <span class="datum">Oktober 1904</span> kämpfen auch die <strong>Nama</strong>; im <span class="datum">April 1905</span> befiehlt Trotha auch ihre Vernichtung.</div>
+    <div class="arrow">▼</div>
+    <div class="step">Überlebende werden in <strong>Konzentrationslager</strong> gesperrt. Tausende sterben dort an Zwangsarbeit, Hunger und Krankheiten.</div>
+    <div class="arrow">▼</div>
+    <div class="step">Bis <span class="datum">1908</span> sterben nach Schätzungen <strong>bis zu 100 000 Herero und Nama</strong>: bis zu 80 Prozent der Herero und etwa die Hälfte der rund 20 000 Nama. Die genauen Zahlen sind umstritten.</div>
+  </div>
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    Der Krieg gegen die Herero und Nama <strong>1904–1908</strong> gilt als <strong>erster Völkermord des 20. Jahrhunderts</strong>. Die deutschen Truppen wollten die Herero gezielt vernichten. Die Bundesregierung hat die Verbrechen <span class="datum">2021</span> als Völkermord anerkannt.
+  </div>
+  <div class="box tipp">
+    <strong class="label">💡 Was ist ein Völkermord?</strong>
+    Nach der UN-Völkermordkonvention sind das Handlungen, die in der <strong>Absicht</strong> begangen werden, eine nationale, ethnische, „rassische“ oder religiöse Gruppe als solche ganz oder teilweise zu zerstören – z. B. durch Tötung von Mitgliedern der Gruppe oder durch Lebensbedingungen, die ihre körperliche Zerstörung herbeiführen sollen.
+  </div>
+</section>
+
+<!-- ============ 6 ROAD TO WAR ============ -->
+<section id="krieg">
+  <h2><span class="num">6</span> Der Weg in den Krieg</h2>
+  <p>Der Imperialismus verschärfte die Gegensätze zwischen den Großmächten. Im Schema siehst du, wie aus der Konkurrenz um Kolonien und Macht ein Krieg werden konnte.</p>
+
+  <h3>Ursachen-Schema: Imperialismus → Spannungen → Krieg</h3>
+  <div class="schema" role="group" aria-label="Ursachen-Schema">
+    <div class="col c1">
+      <h4>🌍 Imperialismus</h4>
+      <ul>
+        <li>Wettlauf um Kolonien</li>
+        <li>Nationalismus</li>
+        <li>deutsche „Weltpolitik“</li>
+        <li>Wettrüsten (Flotte, Heer)</li>
+      </ul>
+    </div>
+    <div class="pfeil" aria-hidden="true">➜</div>
+    <div class="col c2">
+      <h4>⚡ Spannungen</h4>
+      <ul>
+        <li>Flottenwettrüsten mit Großbritannien</li>
+        <li>Marokkokrisen 1905/06 und 1911</li>
+        <li>zwei feindliche <strong>Bündnisblöcke</strong></li>
+        <li>Balkankrisen</li>
+      </ul>
+    </div>
+    <div class="pfeil" aria-hidden="true">➜</div>
+    <div class="col c3">
+      <h4>⚔️ Krieg 1914</h4>
+      <ul>
+        <li><strong>Anlass</strong>: Attentat von Sarajevo (28.06.1914)</li>
+        <li>Bündnisverpflichtungen → Kettenreaktion</li>
+        <li>aus einem regionalen Konflikt wird ein <strong>Weltkrieg</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Die Bündnisse</h3>
+  <p>Bismarck hatte versucht, Frankreich zu isolieren und gute Beziehungen zu Russland zu halten. Wilhelm II. setzte diese Bündnispolitik nicht fort: <span class="datum">1890</span> wurde der Rückversicherungsvertrag mit Russland nicht verlängert. Russland verbündete sich daraufhin mit Frankreich. Deutschland geriet zunehmend in die <strong>Isolation</strong>.</p>
+  <div class="grid">
+    <div class="card">
+      <h4>Dreibund <span class="datum">(1882)</span></h4>
+      <ul>
+        <li>Deutsches Reich</li>
+        <li>Österreich-Ungarn</li>
+        <li>Italien</li>
+      </ul>
+      <p style="margin:.5rem 0 0;font-size:.9rem;color:var(--muted)">Kern: Zweibund 1879 (Deutsches Reich + Österreich-Ungarn). Italien erklärte sich bei Kriegsbeginn für neutral und trat im Folgejahr auf Seiten der Entente in den Krieg ein.</p>
+    </div>
+    <div class="card">
+      <h4>Triple Entente <span class="datum">(1907)</span></h4>
+      <ul>
+        <li>Frankreich</li>
+        <li>Russland</li>
+        <li>Großbritannien</li>
+      </ul>
+      <p style="margin:.5rem 0 0;font-size:.9rem;color:var(--muted)">Entstanden aus dem französisch-russischen Bündnis (1892/94), der Entente cordiale (1904) und dem britisch-russischen Abkommen (1907)</p>
+    </div>
+  </div>
+
+  <h3>Flottenrüstung</h3>
+  <p>Mit den <strong>Flottengesetzen</strong> ab <span class="datum">1898</span> ließ Admiral <strong>Alfred von Tirpitz</strong> eine große Schlachtflotte bauen. Das löste ein <strong>Wettrüsten</strong> vor allem mit der Seemacht Großbritannien aus. <span class="datum">1906</span> lief in Großbritannien die „Dreadnought“ vom Stapel, das damals größte Kriegsschiff der Welt – das Wettrüsten ging in die nächste Runde. Großbritannien suchte neue Partner: 1904 Frankreich, 1907 Russland.</p>
+
+  <h3>Krisen vor 1914</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Jahr</th><th>Krise</th><th>Folge</th></tr>
+    <tr><td>1905/06</td><td><strong>Erste Marokkokrise</strong>: Deutschland stellt sich gegen den französischen Einfluss in Marokko (Besuch Wilhelms II. in Tanger).</td><td>Die Konferenz von Algeciras 1906 endet mit einem Kompromiss: Marokko bleibt souverän, aber die kolonialen Bestrebungen Frankreichs und Spaniens werden berücksichtigt.</td></tr>
+    <tr><td>1908</td><td><strong>Bosnische Annexionskrise</strong>: Österreich-Ungarn verleibt sich Bosnien und Herzegowina ein.</td><td>Der Konflikt mit dem Königreich Serbien verschärft sich.</td></tr>
+    <tr><td>1911</td><td><strong>Zweite Marokkokrise</strong>: Das deutsche Kanonenboot „Panther“ läuft in den Hafen von Agadir ein („Panthersprung“).</td><td>Im Marokko-Kongo-Abkommen erkennt Deutschland die Vorherrschaft Frankreichs in Marokko an und erhält dafür ein Gebiet von Französisch-Kongo („Neukamerun“).</td></tr>
+    <tr><td>1912/13</td><td><strong>Balkankriege</strong>: Die Staaten des Balkanbundes kämpfen gegen das Osmanische Reich, danach untereinander.</td><td>Die Lage auf dem Balkan bleibt angespannt; Österreich-Ungarn und Serbien stehen sich feindlich gegenüber.</td></tr>
+  </table>
+  </div>
+
+  <div class="box tipp">
+    <strong class="label">🔗 Brücke zum 1. Weltkrieg – die Ursachen aus deinem Hefter</strong>
+    <ul style="margin:.4rem 0 .4rem;padding-left:1.2rem">
+      <li>die imperialistische Politik der Großmächte und die daraus resultierenden Interessengegensätze</li>
+      <li>Kolonialpolitik</li>
+      <li>Nationalismus</li>
+      <li>die verstärkte Rüstung der Großmächte (z. B. Flottenwettrüsten)</li>
+      <li>das europäische Bündnissystem</li>
+      <li>Balkankrise</li>
+    </ul>
+    Im Krieg kämpften dann die <strong>Mittelmächte</strong> (Deutsches Reich, Österreich-Ungarn) gegen die <strong>Entente</strong>; Italien blieb bei Kriegsbeginn neutral und wechselte im Folgejahr auf die Seite der Entente.<br>
+    Wie es weitergeht – Attentat von Sarajevo, Kriegserklärungen, Schlieffenplan, Stellungskrieg: <a href="../erster-weltkrieg/"><strong>⚔️ Lernseite Der 1. Weltkrieg</strong></a>
+  </div>
+  <div class="box">
+    <strong class="label">🌍 Krieg auch in den Kolonien</strong>
+    Der 1. Weltkrieg wurde auch in Afrika und Asien geführt. Frankreich setzte 485 000 Soldaten aus seinen Kolonien ein, auch Großbritannien holte Soldaten aus seinem Weltreich. In Deutsch-Ostafrika kapitulierten die deutschen Truppen erst am <span class="datum">25.11.1918</span>. In Deutsch-Ostafrika starben nach Schätzungen bis zu 750 000 Menschen durch Hungersnöte, Seuchen und Krankheiten.
+  </div>
+  <div class="box merke">
+    <strong class="label">✔ Merke</strong>
+    <strong>Ursachen</strong> (lange Vorgeschichte): Imperialismus, Kolonialpolitik, Nationalismus, Wettrüsten, Bündnissystem, Balkankrisen. <strong>Anlass</strong> (Auslöser): das Attentat von Sarajevo am 28.06.1914.
+  </div>
+</section>
+
+<!-- ============ OUTLOOK ============ -->
+<section id="ausblick">
+  <h2><span class="num">➜</span> Ausblick: Kriegsende und Versailler Vertrag</h2>
+  <p style="margin-top:0;font-size:.9rem;color:var(--muted)">Ergänzung nach dem Lehrplan Klasse 9 – steht nicht im Hefter und kommt in den Probe-Klassenarbeiten nicht vor.</p>
+  <div class="timeline">
+    <div class="tl-item"><span class="d">11.11.1918</span> – Waffenstillstand von Compiègne: Ende der Kämpfe</div>
+    <div class="tl-item"><span class="d">28.06.1919</span> – Versailler Vertrag: Deutschland verliert u. a. alle Kolonien und muss Reparationen zahlen</div>
+  </div>
+  <p>Im Krieg starben rund <strong>9 Millionen Soldaten</strong> und über <strong>6 Millionen Zivilisten</strong>.</p>
+</section>
+
+<!-- ============ TERMS ============ -->
+<section id="begriffe">
+  <h2><span class="num">📖</span> Wichtige Begriffe</h2>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Begriff</th><th>Erklärung</th></tr>
+    <tr><td><strong>Imperialismus</strong></td><td>Streben eines Staates nach Herrschaft über andere Länder und Völker; Zeitalter etwa 1880–1914</td></tr>
+    <tr><td><strong>Kolonie</strong></td><td>von einem fremden Staat unterworfenes, beherrschtes und wirtschaftlich ausgebeutetes Gebiet</td></tr>
+    <tr><td><strong>Schutzgebiet</strong></td><td>offizieller, beschönigender Name für die deutschen Kolonien</td></tr>
+    <tr><td><strong>Sozialdarwinismus</strong></td><td>Idee, das „Recht des Stärkeren“ und der „Kampf ums Überleben“ aus der Natur müssten auch zwischen Menschen und Völkern gelten; diente zur Rechtfertigung von Imperialismus und Rassismus</td></tr>
+    <tr><td><strong>Rassismus</strong></td><td>Einteilung von Menschen nach äußeren Merkmalen in angebliche „Rassen“; die eigene Gruppe wird aufgewertet, andere werden abgewertet – führt zu Vorurteilen, Feindseligkeit und Ausgrenzung</td></tr>
+    <tr><td><strong>Nationalismus</strong></td><td>Weltanschauung, die die eigene Nation überhöht und andere Nationen abwertet</td></tr>
+    <tr><td><strong>Berliner Konferenz</strong></td><td>Treffen europäischer Mächte 1884/85 in Berlin, Regeln für die Aufteilung Afrikas</td></tr>
+    <tr><td><strong>Weltpolitik</strong></td><td>Politik Wilhelms II.: Deutschland sollte Weltmacht mit Kolonien und Flotte werden („Platz an der Sonne“)</td></tr>
+    <tr><td><strong>Völkermord (Genozid)</strong></td><td>Handlungen in der Absicht, eine nationale, ethnische, „rassische“ oder religiöse Gruppe ganz oder teilweise zu zerstören (UN-Völkermordkonvention)</td></tr>
+    <tr><td><strong>Flottenwettrüsten</strong></td><td>Wettlauf Deutschlands und Großbritanniens beim Bau von Kriegsschiffen</td></tr>
+    <tr><td><strong>Bündnissystem</strong></td><td>zwei feindliche Blöcke: Dreibund und Triple Entente</td></tr>
+    <tr><td><strong>Ursache – Anlass</strong></td><td>Ursache = tieferer, langfristiger Grund; Anlass = konkreter Auslöser</td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- ============ EXERCISES ============ -->
+<section id="uebungen">
+  <h2><span class="num">✎</span> Übungen mit Lösungen</h2>
+
+  <details><summary>1. Erkläre den Begriff Imperialismus und nenne den Zeitraum des Zeitalters des Imperialismus.</summary>
+    <div class="loesung">Imperialismus ist das Streben eines Staates, seine Macht und Herrschaft über andere Länder und Völker auszudehnen (z. B. durch Kolonien). Das Zeitalter des Imperialismus reicht von etwa 1880 bis 1914.</div></details>
+
+  <details><summary>2. Nenne je ein wirtschaftliches, ein politisches und ein ideologisches Motiv für den Erwerb von Kolonien.</summary>
+    <div class="loesung">Wirtschaftlich: billige Rohstoffe / neue Absatzmärkte. Politisch: Macht und Ansehen als Großmacht / Flottenstützpunkte / Nationalismus. Ideologisch: Sozialdarwinismus / Rassismus / Sendungsbewusstsein (Mission).</div></details>
+
+  <details><summary>3. Erkläre, was man unter Sozialdarwinismus versteht und warum er gefährlich war.</summary>
+    <div class="loesung">Der Sozialdarwinismus übertrug Darwins Idee vom „Kampf ums Dasein“ aus der Natur auf Völker und Staaten: Der „Stärkere“ habe das Recht zu herrschen. Das ist wissenschaftlich falsch. Gefährlich war er, weil er Rassismus, Unterdrückung und Gewalt bis hin zum Völkermord rechtfertigen sollte.</div></details>
+
+  <details><summary>4. Beschreibe, was auf der Berliner Konferenz 1884/85 beschlossen wurde. Wer fehlte?</summary>
+    <div class="loesung">Vertreter von 14 Staaten (11 europäische Staaten, Russland, die USA, das Osmanische Reich) legten Regeln für die Inbesitznahme Afrikas fest: Ein Gebiet galt nur dann als erworben, wenn es tatsächlich („effektiv“) besetzt war. Seitdem galt das Kongogebiet als Kongo-Freistaat, eine Privatkolonie König Leopolds II. von Belgien. Es fehlten Vertreter der Afrikaner – über sie wurde ohne sie entschieden.</div></details>
+
+  <details><summary>5. Nenne vier deutsche Kolonien in Afrika und die heutigen Staaten.</summary>
+    <div class="loesung">Deutsch-Südwestafrika (Namibia), Deutsch-Ostafrika (Tansania, Ruanda, Burundi), Kamerun (Kamerun), Togo (Togo und Teil von Ghana).</div></details>
+
+  <details><summary>6. Erkläre, warum der Begriff „Schutzgebiet“ beschönigend ist.</summary>
+    <div class="loesung">Das Wort klingt, als hätte Deutschland die Menschen beschützt. Tatsächlich wurden sie beherrscht, enteignet, zur Arbeit gezwungen und bei Widerstand mit Gewalt unterdrückt.</div></details>
+
+  <details><summary>7. Beschreibe den Krieg gegen die Herero und Nama und begründe, warum man von Völkermord spricht.</summary>
+    <div class="loesung">1904 erhoben sich die Herero, ab Oktober 1904 auch die Nama gegen Landraub und Entrechtung. Nach der Schlacht am Waterberg (11.08.1904) trieben deutsche Truppen die Herero in die Omaheke-Wüste und sperrten die Wasserstellen ab. Trotha befahl am 02.10.1904 die Vernichtung der Herero, 1905 auch der Nama. Überlebende kamen in Konzentrationslager. Bis 1908 starben nach Schätzungen bis zu 100 000 Menschen. Man spricht von Völkermord, weil die Absicht bestand, die Herero und Nama als Volk zu vernichten.</div></details>
+
+  <details><summary>8. Erkläre, was Bülow 1897 mit dem „Platz an der Sonne“ meinte.</summary>
+    <div class="loesung">Bülow forderte, dass Deutschland wie die anderen Großmächte Kolonien und weltweiten Einfluss bekommt und dass deutsche Händler, Missionare und Schiffe überall gleich geachtet werden. Der „Platz an der Sonne“ steht für Deutschlands Anspruch, Weltmacht zu werden (Weltpolitik).</div></details>
+
+  <details><summary>9. Ordne zu: Welche Staaten gehörten 1914 zum Dreibund, welche zur Triple Entente?</summary>
+    <div class="loesung">Dreibund: Deutsches Reich, Österreich-Ungarn, Italien. Triple Entente: Frankreich, Russland, Großbritannien.</div></details>
+
+  <details><summary>10. Erkläre, wie das Flottenwettrüsten das Verhältnis zu Großbritannien veränderte.</summary>
+    <div class="loesung">Deutschland baute ab 1898 eine große Schlachtflotte. Großbritannien sah seine Vorherrschaft auf See bedroht und rüstete selbst auf (Dreadnought ab 1906). Aus Misstrauen näherte es sich Frankreich (1904) und Russland (1907) an – Deutschland wurde isoliert.</div></details>
+
+  <details><summary>11. Unterscheide Ursache und Anlass des 1. Weltkrieges. Nenne je ein Beispiel.</summary>
+    <div class="loesung">Ursachen sind die tieferen, langfristigen Gründe, z. B. Imperialismus, Nationalismus, Wettrüsten, Bündnissystem. Der Anlass ist der konkrete Auslöser: das Attentat von Sarajevo am 28.06.1914.</div></details>
+
+  <details><summary>12. Nutze die Karte: Welche zwei afrikanischen Staaten waren 1914 unabhängig? Welche Macht besaß das größte zusammenhängende Gebiet im Nordwesten?</summary>
+    <div class="loesung">Unabhängig: Äthiopien (Abessinien) und Liberia. Im Nordwesten: Frankreich (Algerien, Französisch-Westafrika, Marokko, Tunesien).</div></details>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section id="check">
+  <h2><span class="num">✅</span> Checkliste – Kann ich das?</h2>
+  <div class="progress no-print"><div id="bar"></div></div>
+  <p id="ptext" class="no-print" style="margin-top:-.6rem;color:var(--muted)"></p>
+  <ul class="check" id="checklist">
+    <li><label><input type="checkbox"> Ich kann den Begriff Imperialismus erklären und den Zeitraum (ca. 1880–1914) nennen.</label></li>
+    <li><label><input type="checkbox"> Ich kann wirtschaftliche, politische und ideologische Motive unterscheiden.</label></li>
+    <li><label><input type="checkbox"> Ich kann Sozialdarwinismus und Rassismus erklären und kritisch bewerten.</label></li>
+    <li><label><input type="checkbox"> Ich kenne die Berliner Konferenz 1884/85 und weiß, dass keine Afrikaner beteiligt waren.</label></li>
+    <li><label><input type="checkbox"> Ich kann auf der Karte die Kolonialmächte in Afrika um 1914 zeigen.</label></li>
+    <li><label><input type="checkbox"> Ich kann die deutschen Kolonien in Afrika nennen.</label></li>
+    <li><label><input type="checkbox"> Ich kann den Völkermord an den Herero und Nama (1904–1908) beschreiben.</label></li>
+    <li><label><input type="checkbox"> Ich kann den „Platz an der Sonne“ (Bülow 1897) erklären.</label></li>
+    <li><label><input type="checkbox"> Ich kenne Dreibund und Triple Entente mit ihren Mitgliedern.</label></li>
+    <li><label><input type="checkbox"> Ich kann das Flottenwettrüsten und die Marokkokrisen erklären.</label></li>
+    <li><label><input type="checkbox"> Ich kann Ursachen und Anlass des 1. Weltkrieges unterscheiden.</label></li>
+    <li><label><input type="checkbox"> Ich habe auch die <a href="../erster-weltkrieg/#check">Checkliste zum 1. Weltkrieg</a> abgehakt.</label></li>
+  </ul>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section id="quellen">
+  <h2><span class="num">📚</span> Quellen</h2>
+  <p style="margin-top:0">Alle Jahreszahlen und Zahlen wurden am 18.11.2026 mit diesen Quellen geprüft:</p>
+  <ul class="quellen">
+    <li>bpb: Politiklexikon „Imperialismus“ – <span class="url">https://www.bpb.de/kurz-knapp/lexika/politiklexikon/17623/imperialismus/</span></li>
+    <li>bpb, Informationen zur politischen Bildung 338: Die Epoche des Hochimperialismus – <span class="url">https://www.bpb.de/shop/zeitschriften/izpb/europa-zwischen-kolonialismus-und-dekolonisierung-338/280652/die-epoche-des-hochimperialismus/?p=all</span></li>
+    <li>bpb, Informationen zur politischen Bildung 321: Der globale Krieg – <span class="url">https://www.bpb.de/shop/zeitschriften/izpb/zeitalter-der-weltkriege-321/183862/der-globale-krieg/?p=all</span></li>
+    <li>bpb: Politiklexikon „Kolonialismus“ – <span class="url">https://www.bpb.de/kurz-knapp/lexika/politiklexikon/17718/kolonialismus/</span></li>
+    <li>bpb: Das junge Politik-Lexikon „Kolonialismus/Kolonien“ – <span class="url">https://www.bpb.de/kurz-knapp/lexika/das-junge-politik-lexikon/320648/kolonialismus-kolonien/</span></li>
+    <li>bpb: Politiklexikon „Rassismus“ – <span class="url">https://www.bpb.de/kurz-knapp/lexika/politiklexikon/18092/rassismus/</span></li>
+    <li>bpb: Das junge Politik-Lexikon „Nationalismus“ – <span class="url">https://www.bpb.de/kurz-knapp/lexika/das-junge-politik-lexikon/320839/nationalismus/</span></li>
+    <li>bpb: Sozialdarwinismus (Dossier Rechtsextremismus) – <span class="url">https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/500815/sozialdarwinismus/</span></li>
+    <li>LeMO: Jahreschronik 1906 (Algeciras) – <span class="url">https://www.dhm.de/lemo/jahreschronik/1906</span></li>
+    <li>bpb: Kolonialismus (APuZ, Editorial) – <span class="url">https://www.bpb.de/shop/zeitschriften/apuz/146970/editorial/</span></li>
+    <li>bpb: 1951 – UN-Völkermordkonvention tritt in Kraft – <span class="url">https://www.bpb.de/kurz-knapp/hintergrund-aktuell/574314/1951-un-voelkermordkonvention-tritt-in-kraft/</span></li>
+    <li>bpb: Deutschland in Afrika – der Kolonialismus und seine Nachwirkungen – <span class="url">https://www.bpb.de/themen/afrika/dossier-afrika/58870/deutschland-in-afrika-der-kolonialismus-und-seine-nachwirkungen/</span></li>
+    <li>LeMO (Deutsches Historisches Museum): Sitzung der Kongo-Konferenz in Berlin 1884 – <span class="url">https://www.dhm.de/lemo/bestand/objekt/sitzung-der-internationalen-kongo-konferenz-in-berlin-1884</span></li>
+    <li>LeMO: Jahreschroniken 1879–1919 – <span class="url">https://www.dhm.de/lemo/jahreschronik/1884</span></li>
+    <li>LeMO: Statistische Angaben zu den deutschen Kolonien – <span class="url">https://www.dhm.de/lemo/kapitel/kaiserreich/aussenpolitik/statistische-angaben-zu-den-deutschen-kolonien</span></li>
+    <li>Bundesarchiv: Kolonialgeschichte – geografischer Einstieg in die Kolonialbestände – <span class="url">https://www.bundesarchiv.de/im-archiv-recherchieren/archivgut-recherchieren/nach-themen/kolonialgeschichte/geographischer-einstieg-in-kolonialbestaende/</span></li>
+    <li>LeMO: Der Herero-Krieg 1904 – <span class="url">https://www.dhm.de/lemo/kapitel/kaiserreich/aussenpolitik/herero-krieg-1904</span></li>
+    <li>bpb: Völkermord an Herero und Nama – Abkommen zwischen Deutschland und Namibia – <span class="url">https://www.bpb.de/kurz-knapp/hintergrund-aktuell/335257/voelkermord-an-herero-und-nama-abkommen-zwischen-deutschland-und-namibia/</span></li>
+    <li>Bundesregierung: Gedenken an Herero und Nama – <span class="url">https://www.bundesregierung.de/breg-de/aktuelles/gedenken-herero-und-nama-2350348</span></li>
+    <li>Auswärtiges Amt: Pressemitteilung vom 28.05.2021 zu den Verhandlungen mit Namibia – <span class="url">https://www.auswaertiges-amt.de/de/newsroom/2463396-2463396</span></li>
+    <li>Volksbund Deutsche Kriegsgräberfürsorge: Schlacht um Verdun – <span class="url">https://www.volksbund.de/nachrichten/verdun-vom-schlachtfeld-zum-deutsch-franzoesischen-erinnerungsort</span></li>
+    <li>Bülow-Rede vom 6.12.1897: J. Penzler (Hrsg.), Fürst Bülows Reden, Bd. I, Berlin 1907, S. 6–8 – Volltext bei Wikisource – <span class="url">https://de.wikisource.org/wiki/Deutschlands_Platz_an_der_Sonne</span></li>
+    <li>German History in Documents and Images: Bülow über Deutschlands „Platz an der Sonne“ – <span class="url">https://germanhistorydocs.org/de/das-wilhelminische-kaiserreich-und-der-erste-weltkrieg-1890-1918/bernhard-von-buelow-ueber-deutschlands-platz-an-der-sonne-1897</span></li>
+    <li>LeMO: Kriegserklärungen 1914 – <span class="url">https://www.dhm.de/lemo/kapitel/erster-weltkrieg/kriegsverlauf/kriegserklaerungen</span></li>
+    <li>LeMO: Der Erste Weltkrieg – <span class="url">https://www.dhm.de/lemo/kapitel/erster-weltkrieg</span></li>
+    <li>LeMO: Der Versailler Vertrag – <span class="url">https://www.dhm.de/lemo/kapitel/weimarer-republik/aussenpolitik/versailler-vertrag.html</span></li>
+    <li>Encyclopaedia Britannica: Battle of Adwa – <span class="url">https://www.britannica.com/event/Battle-of-Adwa</span></li>
+    <li>Karte – Zuordnung: bpb, Ausgewählte Herrschaftsgebiete und koloniale Beziehungen im Jahr 1914 (nach Putzger); Umrisse: Natural Earth (gemeinfrei) – <span class="url">https://www.bpb.de/themen/kolonialismus-imperialismus/postkolonialismus-und-globalgeschichte/243479/ausgewaehlte-herrschaftsgebiete-und-koloniale-beziehungen-im-jahr-1914/</span></li>
+    <li>Fachlehrplan Geschichte Sekundarschule Sachsen-Anhalt (2019) – <span class="url">https://www.bildung-lsa.de/files/164f3f97e3adf65ff6f44685dd9e1ced/lp_sks_gesch_01_08_2019.pdf</span></li>
+  </ul>
+</section>
+
+</main>
+
+<footer><a href="../" style="color:inherit">← zurück zu Geschichte</a> &nbsp;·&nbsp; <a href="../erster-weltkrieg/" style="color:inherit">⚔️ Der 1. Weltkrieg</a> &nbsp;·&nbsp; <a href="../../" style="color:inherit">Alle Fächer</a></footer>
+
+<script>
+  // checklist with progress bar (state kept per browser)
+  (function () {
+    var boxes = document.querySelectorAll('#checklist input');
+    var bar = document.getElementById('bar');
+    var ptext = document.getElementById('ptext');
+    var KEY = 'imperialismus-check-kl9';
+    var saved = [];
+    try { saved = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
+    boxes.forEach(function (b, i) { b.checked = !!saved[i]; b.addEventListener('change', update); });
+    function update() {
+      var state = [], done = 0;
+      boxes.forEach(function (b) { state.push(b.checked); if (b.checked) done++; });
+      bar.style.width = (done / boxes.length * 100) + '%';
+      ptext.textContent = done + ' von ' + boxes.length + ' erledigt' + (done === boxes.length ? ' – super! 🎉' : '');
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    }
+    update();
+  })();
+
+  // interactive colonial map: legend buttons, taps and hover highlight one power
+  (function () {
+    var karte = document.getElementById('karte');
+    var info = document.getElementById('karte-info');
+    var buttons = document.querySelectorAll('#legende button');
+    var TEXT = {
+      gb: 'Großbritannien: größtes Kolonialreich – von Ägypten bis Südafrika („vom Kap bis Kairo“), dazu Nigeria und die Goldküste.',
+      fr: 'Frankreich: riesige Gebiete im Nordwesten und in der Mitte Afrikas (Algerien, Französisch-West- und Äquatorialafrika) sowie Madagaskar.',
+      de: 'Deutsches Reich: Deutsch-Südwestafrika, Deutsch-Ostafrika, Kamerun und Togo.',
+      be: 'Belgien: Belgisch-Kongo – bis 1908 Privatbesitz König Leopolds II.',
+      pt: 'Portugal: Angola, Mosambik und Portugiesisch-Guinea.',
+      it: 'Italien: Libyen, Eritrea und Italienisch-Somaliland.',
+      es: 'Spanien: Spanisch-Sahara, Spanisch-Guinea und der Norden Marokkos (auf der Karte nicht getrennt).',
+      frei: 'Unabhängig: nur Äthiopien (Abessinien) und Liberia.'
+    };
+    var aktiv = null;
+    function zeige(macht, fest) {
+      karte.classList.toggle('aktiv', !!macht);
+      karte.querySelectorAll('.land').forEach(function (p) { p.classList.toggle('an', p.getAttribute('data-macht') === macht); });
+      if (fest !== false) buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-macht') === macht)); });
+      info.textContent = macht ? TEXT[macht] : 'Wähle eine Kolonialmacht aus.';
+    }
+    function waehle(macht) { aktiv = (aktiv === macht) ? null : macht; zeige(aktiv); }
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () { waehle(b.getAttribute('data-macht')); });
+      b.addEventListener('mouseenter', function () { if (!aktiv) zeige(b.getAttribute('data-macht'), false); });
+      b.addEventListener('mouseleave', function () { if (!aktiv) zeige(null, false); });
+    });
+    karte.querySelectorAll('.land').forEach(function (p) {
+      p.addEventListener('click', function () { waehle(p.getAttribute('data-macht')); });
+    });
+  })();
+</script>
+</body>
+</html>
