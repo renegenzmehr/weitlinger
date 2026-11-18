@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leistungskontrolle 1 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+sub{font-size:.72em}
+svg .ed{stroke:var(--g1);stroke-width:2;fill:none;stroke-linejoin:round}
+svg .ed.hid{stroke-dasharray:5 4;stroke-width:1.5}
+svg .hi{stroke:var(--g2);stroke-width:2;fill:none}
+svg .hi.dash{stroke-dasharray:6 4}
+svg .fc{fill:var(--accent-soft);stroke:none}
+svg .fc2{fill:var(--warn-soft);stroke:none}
+svg .lbl{font-size:12px}
+svg .lbl.b{font-weight:700}
+svg .lbl.g2{fill:var(--g2)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Körper</a> › <span>Leistungskontrolle 1</span></div>
+  <h1>Leistungskontrolle 1 · Mathematik Klasse 9</h1>
+  <p>Körper · Auffrischung: Begriffe, Prisma und Zylinder (A<sub>O</sub>, A<sub>M</sub>, V), Formelauswahl</p>
+</header>
+
+<main>
+<!-- LEISTUNGSKONTROLLE -->
+<section id="lk">
+  <h2>Leistungskontrolle 1</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 20 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner (π-Taste), Tafelwerk &nbsp;·&nbsp; <strong>Gesamt:</strong> 18 Punkte<br>
+    Runde Endergebnisse auf zwei Nachkommastellen. Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Begriffe</span>Aufgabe 1 – Begriffe und Einheiten <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="lk1-a1">
+    <p>Erkläre in Worten, was die Größe angibt, und nenne eine passende Einheit.</p>
+    <p>a) A<sub>G</sub> <em>(1 P.)</em> &nbsp;&nbsp; b) A<sub>M</sub> <em>(1 P.)</em> &nbsp;&nbsp; c) A<sub>O</sub> <em>(1 P.)</em> &nbsp;&nbsp; d) V <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) A<sub>G</sub> = <strong>Grundfläche</strong>, Flächeninhalt der Fläche, auf der der Körper steht, z. B. in cm².<br>
+      b) A<sub>M</sub> = <strong>Mantelfläche</strong>, alle Seitenflächen zusammen ohne Grund- und Deckfläche, z. B. in cm².<br>
+      c) A<sub>O</sub> = <strong>Oberflächeninhalt</strong>, alle Begrenzungsflächen zusammen, z. B. in cm².<br>
+      d) V = <strong>Volumen</strong> (Rauminhalt), wie viel in den Körper hineinpasst, z. B. in cm³ oder Liter.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Formeln</span>Aufgabe 2 – Die richtige Formel wählen <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card" data-k="lk1-a2">
+    <p>Wähle jeweils die richtige Formel aus und begründe kurz.</p>
+    <p>a) Volumen eines Zylinders: &nbsp; ① V = 2πrh &nbsp; ② V = πr²h &nbsp; ③ V = π · d² · h <em>(1 P.)</em><br>
+    b) Mantelfläche eines Zylinders: &nbsp; ① A<sub>M</sub> = πr² &nbsp; ② A<sub>M</sub> = 2πr² + 2πrh &nbsp; ③ A<sub>M</sub> = 2πr · h <em>(1 P.)</em><br>
+    c) Oberfläche eines Prismas: &nbsp; ① A<sub>O</sub> = A<sub>G</sub> · h &nbsp; ② A<sub>O</sub> = 2 · A<sub>G</sub> + A<sub>M</sub> &nbsp; ③ A<sub>O</sub> = A<sub>G</sub> + A<sub>M</sub> <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) <strong>②</strong> V = πr²h: Grundfläche (Kreis πr²) mal Höhe. ③ wäre nur mit r statt d richtig.<br>
+      b) <strong>③</strong> A<sub>M</sub> = 2πr · h: Der Mantel ist abgewickelt ein Rechteck mit den Seiten Umfang 2πr und Höhe h. ② ist die Oberfläche.<br>
+      c) <strong>②</strong> A<sub>O</sub> = 2 · A<sub>G</sub> + A<sub>M</sub>: Ein Prisma hat Grund- <em>und</em> Deckfläche. ① ist das Volumen.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Prisma</span>Aufgabe 3 – Dreiecksprisma <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="lk1-a3">
+    <p>Die Grundfläche eines Prismas ist ein rechtwinkliges Dreieck mit den Katheten 9 cm und 12 cm und der Hypotenuse 15 cm. Das Prisma ist 10 cm hoch.</p>
+    <p>a) Berechne die Grundfläche A<sub>G</sub>. <em>(1 P.)</em><br>
+    b) Berechne das Volumen V. <em>(1 P.)</em><br>
+    c) Berechne die Mantelfläche A<sub>M</sub>. <em>(2 P.)</em><br>
+    d) Berechne den Oberflächeninhalt A<sub>O</sub>. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) A<sub>G</sub> = ½ · 9 cm · 12 cm = <strong>54 cm²</strong> <span class="note">(die Katheten stehen senkrecht aufeinander)</span><br>
+        b) V = A<sub>G</sub> · h = 54 cm² · 10 cm = <strong>540 cm³</strong><br>
+        c) A<sub>M</sub> = u · h = (9 + 12 + 15) cm · 10 cm = 36 cm · 10 cm = <strong>360 cm²</strong><br>
+        d) A<sub>O</sub> = 2 · A<sub>G</sub> + A<sub>M</sub> = 2 · 54 cm² + 360 cm² = <strong>468 cm²</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Zylinder</span>Aufgabe 4 – Konservendose <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-k="lk1-a4">
+    <p>Eine zylinderförmige Konservendose hat den Durchmesser d = 8 cm und die Höhe h = 11 cm. Rechne mit der π-Taste und runde auf zwei Nachkommastellen.</p>
+    <p>a) Berechne das Volumen der Dose. <em>(2 P.)</em><br>
+    b) Wie viel Liter passen hinein? Runde auf zwei Nachkommastellen. <em>(1 P.)</em><br>
+    c) Berechne die Mantelfläche (Etikett). <em>(1 P.)</em><br>
+    d) Berechne den Oberflächeninhalt (Blech). <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        r = d : 2 = 4 cm <span class="note">(nicht mit d = 8 cm rechnen!)</span><br>
+        a) V = π · r² · h = π · (4 cm)² · 11 cm = 176π cm³ ≈ <strong>552,92 cm³</strong><br>
+        b) 552,92 cm³ ≈ <strong>0,55 l</strong> <span class="note">(1 l = 1 dm³ = 1000 cm³)</span><br>
+        c) A<sub>M</sub> = 2 · π · r · h = 2 · π · 4 cm · 11 cm = 88π cm² ≈ <strong>276,46 cm²</strong><br>
+        d) A<sub>O</sub> = 2 · π · r² + A<sub>M</sub> = 32π cm² + 88π cm² = 120π cm² ≈ <strong>376,99 cm²</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>18–17</td><td>16–14</td><td>13–11</td><td>10–8</td><td>7–4</td><td>3–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

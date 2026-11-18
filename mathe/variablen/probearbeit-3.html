@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 3 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75;overflow-wrap:anywhere}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+.box{display:inline-block;min-width:2.2em;border-bottom:2px solid var(--muted);text-align:center}
+.keynote{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+svg .cell{stroke:var(--text);stroke-width:1.5}
+svg .c1{fill:var(--accent-soft)} svg .c2{fill:var(--stat-soft)} svg .c3{fill:var(--wk-soft)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Arbeiten mit Variablen</a> › <span>Probearbeit 3</span></div>
+  <h1>Probearbeit 3 · Mathematik Klasse 9 <span class="niveau schwer">🔥 Niveau: Schwer</span></h1>
+  <p>Arbeiten mit Variablen (laut Stoffverteilungsplan: Test am Ende der Einheit)</p>
+</header>
+
+<main>
+<section>
+  <div class="card" style="border-left:5px solid #c53030">
+    <p style="margin:0"><strong>🔥 Achtung, diese Arbeit ist deutlich schwerer als eine normale Klassenarbeit.</strong>
+    Sie enthält verschachtelte Terme, mehrstufiges Faktorisieren, Formeln mit Wurzeln und Begründungen ohne Vorgabe. Nimm sie dir erst vor, wenn die Probearbeiten 1 und 2 gut klappen.</p>
+  </div>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Formelsammlung &nbsp;·&nbsp; <strong>Gesamt:</strong> 45 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 1 – Vereinfachen <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="pa3-a1">
+    <p>a) 3x(2x − 5) − (x − 4)(x + 2) <em>(3 P.)</em><br>
+    b) (2a − 3)² − (2a + 3)² <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 6x² − 15x − (x² + 2x − 4x − 8) = 6x² − 15x − (x² − 2x − 8)<br>
+        = 6x² − 15x − x² + 2x + 8 = <strong>5x² − 13x + 8</strong><br>
+        b) 4a² − 12a + 9 − (4a² + 12a + 9) = 4a² − 12a + 9 − 4a² − 12a − 9 = <strong>−24a</strong>
+      </div>
+      <p style="color:var(--muted);margin:0">Wichtig: Das Produkt bzw. Binom hinter dem Minus erst vollständig ausrechnen und in Klammern setzen.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Binomisch</span>Aufgabe 2 – Faktorisieren und Lücken <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card" data-var="pa3-a2">
+    <p>a) Ergänze alle Lücken: (<span class="box">?</span> + <span class="box">?</span>)² = 9x² + <span class="box">?</span> + 49y² <em>(2 P.)</em><br>
+    b) Faktorisiere vollständig: 2x² − 32 <em>(2 P.)</em><br>
+    c) Faktorisiere vollständig: 3a² − 30a + 75 <em>(2 P.)</em><br>
+    d) Lässt sich x² + 8x + 64 als Quadrat eines Binoms schreiben? Begründe. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 9x² = (3x)², 49y² = (7y)², Mittelterm 2 · 3x · 7y = 42xy: (3x + 7y)² = <strong>9x² + 42xy + 49y²</strong><br>
+        b) erst 2 ausklammern: 2(x² − 16) = <strong>2(x + 4)(x − 4)</strong><br>
+        c) erst 3 ausklammern: 3(a² − 10a + 25) = <strong>3(a − 5)²</strong><br>
+        d) Nein: 64 = 8², der Mittelterm müsste 2 · x · 8 = 16x sein, nicht 8x.
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Begründen</span>Aufgabe 3 – Quadrate von Zahlen mit Endziffer 5 <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-var="pa3-a3">
+    <p>a) Berechne 997 · 1003 im Kopf. <em>(1 P.)</em><br>
+    b) Berechne 65² mit der 1. binomischen Formel. <em>(1 P.)</em><br>
+    c) Eine Zahl mit der Endziffer 5 lässt sich als 10n + 5 schreiben. Zeige: Ihr Quadrat endet immer auf 25, und davor steht die Zahl n · (n + 1). <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (1000 − 3)(1000 + 3) = 1000000 − 9 = <strong>999991</strong><br>
+        b) (60 + 5)² = 3600 + 600 + 25 = <strong>4225</strong><br>
+        c) (10n + 5)² = 100n² + 100n + 25 = <strong>100 · n(n + 1) + 25</strong><br>
+        100 · n(n + 1) endet auf 00, dazu kommt 25. Beispiel 65: n = 6, 6 · 7 = 42 → 4225 ✓
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Formeln</span>Aufgabe 4 – Formeln umstellen <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card" data-var="pa3-a4">
+    <p>a) Die Oberfläche eines Zylinders ist A<sub>O</sub> = 2 · π · r² + 2 · π · r · h. Stelle nach h um. <em>(3 P.)</em><br>
+    b) Berechne h für A<sub>O</sub> = 300 cm² und r = 5 cm. Runde auf zwei Nachkommastellen. <em>(1 P.)</em><br>
+    c) Die Bewegungsenergie ist E = <span class="frac"><span>1</span><span>2</span></span> · m · v². Stelle nach v um (v &gt; 0). <em>(2 P.)</em><br>
+    d) Ein Wagen mit m = 8 kg hat E = 400 J. Berechne v in m/s. <em>(1 P.)</em><br>
+    e) Stelle die Trapezformel A = <span class="frac"><span>a + c</span><span>2</span></span> · h nach c um. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) A<sub>O</sub> − 2 · π · r² = 2 · π · r · h &nbsp;<span class="note">| : (2 · π · r)</span> → <strong>h = <span class="frac"><span>A<sub>O</sub> − 2 · π · r²</span><span>2 · π · r</span></span></strong><br>
+        b) h = (300 − 50π) : (10π) ≈ (300 − 157,08) : 31,42 ≈ <strong>4,55 cm</strong><br>
+        c) 2E = m · v² &nbsp;<span class="note">| : m</span> → v² = <span class="frac"><span>2E</span><span>m</span></span> &nbsp;<span class="note">| √</span> → <strong>v = √(2E : m)</strong><br>
+        d) v = √(2 · 400 : 8) = √100 = <strong>10 m/s</strong><br>
+        e) <strong>c = <span class="frac"><span>2A</span><span>h</span></span> − a</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Begründen</span>Aufgabe 5 – Begründen <span style="color:var(--muted);font-weight:400">(9 P.)</span></h3>
+  <div class="card" data-var="pa3-a5">
+    <p>a) Zeige: Das Produkt zweier aufeinanderfolgender ungerader Zahlen ist um 1 kleiner als das Quadrat der geraden Zahl dazwischen. <em>(3 P.)</em><br>
+    b) Zeige: Die Summe von vier aufeinanderfolgenden natürlichen Zahlen ist nie durch 4 teilbar. <em>(3 P.)</em><br>
+    c) Mia sagt: „Denk dir eine Zahl, verdopple sie, addiere 6, halbiere das Ergebnis und ziehe deine Zahl ab. Es kommt immer 3 heraus.“ Zeige, dass Mia recht hat. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) ungerade Zahlen 2n − 1 und 2n + 1, gerade Zahl dazwischen 2n: (2n − 1)(2n + 1) = 4n² − 1 = <strong>(2n)² − 1</strong> ✓ &nbsp;Beispiel: 7 · 9 = 63 = 8² − 1<br>
+        b) n + (n + 1) + (n + 2) + (n + 3) = 4n + 6 = <strong>4(n + 1) + 2</strong> → bei Division durch 4 bleibt immer der Rest 2 ✓<br>
+        c) (2x + 6) : 2 − x = x + 3 − x = <strong>3</strong> ✓ – die gedachte Zahl fällt heraus.
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Anwendung</span>Aufgabe 6 – Bilderrahmen <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="pa3-a6">
+    <p>Ein quadratisches Bild hat die Seitenlänge x (in cm). Der Rahmen ist überall 3 cm breit.</p>
+    <p>a) Gib einen möglichst einfachen Term für die Fläche des Rahmens an. <em>(3 P.)</em><br>
+    b) Der Rahmen hat eine Fläche von 180 cm². Wie groß ist das Bild? <em>(2 P.)</em><br>
+    c) Mache die Probe mit den Quadratflächen. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Außenseite x + 6: (x + 6)² − x² = x² + 12x + 36 − x² = <strong>12x + 36</strong><br>
+        b) 12x + 36 = 180 &nbsp;<span class="note">| − 36</span> → 12x = 144 &nbsp;<span class="note">| : 12</span> → <strong>x = 12 cm</strong><br>
+        c) 18² − 12² = 324 − 144 = 180 ✓
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Fehler</span>Aufgabe 7 – Fehlersuche <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="pa3-a7">
+    <p>Ben vereinfacht (x − 3)² − (x + 1)(x − 1) so:<br>
+    <span class="calc">(x − 3)² − (x + 1)(x − 1) = x² − 9 − x² − 1 = −10</span></p>
+    <p>a) Beschreibe die beiden Fehler. <em>(2 P.)</em><br>
+    b) Rechne richtig. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) 1. Fehler: (x − 3)² ist nicht x² − 9 – der Mittelterm −6x fehlt und +9 statt −9. 2. Fehler: Vor (x² − 1) steht ein Minus; die Klammer muss bleiben, aus −(x² − 1) wird −x² + 1.</p>
+      <div class="calc">b) x² − 6x + 9 − (x² − 1) = x² − 6x + 9 − x² + 1 = <strong>−6x + 10</strong></div>
+    </details>
+  </div>
+
+<h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>45–42</td><td>41–34</td><td>33–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="keynote">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

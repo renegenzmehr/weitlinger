@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leistungskontrolle 1 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Lineare Gleichungssysteme</a> › <span>Leistungskontrolle 1</span></div>
+  <h1>Leistungskontrolle 1 · Mathematik Klasse 9</h1>
+  <p>Lineare Gleichungssysteme · Zahlenpaare, Begriff, grafisches Lösen, Lösbarkeitsfälle</p>
+</header>
+
+<main>
+<!-- LEISTUNGSKONTROLLE -->
+<section id="lk">
+  <h2>Leistungskontrolle 1</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 20 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, Geodreieck, kariertes Papier &nbsp;·&nbsp; <strong>Gesamt:</strong> 17 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 1 – Zahlenpaare prüfen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-lgs="lk1-a1">
+    <p>Prüfe durch Einsetzen, ob das Zahlenpaar die Gleichung <strong>3x − 2y = 6</strong> erfüllt.</p>
+    <p>a) (2; 0) <em>(1 P.)</em> &nbsp;&nbsp; b) (4; 3) <em>(1 P.)</em> &nbsp;&nbsp; c) (1; 2) <em>(1 P.)</em> &nbsp;&nbsp; d) (−2; −5) <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 3 · 2 − 2 · 0 = 6 − 0 = 6 ✓ → erfüllt<br>
+        b) 3 · 4 − 2 · 3 = 12 − 6 = 6 ✓ → erfüllt<br>
+        c) 3 · 1 − 2 · 2 = 3 − 4 = −1 ≠ 6 → nicht erfüllt<br>
+        d) 3 · (−2) − 2 · (−5) = −6 + 10 = 4 ≠ 6 → nicht erfüllt
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 2 – Lösung eines Gleichungssystems <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card" data-lgs="lk1-a2">
+    <p>a) Erkläre in einem Satz, was man unter der Lösung eines linearen Gleichungssystems mit zwei Variablen versteht. <em>(1 P.)</em><br>
+    b) Prüfe, ob (5; 1) Lösung des folgenden Gleichungssystems ist. <em>(2 P.)</em></p>
+    <div class="sys"><span class="g1">(I)</span><span>x + 2y = 7</span><span class="g2">(II)</span><span>2x − 3y = 7</span></div>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Eine Lösung ist ein Zahlenpaar (x; y), das <strong>beide</strong> Gleichungen gleichzeitig erfüllt.</p>
+      <div class="calc">
+        b) (I): 5 + 2 · 1 = 7 ✓ &nbsp;&nbsp; (II): 2 · 5 − 3 · 1 = 10 − 3 = 7 ✓<br>
+        Beide Gleichungen sind erfüllt → (5; 1) ist Lösung, <strong>L = {(5; 1)}</strong>.
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grafisch</span>Aufgabe 3 – Grafisch lösen <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-lgs="lk1-a3">
+    <div class="sys"><span class="g1">(I)</span><span>y = x − 2</span><span class="g2">(II)</span><span>y = −0,5x + 4</span></div>
+    <p>a) Zeichne beide Geraden in ein Koordinatensystem (−2 ≤ x ≤ 8, −3 ≤ y ≤ 6). <em>(4 P.)</em><br>
+    b) Lies die Lösung ab und überprüfe sie durch Einsetzen in beide Gleichungen. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) (I): Start bei (0; −2), Anstieg 1 → 1 nach rechts, 1 nach oben.<br>
+      (II): Start bei (0; 4), Anstieg −0,5 → 2 nach rechts, 1 nach unten.</p>
+      <svg viewBox="0 0 348 318" style="max-width:420px" role="img" aria-label="Geraden y = x − 2 und y = −0,5x + 4 mit Schnittpunkt S(4; 2)" data-svg="lk1-a3" data-o="84,204" data-u="30">
+  <g><line class="grid" x1="24" y1="294" x2="24" y2="24"/><line class="grid" x1="54" y1="294" x2="54" y2="24"/><line class="grid" x1="84" y1="294" x2="84" y2="24"/><line class="grid" x1="114" y1="294" x2="114" y2="24"/><line class="grid" x1="144" y1="294" x2="144" y2="24"/><line class="grid" x1="174" y1="294" x2="174" y2="24"/><line class="grid" x1="204" y1="294" x2="204" y2="24"/><line class="grid" x1="234" y1="294" x2="234" y2="24"/><line class="grid" x1="264" y1="294" x2="264" y2="24"/><line class="grid" x1="294" y1="294" x2="294" y2="24"/><line class="grid" x1="324" y1="294" x2="324" y2="24"/><line class="grid" x1="24" y1="294" x2="324" y2="294"/><line class="grid" x1="24" y1="264" x2="324" y2="264"/><line class="grid" x1="24" y1="234" x2="324" y2="234"/><line class="grid" x1="24" y1="204" x2="324" y2="204"/><line class="grid" x1="24" y1="174" x2="324" y2="174"/><line class="grid" x1="24" y1="144" x2="324" y2="144"/><line class="grid" x1="24" y1="114" x2="324" y2="114"/><line class="grid" x1="24" y1="84" x2="324" y2="84"/><line class="grid" x1="24" y1="54" x2="324" y2="54"/><line class="grid" x1="24" y1="24" x2="324" y2="24"/></g>
+  <line class="ax" x1="24" y1="204" x2="334" y2="204"/><line class="ax" x1="84" y1="294" x2="84" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="218">−2</text><text x="54" y="218">−1</text><text x="114" y="218">1</text><text x="144" y="218">2</text><text x="174" y="218">3</text><text x="204" y="218">4</text><text x="234" y="218">5</text><text x="264" y="218">6</text><text x="294" y="218">7</text><text x="324" y="218">8</text></g>
+  <g font-size="11" text-anchor="end"><text x="79" y="298">−3</text><text x="79" y="268">−2</text><text x="79" y="238">−1</text><text x="79" y="178">1</text><text x="79" y="148">2</text><text x="79" y="118">3</text><text x="79" y="88">4</text><text x="79" y="58">5</text><text x="79" y="28">6</text><text x="79" y="218">0</text></g>
+  <text x="330" y="198" font-size="13" font-style="italic">x</text><text x="90" y="22" font-size="13" font-style="italic">y</text>
+  <line class="gI" x1="54" y1="294" x2="324" y2="24"/>
+  <text x="306" y="16" font-size="13" font-weight="700" fill="var(--g1)" style="fill:var(--g1)">I</text>
+  <line class="gII" x1="24" y1="54" x2="324" y2="204"/>
+  <text x="306" y="220" font-size="13" font-weight="700" fill="var(--g2)" style="fill:var(--g2)">II</text>
+  <circle class="sp" cx="204" cy="144" r="4.5"/>
+  <text x="212" y="136" font-size="13" font-weight="700">S(4; 2)</text>
+</svg>
+      <div class="calc">
+        b) Abgelesen: S(4; 2)<br>
+        Probe (I): 4 − 2 = 2 ✓ &nbsp;&nbsp; (II): −0,5 · 4 + 4 = −2 + 4 = 2 ✓ → <strong>L = {(4; 2)}</strong>
+      </div>
+      <p style="color:var(--muted);margin:0">Bewertet wird: beide Geraden richtig (je 2 P.: Achsenabschnitt und Anstieg), Schnittpunkt abgelesen, Probe in beiden Gleichungen.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grafisch</span>Aufgabe 4 – Wie viele Lösungen? <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-lgs="lk1-a4a lk1-a4b lk1-a4c lk1-a4d">
+    <p>Entscheide ohne Zeichnung, wie viele Lösungen das Gleichungssystem hat. Begründe mit Anstieg und y-Achsenabschnitt.</p>
+    <p>a) y = −2x + 3 und y = −2x − 1 <em>(1 P.)</em><br>
+    b) y = 0,5x + 1 und 2y − x = 2 <em>(1 P.)</em><br>
+    c) y = 3x − 1 und y = −x + 3 <em>(1 P.)</em><br>
+    d) Gib eine zweite Gleichung an, sodass das System mit y = x + 2 <strong>keine</strong> Lösung hat. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Gleicher Anstieg −2, verschiedene y-Achsenabschnitte (3 und −1) → parallele Geraden → <strong>keine Lösung</strong>, L = { }.<br>
+      b) 2y − x = 2 &nbsp;| + x → 2y = x + 2 &nbsp;| : 2 → y = 0,5x + 1. Das ist dieselbe Gerade → <strong>unendlich viele Lösungen</strong>.<br>
+      c) Verschiedene Anstiege (3 und −1) → <strong>genau eine Lösung</strong> (der Schnittpunkt ist (1; 2)).<br>
+      d) Zum Beispiel <strong>y = x − 1</strong>: gleicher Anstieg 1, anderer y-Achsenabschnitt → parallel. Jede Gleichung y = x + n mit n ≠ 2 ist richtig.</p>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>17–16</td><td>15–13</td><td>12–11</td><td>10–7</td><td>6–4</td><td>3–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

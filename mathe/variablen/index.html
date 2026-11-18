@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arbeiten mit Variablen</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75;overflow-wrap:anywhere}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+.box{display:inline-block;min-width:2.2em;border-bottom:2px solid var(--muted);text-align:center}
+.keynote{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+svg .cell{stroke:var(--text);stroke-width:1.5}
+svg .c1{fill:var(--accent-soft)} svg .c2{fill:var(--stat-soft)} svg .c3{fill:var(--wk-soft)}
+.hl{background:var(--warn-soft);border-radius:4px;padding:0 3px;font-weight:700}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.btns button{font:inherit;font-size:.9rem;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
+.btns button:hover{background:var(--accent-soft)}
+.labor .ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.labor fieldset{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:0}
+.labor legend{font-weight:700;padding:0 6px}
+.labor label{display:flex;align-items:center;gap:8px;font-size:.95rem;margin:4px 0}
+.labor input[type=range]{flex:1;min-width:0}
+.labor .val{min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}
+.out{font-weight:600;padding:10px 14px;border-radius:8px;background:var(--accent-soft);margin:10px 0}
+.scrub{display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--muted)}
+.scrub input{flex:1;min-width:0}
+svg .pa{fill:var(--accent-soft);stroke:var(--g1);stroke-width:2}
+svg .pab{fill:var(--stat-soft);stroke:var(--stat);stroke-width:2}
+svg .pb{fill:var(--wk-soft);stroke:var(--g2);stroke-width:2}
+svg .cut{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-dasharray:6 5}
+svg .outl{fill:none;stroke:var(--text);stroke-width:3}
+svg .am-end{display:none}
+.formel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+@media print{
+  .btns,.scrub,.labor .ctrl{display:none}
+  svg .am-live{display:none} svg .am-end{display:inline}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <span>Arbeiten mit Variablen</span></div>
+  <h1>Arbeiten mit Variablen · Klasse 9</h1>
+  <p>Terme umformen · binomische Formeln · Aussagen begründen · Formeln umstellen · Anwendungen — Lernübersicht mit Regeln, Beispielen und Übungen</p>
+</header>
+
+<nav><div class="inner">
+  <a href="#tests"><strong>Leistungskontrollen &amp; Probearbeiten</strong></a>
+  <a href="#ueberblick">Überblick</a>
+  <a href="#terme">Terme</a>
+  <a href="#gesetze">Rechengesetze</a>
+  <a href="#zusammenfassen">Zusammenfassen</a>
+  <a href="#klammern">Klammern auflösen</a>
+  <a href="#ausklammern">Ausklammern</a>
+  <a href="#summen">Summe mal Summe</a>
+  <a href="#binomisch">Binomische Formeln</a>
+  <a href="#flaeche">Flächenmodell</a>
+  <a href="#rueckwaerts">Rückwärts</a>
+  <a href="#kopfrechnen">Kopfrechnen</a>
+  <a href="#begruenden">Aussagen begründen</a>
+  <a href="#umstellen">Formeln umstellen</a>
+  <a href="#anwendung">Anwendungen</a>
+  <a href="#fehler">Typische Fehler</a>
+  <a href="#uebungen">Übungen</a>
+  <a href="#check">Checkliste</a>
+</div></nav>
+
+<main>
+
+<!-- TESTS -->
+<section id="tests">
+  <h2>Leistungskontrollen &amp; Probearbeiten</h2>
+  <p>Laut Stoffverteilungsplan gibt es in dieser Einheit einen <strong>Kurztest zu den binomischen Formeln</strong> und einen <strong>Test am Ende der Einheit</strong>. Die Leistungskontrollen (20 Minuten) prüfen jeweils ein Teilthema, die Probearbeiten (45 Minuten) die ganze Einheit. Alle haben Punkte pro Aufgabe, Lösungen zum Aufklappen und einen Notenschlüssel.</p>
+  <div class="card">
+    <ul>
+      <li style="margin:6px 0"><a href="leistungskontrolle-1.html"><strong>Leistungskontrolle 1</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--warn-soft);color:var(--warn)">20 min</span> – Terme umformen: zusammenfassen, ausmultiplizieren, Minusklammern, ausklammern (18 P.)</li>
+      <li style="margin:6px 0"><a href="leistungskontrolle-2.html"><strong>Kurztest Binomische Formeln</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--warn-soft);color:var(--warn)">20 min</span> – alle drei Formeln vorwärts und rückwärts, Lücken ergänzen, Kopfrechnen (16 P.)</li>
+      <li style="margin:6px 0"><a href="leistungskontrolle-3.html"><strong>Leistungskontrolle 3</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--warn-soft);color:var(--warn)">20 min</span> – Formeln umstellen und berechnen, Aussagen über Zahlen begründen oder widerlegen (20 P.)</li>
+      <li style="margin:6px 0"><a href="probearbeit-1.html"><strong>Probearbeit 1</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--stat-soft);color:var(--stat)">Standard</span> – Termwert, Klammern, Ausklammern, binomische Formeln, Formeln umstellen, fünf Nachbarzahlen, Gartenweg, Fehlersuche (44 P.)</li>
+      <li style="margin:6px 0"><a href="probearbeit-2.html"><strong>Probearbeit 2</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--stat-soft);color:var(--stat)">Standard</span> – gleichwertige Terme, Klammern, binomische Formeln mit Lücken, Trapez und Temperatur, gerade/ungerade, Quadrat wird Rechteck (44 P.)</li>
+      <li style="margin:6px 0"><a href="probearbeit-3.html"><strong>Probearbeit 3</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:#c53030;color:#fff">🔥 Schwer</span> – verschachtelte Terme, vollständig faktorisieren, Quadrate von Zahlen mit Endziffer 5, Zylinderoberfläche, Bilderrahmen, Fehlersuche (45 P.)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ÜBERBLICK -->
+<section id="ueberblick">
+  <h2>Überblick: Was kommt dran?</h2>
+  <div class="grid2">
+    <div class="card rule stat">
+      <span class="tag stat">Teil A</span><strong>Terme umformen</strong>
+      <ul>
+        <li>Begriffe: Term, Variable, Koeffizient, gleichwertige Terme</li>
+        <li>Rechengesetze</li>
+        <li>zusammenfassen, ausmultiplizieren, Klammern auflösen</li>
+        <li>ausklammern (faktorisieren)</li>
+        <li>Summe mal Summe</li>
+      </ul>
+    </div>
+    <div class="card rule wk">
+      <span class="tag wk">Teil B</span><strong>Binomische Formeln und Anwendungen</strong>
+      <ul>
+        <li>1., 2. und 3. binomische Formel – vorwärts und rückwärts</li>
+        <li>Kopfrechentricks wie 49 · 51</li>
+        <li>Aussagen über Zahlen mit Variablen begründen</li>
+        <li>Formeln umstellen</li>
+        <li>Anwendungsaufgaben</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TERME -->
+<section id="terme">
+  <h2 class="stat">1 · Terme und Begriffe</h2>
+  <div class="card rule stat">
+    <p>Ein <strong>Term</strong> ist ein Rechenausdruck aus Zahlen, <strong>Variablen</strong> (Platzhalter wie x, a, n) und Rechenzeichen, z. B. 3x² − 2x + 5. Er hat kein Gleichheitszeichen.</p>
+    <ul style="margin-bottom:0">
+      <li>Die Zahl vor einer Variablen heißt <strong>Koeffizient</strong>: In −2x ist −2 der Koeffizient.</li>
+      <li><strong>Gleichartige Terme</strong> haben dieselben Variablen mit denselben Exponenten: 4x und −7x sind gleichartig, 4x und 4x² nicht.</li>
+      <li><strong>Gleichwertige Terme</strong> haben für <em>jede</em> Einsetzung denselben Wert. Umformen heißt: einen Term durch einen gleichwertigen, meist einfacheren Term ersetzen.</li>
+    </ul>
+  </div>
+  <h3>Beispiel: Termwert berechnen</h3>
+  <div class="card" data-var="lp-wert">
+    <p>Berechne T = 3x² − 2x + 5 für x = −2.</p>
+    <div class="calc">T = 3 · (−2)² − 2 · (−2) + 5 = 3 · 4 + 4 + 5 = <strong>21</strong></div>
+    <p style="margin:0">Negative Zahlen beim Einsetzen immer in Klammern setzen: (−2)² = 4, aber −2² = −4.</p>
+  </div>
+  <h3>Beispiel: Sind die Terme gleichwertig?</h3>
+  <div class="card" data-var="lp-gleichw">
+    <div class="tablewrap"><table>
+      <tr><th>x</th><th>−2</th><th>0</th><th>1</th><th>3</th></tr>
+      <tr><th>2(x + 3)</th><td>2</td><td>6</td><td>8</td><td>12</td></tr>
+      <tr><th>2x + 6</th><td>2</td><td>6</td><td>8</td><td>12</td></tr>
+      <tr><th>2x + 3</th><td>−1</td><td>3</td><td>5</td><td>9</td></tr>
+    </table></div>
+    <p style="margin:0">2(x + 3) und 2x + 6 sind gleichwertig (Distributivgesetz). 2x + 3 ist <strong>nicht</strong> gleichwertig – ein einziges Gegenbeispiel wie x = 0 genügt dafür. Eine Tabelle mit gleichen Werten ist dagegen noch kein Beweis; den liefert erst die Umformung.</p>
+  </div>
+</section>
+
+<!-- RECHENGESETZE -->
+<section id="gesetze">
+  <h2 class="stat">2 · Rechengesetze</h2>
+  <div class="grid2">
+    <div class="card rule stat">
+      <strong>Vertauschungsgesetz (Kommutativgesetz)</strong>
+      <div class="formula">a + b = b + a &nbsp;&nbsp; a · b = b · a</div>
+      <strong>Verbindungsgesetz (Assoziativgesetz)</strong>
+      <div class="formula">(a + b) + c = a + (b + c) &nbsp;&nbsp; (a · b) · c = a · (b · c)</div>
+    </div>
+    <div class="card rule stat" data-var="lp-dist">
+      <strong>Verteilungsgesetz (Distributivgesetz)</strong>
+      <div class="formula">a · (b + c) = a · b + a · c</div>
+      <p style="margin:0">Damit rechnet man auch im Kopf: 7 · 13 = 7 · (10 + 3) = 70 + 21 = 91.<br>Für Differenz und Division gelten die ersten beiden Gesetze <strong>nicht</strong>: 8 − 3 ≠ 3 − 8.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ZUSAMMENFASSEN -->
+<section id="zusammenfassen">
+  <h2 class="stat">3 · Terme zusammenfassen</h2>
+  <div class="card rule stat">
+    <p style="margin:0"><strong>Addieren und Subtrahieren:</strong> nur gleichartige Terme zusammenfassen – die Koeffizienten werden addiert, die Variable bleibt.<br>
+    <strong>Multiplizieren:</strong> Zahlen mit Zahlen und Variablen mit Variablen multiplizieren; x · x = x².</p>
+  </div>
+  <div class="card" data-var="lp-zus">
+    <div class="calc">
+      5x + 3y − 2x + 7y − y = (5 − 2)x + (3 + 7 − 1)y = <strong>3x + 9y</strong><br>
+      x² + 3x − 2x² + x = <strong>−x² + 4x</strong> &nbsp;<span class="note">x² und x sind nicht gleichartig!</span><br>
+      4a · 3b = 4 · 3 · a · b = <strong>12ab</strong><br>
+      2x · 5x = 2 · 5 · x · x = <strong>10x²</strong>
+    </div>
+  </div>
+</section>
+
+<!-- KLAMMERN -->
+<section id="klammern">
+  <h2 class="stat">4 · Klammern auflösen und ausmultiplizieren</h2>
+  <div class="grid2">
+    <div class="card rule stat">
+      <strong>Plusklammer:</strong> Klammer weglassen, Vorzeichen bleiben.<br>
+      <strong>Minusklammer:</strong> Klammer weglassen und <strong>jedes</strong> Vorzeichen in der Klammer umdrehen.
+    </div>
+    <div class="card rule stat">
+      <strong>Faktor vor der Klammer:</strong> jeden Summanden in der Klammer mit dem Faktor multiplizieren.
+      <div class="formula">a · (b − c) = ab − ac</div>
+    </div>
+  </div>
+  <div class="card" data-var="lp-kl">
+    <div class="calc">
+      8 + (3x − 5) = 8 + 3x − 5 = <strong>3x + 3</strong><br>
+      10 − (4x − 7) = 10 − 4x + 7 = <strong>17 − 4x</strong><br>
+      3(2x − 5) = <strong>6x − 15</strong><br>
+      −4(x − 2y + 1) = <strong>−4x + 8y − 4</strong> &nbsp;<span class="note">Minus mal Minus ergibt Plus</span><br>
+      2a(3a − b) = <strong>6a² − 2ab</strong><br>
+      5(x + 2) − 3(2x − 1) = 5x + 10 − 6x + 3 = <strong>−x + 13</strong>
+    </div>
+  </div>
+</section>
+
+<!-- AUSKLAMMERN -->
+<section id="ausklammern">
+  <h2 class="stat">5 · Ausklammern (Faktorisieren)</h2>
+  <div class="card rule stat">
+    <p style="margin:0">Ausklammern ist das Ausmultiplizieren rückwärts: Den <strong>größten gemeinsamen Faktor</strong> aller Summanden vor die Klammer schreiben, in die Klammer kommt, was übrig bleibt. Kontrolle: wieder ausmultiplizieren.</p>
+  </div>
+  <div class="card" data-var="lp-aus">
+    <div class="calc">
+      12x + 18 = <strong>6(2x + 3)</strong> &nbsp;<span class="note">ggT von 12 und 18 ist 6</span><br>
+      15a² − 10ab = <strong>5a(3a − 2b)</strong><br>
+      7x − 7 = <strong>7(x − 1)</strong> &nbsp;<span class="note">die 1 nicht vergessen!</span><br>
+      −4x − 12 = <strong>−4(x + 3)</strong> &nbsp;<span class="note">Minus ausklammern dreht die Vorzeichen</span>
+    </div>
+  </div>
+</section>
+
+<!-- SUMME MAL SUMME -->
+<section id="summen">
+  <h2 class="stat">6 · Produkt zweier Summen</h2>
+  <div class="card rule stat">
+    <strong>Jeder Summand der ersten Klammer wird mit jedem Summanden der zweiten Klammer multipliziert:</strong>
+    <div class="formula">(a + b)(c + d) = ac + ad + bc + bd</div>
+  </div>
+  <div class="card" data-var="lp-ss">
+    <p>Am Rechteck sieht man es: Die Fläche (x + 4)(x + 3) besteht aus vier Teilflächen.</p>
+    <svg viewBox="0 0 256 228" style="max-width:340px" role="img" aria-label="Rechteck mit den Seiten x + 4 und x + 3, zerlegt in x², 4x, 3x und 12">
+  <rect class="cell c1" x="30" y="26" width="120" height="120"/>
+  <text x="90" y="91" font-size="15" text-anchor="middle" font-weight="700">x²</text>
+  <rect class="cell c2" x="150" y="26" width="96" height="120"/>
+  <text x="198" y="91" font-size="15" text-anchor="middle" font-weight="700">4x</text>
+  <rect class="cell c2" x="30" y="146" width="120" height="72"/>
+  <text x="90" y="187" font-size="15" text-anchor="middle" font-weight="700">3x</text>
+  <rect class="cell c3" x="150" y="146" width="96" height="72"/>
+  <text x="198" y="187" font-size="15" text-anchor="middle" font-weight="700">12</text>
+  <text x="90" y="18" font-size="14" text-anchor="middle" font-style="italic">x</text>
+  <text x="198" y="18" font-size="14" text-anchor="middle" font-style="italic">4</text>
+  <text x="22" y="91" font-size="14" text-anchor="end" font-style="italic">x</text>
+  <text x="22" y="187" font-size="14" text-anchor="end" font-style="italic">3</text>
+</svg>
+    <div class="calc">
+      (x + 4)(x + 3) = x² + 3x + 4x + 12 = <strong>x² + 7x + 12</strong><br>
+      (2x − 3)(x + 5) = 2x² + 10x − 3x − 15 = <strong>2x² + 7x − 15</strong><br>
+      (y − 2)(3 − y) = 3y − y² − 6 + 2y = <strong>−y² + 5y − 6</strong>
+    </div>
+  </div>
+</section>
+
+<!-- BINOMISCHE FORMELN -->
+<section id="binomisch">
+  <h2 class="wk">7 · Die drei binomischen Formeln</h2>
+  <div class="card rule wk">
+    <div class="formula">1. &nbsp;(a + b)² = a² + 2ab + b²</div>
+    <div class="formula">2. &nbsp;(a − b)² = a² − 2ab + b²</div>
+    <div class="formula">3. &nbsp;(a + b)(a − b) = a² − b²</div>
+    <p style="margin:0">Herleitung: Summe mal Summe. (a + b)² = (a + b)(a + b) = a² + ab + ba + b² = a² + 2ab + b². Bei der 3. Formel heben sich die gemischten Glieder auf: −ab + ab = 0.</p>
+  </div>
+  <div class="card" data-var="lp-bin">
+    <p>So gehst du vor: <strong>a</strong> und <strong>b</strong> in der Klammer erkennen, dann einsetzen. Der Mittelterm ist immer 2 · a · b.</p>
+    <div class="calc">
+      (x + 5)² = x² + 2 · x · 5 + 5² = <strong>x² + 10x + 25</strong><br>
+      (3y − 2)² = (3y)² − 2 · 3y · 2 + 2² = <strong>9y² − 12y + 4</strong><br>
+      (2a + 3b)² = <strong>4a² + 12ab + 9b²</strong><br>
+      (0,5x + 4)² = <strong>0,25x² + 4x + 16</strong><br>
+      (x + 7)(x − 7) = <strong>x² − 49</strong><br>
+      (4m − 5n)(4m + 5n) = <strong>16m² − 25n²</strong>
+    </div>
+  </div>
+</section>
+
+<!-- FLÄCHENMODELL -->
+<section id="flaeche">
+  <h2 class="wk">8 · Flächenmodell: Probier es aus</h2>
+  <h3>(a + b)² – vier Teile ergeben ein Quadrat</h3>
+  <p>Ein Quadrat mit der Seitenlänge a + b lässt sich in vier Teile zerlegen: das Quadrat a², das Quadrat b² und <strong>zwei</strong> Rechtecke a · b. Stelle a und b ein und setze die Teile zusammen.</p>
+  <div class="card labor" id="am1">
+    <div class="ctrl">
+      <fieldset><legend>Seitenlängen</legend>
+        <label>a <input type="range" id="am1A" min="2" max="8" step="1" value="5"><span class="val" id="am1Av">5</span></label>
+        <label>b <input type="range" id="am1B" min="1" max="6" step="1" value="3"><span class="val" id="am1Bv">3</span></label>
+      </fieldset>
+    </div>
+    <div class="btns">
+      <button type="button" id="am1Play">▶ Start</button>
+      <button type="button" id="am1Reset">Auseinandernehmen</button>
+    </div>
+    <div class="scrub"><span>Zusammensetzen</span><input type="range" id="am1T" min="0" max="100" step="1" value="0" aria-label="Fortschritt des Zusammensetzens"><span id="am1Tv">0 %</span></div>
+    <svg id="am1Svg" viewBox="0 0 330 330" style="max-width:400px" role="img" aria-label="Flächenmodell: Quadrat mit Seite a + b aus a², zweimal a·b und b²"></svg>
+    <div class="out" id="am1Out" aria-live="polite">(a + b)² = a² + 2ab + b²</div>
+    <noscript><p>Für das Flächenmodell muss JavaScript aktiviert sein.</p></noscript>
+  </div>
+
+  <h3>(a + b)(a − b) – ein Streifen wird umgelegt</h3>
+  <p>Aus einem Quadrat a² wird das kleine Quadrat b² herausgeschnitten. Den unteren Streifen legt man gedreht rechts an: Es entsteht ein Rechteck mit den Seiten a + b und a − b. Die Fläche bleibt gleich: a² − b².</p>
+  <div class="card labor" id="am2">
+    <div class="ctrl">
+      <fieldset><legend>Seitenlängen (b kleiner als a)</legend>
+        <label>a <input type="range" id="am2A" min="3" max="8" step="1" value="7"><span class="val" id="am2Av">7</span></label>
+        <label>b <input type="range" id="am2B" min="1" max="7" step="1" value="3"><span class="val" id="am2Bv">3</span></label>
+      </fieldset>
+    </div>
+    <div class="btns">
+      <button type="button" id="am2Play">▶ Start</button>
+      <button type="button" id="am2Reset">Zurücklegen</button>
+    </div>
+    <div class="scrub"><span>Umlegen</span><input type="range" id="am2T" min="0" max="100" step="1" value="0" aria-label="Fortschritt des Umlegens"><span id="am2Tv">0 %</span></div>
+    <svg id="am2Svg" viewBox="0 0 400 200" style="max-width:440px" role="img" aria-label="Flächenmodell: a² − b² wird zum Rechteck (a + b)(a − b)"></svg>
+    <div class="out" id="am2Out" aria-live="polite">(a + b)(a − b) = a² − b²</div>
+  </div>
+</section>
+
+<!-- RÜCKWÄRTS -->
+<section id="rueckwaerts">
+  <h2 class="wk">9 · Binomische Formeln rückwärts (faktorisieren)</h2>
+  <div class="card rule wk">
+    <strong>So erkennst du, ob ein Term das Quadrat eines Binoms ist</strong> (Binom = Summe oder Differenz aus zwei Gliedern, z. B. 3a − 5):
+    <ol style="margin-bottom:0">
+      <li>Gibt es zwei Quadrate? Dann a und b bestimmen (Wurzel ziehen): 9a² → a-Teil 3a, 25 → b-Teil 5.</li>
+      <li>Drei Glieder: Mittelterm prüfen – er muss genau 2 · a · b sein. Vorzeichen + → 1. Formel, − → 2. Formel.</li>
+      <li>Zwei Quadrate mit Minus dazwischen → 3. Formel.</li>
+    </ol>
+  </div>
+  <div class="card" data-var="lp-rueck">
+    <div class="calc">
+      x² + 14x + 49 = <strong>(x + 7)²</strong> &nbsp;<span class="note">Prüfung: 2 · x · 7 = 14x ✓</span><br>
+      9a² − 30a + 25 = <strong>(3a − 5)²</strong> &nbsp;<span class="note">Prüfung: 2 · 3a · 5 = 30a ✓</span><br>
+      16y² − 81 = <strong>(4y + 9)(4y − 9)</strong>
+    </div>
+  </div>
+  <h3>Lücken ergänzen</h3>
+  <div class="card" data-var="lp-luecke">
+    <p>(x + <span class="box">?</span>)² = x² + 12x + <span class="box">?</span> &nbsp;&nbsp; und &nbsp;&nbsp; (<span class="box">?</span> − 4b)² = 25a² − <span class="box">?</span> + 16b²</p>
+    <div class="calc">
+      2 · x · ? = 12x → ? = 6, also (x + 6)² = <strong>x² + 12x + 36</strong><br>
+      ?² = 25a² → ? = 5a, Mittelterm 2 · 5a · 4b = 40ab, also (5a − 4b)² = <strong>25a² − 40ab + 16b²</strong>
+    </div>
+  </div>
+  <div class="card warn" data-var="lp-keinbinom">
+    <strong>Nicht jeder dreigliedrige Term ist das Quadrat eines Binoms:</strong> x² + 10x + 16 hat zwar die Quadrate x² und 16 = 4², aber 2 · x · 4 = 8x ≠ 10x. Also ist x² + 10x + 16 <strong>nicht</strong> (x + 4)². (Zum Vergleich: (x + 5)² = x² + 10x + 25, also x² + 10x + 16 = (x + 5)² − 9.)
+  </div>
+</section>
+
+<!-- KOPFRECHNEN -->
+<section id="kopfrechnen">
+  <h2 class="wk">10 · Kopfrechentricks mit binomischen Formeln</h2>
+  <div class="card" data-var="lp-kopf">
+    <div class="tablewrap"><table>
+      <tr><th>Aufgabe</th><th>Trick</th><th>Ergebnis</th></tr>
+      <tr><td>49 · 51</td><td>(50 − 1)(50 + 1) = 2500 − 1</td><td>2499</td></tr>
+      <tr><td>98 · 102</td><td>(100 − 2)(100 + 2) = 10000 − 4</td><td>9996</td></tr>
+      <tr><td>37 · 43</td><td>(40 − 3)(40 + 3) = 1600 − 9</td><td>1591</td></tr>
+      <tr><td>21²</td><td>(20 + 1)² = 400 + 40 + 1</td><td>441</td></tr>
+      <tr><td>39²</td><td>(40 − 1)² = 1600 − 80 + 1</td><td>1521</td></tr>
+      <tr><td>103²</td><td>(100 + 3)² = 10000 + 600 + 9</td><td>10609</td></tr>
+    </table></div>
+    <p style="margin:0">Bei Produkten zweier Zahlen, die gleich weit von einer runden Zahl entfernt sind, hilft die 3. Formel. Bei Quadraten nahe einer runden Zahl hilft die 1. oder 2. Formel.</p>
+  </div>
+</section>
+
+<!-- BEGRÜNDEN -->
+<section id="begruenden">
+  <h2 class="wk">11 · Aussagen über Zahlen begründen</h2>
+  <div class="card rule wk">
+    <p><strong>Beispiele sind kein Beweis</strong> – auch 100 passende Beispiele zeigen nicht, dass eine Aussage für <em>alle</em> Zahlen gilt. Dafür schreibt man die Zahlen allgemein mit Variablen:</p>
+    <ul style="margin-bottom:0">
+      <li>aufeinanderfolgende Zahlen: n, n + 1, n + 2 (oder n − 1, n, n + 1)</li>
+      <li>gerade Zahl: 2n &nbsp;·&nbsp; ungerade Zahl: 2n + 1</li>
+      <li>durch 3 teilbar: Der Term lässt sich als 3 · (…) schreiben, mit einer ganzen Zahl in der Klammer.</li>
+    </ul>
+    <p style="margin:8px 0 0">Um eine Aussage zu <strong>widerlegen</strong>, genügt ein einziges Gegenbeispiel.</p>
+  </div>
+  <h3>Beispiel 1: Drei aufeinanderfolgende Zahlen</h3>
+  <div class="card" data-var="lp-beg1">
+    <p>Behauptung: Die Summe von drei aufeinanderfolgenden natürlichen Zahlen ist immer durch 3 teilbar.</p>
+    <div class="calc">
+      Beispiele: 4 + 5 + 6 = 15 = 3 · 5 ✓ &nbsp; 10 + 11 + 12 = 33 = 3 · 11 ✓<br>
+      Allgemein: n + (n + 1) + (n + 2) = 3n + 3 = <strong>3(n + 1)</strong>
+    </div>
+    <p style="margin:0">3(n + 1) ist ein Vielfaches von 3, also ist die Summe immer durch 3 teilbar. Mehr noch: Die Summe ist das Dreifache der mittleren Zahl n + 1.</p>
+  </div>
+  <h3>Beispiel 2: Gerade und ungerade</h3>
+  <div class="card" data-var="lp-beg2">
+    <p>Behauptung: Die Summe zweier ungerader Zahlen ist gerade.</p>
+    <div class="calc">(2m + 1) + (2n + 1) = 2m + 2n + 2 = <strong>2(m + n + 1)</strong> → ein Vielfaches von 2, also gerade.</div>
+    <p style="margin:0">Zwei <em>verschiedene</em> Variablen m und n, weil die beiden ungeraden Zahlen nicht gleich sein müssen.</p>
+  </div>
+  <h3>Beispiel 3: Quadrat einer ungeraden Zahl</h3>
+  <div class="card" data-var="lp-beg3">
+    <div class="calc">(2n + 1)² = 4n² + 4n + 1 = <strong>2(2n² + 2n) + 1</strong> → hat die Form 2 · (…) + 1, ist also ungerade.</div>
+  </div>
+  <h3>Beispiel 4: Eine falsche Behauptung widerlegen</h3>
+  <div class="card" data-var="lp-beg4">
+    <p>Behauptung: „Die Summe zweier aufeinanderfolgender Zahlen ist durch 2 teilbar.“</p>
+    <div class="calc">Gegenbeispiel: 3 + 4 = 7 ist nicht durch 2 teilbar. Allgemein: n + (n + 1) = <strong>2n + 1</strong> – das ist immer ungerade.</div>
+  </div>
+</section>
+
+<!-- FORMELN UMSTELLEN -->
+<section id="umstellen">
+  <h2 class="wk">12 · Formeln umstellen</h2>
+  <div class="card rule wk">
+    <p style="margin:0">Eine Formel stellt man um wie eine Gleichung: Auf beiden Seiten dasselbe rechnen, bis die gesuchte Größe <strong>allein auf einer Seite</strong> steht. Die anderen Buchstaben behandelt man wie Zahlen. Dabei die Rechenschritte in umgekehrter Reihenfolge rückgängig machen – zuerst das entfernen, was ganz außen um die gesuchte Größe steht. Beispiel u = 2a + 2b nach a: erst − 2b, dann : 2. Steht die Größe in einer Klammer oder einem Bruch, z. B. u = 2 · (a + b), erst den Faktor entfernen (: 2), dann den Summanden (− b).</p>
+  </div>
+  <div class="formel-grid">
+    <div class="card" data-var="lp-f-rechteck">
+      <strong>Umfang Rechteck</strong> u = 2a + 2b, nach a:
+      <div class="calc">
+        u = 2a + 2b &nbsp;<span class="note">| − 2b</span><br>
+        u − 2b = 2a &nbsp;<span class="note">| : 2</span><br>
+        <strong>a = <span class="frac"><span>u − 2b</span><span>2</span></span></strong>
+      </div>
+    </div>
+    <div class="card" data-var="lp-f-dreieck">
+      <strong>Dreiecksfläche</strong> A = <span class="frac"><span>1</span><span>2</span></span> · g · h, nach h:
+      <div class="calc">
+        A = <span class="frac"><span>1</span><span>2</span></span> · g · h &nbsp;<span class="note">| · 2</span><br>
+        2A = g · h &nbsp;<span class="note">| : g</span><br>
+        <strong>h = <span class="frac"><span>2A</span><span>g</span></span></strong>
+      </div>
+    </div>
+    <div class="card" data-var="lp-f-zylinder">
+      <strong>Volumen Zylinder</strong> V = π · r² · h, nach h:
+      <div class="calc">
+        V = π · r² · h &nbsp;<span class="note">| : (π · r²)</span><br>
+        <strong>h = <span class="frac"><span>V</span><span>π · r²</span></span></strong><br>
+        Dose mit V = 1000 cm³ und r = 5 cm: h = 1000 : (π · 25) ≈ <strong>12,73 cm</strong>
+      </div>
+    </div>
+    <div class="card" data-var="lp-f-trapez">
+      <strong>Trapezfläche</strong> A = <span class="frac"><span>a + c</span><span>2</span></span> · h, nach h und nach c:
+      <div class="calc">
+        2A = (a + c) · h → <strong>h = <span class="frac"><span>2A</span><span>a + c</span></span></strong><br>
+        2A : h = a + c → <strong>c = <span class="frac"><span>2A</span><span>h</span></span> − a</strong>
+      </div>
+    </div>
+    <div class="card" data-var="lp-f-physik">
+      <strong>Physik</strong>
+      <div class="calc">
+        Geschwindigkeit v = <span class="frac"><span>s</span><span>t</span></span> → <strong>s = v · t</strong>, <strong>t = <span class="frac"><span>s</span><span>v</span></span></strong><br>
+        Dichte ϱ = <span class="frac"><span>m</span><span>V</span></span> → <strong>m = ϱ · V</strong>, <strong>V = <span class="frac"><span>m</span><span>ϱ</span></span></strong><br>
+        Ohmsches Gesetz U = R · I → <strong>I = <span class="frac"><span>U</span><span>R</span></span></strong>
+      </div>
+    </div>
+    <div class="card" data-var="lp-f-temp">
+      <strong>Temperatur</strong> von °C in °F: F = 1,8 · C + 32, nach C:
+      <div class="calc">
+        F − 32 = 1,8 · C &nbsp;<span class="note">| : 1,8</span><br>
+        <strong>C = <span class="frac"><span>F − 32</span><span>1,8</span></span></strong><br>
+        Probe: 77 °F → C = 45 : 1,8 = <strong>25 °C</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANWENDUNGEN -->
+<section id="anwendung">
+  <h2 class="wk">13 · Anwendungsaufgaben</h2>
+  <h3>Beispiel 1: Ein Beet wird größer</h3>
+  <div class="card" data-var="lp-anw1">
+    <p>Ein quadratisches Beet hat die Seitenlänge x Meter. Jede Seite wird um 3 m verlängert. Um wie viel wächst die Fläche?</p>
+    <div class="calc">
+      neue Fläche − alte Fläche = (x + 3)² − x² = x² + 6x + 9 − x² = <strong>6x + 9</strong><br>
+      Kontrolle für x = 5: 8² − 5² = 64 − 25 = 39 und 6 · 5 + 9 = 39 ✓
+    </div>
+    <p style="margin:0">Die Fläche wächst um (6x + 9) m² – je größer das Beet, desto mehr.</p>
+  </div>
+  <h3>Beispiel 2: Aus einem Quadrat wird ein Rechteck</h3>
+  <div class="card" data-var="lp-anw2">
+    <p>Ein Quadrat hat die Seitenlänge x cm. Eine Seite wird um 4 cm verlängert, die andere um 4 cm verkürzt. Ändert sich die Fläche?</p>
+    <div class="calc">Rechteck: (x + 4)(x − 4) = <strong>x² − 16</strong> → immer genau 16 cm² weniger als das Quadrat x².</div>
+  </div>
+</section>
+
+<!-- FEHLER -->
+<section id="fehler">
+  <h2>14 · Typische Fehler vermeiden</h2>
+  <div class="card warn" data-var="lp-fehler">
+    <ul>
+      <li><strong>(a + b)² ≠ a² + b²</strong> – der Mittelterm 2ab fehlt. Zahlenprobe: (3 + 4)² = 49, aber 3² + 4² = 25.</li>
+      <li>Bei der 2. Formel ist nur der Mittelterm negativ: (a − b)² = a² − 2ab <strong>+ b²</strong>.</li>
+      <li>(2x)² = 4x², nicht 2x² – der Faktor 2 wird mit quadriert.</li>
+      <li>Minusklammer: −(x − 3) = −x <strong>+ 3</strong>, nicht −x − 3.</li>
+      <li>Faktor nur mit dem ersten Summanden multipliziert: 3(x + 2) = 3x + 6, nicht 3x + 2.</li>
+      <li>x + x = 2x, aber x · x = x². Und 2x · 3x = 6x², nicht 6x.</li>
+      <li>Beim Ausklammern die 1 vergessen: 4x + 4 = 4(x + 1), nicht 4x.</li>
+      <li>Beim Formelumstellen nur einen Teil geteilt: aus u − 2b = 2a folgt a = (u − 2b) : 2, nicht a = u − 2b : 2.</li>
+      <li>Mit Beispielen „bewiesen“ – ein Beweis braucht Variablen.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ÜBUNGEN -->
+<section id="uebungen">
+  <h2>15 · Übungsaufgaben mit Lösungen</h2>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 1 – Zusammenfassen</h3>
+  <div class="card" data-var="lp-u1">
+    <p>a) 8a + 3b − 5a + b &nbsp;&nbsp; b) 2x² − 7x + 4x² + 3x &nbsp;&nbsp; c) 5y · (−2y)</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (8 − 5)a + (3 + 1)b = <strong>3a + 4b</strong><br>
+        b) (2 + 4)x² + (−7 + 3)x = <strong>6x² − 4x</strong><br>
+        c) 5 · (−2) · y · y = <strong>−10y²</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 2 – Klammern auflösen</h3>
+  <div class="card" data-var="lp-u2">
+    <p>a) 4(3x + 2) &nbsp;&nbsp; b) −(5 − 2a) &nbsp;&nbsp; c) 6 − 2(x − 4) &nbsp;&nbsp; d) x(x + 3) − 3(x − 1)</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>12x + 8</strong><br>
+        b) <strong>−5 + 2a</strong><br>
+        c) 6 − 2x + 8 = <strong>14 − 2x</strong><br>
+        d) x² + 3x − 3x + 3 = <strong>x² + 3</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 3 – Ausklammern</h3>
+  <div class="card" data-var="lp-u3">
+    <p>a) 16a + 24 &nbsp;&nbsp; b) 9x² − 6x &nbsp;&nbsp; c) 4ab + 6ac − 2a</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>8(2a + 3)</strong><br>
+        b) <strong>3x(3x − 2)</strong><br>
+        c) <strong>2a(2b + 3c − 1)</strong> &nbsp;<span class="note">Kontrolle: 2a · (−1) = −2a ✓</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 4 – Summe mal Summe</h3>
+  <div class="card" data-var="lp-u4">
+    <p>a) (x + 2)(x + 9) &nbsp;&nbsp; b) (2a − 1)(a − 4) &nbsp;&nbsp; c) (x + y)(x − 2y)</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) x² + 9x + 2x + 18 = <strong>x² + 11x + 18</strong><br>
+        b) 2a² − 8a − a + 4 = <strong>2a² − 9a + 4</strong><br>
+        c) x² − 2xy + xy − 2y² = <strong>x² − xy − 2y²</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Binomisch</span>Aufgabe 5 – Ausmultiplizieren mit Formel</h3>
+  <div class="card" data-var="lp-u5">
+    <p>a) (x + 3)² &nbsp;&nbsp; b) (6 − y)² &nbsp;&nbsp; c) (2a + 5b)² &nbsp;&nbsp; d) (x − 0,5)² &nbsp;&nbsp; e) (3m + 4)(3m − 4)</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>x² + 6x + 9</strong><br>
+        b) <strong>36 − 12y + y²</strong><br>
+        c) <strong>4a² + 20ab + 25b²</strong><br>
+        d) <strong>x² − x + 0,25</strong> &nbsp;<span class="note">2 · x · 0,5 = x</span><br>
+        e) <strong>9m² − 16</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Binomisch</span>Aufgabe 6 – Rückwärts und Lücken</h3>
+  <div class="card" data-var="lp-u6">
+    <p>a) x² + 16x + 64 &nbsp;&nbsp; b) 4y² − 4y + 1 &nbsp;&nbsp; c) 100 − 9a²<br>
+    d) Ergänze: (<span class="box">?</span> + 5)² = 9x² + <span class="box">?</span> + 25</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>(x + 8)²</strong><br>
+        b) <strong>(2y − 1)²</strong> &nbsp;<span class="note">2 · 2y · 1 = 4y ✓</span><br>
+        c) <strong>(10 + 3a)(10 − 3a)</strong><br>
+        d) ? = 3x, Mittelterm 2 · 3x · 5 = 30x: (3x + 5)² = <strong>9x² + 30x + 25</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Binomisch</span>Aufgabe 7 – Im Kopf rechnen</h3>
+  <div class="card" data-var="lp-u7">
+    <p>a) 29 · 31 &nbsp;&nbsp; b) 51² &nbsp;&nbsp; c) 99² &nbsp;&nbsp; d) 75 · 85</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (30 − 1)(30 + 1) = 900 − 1 = <strong>899</strong><br>
+        b) (50 + 1)² = 2500 + 100 + 1 = <strong>2601</strong><br>
+        c) (100 − 1)² = 10000 − 200 + 1 = <strong>9801</strong><br>
+        d) (80 − 5)(80 + 5) = 6400 − 25 = <strong>6375</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Begründen</span>Aufgabe 8 – Vorgänger, Zahl, Nachfolger</h3>
+  <div class="card" data-var="lp-u8">
+    <p>Zeige: Addiert man eine Zahl, ihren Vorgänger und ihren Nachfolger, erhält man das Dreifache der Zahl.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">(n − 1) + n + (n + 1) = n + n + n − 1 + 1 = <strong>3n</strong> ✓<br>Beispiel: 6 + 7 + 8 = 21 = 3 · 7</div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Formeln</span>Aufgabe 9 – Formeln umstellen</h3>
+  <div class="card" data-var="lp-u9">
+    <p>a) A = a · b nach a &nbsp;&nbsp; b) s = v · t nach v &nbsp;&nbsp; c) V = <span class="frac"><span>1</span><span>3</span></span> · A<sub>G</sub> · h nach h &nbsp;&nbsp; d) u = 2 · π · r nach r<br>
+    e) Ein Kreis hat den Umfang u = 50 cm. Berechne den Radius auf zwei Nachkommastellen.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>a = <span class="frac"><span>A</span><span>b</span></span></strong> &nbsp;&nbsp;
+        b) <strong>v = <span class="frac"><span>s</span><span>t</span></span></strong> &nbsp;&nbsp;
+        c) 3V = A<sub>G</sub> · h → <strong>h = <span class="frac"><span>3V</span><span>A<sub>G</sub></span></span></strong> &nbsp;&nbsp;
+        d) <strong>r = <span class="frac"><span>u</span><span>2 · π</span></span></strong><br>
+        e) r = 50 : (2 · π) ≈ <strong>7,96 cm</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Anwendung</span>Aufgabe 10 – Rechteck verändern</h3>
+  <div class="card" data-var="lp-u10">
+    <p>Ein Rechteck ist x cm breit und 3 cm länger als breit.<br>
+    a) Gib einen Term für die Fläche an und multipliziere aus.<br>
+    b) Die Breite wird um 2 cm vergrößert, die Länge um 2 cm verkleinert. Wie ändert sich die Fläche?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) A = x(x + 3) = <strong>x² + 3x</strong><br>
+        b) neue Seiten x + 2 und x + 3 − 2 = x + 1: (x + 2)(x + 1) = <strong>x² + 3x + 2</strong>
+      </div>
+      <p style="margin:0">Die Fläche wird immer um genau 2 cm² größer – egal wie breit das Rechteck ist.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Fehler</span>Aufgabe 11 – Finde den Fehler</h3>
+  <div class="card" data-var="lp-u11">
+    <p>Paul rechnet: (a − 4)² = a² − 16. Was hat er falsch gemacht?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">Er hat einfach beide Glieder quadriert und den Mittelterm vergessen. Richtig ist die 2. Formel: (a − 4)² = <strong>a² − 8a + 16</strong>.<br>Probe mit a = 1: (1 − 4)² = 9, aber 1 − 16 = −15.</div>
+    </details>
+  </div>
+</section>
+
+<!-- CHECKLISTE -->
+<section id="check">
+  <h2>16 · Checkliste: Kann ich das?</h2>
+  <div class="card">
+    <ul class="check">
+      <li><label><input type="checkbox"> Den Wert eines Terms berechnen, auch mit negativen Zahlen</label></li>
+      <li><label><input type="checkbox"> Gleichartige Terme erkennen und zusammenfassen</label></li>
+      <li><label><input type="checkbox"> Plus- und Minusklammern auflösen</label></li>
+      <li><label><input type="checkbox"> Einen Faktor mit einer Summe multiplizieren</label></li>
+      <li><label><input type="checkbox"> Den größten gemeinsamen Faktor ausklammern</label></li>
+      <li><label><input type="checkbox"> Zwei Summen miteinander multiplizieren</label></li>
+      <li><label><input type="checkbox"> Die drei binomischen Formeln auswendig und am Flächenmodell erklären</label></li>
+      <li><label><input type="checkbox"> Binome mit Faktoren wie (3y − 2)² ausmultiplizieren</label></li>
+      <li><label><input type="checkbox"> Terme mit den binomischen Formeln faktorisieren und Lücken ergänzen</label></li>
+      <li><label><input type="checkbox"> Aufgaben wie 49 · 51 oder 39² im Kopf rechnen</label></li>
+      <li><label><input type="checkbox"> Eine Aussage über Zahlen mit Variablen begründen</label></li>
+      <li><label><input type="checkbox"> Eine falsche Aussage mit einem Gegenbeispiel widerlegen</label></li>
+      <li><label><input type="checkbox"> Formeln aus Geometrie und Physik nach jeder Größe umstellen</label></li>
+      <li><label><input type="checkbox"> Zu einer Sachsituation einen Term aufstellen und vereinfachen</label></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<footer><a href="../" style="color:var(--accent)">← zurück zu Mathematik</a> &nbsp;·&nbsp; <a href="../../" style="color:var(--accent)">Alle Fächer</a></footer>
+
+<script>
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    parent.appendChild(e);
+    return e;
+  }
+  function txt(parent, x, y, s, size, extra) {
+    var a = { x: x, y: y, "font-size": size, "text-anchor": "middle" };
+    for (var k in extra || {}) a[k] = extra[k];
+    el("text", a, parent).textContent = s;
+  }
+  function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function clamp(v) { return Math.max(0, Math.min(1, v)); }
+  // label inside a piece: name plus area value when there is room
+  function pieceLabel(g, cx, cy, w, h, name, val) {
+    var size = Math.min(w, h) >= 34 ? 14 : 11;
+    if (Math.min(w, h) >= 40) {
+      txt(g, cx, cy - 2, name, size, { "font-weight": 700 });
+      txt(g, cx, cy + 15, "= " + val, 12);
+    } else txt(g, cx, cy + 4, name, size, { "font-weight": 700 });
+  }
+
+  // Generic controller: one progress value t in [0, 1], set by the scrub slider or by play.
+  function Model(cfg) {
+    var t = reduce ? 1 : 0, raf = null, t0 = 0, tStart = 0;
+    var range = document.getElementById(cfg.id + "T"), tv = document.getElementById(cfg.id + "Tv");
+    var play = document.getElementById(cfg.id + "Play");
+    function render() {
+      range.value = Math.round(t * 100);
+      tv.textContent = Math.round(t * 100) + " %";
+      cfg.draw(cfg.live, t);
+      cfg.draw(cfg.end, 1); // print shows this group (end state)
+    }
+    function stop() { if (raf) cancelAnimationFrame(raf); raf = null; play.textContent = "▶ Start"; }
+    function frame(now) {
+      if (!t0) t0 = now;
+      t = clamp(tStart + (now - t0) / cfg.duration);
+      render();
+      if (t >= 1) { stop(); return; }
+      raf = requestAnimationFrame(frame);
+    }
+    play.addEventListener("click", function () {
+      if (raf) { stop(); return; }
+      if (reduce) { t = 1; render(); return; }
+      if (t >= 1) t = 0;
+      tStart = t; t0 = 0; play.textContent = "⏸ Pause";
+      raf = requestAnimationFrame(frame);
+    });
+    document.getElementById(cfg.id + "Reset").addEventListener("click", function () { stop(); t = 0; render(); });
+    range.addEventListener("input", function () { stop(); t = +range.value / 100; render(); });
+    cfg.inputs.forEach(function (i) { i.addEventListener("input", function () { cfg.sync(); render(); }); });
+    cfg.sync();
+    render();
+  }
+
+  // ---------- Model 1: (a + b)^2 as four pieces that slide together ----------
+  (function () {
+    var svg = document.getElementById("am1Svg");
+    var live = el("g", { "class": "am-live" }, svg), end = el("g", { "class": "am-end" }, svg);
+    var A = document.getElementById("am1A"), B = document.getElementById("am1B"), out = document.getElementById("am1Out");
+    var U = 18, OX = 34, OY = 30, GAP = 1.4;
+    function draw(g, t) {
+      while (g.firstChild) g.removeChild(g.firstChild);
+      var a = +A.value, b = +B.value, gap = GAP * (1 - ease(t));
+      var P = [
+        [0, 0, a, a, "pa", "a²", a * a],
+        [a + gap, 0, b, a, "pab", "a·b", a * b],
+        [0, a + gap, a, b, "pab", "a·b", a * b],
+        [a + gap, a + gap, b, b, "pb", "b²", b * b]
+      ];
+      P.forEach(function (p) {
+        var x = OX + p[0] * U, y = OY + p[1] * U, w = p[2] * U, h = p[3] * U;
+        el("rect", { "class": p[4], x: x, y: y, width: w, height: h, "data-piece": p[5] }, g);
+        pieceLabel(g, x + w / 2, y + h / 2, w, h, p[5], p[6]);
+      });
+      txt(g, OX + a * U / 2, OY - 8, "a = " + a, 13, { "font-style": "italic" });
+      txt(g, OX + (a + gap + b / 2) * U, OY - 8, "b = " + b, 13, { "font-style": "italic" });
+      txt(g, OX - 8, OY + a * U / 2 + 4, "a", 13, { "font-style": "italic", "text-anchor": "end" });
+      txt(g, OX - 8, OY + (a + gap + b / 2) * U + 4, "b", 13, { "font-style": "italic", "text-anchor": "end" });
+      if (t >= 1) el("rect", { "class": "outl", x: OX, y: OY, width: (a + b) * U, height: (a + b) * U }, g);
+    }
+    function sync() {
+      var a = +A.value, b = +B.value, s = a + b;
+      document.getElementById("am1Av").textContent = a;
+      document.getElementById("am1Bv").textContent = b;
+      out.innerHTML = "(a + b)² = (" + a + " + " + b + ")² = " + s + "² = <strong>" + s * s + "</strong><br>" +
+        "a² + 2ab + b² = " + a * a + " + 2 · " + a * b + " + " + b * b + " = " + a * a + " + " + 2 * a * b + " + " + b * b +
+        " = <strong>" + (a * a + 2 * a * b + b * b) + "</strong> ✓<br>" +
+        "Nur a² + b² = " + (a * a + b * b) + " wäre zu wenig – es fehlen die beiden Rechtecke 2ab = " + 2 * a * b + ".";
+    }
+    Model({ id: "am1", live: live, end: end, draw: draw, sync: sync, inputs: [A, B], duration: 3500 });
+  })();
+
+  // ---------- Model 2: a^2 − b^2 rearranged into (a + b)(a − b) ----------
+  (function () {
+    var svg = document.getElementById("am2Svg");
+    var live = el("g", { "class": "am-live" }, svg), end = el("g", { "class": "am-end" }, svg);
+    var A = document.getElementById("am2A"), B = document.getElementById("am2B"), out = document.getElementById("am2Out");
+    var U = 20, OX = 52, OY = 30;
+    function draw(g, t) {
+      while (g.firstChild) g.removeChild(g.firstChild);
+      var a = +A.value, b = +B.value, d = a - b, e = ease(t);
+      // cut-out square b x b (dashed) stays where it was removed
+      el("rect", { "class": "cut", x: OX + d * U, y: OY + d * U, width: b * U, height: b * U }, g);
+      if (b * U >= 26) txt(g, OX + (d + b / 2) * U, OY + (d + b / 2) * U + 4, "b² weg", 11, { fill: "var(--muted)", style: "fill:var(--muted)" });
+      // fixed part: a x (a − b)
+      el("rect", { "class": "pa", x: OX, y: OY, width: a * U, height: d * U, "data-piece": "fest" }, g);
+      pieceLabel(g, OX + a * U / 2, OY + d * U / 2, a * U, d * U, "a·(a − b)", a * d);
+      // moving strip: (a − b) wide, b high; ends rotated by 90° to the right of the fixed part
+      // phase 1 (first half): slide right next to the square; phase 2: turn by 90° and move up
+      var c0x = d / 2, c0y = a - b / 2, cmx = a + Math.max(d, b) / 2 + 0.6, c1x = a + b / 2, c1y = d / 2;
+      var e1 = ease(clamp(2 * t)), e2 = ease(clamp(2 * t - 1));
+      var cxu = t < 0.5 ? c0x + (cmx - c0x) * e1 : cmx + (c1x - cmx) * e2;
+      var cyu = t < 0.5 ? c0y : c0y + (c1y - c0y) * e2;
+      var cx = OX + cxu * U, cy = OY + cyu * U;
+      el("rect", { "class": "pb", x: -d * U / 2, y: -b * U / 2, width: d * U, height: b * U, "data-piece": "streifen",
+        transform: "translate(" + cx + " " + cy + ") rotate(" + 90 * e2 + ")" }, g);
+      // label only when the strip is wide enough in every orientation
+      if (Math.min(d, b) * U >= 56) pieceLabel(g, cx, cy, Math.min(d, b) * U, Math.min(d, b) * U, "b·(a − b)", b * d);
+      txt(g, OX + a * U / 2, OY - 8, "a = " + a, 13, { "font-style": "italic" });
+      txt(g, OX - 8, OY + d * U / 2 + 4, "a − b", 12, { "font-style": "italic", "text-anchor": "end" });
+      if (t >= 1) {
+        txt(g, OX + (a + b / 2) * U, OY - 8, "b = " + b, 13, { "font-style": "italic" });
+        el("rect", { "class": "outl", x: OX, y: OY, width: (a + b) * U, height: d * U }, g);
+      } else txt(g, OX - 8, OY + (d + b / 2) * U + 4, "b", 13, { "font-style": "italic", "text-anchor": "end" });
+    }
+    function sync() {
+      if (+B.value >= +A.value) B.value = +A.value - 1;
+      var a = +A.value, b = +B.value;
+      document.getElementById("am2Av").textContent = a;
+      document.getElementById("am2Bv").textContent = b;
+      out.innerHTML = "a² − b² = " + a * a + " − " + b * b + " = <strong>" + (a * a - b * b) + "</strong><br>" +
+        "(a + b)(a − b) = " + (a + b) + " · " + (a - b) + " = <strong>" + (a + b) * (a - b) + "</strong> ✓";
+    }
+    Model({ id: "am2", live: live, end: end, draw: draw, sync: sync, inputs: [A, B], duration: 3000 });
+  })();
+})();
+</script>
+</body>
+</html>

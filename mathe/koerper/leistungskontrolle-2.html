@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leistungskontrolle 2 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+sub{font-size:.72em}
+svg .ed{stroke:var(--g1);stroke-width:2;fill:none;stroke-linejoin:round}
+svg .ed.hid{stroke-dasharray:5 4;stroke-width:1.5}
+svg .hi{stroke:var(--g2);stroke-width:2;fill:none}
+svg .hi.dash{stroke-dasharray:6 4}
+svg .fc{fill:var(--accent-soft);stroke:none}
+svg .fc2{fill:var(--warn-soft);stroke:none}
+svg .lbl{font-size:12px}
+svg .lbl.b{font-weight:700}
+svg .lbl.g2{fill:var(--g2)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Körper</a> › <span>Leistungskontrolle 2</span></div>
+  <h1>Leistungskontrolle 2 · Mathematik Klasse 9</h1>
+  <p>Körper · Pyramide (quadratisch und rechteckig) und Kreiskegel: h<sub>s</sub>, s, Mantel, A<sub>O</sub>, V, Satz des Pythagoras im Körper, Netz</p>
+</header>
+
+<main>
+<!-- LEISTUNGSKONTROLLE -->
+<section id="lk">
+  <h2>Leistungskontrolle 2</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 20 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner (π-Taste), Tafelwerk, Zirkel, Geodreieck &nbsp;·&nbsp; <strong>Gesamt:</strong> 20 Punkte<br>
+    Runde Endergebnisse auf zwei Nachkommastellen. Rechne mit ungerundeten Zwischenergebnissen weiter (Taschenrechnerspeicher). Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Pyramide</span>Aufgabe 1 – Quadratische Pyramide <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="lk2-a1">
+    <p>Eine quadratische Pyramide hat die Grundkante a = 10 cm und die Körperhöhe h = 12 cm.</p>
+    <p>a) Berechne die Höhe h<sub>s</sub> einer Seitenfläche. <em>(2 P.)</em><br>
+    b) Berechne den Oberflächeninhalt A<sub>O</sub>. <em>(2 P.)</em><br>
+    c) Berechne das Volumen V. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Stützdreieck aus h, a/2 und h<sub>s</sub> (rechter Winkel am Fußpunkt der Höhe):<br>
+        h<sub>s</sub>² = h² + (a/2)² = 12² + 5² = 144 + 25 = 169 → h<sub>s</sub> = <strong>13 cm</strong><br>
+        b) A<sub>G</sub> = a² = 100 cm²; &nbsp; A<sub>M</sub> = 4 · ½ · a · h<sub>s</sub> = 2 · 10 cm · 13 cm = 260 cm²<br>
+        A<sub>O</sub> = A<sub>G</sub> + A<sub>M</sub> = 100 cm² + 260 cm² = <strong>360 cm²</strong><br>
+        c) V = ⅓ · A<sub>G</sub> · h = ⅓ · 100 cm² · 12 cm = <strong>400 cm³</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Pythagoras</span>Aufgabe 2 – Von der Seitenkante zur Höhe <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="lk2-a2">
+    <p>Bei einer quadratischen Pyramide ist die Grundkante a = 8 cm und jede Seitenkante s = 9 cm lang.</p>
+    <p>a) Berechne die Höhe h<sub>s</sub> einer Seitenfläche. <em>(2 P.)</em><br>
+    b) Berechne die Körperhöhe h. <em>(1 P.)</em><br>
+    c) Berechne das Volumen. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Seitenfläche: gleichschenkliges Dreieck mit Schenkel s, halbe Grundseite a/2 = 4 cm.<br>
+        h<sub>s</sub>² = s² − (a/2)² = 81 − 16 = 65 → h<sub>s</sub> = √65 cm ≈ <strong>8,06 cm</strong><br>
+        b) h² = h<sub>s</sub>² − (a/2)² = 65 − 16 = 49 → h = <strong>7 cm</strong><br>
+        c) V = ⅓ · a² · h = ⅓ · 64 cm² · 7 cm ≈ <strong>149,33 cm³</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Pyramide</span>Aufgabe 3 – Dach eines Gartenpavillons <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="lk2-a3">
+    <p>Das Dach eines Pavillons hat die Form einer rechteckigen Pyramide (ohne Boden) mit a = 3,0 m, b = 1,2 m und der Höhe h = 0,8 m.</p>
+    <p>a) Berechne die Höhen h<sub>a</sub> (Seitenfläche über a) und h<sub>b</sub> (Seitenfläche über b). <em>(2 P.)</em><br>
+    b) Wie viel Quadratmeter Dachplane werden gebraucht? <em>(2 P.)</em><br>
+    c) Berechne das Volumen des Dachraums. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Über a liegt das Stützdreieck aus h und <strong>b/2</strong> = 0,6 m: h<sub>a</sub>² = 0,8² + 0,6² = 0,64 + 0,36 = 1 → h<sub>a</sub> = <strong>1 m</strong><br>
+        Über b liegt das Stützdreieck aus h und <strong>a/2</strong> = 1,5 m: h<sub>b</sub>² = 0,8² + 1,5² = 0,64 + 2,25 = 2,89 → h<sub>b</sub> = <strong>1,7 m</strong><br>
+        b) A<sub>M</sub> = 2 · ½ · a · h<sub>a</sub> + 2 · ½ · b · h<sub>b</sub> = 3,0 · 1 + 1,2 · 1,7 = 3 + 2,04 = <strong>5,04 m²</strong><br>
+        c) V = ⅓ · a · b · h = ⅓ · 3,0 m · 1,2 m · 0,8 m = <strong>0,96 m³</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Kegel</span>Aufgabe 4 – Partyhut <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="lk2-a4">
+    <p>Ein kegelförmiger Partyhut hat unten den Durchmesser d = 12 cm, die Mantellinie ist s = 10 cm lang.</p>
+    <p>a) Berechne die Höhe des Hutes. <em>(1 P.)</em><br>
+    b) Wie viel Pappe braucht man für den Mantel? <em>(2 P.)</em><br>
+    c) Berechne das Volumen des Hutes. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        r = 12 cm : 2 = 6 cm<br>
+        a) h² = s² − r² = 100 − 36 = 64 → h = <strong>8 cm</strong><br>
+        b) A<sub>M</sub> = π · r · s = π · 6 cm · 10 cm = 60π cm² ≈ <strong>188,50 cm²</strong><br>
+        c) V = ⅓ · π · r² · h = ⅓ · π · 36 cm² · 8 cm = 96π cm³ ≈ <strong>301,59 cm³</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Netz</span>Aufgabe 5 – Netz eines Kegels <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card" data-k="lk2-a5">
+    <p>Ein Kegel hat den Radius r = 3 cm und die Mantellinie s = 5 cm.</p>
+    <p>a) Berechne den Mittelpunktswinkel α des Kreisausschnitts im Netz. <em>(1 P.)</em><br>
+    b) Zeichne das Netz in Originalgröße. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Der Bogen des Kreisausschnitts ist so lang wie der Umfang des Grundkreises:<br>
+        α = 360° · r : s = 360° · 3 : 5 = <strong>216°</strong>
+      </div>
+      <p>b) Kreisausschnitt mit Radius 5 cm und 216°, daran ein Kreis mit Radius 3 cm, der den Bogen berührt (Zeichnung verkleinert):</p>
+      <svg viewBox="0 0 316 383" style="max-width:300px" role="img" aria-label="Netz eines Kegels: Kreisausschnitt mit Radius 5 cm und 216 Grad, Grundkreis mit Radius 3 cm" data-geo="lk2-netz" data-o="158,68.17" data-u="26">
+  <polygon class="fc2" points="158,68.17 34.36,28 33.16,31.9 32.08,35.84 31.13,39.81 30.3,43.81 29.6,47.83 29.03,51.88 28.58,55.94 28.26,60.01 28.06,64.09 28,68.17 28.06,72.25 28.26,76.33 28.58,80.4 29.03,84.46 29.6,88.51 30.3,92.53 31.13,96.53 32.08,100.5 33.16,104.44 34.36,108.34 35.69,112.21 37.13,116.03 38.69,119.8 40.37,123.52 42.17,127.19 44.08,130.8 46.1,134.35 48.24,137.83 50.48,141.24 52.83,144.58 55.28,147.85 57.83,151.04 60.49,154.14 63.23,157.16 66.08,160.09 69.01,162.94 72.03,165.68 75.13,168.34 78.32,170.89 81.59,173.34 84.93,175.69 88.34,177.93 91.82,180.07 95.37,182.09 98.98,184 102.65,185.8 106.37,187.48 110.14,189.04 113.96,190.48 117.83,191.81 121.73,193.01 125.67,194.09 129.64,195.04 133.64,195.87 137.66,196.57 141.71,197.14 145.77,197.59 149.84,197.91 153.92,198.11 158,198.17 162.08,198.11 166.16,197.91 170.23,197.59 174.29,197.14 178.34,196.57 182.36,195.87 186.36,195.04 190.33,194.09 194.27,193.01 198.17,191.81 202.04,190.48 205.86,189.04 209.63,187.48 213.35,185.8 217.02,184 220.63,182.09 224.18,180.07 227.66,177.93 231.07,175.69 234.41,173.34 237.68,170.89 240.87,168.34 243.97,165.68 246.99,162.94 249.92,160.09 252.77,157.16 255.51,154.14 258.17,151.04 260.72,147.85 263.17,144.58 265.52,141.24 267.76,137.83 269.9,134.35 271.92,130.8 273.83,127.19 275.63,123.52 277.31,119.8 278.87,116.03 280.31,112.21 281.64,108.34 282.84,104.44 283.92,100.5 284.87,96.53 285.7,92.53 286.4,88.51 286.97,84.46 287.42,80.4 287.74,76.33 287.94,72.25 288,68.17 287.94,64.09 287.74,60.01 287.42,55.94 286.97,51.88 286.4,47.83 285.7,43.81 284.87,39.81 283.92,35.84 282.84,31.9 281.64,28"/>
+  <line class="ed" data-e="R1" x1="158" y1="68.17" x2="34.36" y2="28"/>
+  <line class="ed" data-e="R2" x1="158" y1="68.17" x2="281.64" y2="28"/>
+  <polyline class="ed" data-e="arc" points="34.36,28 33.16,31.9 32.08,35.84 31.13,39.81 30.3,43.81 29.6,47.83 29.03,51.88 28.58,55.94 28.26,60.01 28.06,64.09 28,68.17 28.06,72.25 28.26,76.33 28.58,80.4 29.03,84.46 29.6,88.51 30.3,92.53 31.13,96.53 32.08,100.5 33.16,104.44 34.36,108.34 35.69,112.21 37.13,116.03 38.69,119.8 40.37,123.52 42.17,127.19 44.08,130.8 46.1,134.35 48.24,137.83 50.48,141.24 52.83,144.58 55.28,147.85 57.83,151.04 60.49,154.14 63.23,157.16 66.08,160.09 69.01,162.94 72.03,165.68 75.13,168.34 78.32,170.89 81.59,173.34 84.93,175.69 88.34,177.93 91.82,180.07 95.37,182.09 98.98,184 102.65,185.8 106.37,187.48 110.14,189.04 113.96,190.48 117.83,191.81 121.73,193.01 125.67,194.09 129.64,195.04 133.64,195.87 137.66,196.57 141.71,197.14 145.77,197.59 149.84,197.91 153.92,198.11 158,198.17 162.08,198.11 166.16,197.91 170.23,197.59 174.29,197.14 178.34,196.57 182.36,195.87 186.36,195.04 190.33,194.09 194.27,193.01 198.17,191.81 202.04,190.48 205.86,189.04 209.63,187.48 213.35,185.8 217.02,184 220.63,182.09 224.18,180.07 227.66,177.93 231.07,175.69 234.41,173.34 237.68,170.89 240.87,168.34 243.97,165.68 246.99,162.94 249.92,160.09 252.77,157.16 255.51,154.14 258.17,151.04 260.72,147.85 263.17,144.58 265.52,141.24 267.76,137.83 269.9,134.35 271.92,130.8 273.83,127.19 275.63,123.52 277.31,119.8 278.87,116.03 280.31,112.21 281.64,108.34 282.84,104.44 283.92,100.5 284.87,96.53 285.7,92.53 286.4,88.51 286.97,84.46 287.42,80.4 287.74,76.33 287.94,72.25 288,68.17 287.94,64.09 287.74,60.01 287.42,55.94 286.97,51.88 286.4,47.83 285.7,43.81 284.87,39.81 283.92,35.84 282.84,31.9 281.64,28"/>
+  <polyline class="ed" data-e="kreis" points="236,276.17 235.83,271.07 235.33,265.99 234.5,260.95 233.34,255.98 231.86,251.1 230.06,246.32 227.96,241.67 225.55,237.17 222.85,232.84 219.88,228.69 216.64,224.74 213.15,221.02 209.43,217.53 205.48,214.29 201.33,211.32 197,208.62 192.5,206.21 187.85,204.11 183.07,202.31 178.19,200.83 173.22,199.67 168.18,198.84 163.1,198.34 158,198.17 152.9,198.34 147.82,198.84 142.78,199.67 137.81,200.83 132.93,202.31 128.15,204.11 123.5,206.21 119,208.62 114.67,211.32 110.52,214.29 106.57,217.53 102.85,221.02 99.36,224.74 96.12,228.69 93.15,232.84 90.45,237.17 88.04,241.67 85.94,246.32 84.14,251.1 82.66,255.98 81.5,260.95 80.67,265.99 80.17,271.07 80,276.17 80.17,281.27 80.67,286.35 81.5,291.39 82.66,296.36 84.14,301.24 85.94,306.02 88.04,310.67 90.45,315.17 93.15,319.5 96.12,323.65 99.36,327.6 102.85,331.32 106.57,334.81 110.52,338.05 114.67,341.02 119,343.72 123.5,346.13 128.15,348.23 132.93,350.03 137.81,351.51 142.78,352.67 147.82,353.5 152.9,354 158,354.17 163.1,354 168.18,353.5 173.22,352.67 178.19,351.51 183.07,350.03 187.85,348.23 192.5,346.13 197,343.72 201.33,341.02 205.48,338.05 209.43,334.81 213.15,331.32 216.64,327.6 219.88,323.65 222.85,319.5 225.55,315.17 227.96,310.67 230.06,306.02 231.86,301.24 233.34,296.36 234.5,291.39 235.33,286.35 235.83,281.27 236,276.17"/>
+  <polyline class="hi" points="135.75,60.94 135.16,63.07 134.78,65.24 134.61,67.43 134.65,69.64 134.89,71.83 135.34,73.99 135.98,76.1 136.83,78.13 137.86,80.08 139.07,81.92 140.45,83.64 141.98,85.23 143.66,86.66 145.46,87.93 147.38,89.02 149.39,89.93 151.47,90.64 153.62,91.16 155.8,91.47 158,91.57 160.2,91.47 162.38,91.16 164.53,90.64 166.61,89.93 168.62,89.02 170.54,87.93 172.34,86.66 174.02,85.23 175.55,83.64 176.93,81.92 178.14,80.08 179.17,78.13 180.02,76.1 180.66,73.99 181.11,71.83 181.35,69.64 181.39,67.43 181.22,65.24 180.84,63.07 180.25,60.94"/>
+  <line class="hi dash" data-e="rr" x1="158" y1="276.17" x2="236" y2="276.17"/>
+  <text class="lbl g2 b" x="132" y="107.57">α = 216°</text>
+  <text class="lbl " x="225.82" y="52.08">s = 5 cm</text>
+  <text class="lbl " x="177" y="270.17">r = 3 cm</text>
+</svg>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>20–19</td><td>18–15</td><td>14–12</td><td>11–8</td><td>7–4</td><td>3–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

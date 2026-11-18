@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 1 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Potenzen</a> › <span>Probearbeit 1</span></div>
+  <h1>Probearbeit 1 · Mathematik Klasse 9</h1>
+  <p>Potenzen</p>
+</header>
+
+<main>
+<!-- PROBEARBEIT -->
+<section id="probearbeit">
+  <h2>Probearbeit 1</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner &nbsp;·&nbsp; <strong>Gesamt:</strong> 44 Punkte<br>
+    Laut Stoffverteilungsplan schließt die Einheit mit einem Test am Ende der Einheit ab. Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 1 – Potenzschreibweise und Potenzwerte <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card">
+    <p>a) Schreibe 6 · 6 · 6 · 6 als Potenz. <em>(1 P.)</em> &nbsp;&nbsp; b) Schreibe z · z · z als Potenz. <em>(1 P.)</em><br>
+    Berechne: c) 3<sup>4</sup> <em>(1 P.)</em> &nbsp;&nbsp; d) 2<sup>−5</sup> <em>(1 P.)</em> &nbsp;&nbsp; e) 7<sup>0</sup> <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 4 Faktoren 6: <b class="r" data-pot="pa1-1a">6<sup>4</sup></b> &nbsp;&nbsp; b) 3 Faktoren z: <b class="r" data-pot="pa1-1b">z<sup>3</sup></b><br>
+        c) 3 · 3 · 3 · 3 = <b class="r" data-pot="pa1-1c">81</b><br>
+        d) 2<sup>−5</sup> = <span class="frac"><span>1</span><span>2<sup>5</sup></span></span> = <b class="r" data-pot="pa1-1d"><span class="frac"><span>1</span><span>32</span></span></b><br>
+        e) 7<sup>0</sup> = <b class="r" data-pot="pa1-1e">1</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Vorzeichen</span>Aufgabe 2 – Negative Basis <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) (−2)<sup>6</sup> <em>(1 P.)</em> &nbsp;&nbsp; b) −2<sup>6</sup> <em>(1 P.)</em> &nbsp;&nbsp; c) (−1)<sup>15</sup> <em>(1 P.)</em> &nbsp;&nbsp; d) −(−3)<sup>3</sup> <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) gerader Exponent: <b class="r" data-pot="pa1-2a">64</b><br>
+        b) −(2<sup>6</sup>) = <b class="r" data-pot="pa1-2b">−64</b><br>
+        c) ungerader Exponent: <b class="r" data-pot="pa1-2c">−1</b><br>
+        d) (−3)<sup>3</sup> = −27, davor ein Minus: −(−27) = <b class="r" data-pot="pa1-2d">27</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Negative Exponenten</span>Aufgabe 3 – Kehrwerte <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) Schreibe 5<sup>−2</sup> als Bruch. <em>(1 P.)</em> &nbsp;&nbsp; b) Schreibe 10<sup>−3</sup> als Dezimalzahl. <em>(1 P.)</em><br>
+    c) Schreibe <span class="frac"><span>1</span><span>64</span></span> als Potenz mit der Basis 2. <em>(1 P.)</em> &nbsp;&nbsp; d) Schreibe <span class="frac"><span>1</span><span>x<sup>4</sup></span></span> mit negativem Exponenten. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <span class="frac"><span>1</span><span>5<sup>2</sup></span></span> = <b class="r" data-pot="pa1-3a"><span class="frac"><span>1</span><span>25</span></span></b><br>
+        b) <span class="frac"><span>1</span><span>1000</span></span> = <b class="r" data-pot="pa1-3b">0,001</b><br>
+        c) 64 = 2<sup>6</sup> → <b class="r" data-pot="pa1-3c">2<sup>−6</sup></b><br>
+        d) <b class="r" data-pot="pa1-3d">x<sup>−4</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Zehnerpotenzen</span>Aufgabe 4 – Wissenschaftliche Schreibweise <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>a) Schreibe 7 300 000 000 wissenschaftlich. <em>(1 P.)</em> &nbsp;&nbsp; b) Schreibe 0,0000062 wissenschaftlich. <em>(1 P.)</em><br>
+    c) Schreibe 1,08 · 10<sup>4</sup> ohne Zehnerpotenz. <em>(1 P.)</em> &nbsp;&nbsp; d) Schreibe 9,5 · 10<sup>−5</sup> ohne Zehnerpotenz. <em>(1 P.)</em><br>
+    e) 23 · 10<sup>5</sup> und 0,4 · 10<sup>−3</sup> sind nicht in wissenschaftlicher Schreibweise. Begründe und korrigiere. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Komma 9 Stellen nach links: <b class="r" data-pot="pa1-4a">7,3 · 10<sup>9</sup></b><br>
+        b) Komma 6 Stellen nach rechts: <b class="r" data-pot="pa1-4b">6,2 · 10<sup>−6</sup></b><br>
+        c) Komma 4 Stellen nach rechts: <b class="r" data-pot="pa1-4c">10 800</b><br>
+        d) Komma 5 Stellen nach links: <b class="r" data-pot="pa1-4d">0,000095</b><br>
+        e) 23 ist größer als 10: 23 · 10<sup>5</sup> = 2,3 · 10<sup>1</sup> · 10<sup>5</sup> = <b class="r" data-pot="pa1-4e">2,3 · 10<sup>6</sup></b><br>
+        0,4 ist kleiner als 1: 0,4 · 10<sup>−3</sup> = 4 · 10<sup>−1</sup> · 10<sup>−3</sup> = <b class="r" data-pot="pa1-4f">4 · 10<sup>−4</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Potenzgesetze</span>Aufgabe 5 – Vereinfachen <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>Vereinfache so weit wie möglich. Alle Variablen sind ungleich 0.</p>
+    <p>a) x<sup>4</sup> · x<sup>3</sup> <em>(1 P.)</em> &nbsp;&nbsp; b) a<sup>10</sup> : a<sup>2</sup> <em>(1 P.)</em> &nbsp;&nbsp; c) (y<sup>3</sup>)<sup>3</sup> <em>(1 P.)</em> &nbsp;&nbsp; d) 4<sup>3</sup> · 2,5<sup>3</sup> <em>(1 P.)</em><br>
+    e) z<sup>5</sup> · z<sup>−2</sup> <em>(1 P.)</em> &nbsp;&nbsp; f) (2a)<sup>3</sup> <em>(1 P.)</em> &nbsp;&nbsp; g) 3<sup>7</sup> : 3<sup>5</sup> <em>(1 P.)</em> &nbsp;&nbsp; h) b<sup>2</sup> · b<sup>4</sup> · b <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) x<sup>4 + 3</sup> = <b class="r" data-pot="pa1-5a">x<sup>7</sup></b> &nbsp;&nbsp; b) a<sup>10 − 2</sup> = <b class="r" data-pot="pa1-5b">a<sup>8</sup></b> &nbsp;&nbsp; c) y<sup>3 · 3</sup> = <b class="r" data-pot="pa1-5c">y<sup>9</sup></b><br>
+        d) (4 · 2,5)<sup>3</sup> = 10<sup>3</sup> = <b class="r" data-pot="pa1-5d">1000</b><br>
+        e) z<sup>5 + (−2)</sup> = <b class="r" data-pot="pa1-5e">z<sup>3</sup></b> &nbsp;&nbsp; f) 2<sup>3</sup> · a<sup>3</sup> = <b class="r" data-pot="pa1-5f">8a<sup>3</sup></b><br>
+        g) 3<sup>7 − 5</sup> = 3<sup>2</sup> = <b class="r" data-pot="pa1-5g">9</b> &nbsp;&nbsp; h) b<sup>2 + 4 + 1</sup> = <b class="r" data-pot="pa1-5h">b<sup>7</sup></b> &nbsp;<span class="note">b = b<sup>1</sup></span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 6 – Bakterienwachstum <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>In einer Probe sind zu Beginn 500 Bakterien. Ihre Anzahl verdoppelt sich alle 30 Minuten.</p>
+    <p>a) Wie viele Bakterien sind es nach 3 Stunden? <em>(2 P.)</em><br>
+    b) Gib einen Term für die Anzahl N nach n Verdopplungen an. <em>(1 P.)</em><br>
+    c) Nach wie vielen Verdopplungen sind es erstmals mehr als eine Million Bakterien? Wie viele Stunden sind das? <em>(2 P.)</em><br>
+    d) Wie viele Bakterien waren es eine Stunde <em>vor</em> Beobachtungsbeginn, wenn das Wachstum schon vorher so verlief? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 3 h = 180 min → 180 : 30 = 6 Verdopplungen: 500 · 2<sup>6</sup> = 500 · 64 = <b class="r" data-pot="pa1-6a">32 000</b><br>
+        b) N = <b class="r" data-pot="pa1-6b">500 · 2<sup>n</sup></b><br>
+        c) 500 · 2<sup>n</sup> &gt; 1 000 000 &nbsp;| : 500 → 2<sup>n</sup> &gt; 2000. Probieren: 2<sup>10</sup> = 1024, 2<sup>11</sup> = 2048.<br>
+        Also nach <b class="r" data-pot="pa1-6c">11</b> Verdopplungen, das sind 11 · 30 min = 330 min = <b class="r" data-pot="pa1-6d">5,5</b> Stunden.<br>
+        d) eine Stunde vorher = 2 Verdopplungen zurück: 500 · 2<sup>−2</sup> = <span class="frac"><span>500</span><span>4</span></span> = <b class="r" data-pot="pa1-6e">125</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 7 – Speichergrößen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card">
+    <p>Es gilt 1 MB = 10<sup>6</sup> Byte, 1 GB = 10<sup>9</sup> Byte, 1 TB = 10<sup>12</sup> Byte.</p>
+    <p>a) Ein Foto ist 4 MB groß. Gib die Größe in Byte in wissenschaftlicher Schreibweise an. <em>(1 P.)</em><br>
+    b) Wie viele dieser Fotos passen auf eine Speicherkarte mit 64 GB? <em>(2 P.)</em><br>
+    c) Ein Film ist 1,5 GB groß. Wie viele ganze Filme passen auf eine Festplatte mit 2 TB? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 4 MB = <b class="r" data-pot="pa1-7a">4 · 10<sup>6</sup></b> Byte<br>
+        b) <span class="frac"><span>64 · 10<sup>9</sup></span><span>4 · 10<sup>6</sup></span></span> = 16 · 10<sup>3</sup> = <b class="r" data-pot="pa1-7b">16 000</b> Fotos<br>
+        c) <span class="frac"><span>2 · 10<sup>12</sup></span><span>1,5 · 10<sup>9</sup></span></span> = 1,333… · 10<sup>3</sup> ≈ 1333,3 → <b class="r" data-pot="pa1-7c">1333</b> ganze Filme
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 8 – Licht von der Sonne <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Licht legt in einer Sekunde etwa 3 · 10<sup>5</sup> km zurück. Die Erde ist etwa 1,5 · 10<sup>8</sup> km von der Sonne entfernt.</p>
+    <p>a) Wie viele Sekunden braucht das Sonnenlicht bis zur Erde? Gib das Ergebnis auch in Minuten an (eine Nachkommastelle). <em>(3 P.)</em><br>
+    b) Wie viele Kilometer legt Licht in einem Jahr (365 Tage) zurück? Runde auf eine Nachkommastelle in wissenschaftlicher Schreibweise. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) t = <span class="frac"><span>1,5 · 10<sup>8</sup></span><span>3 · 10<sup>5</sup></span></span> s = 0,5 · 10<sup>3</sup> s = <b class="r" data-pot="pa1-8a">500</b> s; &nbsp;500 : 60 ≈ <b class="r" data-pot="pa1-8b">8,3</b> min<br>
+        b) Sekunden im Jahr: 365 · 24 · 60 · 60 = <b class="r" data-pot="pa1-8c">31 536 000</b> ≈ 3,15 · 10<sup>7</sup><br>
+        s = 3 · 10<sup>5</sup> · 31 536 000 km = 9,4608 · 10<sup>12</sup> km ≈ <b class="r" data-pot="pa1-8d">9,5 · 10<sup>12</sup></b> km
+      </div>
+      <p style="margin:0">Diese Strecke heißt <strong>Lichtjahr</strong>.</p>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>44–41</td><td>40–33</td><td>32–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

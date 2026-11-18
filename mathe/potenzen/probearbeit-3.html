@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 3 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Potenzen</a> › <span>Probearbeit 3</span></div>
+  <h1>Probearbeit 3 · Mathematik Klasse 9 <span class="niveau schwer">🔥 Niveau: Schwer</span></h1>
+  <p>Potenzen</p>
+</header>
+
+<main>
+<!-- PROBEARBEIT -->
+<section id="probearbeit">
+  <h2>Probearbeit 3</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner &nbsp;·&nbsp; <strong>Gesamt:</strong> 46 Punkte<br>
+    Diese Probearbeit ist bewusst schwerer als der Test am Ende der Einheit. Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag wk">Potenzgesetze</span>Aufgabe 1 – Verschachtelte Terme <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>Vereinfache so weit wie möglich. Alle Variablen sind ungleich 0. c) und d) ohne Taschenrechner.</p>
+    <p>a) (a<sup>3</sup>b<sup>2</sup>)<sup>2</sup> · a<sup>−4</sup> <em>(2 P.)</em> &nbsp;&nbsp; b) (x<sup>−2</sup>)<sup>3</sup> : x<sup>−8</sup> <em>(2 P.)</em><br>
+    c) <span class="frac"><span>2<sup>10</sup> · 4<sup>3</sup></span><span>8<sup>4</sup></span></span> <em>(2 P.)</em> &nbsp;&nbsp; d) <span class="frac"><span>12<sup>5</sup></span><span>3<sup>5</sup> · 2<sup>9</sup></span></span> <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) a<sup>6</sup>b<sup>4</sup> · a<sup>−4</sup> = <b class="r" data-pot="pa3-1a">a<sup>2</sup>b<sup>4</sup></b><br>
+        b) x<sup>−6</sup> : x<sup>−8</sup> = x<sup>−6 − (−8)</sup> = <b class="r" data-pot="pa3-1b">x<sup>2</sup></b><br>
+        c) alles mit Basis 2: 4<sup>3</sup> = (2<sup>2</sup>)<sup>3</sup> = 2<sup>6</sup>, 8<sup>4</sup> = (2<sup>3</sup>)<sup>4</sup> = 2<sup>12</sup> → <span class="frac"><span>2<sup>10</sup> · 2<sup>6</sup></span><span>2<sup>12</sup></span></span> = 2<sup>16 − 12</sup> = 2<sup>4</sup> = <b class="r" data-pot="pa3-1c">16</b><br>
+        d) <span class="frac"><span>12<sup>5</sup></span><span>3<sup>5</sup></span></span> = 4<sup>5</sup> = 2<sup>10</sup> → <span class="frac"><span>2<sup>10</sup></span><span>2<sup>9</sup></span></span> = <b class="r" data-pot="pa3-1d">2</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Vorzeichen</span>Aufgabe 2 – Minus, Brüche, Ordnung <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card">
+    <p>a) (−<span class="frac"><span>1</span><span>2</span></span>)<sup>−3</sup> <em>(1 P.)</em> &nbsp;&nbsp; b) −2<sup>−2</sup> <em>(1 P.)</em> &nbsp;&nbsp; c) (−3)<sup>−2</sup> · (−3)<sup>5</sup> <em>(1 P.)</em><br>
+    d) Ordne der Größe nach, beginne mit der kleinsten Zahl: 2<sup>−3</sup>, (−2)<sup>3</sup>, −2<sup>−3</sup>, (−2)<sup>−2</sup> <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Kehrwert von −<span class="frac"><span>1</span><span>2</span></span> ist −2: (−2)<sup>3</sup> = <b class="r" data-pot="pa3-2a">−8</b><br>
+        b) −(2<sup>−2</sup>) = <b class="r" data-pot="pa3-2b">−<span class="frac"><span>1</span><span>4</span></span></b><br>
+        c) (−3)<sup>−2 + 5</sup> = (−3)<sup>3</sup> = <b class="r" data-pot="pa3-2c">−27</b><br>
+        d) Werte: 2<sup>−3</sup> = <span class="frac"><span>1</span><span>8</span></span>, (−2)<sup>3</sup> = −8, −2<sup>−3</sup> = −<span class="frac"><span>1</span><span>8</span></span>, (−2)<sup>−2</sup> = <span class="frac"><span>1</span><span>4</span></span><br>
+        <b class="r" data-pot="pa3-2d">(−2)<sup>3</sup> &lt; −2<sup>−3</sup> &lt; 2<sup>−3</sup> &lt; (−2)<sup>−2</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Exponenten</span>Aufgabe 3 – Fehlende Zahl bestimmen <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Bestimme x.</p>
+    <p>a) 2<sup>x</sup> = 128 <em>(1 P.)</em> &nbsp;&nbsp; b) 3<sup>x</sup> = <span class="frac"><span>1</span><span>81</span></span> <em>(1 P.)</em> &nbsp;&nbsp; c) 10<sup>x</sup> = 0,00001 <em>(1 P.)</em><br>
+    d) x<sup>3</sup> = −125 <em>(1 P.)</em> &nbsp;&nbsp; e) 5<sup>x + 1</sup> = 625 <em>(1 P.)</em> &nbsp;&nbsp; f) 4<sup>x</sup> = 2<sup>10</sup> <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 128 = 2<sup>7</sup> → x = <b class="r" data-pot="pa3-3a">7</b> &nbsp;&nbsp; b) <span class="frac"><span>1</span><span>81</span></span> = 3<sup>−4</sup> → x = <b class="r" data-pot="pa3-3b">−4</b> &nbsp;&nbsp; c) 0,00001 = 10<sup>−5</sup> → x = <b class="r" data-pot="pa3-3c">−5</b><br>
+        d) (−5)<sup>3</sup> = −125 → x = <b class="r" data-pot="pa3-3d">−5</b> &nbsp;&nbsp; e) 625 = 5<sup>4</sup> → x + 1 = 4 → x = <b class="r" data-pot="pa3-3e">3</b><br>
+        f) 4<sup>x</sup> = (2<sup>2</sup>)<sup>x</sup> = 2<sup>2x</sup> → 2x = 10 → x = <b class="r" data-pot="pa3-3f">5</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Zehnerpotenzen</span>Aufgabe 4 – Rechnen in wissenschaftlicher Schreibweise <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Berechne ohne Taschenrechner, Ergebnis in wissenschaftlicher Schreibweise.</p>
+    <p>a) (6 · 10<sup>−4</sup>) · (5 · 10<sup>9</sup>) <em>(2 P.)</em> &nbsp;&nbsp; b) (9,6 · 10<sup>3</sup>) : (3,2 · 10<sup>−5</sup>) <em>(2 P.)</em> &nbsp;&nbsp; c) (2 · 10<sup>−3</sup>)<sup>3</sup> <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 6 · 5 = 30; 10<sup>−4 + 9</sup> = 10<sup>5</sup> → 30 · 10<sup>5</sup> = <b class="r" data-pot="pa3-4a">3 · 10<sup>6</sup></b><br>
+        b) 9,6 : 3,2 = 3; 10<sup>3 − (−5)</sup> = 10<sup>8</sup> → <b class="r" data-pot="pa3-4b">3 · 10<sup>8</sup></b><br>
+        c) 2<sup>3</sup> · (10<sup>−3</sup>)<sup>3</sup> = 8 · 10<sup>−9</sup> → <b class="r" data-pot="pa3-4c">8 · 10<sup>−9</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 5 – Vom Stern zum Atomkern <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p>Ein Lichtjahr sind etwa 9,46 · 10<sup>12</sup> km. Der nächste Stern nach der Sonne, Proxima Centauri, ist etwa 4,2 Lichtjahre entfernt.</p>
+    <p>a) Gib die Entfernung in km an, gerundet auf eine Nachkommastelle in wissenschaftlicher Schreibweise. <em>(2 P.)</em><br>
+    b) Eine Raumsonde fliegt mit 6 · 10<sup>4</sup> km pro Stunde. Wie viele Jahre (365 Tage) wäre sie bis Proxima Centauri unterwegs? Rechne mit dem ungerundeten Wert aus a) und runde auf eine Nachkommastelle in wissenschaftlicher Schreibweise. <em>(3 P.)</em><br>
+    c) Ein Atom hat einen Durchmesser von etwa 10<sup>−10</sup> m, sein Kern etwa 10<sup>−14</sup> m. Wievielmal so groß ist der Durchmesser des Atoms? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 4,2 · 9,46 · 10<sup>12</sup> km = 39,732 · 10<sup>12</sup> km = 3,9732 · 10<sup>13</sup> km ≈ <b class="r" data-pot="pa3-5a">4,0 · 10<sup>13</sup></b> km<br>
+        b) Stunden: <span class="frac"><span>3,9732 · 10<sup>13</sup></span><span>6 · 10<sup>4</sup></span></span> = 0,6622 · 10<sup>9</sup> = 6,622 · 10<sup>8</sup> h<br>
+        Jahre: 6,622 · 10<sup>8</sup> : (365 · 24) = 6,622 · 10<sup>8</sup> : 8760 ≈ 75 594 ≈ <b class="r" data-pot="pa3-5b">7,6 · 10<sup>4</sup></b> Jahre<br>
+        c) <span class="frac"><span>10<sup>−10</sup></span><span>10<sup>−14</sup></span></span> = 10<sup>−10 − (−14)</sup> = 10<sup>4</sup> = <b class="r" data-pot="pa3-5c">10 000</b>
+      </div>
+      <p style="margin:0">Wäre der Atomkern 1 cm groß, hätte das Atom einen Durchmesser von 100 m.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 6 – Bakterienmasse <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p>Ein Kolibakterium teilt sich unter idealen Bedingungen alle 20 Minuten, die Anzahl verdoppelt sich also. Ein Bakterium hat eine Masse von etwa 10<sup>−12</sup> g. Zu Beginn ist ein einziges Bakterium da.</p>
+    <p>a) Wie viele Bakterien sind es nach 8 Stunden? <em>(2 P.)</em><br>
+    b) Runde die Anzahl aus a) auf eine Nachkommastelle in wissenschaftlicher Schreibweise. <em>(1 P.)</em><br>
+    c) Welche Masse hätten die Bakterien nach 24 Stunden? Gib sie in Gramm und in Tonnen an (je eine Nachkommastelle, wissenschaftliche Schreibweise; 1 t = 10<sup>6</sup> g). <em>(3 P.)</em><br>
+    d) Warum passiert das in Wirklichkeit nicht? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 8 h = 480 min → 480 : 20 = 24 Verdopplungen: 2<sup>24</sup> = <b class="r" data-pot="pa3-6a">16 777 216</b><br>
+        b) ≈ <b class="r" data-pot="pa3-6b">1,7 · 10<sup>7</sup></b><br>
+        c) 24 h → 72 Verdopplungen: 2<sup>72</sup> ≈ 4,72 · 10<sup>21</sup> Bakterien<br>
+        m ≈ 4,72 · 10<sup>21</sup> · 10<sup>−12</sup> g = 4,72 · 10<sup>9</sup> g ≈ <b class="r" data-pot="pa3-6c">4,7 · 10<sup>9</sup></b> g ≈ <b class="r" data-pot="pa3-6d">4,7 · 10<sup>3</sup></b> t
+      </div>
+      <p style="margin:0">d) Nährstoffe und Platz gehen aus, und Abfallstoffe hemmen das Wachstum. Ungebremstes Verdoppeln gibt es nur kurze Zeit.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 7 – Musik auf der Festplatte <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p>Eine Festplatte fasst 4 TB = 4 · 10<sup>12</sup> Byte. Ein Lied braucht etwa 4 MB = 4 · 10<sup>6</sup> Byte und dauert 3,5 Minuten.</p>
+    <p>a) Wie viele Lieder passen auf die Festplatte? <em>(1 P.)</em><br>
+    b) Wie viele Jahre (365 Tage) könnte man ohne Pause Musik hören? Eine Nachkommastelle. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <span class="frac"><span>4 · 10<sup>12</sup></span><span>4 · 10<sup>6</sup></span></span> = 10<sup>6</sup> = <b class="r" data-pot="pa3-7a">1 000 000</b> Lieder<br>
+        b) 10<sup>6</sup> · 3,5 min = 3,5 · 10<sup>6</sup> min; ein Jahr hat 365 · 24 · 60 = 525 600 min<br>
+        3 500 000 : 525 600 ≈ <b class="r" data-pot="pa3-7b">6,7</b> Jahre
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Fehlersuche</span>Aufgabe 8 – Mias Hausaufgabe <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>Mia hat vier Aufgaben gerechnet. Jede ist falsch. Beschreibe den Fehler und rechne richtig. <em>(je 1 P.)</em></p>
+    <p>(1) 2<sup>3</sup> · 2<sup>4</sup> = 4<sup>7</sup> &nbsp;&nbsp; (2) (a<sup>2</sup>)<sup>3</sup> = a<sup>5</sup> &nbsp;&nbsp; (3) 10<sup>−3</sup> = −1000 &nbsp;&nbsp; (4) 5<sup>3</sup> + 5<sup>3</sup> = 5<sup>6</sup></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        (1) Basen multipliziert. Richtig: 2<sup>3 + 4</sup> = <b class="r" data-pot="pa3-8a">2<sup>7</sup></b> = <b class="r" data-pot="pa3-8b">128</b><br>
+        (2) Exponenten addiert statt multipliziert. Richtig: a<sup>2 · 3</sup> = <b class="r" data-pot="pa3-8c">a<sup>6</sup></b><br>
+        (3) Negativer Exponent heißt Kehrwert, nicht negative Zahl. Richtig: <span class="frac"><span>1</span><span>1000</span></span> = <b class="r" data-pot="pa3-8d">0,001</b><br>
+        (4) Für Summen gibt es kein Potenzgesetz. Richtig: 2 · 5<sup>3</sup> = 2 · 125 = <b class="r" data-pot="pa3-8e">250</b>
+      </div>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>46–43</td><td>42–35</td><td>34–28</td><td>27–19</td><td>18–10</td><td>9–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

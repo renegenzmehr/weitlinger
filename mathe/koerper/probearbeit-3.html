@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 3 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+sub{font-size:.72em}
+svg .ed{stroke:var(--g1);stroke-width:2;fill:none;stroke-linejoin:round}
+svg .ed.hid{stroke-dasharray:5 4;stroke-width:1.5}
+svg .hi{stroke:var(--g2);stroke-width:2;fill:none}
+svg .hi.dash{stroke-dasharray:6 4}
+svg .fc{fill:var(--accent-soft);stroke:none}
+svg .fc2{fill:var(--warn-soft);stroke:none}
+svg .lbl{font-size:12px}
+svg .lbl.b{font-weight:700}
+svg .lbl.g2{fill:var(--g2)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Körper</a> › <span>Probearbeit 3</span></div>
+  <h1>Probearbeit 3 · Mathematik Klasse 9 <span class="niveau schwer">🔥 Niveau: Schwer</span></h1>
+  <p>Probe-Klassenarbeit zur 2. Klassenarbeit · Schwerpunkt Körper, dazu Lineare Gleichungssysteme und Arbeiten mit Variablen</p>
+</header>
+
+<main>
+<section>
+  <div class="card" style="border-left:5px solid #c53030">
+    <p style="margin:0"><strong>🔥 Achtung, diese Arbeit ist deutlich schwerer als eine normale Klassenarbeit.</strong>
+    Hier musst du Formeln rückwärts anwenden, Körper zerlegen und wieder zusammensetzen, Größen über mehrere Stützdreiecke berechnen und Aussagen mit Variablen begründen. Nimm sie dir erst vor, wenn die Probearbeiten 1 und 2 gut klappen.</p>
+  </div>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner (π-Taste), Tafelwerk &nbsp;·&nbsp; <strong>Gesamt:</strong> 45 Punkte<br>
+    Runde Endergebnisse auf zwei Nachkommastellen, wenn nichts anderes steht. Rechne mit ungerundeten Zwischenergebnissen weiter. Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Pyramide</span>Aufgabe 1 – Pyramide rückwärts <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-k="pa3-a1">
+    <p>Eine quadratische Pyramide hat das Volumen V = 1568 cm³ und die Grundkante a = 14 cm.</p>
+    <p>a) Berechne die Höhe h. <em>(2 P.)</em><br>
+    b) Berechne die Höhe h<sub>s</sub> einer Seitenfläche. <em>(2 P.)</em><br>
+    c) Berechne den Oberflächeninhalt. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) V = ⅓ · a² · h → h = 3V : a² = 3 · 1568 : 196 = 4704 : 196 = <strong>24 cm</strong><br>
+        b) h<sub>s</sub>² = h² + (a/2)² = 576 + 49 = 625 → h<sub>s</sub> = <strong>25 cm</strong><br>
+        c) A<sub>O</sub> = a² + 2 · a · h<sub>s</sub> = 196 cm² + 2 · 14 cm · 25 cm = 196 cm² + 700 cm² = <strong>896 cm²</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Kegel</span>Aufgabe 2 – Kegel aus der Mantelfläche <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="pa3-a2">
+    <p>Ein Kreiskegel hat den Radius r = 5 cm und die Mantelfläche A<sub>M</sub> ≈ 204,20 cm².</p>
+    <p>a) Berechne die Mantellinie s. <em>(2 P.)</em><br>
+    b) Berechne die Höhe h. <em>(1 P.)</em><br>
+    c) Berechne das Volumen. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) A<sub>M</sub> = π · r · s → s = A<sub>M</sub> : (π · r) = 204,20 : (5π) ≈ <strong>13 cm</strong><br>
+        b) h² = s² − r² = 169 − 25 = 144 → h = <strong>12 cm</strong><br>
+        c) V = ⅓ · π · 5² · 12 = 100π cm³ ≈ <strong>314,16 cm³</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Abzug</span>Aufgabe 3 – Werkstück mit Pyramidendach und Querbohrung <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card" data-k="pa3-a3">
+    <p>Ein Werkstück besteht aus einem Quader mit quadratischer Grundfläche (8 cm × 8 cm, Höhe 10 cm) und einer aufgesetzten quadratischen Pyramide (a = 8 cm, h = 3 cm). Durch den Quader geht von einer Seitenfläche zur gegenüberliegenden eine waagerechte Bohrung mit dem Durchmesser 4 cm (Länge 8 cm).</p>
+    <p>a) Berechne das Volumen des Werkstücks. <em>(3 P.)</em><br>
+    b) Berechne den Oberflächeninhalt des Werkstücks einschließlich der Innenwand der Bohrung. <em>(4 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) V<sub>Quader</sub> = 8 · 8 · 10 = 640 cm³; &nbsp; V<sub>Pyramide</sub> = ⅓ · 64 · 3 = 64 cm³; &nbsp; V<sub>Bohrung</sub> = π · 2² · 8 = 32π cm³ ≈ 100,53 cm³<br>
+        V = 640 + 64 − 32π ≈ <strong>603,47 cm³</strong><br>
+        b) Quader ohne Deckfläche: 64 + 4 · 8 · 10 = 384 cm²<br>
+        Pyramidenmantel: h<sub>s</sub>² = 3² + 4² = 25 → h<sub>s</sub> = 5 cm; &nbsp; A<sub>M</sub> = 4 · ½ · 8 · 5 = 80 cm²<br>
+        Bohrung: zwei Kreislöcher fallen weg (− 2 · π · 2² = − 8π cm²), die Innenwand kommt dazu (+ 2 · π · 2 · 8 = + 32π cm²)<br>
+        A<sub>O</sub> = 384 + 80 − 8π + 32π = 464 + 24π ≈ <strong>539,40 cm²</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Kugel</span>Aufgabe 4 – Tennisballdose <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="pa3-a4">
+    <p>In einer zylinderförmigen Dose liegen 3 Tennisbälle (r = 3,3 cm) genau übereinander. Die Dose ist so eng und so hoch, dass die Bälle Wand, Boden und Deckel berühren.</p>
+    <p>a) Berechne das Volumen der Dose. <em>(2 P.)</em><br>
+    b) Berechne das Volumen der drei Bälle. <em>(2 P.)</em><br>
+    c) Wie viel Prozent der Dose füllen die Bälle aus? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Dose: r = 3,3 cm, h = 3 · 6,6 cm = 19,8 cm; &nbsp; V<sub>Dose</sub> = π · 3,3² · 19,8 ≈ <strong>677,40 cm³</strong><br>
+        b) V<sub>Bälle</sub> = 3 · <span class="frac"><span>4</span><span>3</span></span> · π · 3,3³ = 4π · 3,3³ ≈ <strong>451,60 cm³</strong><br>
+        c) 451,60 : 677,40 ≈ 0,6667 → <strong>66,67 %</strong> <span class="note">(genau zwei Drittel, egal wie groß r ist)</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Pythagoras</span>Aufgabe 5 – Zwei Stützdreiecke <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card" data-k="pa3-a5">
+    <p>Bei einer quadratischen Pyramide sind alle Seitenkanten s = 10 cm lang, die Grundkante ist a = 12 cm. Berechne h<sub>s</sub> und die Körperhöhe h.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        h<sub>s</sub>² = s² − (a/2)² = 100 − 36 = 64 → h<sub>s</sub> = <strong>8 cm</strong> <em>(1 P.)</em><br>
+        h² = h<sub>s</sub>² − (a/2)² = 64 − 36 = 28 → h = √28 cm ≈ <strong>5,29 cm</strong> <em>(2 P.)</em>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">LGS</span>Aufgabe 6 – Messingteile <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-k="pa3-a6">
+    <p>5 Messingkugeln und 2 Messingwürfel wiegen zusammen 1340 g. Drei Kugeln sind 100 g schwerer als zwei Würfel. Alle Kugeln sind gleich schwer, alle Würfel auch.</p>
+    <p>a) Lege Variablen fest und stelle ein Gleichungssystem auf. <em>(2 P.)</em><br>
+    b) Löse das System. <em>(3 P.)</em><br>
+    c) Schreibe einen Antwortsatz. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) x = Masse einer Kugel in g, y = Masse eines Würfels in g<br>
+        (I) 5x + 2y = 1340 &nbsp;&nbsp; (II) 3x = 2y + 100, also 3x − 2y = 100<br>
+        b) (I) + (II): 8x = 1440 → x = 180; &nbsp; in (I): 900 + 2y = 1340 → 2y = 440 → y = 220<br>
+        Probe (II): 3 · 180 = 540 = 2 · 220 + 100 ✓
+      </div>
+      <p style="margin:0">c) Eine Kugel wiegt 180 g, ein Würfel 220 g.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Variablen</span>Aufgabe 7 – Binomische Formeln <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="pa3-a7a pa3-a7b pa3-a7c pa3-a7d">
+    <p>a) Multipliziere aus: (2x − 3y)² <em>(1 P.)</em><br>
+    b) Tom schreibt (a + 4)² = a² + 16. Erkläre den Fehler und gib das richtige Ergebnis an. <em>(1 P.)</em><br>
+    c) Ergänze die Lücken: (□ + 5)² = 9x² + □ + 25 <em>(1 P.)</em><br>
+    d) Vereinfache: (x + 2)² − (x − 2)² <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>4x² − 12xy + 9y²</strong><br>
+        b) Tom hat das Mittelglied 2 · a · 4 vergessen: (a + 4)² = <strong>a² + 8a + 16</strong><br>
+        c) 9x² = (3x)² → (3x + 5)² = 9x² + 30x + 25, Lücken: <strong>3x</strong> und <strong>30x</strong><br>
+        d) (x² + 4x + 4) − (x² − 4x + 4) = x² + 4x + 4 − x² + 4x − 4 = <strong>8x</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Variablen</span>Aufgabe 8 – Körperformeln umstellen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="pa3-a8a pa3-a8b pa3-a8c">
+    <p>a) Stelle V = ⅓ · π · r² · h nach r um. <em>(2 P.)</em><br>
+    b) Berechne r für V ≈ 314,16 cm³ und h = 12 cm. <em>(1 P.)</em><br>
+    c) Stelle A<sub>O</sub> = 2 · π · r · (r + h) nach h um. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 3V = π · r² · h → r² = 3V : (π · h) → <strong>r = √(3V : (π · h))</strong><br>
+        b) r = √(3 · 314,16 : (12π)) ≈ √25,00 → r ≈ <strong>5 cm</strong><br>
+        c) A<sub>O</sub> : (2πr) = r + h → <strong>h = A<sub>O</sub> : (2πr) − r</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Variablen</span>Aufgabe 9 – Aussagen begründen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="pa3-a9a pa3-a9b">
+    <p>a) Begründe mit einer Variablen: Die Summe von drei aufeinanderfolgenden natürlichen Zahlen ist immer durch 3 teilbar. <em>(2 P.)</em><br>
+    b) Begründe: Die Differenz der Quadrate zweier aufeinanderfolgender natürlicher Zahlen ist immer ungerade. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Zahlen n, n + 1, n + 2: &nbsp; n + (n + 1) + (n + 2) = 3n + 3 = <strong>3(n + 1)</strong> → ein Vielfaches von 3.<br>
+        b) (n + 1)² − n² = n² + 2n + 1 − n² = <strong>2n + 1</strong> → eine gerade Zahl 2n plus 1, also ungerade.
+      </div>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>45–42</td><td>41–34</td><td>33–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

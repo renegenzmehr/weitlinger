@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leistungskontrolle 1 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Potenzen</a> › <span>Leistungskontrolle 1</span></div>
+  <h1>Leistungskontrolle 1 · Mathematik Klasse 9</h1>
+  <p>Potenzen · Begriffe, Potenzschreibweise, Null und negative Exponenten, Vorzeichen</p>
+</header>
+
+<main>
+<!-- LEISTUNGSKONTROLLE -->
+<section id="lk">
+  <h2>Leistungskontrolle 1</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 20 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> keine &nbsp;·&nbsp; <strong>Gesamt:</strong> 19 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 1 – Begriffe <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p>Es gilt 5<sup>4</sup> = 625. Gib an:</p>
+    <p>a) die Basis <em>(1 P.)</em> &nbsp;&nbsp; b) den Exponenten <em>(1 P.)</em> &nbsp;&nbsp; c) den Potenzwert <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Basis: <b class="r" data-pot="lk1-1a">5</b> (der Faktor, der sich wiederholt)<br>
+      b) Exponent: <b class="r" data-pot="lk1-1b">4</b> (so oft steht die 5 als Faktor da)<br>
+      c) Potenzwert: <b class="r" data-pot="lk1-1c">625</b> (5 · 5 · 5 · 5 = 625)</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 2 – Als Potenz schreiben <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) 3 · 3 · 3 · 3 · 3 <em>(1 P.)</em> &nbsp;&nbsp; b) (−2) · (−2) · (−2) <em>(1 P.)</em> &nbsp;&nbsp; c) x · x · x · x · x · x · x <em>(1 P.)</em> &nbsp;&nbsp; d) <span class="frac"><span>1</span><span>7 · 7 · 7 · 7</span></span> mit negativem Exponenten <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 5 Faktoren 3: <b class="r" data-pot="lk1-2a">3<sup>5</sup></b><br>
+        b) 3 Faktoren −2, Klammer nötig: <b class="r" data-pot="lk1-2b">(−2)<sup>3</sup></b><br>
+        c) 7 Faktoren x: <b class="r" data-pot="lk1-2c">x<sup>7</sup></b><br>
+        d) <span class="frac"><span>1</span><span>7<sup>4</sup></span></span> = <b class="r" data-pot="lk1-2d">7<sup>−4</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Berechnen</span>Aufgabe 3 – Potenzwerte <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card">
+    <p>Berechne. Gib Ergebnisse mit negativem Exponenten als Bruch an.</p>
+    <p>a) 2<sup>6</sup> <em>(1 P.)</em> &nbsp;&nbsp; b) 10<sup>0</sup> <em>(1 P.)</em> &nbsp;&nbsp; c) 4<sup>−2</sup> <em>(1 P.)</em> &nbsp;&nbsp; d) 5<sup>−1</sup> <em>(1 P.)</em> &nbsp;&nbsp; e) (<span class="frac"><span>2</span><span>3</span></span>)<sup>−2</sup> <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 2 · 2 · 2 · 2 · 2 · 2 = <b class="r" data-pot="lk1-3a">64</b><br>
+        b) Jede Zahl (außer 0) hoch 0 ergibt 1: 10<sup>0</sup> = <b class="r" data-pot="lk1-3b">1</b><br>
+        c) 4<sup>−2</sup> = <span class="frac"><span>1</span><span>4<sup>2</sup></span></span> = <b class="r" data-pot="lk1-3c"><span class="frac"><span>1</span><span>16</span></span></b><br>
+        d) 5<sup>−1</sup> = <b class="r" data-pot="lk1-3d"><span class="frac"><span>1</span><span>5</span></span></b><br>
+        e) Bruch umdrehen: (<span class="frac"><span>3</span><span>2</span></span>)<sup>2</sup> = <b class="r" data-pot="lk1-3e"><span class="frac"><span>9</span><span>4</span></span></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Vorzeichen</span>Aufgabe 4 – Auf das Minus achten <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) (−3)<sup>4</sup> <em>(1 P.)</em> &nbsp;&nbsp; b) −3<sup>4</sup> <em>(1 P.)</em> &nbsp;&nbsp; c) (−2)<sup>5</sup> <em>(1 P.)</em><br>
+    d) Erkläre mit einer Rechnung, warum (−5)<sup>2</sup> und −5<sup>2</sup> verschieden sind. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (−3) · (−3) · (−3) · (−3) = <b class="r" data-pot="lk1-4a">81</b> &nbsp;<span class="note">gerader Exponent → positiv</span><br>
+        b) −(3 · 3 · 3 · 3) = <b class="r" data-pot="lk1-4b">−81</b> &nbsp;<span class="note">Basis ist nur 3</span><br>
+        c) (−2) · (−2) · (−2) · (−2) · (−2) = <b class="r" data-pot="lk1-4c">−32</b> &nbsp;<span class="note">ungerader Exponent → negativ</span><br>
+        d) (−5)<sup>2</sup> = (−5) · (−5) = <b class="r" data-pot="lk1-4d">25</b>, aber −5<sup>2</sup> = −(5 · 5) = <b class="r" data-pot="lk1-4e">−25</b>.
+      </div>
+      <p style="margin:0">Bei (−5)<sup>2</sup> gehört das Minus zur Basis und wird mit quadriert. Bei −5<sup>2</sup> wird nur die 5 quadriert, das Minus steht davor.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Negative Exponenten</span>Aufgabe 5 – Kehrwert <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p>a) Schreibe 2<sup>−3</sup> als Bruch und als Dezimalzahl. <em>(1 P.)</em><br>
+    b) Schreibe 10<sup>−4</sup> als Dezimalzahl. <em>(1 P.)</em><br>
+    c) Schreibe <span class="frac"><span>1</span><span>27</span></span> als Potenz mit der Basis 3. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 2<sup>−3</sup> = <span class="frac"><span>1</span><span>2<sup>3</sup></span></span> = <b class="r" data-pot="lk1-5a"><span class="frac"><span>1</span><span>8</span></span></b> = <b class="r" data-pot="lk1-5b">0,125</b><br>
+        b) 10<sup>−4</sup> = <span class="frac"><span>1</span><span>10 000</span></span> = <b class="r" data-pot="lk1-5c">0,0001</b><br>
+        c) 27 = 3<sup>3</sup>, also <span class="frac"><span>1</span><span>27</span></span> = <span class="frac"><span>1</span><span>3<sup>3</sup></span></span> = <b class="r" data-pot="lk1-5d">3<sup>−3</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>19–18</td><td>17–15</td><td>14–12</td><td>11–8</td><td>7–4</td><td>3–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

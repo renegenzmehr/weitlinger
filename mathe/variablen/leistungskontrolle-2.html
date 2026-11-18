@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kurztest Binomische Formeln · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75;overflow-wrap:anywhere}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+.box{display:inline-block;min-width:2.2em;border-bottom:2px solid var(--muted);text-align:center}
+.keynote{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+svg .cell{stroke:var(--text);stroke-width:1.5}
+svg .c1{fill:var(--accent-soft)} svg .c2{fill:var(--stat-soft)} svg .c3{fill:var(--wk-soft)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Arbeiten mit Variablen</a> › <span>Kurztest Binomische Formeln</span></div>
+  <h1>Kurztest Binomische Formeln · Mathematik Klasse 9</h1>
+  <p>Arbeiten mit Variablen · 1., 2. und 3. binomische Formel vorwärts und rückwärts, Lücken, Kopfrechnen (laut Stoffverteilungsplan: Kurztest)</p>
+</header>
+
+<main>
+<!-- KURZTEST -->
+<section id="lk">
+  <h2>Kurztest Binomische Formeln</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 20 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> keine &nbsp;·&nbsp; <strong>Gesamt:</strong> 16 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag wk">Vorwärts</span>Aufgabe 1 – Ausmultiplizieren <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="lk2-a1">
+    <p>Multipliziere mit einer binomischen Formel aus.</p>
+    <p>a) (x + 6)² <em>(1 P.)</em> &nbsp;&nbsp; b) (y − 9)² <em>(1 P.)</em> &nbsp;&nbsp; c) (a + 8)(a − 8) <em>(1 P.)</em><br>
+    d) (3x + 2)² <em>(1 P.)</em> &nbsp;&nbsp; e) (5a − 4b)² <em>(1 P.)</em> &nbsp;&nbsp; f) (7m + 0,5)(7m − 0,5) <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>x² + 12x + 36</strong><br>
+        b) <strong>y² − 18y + 81</strong><br>
+        c) <strong>a² − 64</strong><br>
+        d) (3x)² + 2 · 3x · 2 + 2² = <strong>9x² + 12x + 4</strong><br>
+        e) (5a)² − 2 · 5a · 4b + (4b)² = <strong>25a² − 40ab + 16b²</strong><br>
+        f) (7m)² − 0,5² = <strong>49m² − 0,25</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rückwärts</span>Aufgabe 2 – Faktorisieren <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="lk2-a2">
+    <p>Schreibe als Produkt.</p>
+    <p>a) x² + 20x + 100 <em>(1 P.)</em> &nbsp;&nbsp; b) 49 − 14y + y² <em>(1 P.)</em><br>
+    c) 36a² − 25 <em>(1 P.)</em> &nbsp;&nbsp; d) 4x² + 12xy + 9y² <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>(x + 10)²</strong> &nbsp;<span class="note">2 · x · 10 = 20x ✓</span><br>
+        b) <strong>(7 − y)²</strong> &nbsp;<span class="note">auch (y − 7)² ist richtig</span><br>
+        c) <strong>(6a + 5)(6a − 5)</strong><br>
+        d) <strong>(2x + 3y)²</strong> &nbsp;<span class="note">2 · 2x · 3y = 12xy ✓</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Lücken</span>Aufgabe 3 – Lücken ergänzen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="lk2-a3">
+    <p>a) (x + <span class="box">?</span>)² = x² + <span class="box">?</span> + 16 <em>(2 P.)</em><br>
+    b) (<span class="box">?</span> − 3)² = 4a² − <span class="box">?</span> + 9 <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 16 = 4², Mittelterm 2 · x · 4 = 8x: (x + 4)² = <strong>x² + 8x + 16</strong><br>
+        b) 4a² = (2a)², Mittelterm 2 · 2a · 3 = 12a: (2a − 3)² = <strong>4a² − 12a + 9</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Kopfrechnen</span>Aufgabe 4 – Geschickt rechnen <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card" data-var="lk2-a4">
+    <p>Rechne ohne Taschenrechner mit einer binomischen Formel. Schreibe den Ansatz auf.</p>
+    <p>a) 59 · 61 <em>(1 P.)</em> &nbsp;&nbsp; b) 101² <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (60 − 1)(60 + 1) = 3600 − 1 = <strong>3599</strong><br>
+        b) (100 + 1)² = 10000 + 200 + 1 = <strong>10201</strong>
+      </div>
+    </details>
+  </div>
+
+<h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>16–15</td><td>14–12</td><td>11–10</td><td>9–7</td><td>6–4</td><td>3–0</td></tr>
+  </table></div>
+  <p class="keynote">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

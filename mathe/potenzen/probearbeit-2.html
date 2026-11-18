@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 2 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Potenzen</a> › <span>Probearbeit 2</span></div>
+  <h1>Probearbeit 2 · Mathematik Klasse 9</h1>
+  <p>Potenzen</p>
+</header>
+
+<main>
+<!-- PROBEARBEIT -->
+<section id="probearbeit">
+  <h2>Probearbeit 2</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner &nbsp;·&nbsp; <strong>Gesamt:</strong> 44 Punkte<br>
+    Laut Stoffverteilungsplan schließt die Einheit mit einem Test am Ende der Einheit ab. Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 1 – Begriffe <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>Gegeben ist die Potenz (−4)<sup>3</sup>.</p>
+    <p>a) Gib die Basis an. <em>(1 P.)</em> &nbsp;&nbsp; b) Gib den Exponenten an. <em>(1 P.)</em> &nbsp;&nbsp; c) Berechne den Potenzwert. <em>(1 P.)</em><br>
+    d) Schreibe 9 · 9 · 9 · 9 · 9 · 9 als Potenz. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Basis <b class="r" data-pot="pa2-1a">−4</b> (wegen der Klammer gehört das Minus dazu) &nbsp;&nbsp; b) Exponent <b class="r" data-pot="pa2-1b">3</b><br>
+        c) (−4) · (−4) · (−4) = <b class="r" data-pot="pa2-1c">−64</b> &nbsp;&nbsp; d) 6 Faktoren 9: <b class="r" data-pot="pa2-1d">9<sup>6</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Berechnen</span>Aufgabe 2 – Potenzwerte <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>a) 3<sup>5</sup> <em>(1 P.)</em> &nbsp;&nbsp; b) (−5)<sup>3</sup> <em>(1 P.)</em> &nbsp;&nbsp; c) −4<sup>2</sup> <em>(1 P.)</em> &nbsp;&nbsp; d) 6<sup>−2</sup> <em>(1 P.)</em> &nbsp;&nbsp; e) (<span class="frac"><span>1</span><span>2</span></span>)<sup>−3</sup> <em>(1 P.)</em> &nbsp;&nbsp; f) −7<sup>0</sup> <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 3 · 3 · 3 · 3 · 3 = <b class="r" data-pot="pa2-2a">243</b> &nbsp;&nbsp; b) (−5) · (−5) · (−5) = <b class="r" data-pot="pa2-2b">−125</b> &nbsp;&nbsp; c) −(4 · 4) = <b class="r" data-pot="pa2-2c">−16</b><br>
+        d) <span class="frac"><span>1</span><span>6<sup>2</sup></span></span> = <b class="r" data-pot="pa2-2d"><span class="frac"><span>1</span><span>36</span></span></b> &nbsp;&nbsp; e) 2<sup>3</sup> = <b class="r" data-pot="pa2-2e">8</b> &nbsp;&nbsp; f) −(7<sup>0</sup>) = −(1) = <b class="r" data-pot="pa2-2f">−1</b> &nbsp;<span class="note">das Minus gehört nicht zur Basis</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Negative Exponenten</span>Aufgabe 3 – Umwandeln <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>a) Schreibe 0,01 als Zehnerpotenz. <em>(1 P.)</em> &nbsp;&nbsp; b) Schreibe <span class="frac"><span>1</span><span>125</span></span> als Potenz mit der Basis 5. <em>(1 P.)</em><br>
+    c) Schreibe 3<sup>−4</sup> als Bruch. <em>(1 P.)</em> &nbsp;&nbsp; d) Schreibe 4 · 10<sup>−2</sup> als Dezimalzahl. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 0,01 = <span class="frac"><span>1</span><span>100</span></span> = <b class="r" data-pot="pa2-3a">10<sup>−2</sup></b> &nbsp;&nbsp; b) 125 = 5<sup>3</sup> → <b class="r" data-pot="pa2-3b">5<sup>−3</sup></b><br>
+        c) <span class="frac"><span>1</span><span>3<sup>4</sup></span></span> = <b class="r" data-pot="pa2-3c"><span class="frac"><span>1</span><span>81</span></span></b> &nbsp;&nbsp; d) 4 · 0,01 = <b class="r" data-pot="pa2-3d">0,04</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Vorsilben</span>Aufgabe 4 – Umrechnen <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Gib in der Grundeinheit in wissenschaftlicher Schreibweise an.</p>
+    <p>a) 3,5 km in m <em>(1 P.)</em> &nbsp;&nbsp; b) 0,2 mm in m <em>(1 P.)</em> &nbsp;&nbsp; c) 7 µm in m <em>(1 P.)</em><br>
+    d) 25 ns (Nanosekunden) in s <em>(1 P.)</em> &nbsp;&nbsp; e) 1,2 MB in Byte <em>(1 P.)</em> &nbsp;&nbsp; f) 450 mg in g <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) kilo = 10<sup>3</sup>: <b class="r" data-pot="pa2-4a">3,5 · 10<sup>3</sup></b> m &nbsp;&nbsp; b) 0,2 · 10<sup>−3</sup> m = <b class="r" data-pot="pa2-4b">2 · 10<sup>−4</sup></b> m &nbsp;&nbsp; c) mikro = 10<sup>−6</sup>: <b class="r" data-pot="pa2-4c">7 · 10<sup>−6</sup></b> m<br>
+        d) 25 · 10<sup>−9</sup> s = <b class="r" data-pot="pa2-4d">2,5 · 10<sup>−8</sup></b> s &nbsp;&nbsp; e) Mega = 10<sup>6</sup>: <b class="r" data-pot="pa2-4e">1,2 · 10<sup>6</sup></b> Byte &nbsp;&nbsp; f) 450 · 10<sup>−3</sup> g = <b class="r" data-pot="pa2-4f">4,5 · 10<sup>−1</sup></b> g
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Potenzgesetze</span>Aufgabe 5 – Vereinfachen <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p>Vereinfache so weit wie möglich. Alle Variablen sind ungleich 0.</p>
+    <p>a) m<sup>6</sup> · m<sup>2</sup> <em>(1 P.)</em> &nbsp;&nbsp; b) k<sup>12</sup> : k<sup>3</sup> <em>(1 P.)</em> &nbsp;&nbsp; c) (x<sup>5</sup>)<sup>2</sup> <em>(1 P.)</em> &nbsp;&nbsp; d) 5<sup>4</sup> · 2<sup>4</sup> <em>(1 P.)</em><br>
+    e) a<sup>−3</sup> · a<sup>7</sup> <em>(1 P.)</em> &nbsp;&nbsp; f) (3b<sup>2</sup>)<sup>2</sup> <em>(1 P.)</em> &nbsp;&nbsp; g) 10<sup>5</sup> · 10<sup>−8</sup> <em>(1 P.)</em> &nbsp;&nbsp; h) (a<sup>2</sup>)<sup>3</sup> · a <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) m<sup>6 + 2</sup> = <b class="r" data-pot="pa2-5a">m<sup>8</sup></b> &nbsp;&nbsp; b) k<sup>12 − 3</sup> = <b class="r" data-pot="pa2-5b">k<sup>9</sup></b> &nbsp;&nbsp; c) x<sup>5 · 2</sup> = <b class="r" data-pot="pa2-5c">x<sup>10</sup></b> &nbsp;&nbsp; d) (5 · 2)<sup>4</sup> = 10<sup>4</sup> = <b class="r" data-pot="pa2-5d">10 000</b><br>
+        e) a<sup>−3 + 7</sup> = <b class="r" data-pot="pa2-5e">a<sup>4</sup></b> &nbsp;&nbsp; f) 3<sup>2</sup> · (b<sup>2</sup>)<sup>2</sup> = <b class="r" data-pot="pa2-5f">9b<sup>4</sup></b><br>
+        g) 10<sup>5 + (−8)</sup> = <b class="r" data-pot="pa2-5g">10<sup>−3</sup></b> &nbsp;&nbsp; h) a<sup>6</sup> · a<sup>1</sup> = <b class="r" data-pot="pa2-5h">a<sup>7</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 6 – Mikrokosmos <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Ein Wassermolekül hat einen Durchmesser von etwa 3 · 10<sup>−10</sup> m. Ein rotes Blutkörperchen hat einen Durchmesser von etwa 7,5 µm.</p>
+    <p>a) Wie viele Wassermoleküle passen nebeneinander auf eine Strecke von 1 mm? Runde auf eine Nachkommastelle in wissenschaftlicher Schreibweise. <em>(3 P.)</em><br>
+    b) Gib den Durchmesser des Blutkörperchens in Metern in wissenschaftlicher Schreibweise an. <em>(1 P.)</em><br>
+    c) Wie viele Blutkörperchen ergeben hintereinandergelegt eine Strecke von 3 cm? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 1 mm = 10<sup>−3</sup> m: &nbsp;<span class="frac"><span>10<sup>−3</sup></span><span>3 · 10<sup>−10</sup></span></span> = 0,333… · 10<sup>7</sup> ≈ <b class="r" data-pot="pa2-6a">3,3 · 10<sup>6</sup></b><br>
+        b) 7,5 µm = <b class="r" data-pot="pa2-6b">7,5 · 10<sup>−6</sup></b> m<br>
+        c) 3 cm = 3 · 10<sup>−2</sup> m: &nbsp;<span class="frac"><span>3 · 10<sup>−2</sup></span><span>7,5 · 10<sup>−6</sup></span></span> = 0,4 · 10<sup>4</sup> = <b class="r" data-pot="pa2-6c">4000</b>
+      </div>
+      <p style="margin:0">Auf 1 mm passen rund 3,3 Millionen Wassermoleküle, auf 3 cm 4000 Blutkörperchen.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 7 – Papier falten <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card">
+    <p>Ein Blatt Papier ist 0,1 mm dick. Bei jedem Falten verdoppelt sich die Dicke des Stapels. (Wir tun so, als könnte man beliebig oft falten.)</p>
+    <p>a) Wie dick ist der Stapel nach 10 Faltungen? <em>(2 P.)</em><br>
+    b) Gib einen Term für die Dicke d (in mm) nach n Faltungen an. <em>(1 P.)</em><br>
+    c) Wie hoch ist der Stapel nach 20 Faltungen in Metern? Runde auf ganze Meter. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) d = 0,1 mm · 2<sup>10</sup> = 0,1 mm · 1024 = <b class="r" data-pot="pa2-7a">102,4</b> mm (gut 10 cm)<br>
+        b) d = <b class="r" data-pot="pa2-7b">0,1 · 2<sup>n</sup></b><br>
+        c) d = 0,1 mm · 2<sup>20</sup> = 0,1 mm · 1 048 576 = 104 857,6 mm = 104,8576 m ≈ <b class="r" data-pot="pa2-7c">105</b> m
+      </div>
+      <p style="margin:0">Nach 20 Faltungen wäre der Stapel etwa 105 m hoch – so hoch wie ein Hochhaus mit gut 30 Stockwerken.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 8 – Reise durchs Sonnensystem <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card">
+    <p>Die Erde ist rund 1,5 · 10<sup>8</sup> km von der Sonne entfernt, der Planet Neptun rund 4,5 · 10<sup>9</sup> km.</p>
+    <p>a) Wievielmal so weit wie die Erde ist Neptun von der Sonne entfernt? <em>(2 P.)</em><br>
+    b) Ein Raumschiff fliegt mit 5 · 10<sup>4</sup> km pro Stunde. Wie viele Stunden bräuchte es für die Strecke Erde–Sonne? <em>(2 P.)</em><br>
+    c) Wie viele Tage sind das? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <span class="frac"><span>4,5 · 10<sup>9</sup></span><span>1,5 · 10<sup>8</sup></span></span> = 3 · 10<sup>1</sup> = <b class="r" data-pot="pa2-8a">30</b><br>
+        b) <span class="frac"><span>1,5 · 10<sup>8</sup></span><span>5 · 10<sup>4</sup></span></span> h = 0,3 · 10<sup>4</sup> h = <b class="r" data-pot="pa2-8b">3000</b> h<br>
+        c) 3000 : 24 = <b class="r" data-pot="pa2-8c">125</b> Tage
+      </div>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>44–41</td><td>40–33</td><td>32–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

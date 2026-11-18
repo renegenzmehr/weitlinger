@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 2 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75;overflow-wrap:anywhere}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+.box{display:inline-block;min-width:2.2em;border-bottom:2px solid var(--muted);text-align:center}
+.keynote{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+svg .cell{stroke:var(--text);stroke-width:1.5}
+svg .c1{fill:var(--accent-soft)} svg .c2{fill:var(--stat-soft)} svg .c3{fill:var(--wk-soft)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Arbeiten mit Variablen</a> › <span>Probearbeit 2</span></div>
+  <h1>Probearbeit 2 · Mathematik Klasse 9</h1>
+  <p>Arbeiten mit Variablen (laut Stoffverteilungsplan: Test am Ende der Einheit)</p>
+</header>
+
+<main>
+<!-- PROBEARBEIT -->
+<section id="probearbeit">
+  <h2>Probearbeit 2</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Formelsammlung &nbsp;·&nbsp; <strong>Gesamt:</strong> 44 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 1 – Gleichwertige Terme? <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="pa2-a1">
+    <p>Gegeben sind die Terme T = (x − 2)² und S = x² − 4.</p>
+    <p>a) Berechne beide Terme für x = 0, x = 3 und x = −1. <em>(2 P.)</em><br>
+    b) Sind T und S gleichwertig? Begründe durch Umformen. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th>x</th><th>0</th><th>3</th><th>−1</th></tr>
+        <tr><th>T = (x − 2)²</th><td>4</td><td>1</td><td>9</td></tr>
+        <tr><th>S = x² − 4</th><td>−4</td><td>5</td><td>−3</td></tr>
+      </table></div>
+      <div class="calc">b) Nein. Schon für x = 0 sind die Werte verschieden. Richtig umgeformt ist T = (x − 2)² = <strong>x² − 4x + 4</strong>.</div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 2 – Klammern auflösen <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="pa2-a2">
+    <p>a) 9m − 4n − (3m − 7n) <em>(1 P.)</em> &nbsp;&nbsp; b) 2(5x − y) + 3(x + 4y) <em>(2 P.)</em><br>
+    c) a(a + 3) − 2(a² − a) <em>(2 P.)</em> &nbsp;&nbsp; d) −3(2 − x) <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 9m − 4n − 3m + 7n = <strong>6m + 3n</strong><br>
+        b) 10x − 2y + 3x + 12y = <strong>13x + 10y</strong><br>
+        c) a² + 3a − 2a² + 2a = <strong>−a² + 5a</strong><br>
+        d) <strong>−6 + 3x</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 3 – Ausklammern <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card" data-var="pa2-a3">
+    <p>a) 18a − 24b <em>(1 P.)</em> &nbsp;&nbsp; b) 10x² − 15x <em>(1 P.)</em> &nbsp;&nbsp; c) −9y − 3 <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>6(3a − 4b)</strong> &nbsp;&nbsp; b) <strong>5x(2x − 3)</strong> &nbsp;&nbsp; c) <strong>−3(3y + 1)</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 4 – Summe mal Summe <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="pa2-a4">
+    <p>a) (y − 3)(y − 7) <em>(2 P.)</em> &nbsp;&nbsp; b) (2x + 5)(4 − x) <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) y² − 7y − 3y + 21 = <strong>y² − 10y + 21</strong><br>
+        b) 8x − 2x² + 20 − 5x = <strong>−2x² + 3x + 20</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Binomisch</span>Aufgabe 5 – Binomische Formeln <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card" data-var="pa2-a5">
+    <p>a) (m + 9)² <em>(1 P.)</em> &nbsp;&nbsp; b) (4x − 3y)² <em>(1 P.)</em> &nbsp;&nbsp; c) (0,5a + 2)(0,5a − 2) <em>(1 P.)</em><br>
+    d) Ergänze: (x − <span class="box">?</span>)² = x² − <span class="box">?</span> + 64 <em>(2 P.)</em><br>
+    e) Faktorisiere: 25x² + 30x + 9 <em>(1 P.)</em> &nbsp;&nbsp; f) Berechne 31² im Kopf. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>m² + 18m + 81</strong><br>
+        b) <strong>16x² − 24xy + 9y²</strong><br>
+        c) <strong>0,25a² − 4</strong><br>
+        d) 64 = 8², Mittelterm 2 · x · 8 = 16x: (x − 8)² = <strong>x² − 16x + 64</strong><br>
+        e) <strong>(5x + 3)²</strong> &nbsp;<span class="note">2 · 5x · 3 = 30x ✓</span><br>
+        f) (30 + 1)² = 900 + 60 + 1 = <strong>961</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Formeln</span>Aufgabe 6 – Formeln umstellen <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="pa2-a6">
+    <p>a) Stelle das ohmsche Gesetz U = R · I nach I um. <em>(1 P.)</em><br>
+    b) Stelle die Trapezformel A = <span class="frac"><span>a + c</span><span>2</span></span> · h nach h um. <em>(2 P.)</em><br>
+    c) Ein trapezförmiges Beet hat A = 21 m², a = 8 m und c = 6 m. Berechne seine Höhe. <em>(1 P.)</em><br>
+    d) Stelle F = 1,8 · C + 32 (Umrechnung °C in °F) nach C um. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>I = <span class="frac"><span>U</span><span>R</span></span></strong><br>
+        b) 2A = (a + c) · h &nbsp;<span class="note">| : (a + c)</span> → <strong>h = <span class="frac"><span>2A</span><span>a + c</span></span></strong><br>
+        c) h = 2 · 21 : (8 + 6) = 42 : 14 = <strong>3 m</strong><br>
+        d) F − 32 = 1,8 · C &nbsp;<span class="note">| : 1,8</span> → <strong>C = <span class="frac"><span>F − 32</span><span>1,8</span></span></strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Begründen</span>Aufgabe 7 – Gerade und ungerade <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="pa2-a7">
+    <p>a) Zeige: Die Summe einer geraden und einer ungeraden Zahl ist ungerade. <em>(2 P.)</em><br>
+    b) Zeige: Die Differenz der Quadrate zweier aufeinanderfolgender Zahlen, (n + 1)² − n², ist immer gleich der Summe der beiden Zahlen. <em>(3 P.)</em><br>
+    c) Prüfe das Ergebnis aus b) für n = 12. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 2m + (2n + 1) = <strong>2(m + n) + 1</strong> → gerade Zahl plus 1, also ungerade ✓<br>
+        b) (n + 1)² − n² = n² + 2n + 1 − n² = <strong>2n + 1</strong> und n + (n + 1) = 2n + 1 ✓<br>
+        c) 13² − 12² = 169 − 144 = 25 und 12 + 13 = 25 ✓
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Anwendung</span>Aufgabe 8 – Aus einem Quadrat wird ein Rechteck <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card" data-var="pa2-a8">
+    <p>Ein Quadrat hat die Seitenlänge a (in cm). Daraus entsteht ein Rechteck: Eine Seite wird um 5 cm verlängert, die andere um 5 cm verkürzt.</p>
+    <p>a) Gib einen Term für die Rechteckfläche an. <em>(1 P.)</em><br>
+    b) Vereinfache den Term und vergleiche mit der Quadratfläche. <em>(2 P.)</em><br>
+    c) Berechne beide Flächen für a = 12 cm. <em>(2 P.)</em><br>
+    d) Für welche Seitenlängen a ist das Rechteck überhaupt möglich? <em>(1 P.)</em><br>
+    e) Vergleiche die Umfänge von Quadrat und Rechteck. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>(a + 5)(a − 5)</strong><br>
+        b) (a + 5)(a − 5) = <strong>a² − 25</strong> → das Rechteck ist immer 25 cm² kleiner als das Quadrat a².<br>
+        c) Quadrat: 12² = <strong>144 cm²</strong>; Rechteck: 17 · 7 = <strong>119 cm²</strong>; 144 − 119 = 25 ✓<br>
+        d) Die kürzere Seite a − 5 muss größer als 0 sein: <strong>a &gt; 5 cm</strong>.<br>
+        e) Quadrat: 4a; Rechteck: 2(a + 5) + 2(a − 5) = <strong>4a</strong> → die Umfänge sind gleich.
+      </div>
+    </details>
+  </div>
+
+<h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>44–41</td><td>40–33</td><td>32–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="keynote">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

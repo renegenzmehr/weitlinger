@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 2 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+sub{font-size:.72em}
+svg .ed{stroke:var(--g1);stroke-width:2;fill:none;stroke-linejoin:round}
+svg .ed.hid{stroke-dasharray:5 4;stroke-width:1.5}
+svg .hi{stroke:var(--g2);stroke-width:2;fill:none}
+svg .hi.dash{stroke-dasharray:6 4}
+svg .fc{fill:var(--accent-soft);stroke:none}
+svg .fc2{fill:var(--warn-soft);stroke:none}
+svg .lbl{font-size:12px}
+svg .lbl.b{font-weight:700}
+svg .lbl.g2{fill:var(--g2)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Körper</a> › <span>Probearbeit 2</span></div>
+  <h1>Probearbeit 2 · Mathematik Klasse 9</h1>
+  <p>Probe-Klassenarbeit zur 2. Klassenarbeit · Schwerpunkt Körper, dazu Lineare Gleichungssysteme und Arbeiten mit Variablen</p>
+</header>
+
+<main>
+<!-- PROBEARBEIT -->
+<section id="probearbeit">
+  <h2>Probearbeit 2</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner (π-Taste), Tafelwerk, Zirkel, Lineal, Geodreieck &nbsp;·&nbsp; <strong>Gesamt:</strong> 44 Punkte<br>
+    Runde Endergebnisse auf zwei Nachkommastellen, wenn nichts anderes steht. Rechne mit ungerundeten Zwischenergebnissen weiter. Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Prisma</span>Aufgabe 1 – Zelt <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="pa2-a1">
+    <p>Ein Zelt hat die Form eines liegenden Dreiecksprismas. Die Vorderseite ist ein gleichschenkliges Dreieck mit der Breite 2,4 m und der Höhe 1,6 m. Das Zelt ist 3 m lang.</p>
+    <p>a) Berechne die Länge einer schrägen Zeltwand (Schenkel des Dreiecks). <em>(1 P.)</em><br>
+    b) Berechne das Volumen des Zeltes. <em>(1 P.)</em><br>
+    c) Wie viel Quadratmeter Stoff braucht man für das ganze Zelt mit Boden? <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Die Höhe teilt die Breite in zweimal 1,2 m: x² = 1,2² + 1,6² = 1,44 + 2,56 = 4 → x = <strong>2 m</strong><br>
+        b) A<sub>G</sub> = ½ · 2,4 m · 1,6 m = 1,92 m²; &nbsp; V = A<sub>G</sub> · l = 1,92 m² · 3 m = <strong>5,76 m³</strong><br>
+        c) A<sub>M</sub> = u · l = (2 + 2 + 2,4) m · 3 m = 19,2 m² <span class="note">(zwei Wände und der Boden)</span><br>
+        A<sub>O</sub> = 2 · A<sub>G</sub> + A<sub>M</sub> = 3,84 m² + 19,2 m² = <strong>23,04 m²</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Pyramide</span>Aufgabe 2 – Rechteckige Pyramide <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-k="pa2-a2">
+    <p>Eine rechteckige Pyramide hat die Grundkanten a = 14 cm und b = 20 cm und die Höhe h = 24 cm.</p>
+    <p>a) Berechne die Höhen h<sub>a</sub> und h<sub>b</sub> der Seitenflächen über a und über b. <em>(2 P.)</em><br>
+    b) Berechne den Oberflächeninhalt. <em>(2 P.)</em><br>
+    c) Berechne das Volumen in cm³ und in Liter. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) über a: h<sub>a</sub>² = h² + (b/2)² = 576 + 100 = 676 → h<sub>a</sub> = <strong>26 cm</strong><br>
+        über b: h<sub>b</sub>² = h² + (a/2)² = 576 + 49 = 625 → h<sub>b</sub> = <strong>25 cm</strong><br>
+        b) A<sub>G</sub> = 14 · 20 = 280 cm²; &nbsp; A<sub>M</sub> = 2 · ½ · 14 · 26 + 2 · ½ · 20 · 25 = 364 + 500 = 864 cm²<br>
+        A<sub>O</sub> = 280 cm² + 864 cm² = <strong>1144 cm²</strong><br>
+        c) V = ⅓ · 280 cm² · 24 cm = <strong>2240 cm³</strong> = <strong>2,24 l</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Kegel</span>Aufgabe 3 – Kegel und sein Netz <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="pa2-a3">
+    <p>Ein Kreiskegel hat den Radius r = 4 cm und die Höhe h = 3 cm.</p>
+    <p>a) Berechne die Mantellinie s. <em>(1 P.)</em><br>
+    b) Berechne den Mittelpunktswinkel α des Kreisausschnitts im Netz und zeichne das Netz. <em>(2 P.)</em><br>
+    c) Berechne den Oberflächeninhalt. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) s² = r² + h² = 16 + 9 = 25 → s = <strong>5 cm</strong><br>
+        b) α = 360° · r : s = 360° · 4 : 5 = <strong>288°</strong>
+      </div>
+      <svg viewBox="0 0 296 466" style="max-width:280px" role="img" aria-label="Netz: Kreisausschnitt mit Radius 5 cm und 288 Grad, Grundkreis mit Radius 4 cm" data-geo="pa2-netz" data-o="147.97,125.08" data-u="24">
+  <polygon class="fc2" points="147.97,125.08 77.44,28 73.43,31.04 69.56,34.24 65.82,37.6 62.23,41.12 58.79,44.78 55.51,48.59 52.39,52.53 49.43,56.59 46.65,60.78 44.05,65.08 41.63,69.48 39.39,73.99 37.35,78.58 35.5,83.25 33.84,88 32.39,92.81 31.14,97.68 30.1,102.59 29.26,107.55 28.63,112.54 28.21,117.55 28,122.57 28,127.59 28.21,132.61 28.63,137.62 29.26,142.61 30.1,147.57 31.14,152.48 32.39,157.35 33.84,162.16 35.5,166.91 37.35,171.58 39.39,176.17 41.63,180.68 44.05,185.08 46.65,189.38 49.43,193.57 52.39,197.63 55.51,201.57 58.79,205.38 62.23,209.04 65.82,212.56 69.56,215.92 73.43,219.12 77.44,222.16 81.56,225.03 85.81,227.72 90.16,230.24 94.61,232.57 99.16,234.71 103.8,236.65 108.51,238.41 113.29,239.96 118.13,241.31 123.02,242.46 127.96,243.4 132.93,244.13 137.93,244.66 142.94,244.97 147.97,245.08 153,244.97 158.01,244.66 163.01,244.13 167.98,243.4 172.92,242.46 177.81,241.31 182.65,239.96 187.43,238.41 192.14,236.65 196.78,234.71 201.33,232.57 205.78,230.24 210.13,227.72 214.38,225.03 218.5,222.16 222.51,219.12 226.38,215.92 230.12,212.56 233.71,209.04 237.15,205.38 240.43,201.57 243.55,197.63 246.51,193.57 249.29,189.38 251.89,185.08 254.31,180.68 256.55,176.17 258.59,171.58 260.44,166.91 262.1,162.16 263.55,157.35 264.8,152.48 265.84,147.57 266.68,142.61 267.31,137.62 267.73,132.61 267.94,127.59 267.94,122.57 267.73,117.55 267.31,112.54 266.68,107.55 265.84,102.59 264.8,97.68 263.55,92.81 262.1,88 260.44,83.25 258.59,78.58 256.55,73.99 254.31,69.48 251.89,65.08 249.29,60.78 246.51,56.59 243.55,52.53 240.43,48.59 237.15,44.78 233.71,41.12 230.12,37.6 226.38,34.24 222.51,31.04 218.5,28"/>
+  <line class="ed" data-e="R1" x1="147.97" y1="125.08" x2="77.44" y2="28"/>
+  <line class="ed" data-e="R2" x1="147.97" y1="125.08" x2="218.5" y2="28"/>
+  <polyline class="ed" data-e="arc" points="77.44,28 73.43,31.04 69.56,34.24 65.82,37.6 62.23,41.12 58.79,44.78 55.51,48.59 52.39,52.53 49.43,56.59 46.65,60.78 44.05,65.08 41.63,69.48 39.39,73.99 37.35,78.58 35.5,83.25 33.84,88 32.39,92.81 31.14,97.68 30.1,102.59 29.26,107.55 28.63,112.54 28.21,117.55 28,122.57 28,127.59 28.21,132.61 28.63,137.62 29.26,142.61 30.1,147.57 31.14,152.48 32.39,157.35 33.84,162.16 35.5,166.91 37.35,171.58 39.39,176.17 41.63,180.68 44.05,185.08 46.65,189.38 49.43,193.57 52.39,197.63 55.51,201.57 58.79,205.38 62.23,209.04 65.82,212.56 69.56,215.92 73.43,219.12 77.44,222.16 81.56,225.03 85.81,227.72 90.16,230.24 94.61,232.57 99.16,234.71 103.8,236.65 108.51,238.41 113.29,239.96 118.13,241.31 123.02,242.46 127.96,243.4 132.93,244.13 137.93,244.66 142.94,244.97 147.97,245.08 153,244.97 158.01,244.66 163.01,244.13 167.98,243.4 172.92,242.46 177.81,241.31 182.65,239.96 187.43,238.41 192.14,236.65 196.78,234.71 201.33,232.57 205.78,230.24 210.13,227.72 214.38,225.03 218.5,222.16 222.51,219.12 226.38,215.92 230.12,212.56 233.71,209.04 237.15,205.38 240.43,201.57 243.55,197.63 246.51,193.57 249.29,189.38 251.89,185.08 254.31,180.68 256.55,176.17 258.59,171.58 260.44,166.91 262.1,162.16 263.55,157.35 264.8,152.48 265.84,147.57 266.68,142.61 267.31,137.62 267.73,132.61 267.94,127.59 267.94,122.57 267.73,117.55 267.31,112.54 266.68,107.55 265.84,102.59 264.8,97.68 263.55,92.81 262.1,88 260.44,83.25 258.59,78.58 256.55,73.99 254.31,69.48 251.89,65.08 249.29,60.78 246.51,56.59 243.55,52.53 240.43,48.59 237.15,44.78 233.71,41.12 230.12,37.6 226.38,34.24 222.51,31.04 218.5,28"/>
+  <polyline class="ed" data-e="kreis" points="243.97,341.08 243.76,334.8 243.15,328.55 242.13,322.35 240.7,316.23 238.88,310.22 236.66,304.34 234.07,298.62 231.11,293.08 227.79,287.75 224.13,282.64 220.15,277.78 215.85,273.2 211.27,268.9 206.41,264.92 201.3,261.26 195.97,257.94 190.43,254.98 184.71,252.39 178.83,250.17 172.82,248.35 166.7,246.92 160.5,245.9 154.25,245.29 147.97,245.08 141.69,245.29 135.44,245.9 129.24,246.92 123.12,248.35 117.11,250.17 111.23,252.39 105.51,254.98 99.97,257.94 94.64,261.26 89.53,264.92 84.67,268.9 80.09,273.2 75.79,277.78 71.81,282.64 68.15,287.75 64.83,293.08 61.87,298.62 59.28,304.34 57.06,310.22 55.24,316.23 53.81,322.35 52.79,328.55 52.18,334.8 51.97,341.08 52.18,347.36 52.79,353.61 53.81,359.81 55.24,365.93 57.06,371.94 59.28,377.82 61.87,383.54 64.83,389.08 68.15,394.41 71.81,399.52 75.79,404.38 80.09,408.96 84.67,413.26 89.53,417.24 94.64,420.9 99.97,424.22 105.51,427.18 111.23,429.77 117.11,431.99 123.12,433.81 129.24,435.24 135.44,436.26 141.69,436.87 147.97,437.08 154.25,436.87 160.5,436.26 166.7,435.24 172.82,433.81 178.83,431.99 184.71,429.77 190.43,427.18 195.97,424.22 201.3,420.9 206.41,417.24 211.27,413.26 215.85,408.96 220.15,404.38 224.13,399.52 227.79,394.41 231.11,389.08 234.07,383.54 236.66,377.82 238.88,371.94 240.7,365.93 242.13,359.81 243.15,353.61 243.76,347.36 243.97,341.08"/>
+  <polyline class="hi" points="135.27,107.61 133.18,109.33 131.33,111.31 129.73,113.51 128.43,115.88 127.43,118.41 126.75,121.03 126.41,123.72 126.41,126.44 126.75,129.13 127.43,131.75 128.43,134.28 129.73,136.65 131.33,138.85 133.18,140.83 135.27,142.55 137.56,144.01 140.02,145.16 142.6,146 145.26,146.51 147.97,146.68 150.68,146.51 153.34,146 155.92,145.16 158.38,144.01 160.67,142.55 162.76,140.83 164.61,138.85 166.21,136.65 167.51,134.28 168.51,131.75 169.19,129.13 169.53,126.44 169.53,123.72 169.19,121.03 168.51,118.41 167.51,115.88 166.21,113.51 164.61,111.31 162.76,109.33 160.67,107.61"/>
+  <line class="hi dash" data-e="rr" x1="147.97" y1="341.08" x2="243.97" y2="341.08"/>
+  <text class="lbl g2 b" x="121.97" y="162.68">α = 288°</text>
+  <text class="lbl " x="189.24" y="80.54">s = 5 cm</text>
+  <text class="lbl " x="175.97" y="335.08">r = 4 cm</text>
+</svg>
+      <div class="calc">
+        c) A<sub>O</sub> = π · r² + π · r · s = 16π cm² + 20π cm² = 36π cm² ≈ <strong>113,10 cm²</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Kugel</span>Aufgabe 4 – Kugel im Würfel <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="pa2-a4">
+    <p>Eine Kugel passt genau in eine würfelförmige Schachtel mit der Kantenlänge 10 cm.</p>
+    <p>a) Berechne das Volumen der Kugel. <em>(2 P.)</em><br>
+    b) Wie viel Prozent der Schachtel füllt die Kugel aus? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Der Kugeldurchmesser ist die Kantenlänge: r = 5 cm.<br>
+        V<sub>Kugel</sub> = <span class="frac"><span>4</span><span>3</span></span> · π · (5 cm)³ ≈ <strong>523,60 cm³</strong><br>
+        b) V<sub>Würfel</sub> = 1000 cm³; &nbsp; 523,60 : 1000 ≈ 0,5236 → <strong>52,36 %</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Abzug</span>Aufgabe 5 – Holzzylinder mit Vertiefung <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="pa2-a5">
+    <p>Aus einem Holzzylinder (r = 5 cm, h = 12 cm) wird oben eine kegelförmige Vertiefung herausgefräst. Der Kegel hat denselben Radius 5 cm und ist 6 cm tief. Berechne das Volumen des Werkstücks.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        V<sub>Zylinder</sub> = π · 5² · 12 = 300π cm³ ≈ 942,48 cm³<br>
+        V<sub>Kegel</sub> = ⅓ · π · 5² · 6 = 50π cm³ ≈ 157,08 cm³<br>
+        V = 300π cm³ − 50π cm³ = 250π cm³ ≈ <strong>785,40 cm³</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Fehler</span>Aufgabe 6 – Fehler finden <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card" data-k="pa2-a6">
+    <p>Finde jeweils den Fehler und gib das richtige Ergebnis an.</p>
+    <p>a) Lea: „Pyramide mit A<sub>G</sub> = 36 cm² und h = 5 cm: V = 36 · 5 = 180 cm³.“ <em>(1 P.)</em><br>
+    b) Ben: „Kugel mit d = 10 cm: V = <span class="frac"><span>4</span><span>3</span></span> · π · 10³ ≈ 4188,79 cm³.“ <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Der Faktor ⅓ fehlt: V = ⅓ · 36 cm² · 5 cm = <strong>60 cm³</strong><br>
+        b) Ben rechnet mit dem Durchmesser statt mit r = 5 cm: V = <span class="frac"><span>4</span><span>3</span></span> · π · 5³ ≈ <strong>523,60 cm³</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">LGS</span>Aufgabe 7 – Einsetzungsverfahren <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="pa2-a7">
+    <p>Löse das Gleichungssystem und mache die Probe.</p>
+    <div class="sys"><span class="g1">(I)</span><span>y = 2x − 3</span><span class="g2">(II)</span><span>3x + 2y = 22</span></div>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        (I) in (II): 3x + 2 · (2x − 3) = 22 → 3x + 4x − 6 = 22 → 7x = 28 → x = 4<br>
+        in (I): y = 2 · 4 − 3 = 5<br>
+        Probe (II): 3 · 4 + 2 · 5 = 12 + 10 = 22 ✓ → <strong>L = {(4; 5)}</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">LGS</span>Aufgabe 8 – Kerzen gießen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="pa2-a8">
+    <p>Für ein Schulfest werden Kerzen gegossen. 4 Zylinderkerzen und 3 Kegelkerzen brauchen zusammen 1200 g Wachs, 2 Zylinderkerzen und 5 Kegelkerzen brauchen 950 g.</p>
+    <p>a) Stelle ein Gleichungssystem auf. <em>(2 P.)</em><br>
+    b) Berechne, wie viel Wachs eine Kerze jeder Sorte braucht. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) z = Wachs für eine Zylinderkerze in g, k = Wachs für eine Kegelkerze in g<br>
+        (I) 4z + 3k = 1200 &nbsp;&nbsp; (II) 2z + 5k = 950<br>
+        b) (II) · (−2): −4z − 10k = −1900; &nbsp; addieren mit (I): −7k = −700 → k = 100<br>
+        in (II): 2z + 500 = 950 → 2z = 450 → z = 225<br>
+        Probe (I): 4 · 225 + 3 · 100 = 900 + 300 = 1200 ✓
+      </div>
+      <p style="margin:0">Eine Zylinderkerze braucht 225 g Wachs, eine Kegelkerze 100 g.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Variablen</span>Aufgabe 9 – Terme umformen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-k="pa2-a9a pa2-a9b pa2-a9c pa2-a9d">
+    <p>a) Vereinfache: 4x − 2(3x − 5) <em>(1 P.)</em><br>
+    b) Multipliziere aus: (2x + 3)(x − 4) <em>(2 P.)</em><br>
+    c) Klammere aus: 12a² − 18a <em>(1 P.)</em><br>
+    d) Schreibe als Quadrat: x² − 14x + 49 <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 4x − 6x + 10 = <strong>−2x + 10</strong> <span class="note">(Minus vor der Klammer dreht beide Vorzeichen)</span><br>
+        b) 2x² − 8x + 3x − 12 = <strong>2x² − 5x − 12</strong><br>
+        c) <strong>6a(2a − 3)</strong><br>
+        d) <strong>(x − 7)²</strong> <span class="note">(2. binomische Formel rückwärts: 2 · x · 7 = 14x)</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Variablen</span>Aufgabe 10 – Formeln umstellen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-k="pa2-a10a pa2-a10b">
+    <p>a) Stelle A<sub>M</sub> = 2 · π · r · h nach h um. <em>(2 P.)</em><br>
+    b) Für die quadratische Pyramide gilt A<sub>O</sub> = a² + 2 · a · h<sub>s</sub>. Stelle nach h<sub>s</sub> um und berechne h<sub>s</sub> für A<sub>O</sub> = 360 cm² und a = 10 cm. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) A<sub>M</sub> = 2πr · h &nbsp;<span class="note">| : (2πr)</span> → <strong>h = A<sub>M</sub> : (2πr)</strong><br>
+        b) A<sub>O</sub> − a² = 2a · h<sub>s</sub> &nbsp;<span class="note">| : (2a)</span> → <strong>h<sub>s</sub> = (A<sub>O</sub> − a²) : (2a)</strong><br>
+        h<sub>s</sub> = (360 − 100) : 20 = <strong>13 cm</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>44–41</td><td>40–33</td><td>32–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

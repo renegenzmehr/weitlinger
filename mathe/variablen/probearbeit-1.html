@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 1 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75;overflow-wrap:anywhere}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+.box{display:inline-block;min-width:2.2em;border-bottom:2px solid var(--muted);text-align:center}
+.keynote{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+svg .cell{stroke:var(--text);stroke-width:1.5}
+svg .c1{fill:var(--accent-soft)} svg .c2{fill:var(--stat-soft)} svg .c3{fill:var(--wk-soft)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Arbeiten mit Variablen</a> › <span>Probearbeit 1</span></div>
+  <h1>Probearbeit 1 · Mathematik Klasse 9</h1>
+  <p>Arbeiten mit Variablen (laut Stoffverteilungsplan: Test am Ende der Einheit)</p>
+</header>
+
+<main>
+<!-- PROBEARBEIT -->
+<section id="probearbeit">
+  <h2>Probearbeit 1</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Formelsammlung &nbsp;·&nbsp; <strong>Gesamt:</strong> 44 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 1 – Termwert und Zusammenfassen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="pa1-a1">
+    <p>a) Berechne den Wert des Terms 2x² − 3x + 1 für x = −3. <em>(1 P.)</em><br>
+    b) Fasse zusammen: 6ab − 2a + 3ab + 7a <em>(1 P.)</em><br>
+    c) Vereinfache: 3x · 4y · 2 <em>(1 P.)</em><br>
+    d) Fasse zusammen: x² + 5x − 3x² − 2x <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 2 · (−3)² − 3 · (−3) + 1 = 2 · 9 + 9 + 1 = <strong>28</strong><br>
+        b) <strong>9ab + 5a</strong><br>
+        c) 3 · 4 · 2 · x · y = <strong>24xy</strong><br>
+        d) <strong>−2x² + 3x</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 2 – Klammern auflösen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-var="pa1-a2">
+    <p>Löse die Klammern auf und fasse zusammen.</p>
+    <p>a) 7(4a − 3) <em>(1 P.)</em> &nbsp;&nbsp; b) −2x(3x − 5) <em>(1 P.)</em> &nbsp;&nbsp; c) 20 − (8 − 3y) <em>(1 P.)</em><br>
+    d) 3(2x − 1) − 4(x − 5) <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>28a − 21</strong><br>
+        b) <strong>−6x² + 10x</strong> &nbsp;<span class="note">−2x · (−5) = +10x</span><br>
+        c) 20 − 8 + 3y = <strong>12 + 3y</strong><br>
+        d) 6x − 3 − 4x + 20 = <strong>2x + 17</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 3 – Ausklammern <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card" data-var="pa1-a3">
+    <p>a) 14x − 35 <em>(1 P.)</em> &nbsp;&nbsp; b) 6a² + 9a <em>(1 P.)</em> &nbsp;&nbsp; c) 12xy − 8y <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>7(2x − 5)</strong> &nbsp;&nbsp; b) <strong>3a(2a + 3)</strong> &nbsp;&nbsp; c) <strong>4y(3x − 2)</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 4 – Summe mal Summe <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="pa1-a4">
+    <p>a) (x + 5)(x − 2) <em>(2 P.)</em> &nbsp;&nbsp; b) (3a − 1)(2a + 4) <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) x² − 2x + 5x − 10 = <strong>x² + 3x − 10</strong><br>
+        b) 6a² + 12a − 2a − 4 = <strong>6a² + 10a − 4</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Binomisch</span>Aufgabe 5 – Binomische Formeln <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="pa1-a5">
+    <p>a) (x + 4)² <em>(1 P.)</em> &nbsp;&nbsp; b) (2y − 5)² <em>(1 P.)</em> &nbsp;&nbsp; c) (a + 6)(a − 6) <em>(1 P.)</em><br>
+    d) Faktorisiere: x² − 10x + 25 <em>(1 P.)</em> &nbsp;&nbsp; e) Faktorisiere: 81 − z² <em>(1 P.)</em><br>
+    f) Berechne 48 · 52 im Kopf mit einer binomischen Formel. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>x² + 8x + 16</strong><br>
+        b) <strong>4y² − 20y + 25</strong><br>
+        c) <strong>a² − 36</strong><br>
+        d) <strong>(x − 5)²</strong><br>
+        e) <strong>(9 + z)(9 − z)</strong><br>
+        f) (50 − 2)(50 + 2) = 2500 − 4 = <strong>2496</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Formeln</span>Aufgabe 6 – Formeln umstellen <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="pa1-a6">
+    <p>a) Stelle die Umfangsformel des Rechtecks u = 2 · (a + b) nach b um. <em>(2 P.)</em><br>
+    b) Ein Rechteck hat den Umfang 46 cm und ist 15 cm lang. Wie breit ist es? <em>(1 P.)</em><br>
+    c) Stelle die Volumenformel des Kegels V = <span class="frac"><span>1</span><span>3</span></span> · π · r² · h nach h um. <em>(2 P.)</em><br>
+    d) Stelle v = <span class="frac"><span>s</span><span>t</span></span> nach t um und berechne, wie lange eine Radfahrerin für 36 km bei 12 km/h braucht. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) u = 2 · (a + b) &nbsp;<span class="note">| : 2</span> → <span class="frac"><span>u</span><span>2</span></span> = a + b &nbsp;<span class="note">| − a</span> → <strong>b = <span class="frac"><span>u</span><span>2</span></span> − a</strong><br>
+        b) b = 46 : 2 − 15 = 23 − 15 = <strong>8 cm</strong><br>
+        c) 3V = π · r² · h &nbsp;<span class="note">| : (π · r²)</span> → <strong>h = <span class="frac"><span>3V</span><span>π · r²</span></span></strong><br>
+        d) <strong>t = <span class="frac"><span>s</span><span>v</span></span></strong> = 36 : 12 = <strong>3 h</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Begründen</span>Aufgabe 7 – Fünf Nachbarzahlen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-var="pa1-a7">
+    <p>Behauptung: Die Summe von fünf aufeinanderfolgenden natürlichen Zahlen ist immer durch 5 teilbar.</p>
+    <p>a) Prüfe die Behauptung an zwei Beispielen. <em>(1 P.)</em><br>
+    b) Begründe die Behauptung allgemein. <em>(3 P.)</em><br>
+    c) Welche der fünf Zahlen erhält man, wenn man die Summe durch 5 teilt? <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) z. B. 1 + 2 + 3 + 4 + 5 = 15 = 5 · 3 ✓ &nbsp; 8 + 9 + 10 + 11 + 12 = 50 = 5 · 10 ✓<br>
+        b) n + (n + 1) + (n + 2) + (n + 3) + (n + 4) = 5n + 10 = <strong>5(n + 2)</strong> → ein Vielfaches von 5 ✓<br>
+        c) Summe : 5 = n + 2, also die <strong>mittlere Zahl</strong>.
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Anwendung</span>Aufgabe 8 – Weg um ein Beet <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-var="pa1-a8">
+    <p>Ein quadratisches Beet mit der Seitenlänge x (in m) wird ringsum von einem 1 m breiten Weg umgeben.</p>
+    <p>a) Gib einen Term für die Fläche von Beet und Weg zusammen an. <em>(1 P.)</em><br>
+    b) Zeige, dass der Weg die Fläche 4x + 4 hat. <em>(3 P.)</em><br>
+    c) Berechne die Wegfläche für x = 6 m und kontrolliere mit der Differenz der beiden Quadratflächen. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Die Seitenlänge wächst auf beiden Seiten um 1 m: <strong>(x + 2)²</strong><br>
+        b) (x + 2)² − x² = x² + 4x + 4 − x² = <strong>4x + 4</strong> ✓<br>
+        c) 4 · 6 + 4 = <strong>28 m²</strong>; Kontrolle: 8² − 6² = 64 − 36 = 28 ✓
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Fehler</span>Aufgabe 9 – Fehlersuche <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-var="pa1-a9">
+    <p>Tim hat fünf Umformungen falsch gemacht. Finde jeweils den Fehler und schreibe die richtige Lösung auf.</p>
+    <p>a) (x + 3)² = x² + 9 <em>(1 P.)</em> &nbsp;&nbsp; b) −(2a − 5) = −2a − 5 <em>(1 P.)</em> &nbsp;&nbsp; c) 4x · 3x = 12x <em>(1 P.)</em><br>
+    d) (2y)² = 2y² <em>(1 P.)</em> &nbsp;&nbsp; e) 6x + 6 = 6 · x <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Mittelterm fehlt: <strong>x² + 6x + 9</strong><br>
+        b) Vorzeichen in der Minusklammer nicht umgedreht: <strong>−2a + 5</strong><br>
+        c) x · x = x²: <strong>12x²</strong><br>
+        d) Der Faktor 2 muss mit quadriert werden: <strong>4y²</strong><br>
+        e) Beim Ausklammern fehlt die 1 in der Klammer: <strong>6(x + 1)</strong>
+      </div>
+    </details>
+  </div>
+
+<h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>44–41</td><td>40–33</td><td>32–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="keynote">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

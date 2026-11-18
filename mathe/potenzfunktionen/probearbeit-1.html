@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 1 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621; --g3:#2f855a; --g4:#805ad5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a; --g3:#68c08f; --g4:#b794f4;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a; --g3:#68c08f; --g4:#b794f4;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+.c1t{color:var(--g1);font-weight:700} .c2t{color:var(--g2);font-weight:700} .c3t{color:var(--g3);font-weight:700} .c4t{color:var(--g4);font-weight:700}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg path.c1,svg path.c2,svg path.c3,svg path.c4,svg path.c5,svg path.c6{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+svg path.c1{stroke:var(--g1)} svg path.c2{stroke:var(--g2)} svg path.c3{stroke:var(--g3)} svg path.c4{stroke:var(--g4)} svg path.c5{stroke:var(--wk)} svg path.c6{stroke:var(--warn)}
+svg .pt{fill:var(--text)}
+svg .lbl{font-size:13px;font-weight:700}
+.hl{background:var(--warn-soft);border-radius:4px;padding:0 3px;font-weight:700}
+table.vt td:first-child,table.vt th:first-child{white-space:nowrap}
+table.sheet{width:auto;font-size:.92rem}
+table.sheet th{background:var(--line);font-weight:600;min-width:2.2em}
+table.sheet td{text-align:right;font-family:Consolas,"Courier New",monospace;min-width:5.5em}
+.svgcap{text-align:center;font-weight:700;margin:4px 0 0}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Potenzfunktionen</a> › <span>Probearbeit 1</span></div>
+  <h1>Probearbeit 1 · Mathematik Klasse 9</h1>
+  <p>Potenzfunktionen</p>
+</header>
+
+<main>
+<!-- PROBEARBEIT -->
+<section id="probearbeit">
+  <h2>Probearbeit 1</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, kariertes Papier &nbsp;·&nbsp; <strong>Gesamt:</strong> 44 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Eigenschaften</span>Aufgabe 1 – Steckbrief <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Gib für y = x⁵ und y = x⁻² jeweils den Definitionsbereich, den Wertebereich und die Symmetrie an. &nbsp;(je Angabe 1 P.)</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th></th><th>y = x⁵</th><th>y = x⁻²</th></tr>
+        <tr><th>Definitionsbereich</th><td>alle reellen Zahlen (x ∈ ℝ)</td><td>alle reellen Zahlen außer 0 (x ≠ 0)</td></tr>
+        <tr><th>Wertebereich</th><td>alle reellen Zahlen (y ∈ ℝ)</td><td>y &gt; 0</td></tr>
+        <tr><th>Symmetrie</th><td>punktsymmetrisch zum Ursprung (n ungerade)</td><td>achsensymmetrisch zur y-Achse (n gerade)</td></tr>
+      </table></div>
+      <p style="margin:0">y = x⁻² = <span class="frac"><span>1</span><span>x²</span></span>: Der Nenner x² ist für x ≠ 0 immer positiv, deshalb ist auch y immer positiv – aber nie 0.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Graphen</span>Aufgabe 2 – Graphen zuordnen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-pf="pa1-a2">
+    <p>Ordne zu: &nbsp;<strong>y = x³</strong> &nbsp;·&nbsp; <strong>y = 0,5x²</strong> &nbsp;·&nbsp; <strong>y = −x²</strong> &nbsp;·&nbsp; <strong>y = 2x²</strong> &nbsp;(je richtige Zuordnung 1 P.)</p>
+    <div class="grid2">
+      <div><p class="svgcap">Graph A</p><svg viewBox="0 0 204 282" style="max-width:255px" role="img" aria-label="Graph A" data-svg="pa1-gA" data-o="102,154" data-u="26,26" data-view="-3,3,-4,5">
+  <g><line class="grid" x1="24" y1="258" x2="24" y2="24"/><line class="grid" x1="50" y1="258" x2="50" y2="24"/><line class="grid" x1="76" y1="258" x2="76" y2="24"/><line class="grid" x1="102" y1="258" x2="102" y2="24"/><line class="grid" x1="128" y1="258" x2="128" y2="24"/><line class="grid" x1="154" y1="258" x2="154" y2="24"/><line class="grid" x1="180" y1="258" x2="180" y2="24"/><line class="grid" x1="24" y1="258" x2="180" y2="258"/><line class="grid" x1="24" y1="232" x2="180" y2="232"/><line class="grid" x1="24" y1="206" x2="180" y2="206"/><line class="grid" x1="24" y1="180" x2="180" y2="180"/><line class="grid" x1="24" y1="154" x2="180" y2="154"/><line class="grid" x1="24" y1="128" x2="180" y2="128"/><line class="grid" x1="24" y1="102" x2="180" y2="102"/><line class="grid" x1="24" y1="76" x2="180" y2="76"/><line class="grid" x1="24" y1="50" x2="180" y2="50"/><line class="grid" x1="24" y1="24" x2="180" y2="24"/></g>
+  <line class="ax" x1="24" y1="154" x2="190" y2="154"/><line class="ax" x1="102" y1="258" x2="102" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="168">−3</text><text x="50" y="168">−2</text><text x="76" y="168">−1</text><text x="128" y="168">1</text><text x="154" y="168">2</text><text x="180" y="168">3</text></g>
+  <g font-size="11" text-anchor="end"><text x="97" y="262">−4</text><text x="97" y="236">−3</text><text x="97" y="210">−2</text><text x="97" y="184">−1</text><text x="97" y="132">1</text><text x="97" y="106">2</text><text x="97" y="80">3</text><text x="97" y="54">4</text><text x="97" y="28">5</text><text x="97" y="168">0</text></g>
+  <text x="186" y="148" font-size="13" font-style="italic">x</text><text x="108" y="22" font-size="13" font-style="italic">y</text>
+  <path class="c1" d="M24 37 L36.27 70.92 L47.61 97.11 L58.01 116.78 L67.52 131.14 L76.36 141.36 L84.53 148.13 L92.07 152.1 L99.24 153.85 L106.32 153.64 L113.6 151.41 L121.24 146.88 L129.51 139.45 L138.45 128.45 L148.23 112.9 L158.84 91.88 L170.38 64.08 L180 37"/>
+</svg></div>
+      <div><p class="svgcap">Graph B</p><svg viewBox="0 0 204 282" style="max-width:255px" role="img" aria-label="Graph B" data-svg="pa1-gB" data-o="102,154" data-u="26,26" data-view="-3,3,-4,5">
+  <g><line class="grid" x1="24" y1="258" x2="24" y2="24"/><line class="grid" x1="50" y1="258" x2="50" y2="24"/><line class="grid" x1="76" y1="258" x2="76" y2="24"/><line class="grid" x1="102" y1="258" x2="102" y2="24"/><line class="grid" x1="128" y1="258" x2="128" y2="24"/><line class="grid" x1="154" y1="258" x2="154" y2="24"/><line class="grid" x1="180" y1="258" x2="180" y2="24"/><line class="grid" x1="24" y1="258" x2="180" y2="258"/><line class="grid" x1="24" y1="232" x2="180" y2="232"/><line class="grid" x1="24" y1="206" x2="180" y2="206"/><line class="grid" x1="24" y1="180" x2="180" y2="180"/><line class="grid" x1="24" y1="154" x2="180" y2="154"/><line class="grid" x1="24" y1="128" x2="180" y2="128"/><line class="grid" x1="24" y1="102" x2="180" y2="102"/><line class="grid" x1="24" y1="76" x2="180" y2="76"/><line class="grid" x1="24" y1="50" x2="180" y2="50"/><line class="grid" x1="24" y1="24" x2="180" y2="24"/></g>
+  <line class="ax" x1="24" y1="154" x2="190" y2="154"/><line class="ax" x1="102" y1="258" x2="102" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="168">−3</text><text x="50" y="168">−2</text><text x="76" y="168">−1</text><text x="128" y="168">1</text><text x="154" y="168">2</text><text x="180" y="168">3</text></g>
+  <g font-size="11" text-anchor="end"><text x="97" y="262">−4</text><text x="97" y="236">−3</text><text x="97" y="210">−2</text><text x="97" y="184">−1</text><text x="97" y="132">1</text><text x="97" y="106">2</text><text x="97" y="80">3</text><text x="97" y="54">4</text><text x="97" y="28">5</text><text x="97" y="168">0</text></g>
+  <text x="186" y="148" font-size="13" font-style="italic">x</text><text x="108" y="22" font-size="13" font-style="italic">y</text>
+  <path class="c1" d="M50 258 L59.72 222.74 L68.56 197 L76.52 178.97 L83.59 167.03 L89.88 159.65 L95.45 155.65 L100.54 154.08 L105.59 154.5 L110.89 157.04 L116.77 162.39 L123.32 171.48 L130.76 185.8 L139.13 207.02 L148.44 236.93 L154 258"/>
+</svg></div>
+      <div><p class="svgcap">Graph C</p><svg viewBox="0 0 204 282" style="max-width:255px" role="img" aria-label="Graph C" data-svg="pa1-gC" data-o="102,154" data-u="26,26" data-view="-3,3,-4,5">
+  <g><line class="grid" x1="24" y1="258" x2="24" y2="24"/><line class="grid" x1="50" y1="258" x2="50" y2="24"/><line class="grid" x1="76" y1="258" x2="76" y2="24"/><line class="grid" x1="102" y1="258" x2="102" y2="24"/><line class="grid" x1="128" y1="258" x2="128" y2="24"/><line class="grid" x1="154" y1="258" x2="154" y2="24"/><line class="grid" x1="180" y1="258" x2="180" y2="24"/><line class="grid" x1="24" y1="258" x2="180" y2="258"/><line class="grid" x1="24" y1="232" x2="180" y2="232"/><line class="grid" x1="24" y1="206" x2="180" y2="206"/><line class="grid" x1="24" y1="180" x2="180" y2="180"/><line class="grid" x1="24" y1="154" x2="180" y2="154"/><line class="grid" x1="24" y1="128" x2="180" y2="128"/><line class="grid" x1="24" y1="102" x2="180" y2="102"/><line class="grid" x1="24" y1="76" x2="180" y2="76"/><line class="grid" x1="24" y1="50" x2="180" y2="50"/><line class="grid" x1="24" y1="24" x2="180" y2="24"/></g>
+  <line class="ax" x1="24" y1="154" x2="190" y2="154"/><line class="ax" x1="102" y1="258" x2="102" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="168">−3</text><text x="50" y="168">−2</text><text x="76" y="168">−1</text><text x="128" y="168">1</text><text x="154" y="168">2</text><text x="180" y="168">3</text></g>
+  <g font-size="11" text-anchor="end"><text x="97" y="262">−4</text><text x="97" y="236">−3</text><text x="97" y="210">−2</text><text x="97" y="184">−1</text><text x="97" y="132">1</text><text x="97" y="106">2</text><text x="97" y="80">3</text><text x="97" y="54">4</text><text x="97" y="28">5</text><text x="97" y="168">0</text></g>
+  <text x="186" y="148" font-size="13" font-style="italic">x</text><text x="108" y="22" font-size="13" font-style="italic">y</text>
+  <path class="c1" d="M60.89 24 L67.68 63.4 L75.48 99.9 L82.34 124.28 L88.27 139.5 L93.26 148.13 L97.53 152.46 L101.22 153.95 L104.76 153.42 L108.71 150.54 L113.39 144.02 L118.9 132.03 L125.35 112.07 L132.73 81.35 L140.12 42.24 L143.11 24"/>
+</svg></div>
+      <div><p class="svgcap">Graph D</p><svg viewBox="0 0 204 282" style="max-width:255px" role="img" aria-label="Graph D" data-svg="pa1-gD" data-o="102,154" data-u="26,26" data-view="-3,3,-4,5">
+  <g><line class="grid" x1="24" y1="258" x2="24" y2="24"/><line class="grid" x1="50" y1="258" x2="50" y2="24"/><line class="grid" x1="76" y1="258" x2="76" y2="24"/><line class="grid" x1="102" y1="258" x2="102" y2="24"/><line class="grid" x1="128" y1="258" x2="128" y2="24"/><line class="grid" x1="154" y1="258" x2="154" y2="24"/><line class="grid" x1="180" y1="258" x2="180" y2="24"/><line class="grid" x1="24" y1="258" x2="180" y2="258"/><line class="grid" x1="24" y1="232" x2="180" y2="232"/><line class="grid" x1="24" y1="206" x2="180" y2="206"/><line class="grid" x1="24" y1="180" x2="180" y2="180"/><line class="grid" x1="24" y1="154" x2="180" y2="154"/><line class="grid" x1="24" y1="128" x2="180" y2="128"/><line class="grid" x1="24" y1="102" x2="180" y2="102"/><line class="grid" x1="24" y1="76" x2="180" y2="76"/><line class="grid" x1="24" y1="50" x2="180" y2="50"/><line class="grid" x1="24" y1="24" x2="180" y2="24"/></g>
+  <line class="ax" x1="24" y1="154" x2="190" y2="154"/><line class="ax" x1="102" y1="258" x2="102" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="168">−3</text><text x="50" y="168">−2</text><text x="76" y="168">−1</text><text x="128" y="168">1</text><text x="154" y="168">2</text><text x="180" y="168">3</text></g>
+  <g font-size="11" text-anchor="end"><text x="97" y="262">−4</text><text x="97" y="236">−3</text><text x="97" y="210">−2</text><text x="97" y="184">−1</text><text x="97" y="132">1</text><text x="97" y="106">2</text><text x="97" y="80">3</text><text x="97" y="54">4</text><text x="97" y="28">5</text><text x="97" y="168">0</text></g>
+  <text x="186" y="148" font-size="13" font-style="italic">x</text><text x="108" y="22" font-size="13" font-style="italic">y</text>
+  <path class="c1" d="M60.73 258 L66.8 218.54 L72.46 192.12 L77.72 175.18 L82.6 164.79 L87.23 158.76 L91.86 155.54 L97.42 154.14 L108.97 153.5 L113.96 151.47 L118.54 147.31 L123.27 139.77 L128.26 127.21 L133.67 107.02 L139.6 75.39 L145.06 35.93 L146.46 24"/>
+</svg></div>
+    </div>
+    <details><summary>Lösung anzeigen</summary>
+      <p style="margin:0">A ↔ y = 0,5x²: nach oben geöffnet, geht durch (2; 2) – gestaucht.<br>
+      B ↔ y = −x²: nach unten geöffnet – an der x-Achse gespiegelt.<br>
+      C ↔ y = 2x²: nach oben geöffnet, geht durch (1; 2) – gestreckt, schmaler als die Normalparabel.<br>
+      D ↔ y = x³: punktsymmetrisch zum Ursprung, links unten nach rechts oben.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Wertetabelle</span>Aufgabe 3 – Wertetabelle und Graph <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p>Gegeben ist y = 0,5x³.</p>
+    <p>a) Lege eine Wertetabelle für x = −2; −1,5; −1; −0,5; 0; 0,5; 1; 1,5; 2 an. Runde auf zwei Nachkommastellen. <em>(3 P.)</em><br>
+    b) Zeichne den Graphen für −2 ≤ x ≤ 2. <em>(2 P.)</em><br>
+    c) Beschreibe, wie der Graph aus dem Graphen von y = x³ entsteht. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table class="vt" data-pft="pa1-a3">
+        <tr><th>x</th><td>−2</td><td>−1,5</td><td>−1</td><td>−0,5</td><td>0</td><td>0,5</td><td>1</td><td>1,5</td><td>2</td></tr>
+        <tr><th>y = 0,5x³</th><td>−4</td><td>≈ −1,69</td><td>−0,5</td><td>≈ −0,06</td><td>0</td><td>≈ 0,06</td><td>0,5</td><td>≈ 1,69</td><td>4</td></tr>
+      </table></div>
+      <p>Beispiel x = −1,5: 0,5 · (−1,5)³ = 0,5 · (−3,375) = −1,6875 ≈ −1,69</p>
+      <svg viewBox="0 0 248 248" style="max-width:310px" role="img" aria-label="Graphen von y = 0,5 x hoch 3 und zum Vergleich y = x hoch 3" data-svg="pa1-a3" data-o="124,124" data-u="50,25" data-view="-2,2,-4,4">
+  <g><line class="grid" x1="24" y1="224" x2="24" y2="24"/><line class="grid" x1="74" y1="224" x2="74" y2="24"/><line class="grid" x1="124" y1="224" x2="124" y2="24"/><line class="grid" x1="174" y1="224" x2="174" y2="24"/><line class="grid" x1="224" y1="224" x2="224" y2="24"/><line class="grid" x1="24" y1="224" x2="224" y2="224"/><line class="grid" x1="24" y1="199" x2="224" y2="199"/><line class="grid" x1="24" y1="174" x2="224" y2="174"/><line class="grid" x1="24" y1="149" x2="224" y2="149"/><line class="grid" x1="24" y1="124" x2="224" y2="124"/><line class="grid" x1="24" y1="99" x2="224" y2="99"/><line class="grid" x1="24" y1="74" x2="224" y2="74"/><line class="grid" x1="24" y1="49" x2="224" y2="49"/><line class="grid" x1="24" y1="24" x2="224" y2="24"/></g>
+  <line class="ax" x1="24" y1="124" x2="234" y2="124"/><line class="ax" x1="124" y1="224" x2="124" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="138">−2</text><text x="74" y="138">−1</text><text x="174" y="138">1</text><text x="224" y="138">2</text></g>
+  <g font-size="11" text-anchor="end"><text x="119" y="228">−4</text><text x="119" y="203">−3</text><text x="119" y="178">−2</text><text x="119" y="153">−1</text><text x="119" y="103">1</text><text x="119" y="78">2</text><text x="119" y="53">3</text><text x="119" y="28">4</text><text x="119" y="138">0</text></g>
+  <text x="230" y="118" font-size="13" font-style="italic">x</text><text x="130" y="22" font-size="13" font-style="italic">y</text>
+  <path class="c1" d="M24 224 L34 196.9 L43.6 175.97 L52.9 159.94 L62 147.83 L71 138.89 L80.1 132.46 L89.6 128.07 L100.4 125.31 L114.4 124.09 L141 123.51 L152.9 121.59 L163 118.07 L172.3 112.73 L181.3 105.19 L190.3 94.86 L199.4 81.13 L208.8 63.02 L218.6 39.34 L224 24"/>
+  <text class="lbl" x="131.5" y="184" style="fill:var(--g1)">y = 0,5x³</text>
+  <path class="c2" d="M44.63 224 L53.4 194.38 L61.8 172.13 L69.8 155.84 L77.5 144.11 L85.1 135.77 L92.7 130.13 L100.8 126.5 L110.3 124.51 L128 123.99 L140.6 123.09 L149.5 120.68 L157.4 116.55 L165 110.22 L172.6 101.04 L180.4 88.12 L188.5 70.33 L197 46.2 L203.37 24"/>
+  <text class="lbl" x="29" y="59" style="fill:var(--g2)">y = x³</text>
+  <circle class="pt" cx="24" cy="224" r="4"/>
+  <circle class="pt" cx="49" cy="166.19" r="4"/>
+  <circle class="pt" cx="74" cy="136.5" r="4"/>
+  <circle class="pt" cx="99" cy="125.56" r="4"/>
+  <circle class="pt" cx="124" cy="124" r="4"/>
+  <circle class="pt" cx="149" cy="122.44" r="4"/>
+  <circle class="pt" cx="174" cy="111.5" r="4"/>
+  <circle class="pt" cx="199" cy="81.81" r="4"/>
+  <circle class="pt" cx="224" cy="24" r="4"/>
+</svg>
+      <p style="margin:0">c) Jeder y-Wert von y = x³ wird halbiert: Der Graph ist in y-Richtung mit dem Faktor 0,5 <strong>gestaucht</strong>. Er geht durch (1; 0,5) statt durch (1; 1).</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rechnen</span>Aufgabe 4 – Punktprobe <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-pf="pa1-a4">
+    <p>Prüfe rechnerisch, welche Punkte auf dem Graphen von <strong>y = −2x⁴</strong> liegen.</p>
+    <p>P(1; −2) <em>(1 P.)</em> &nbsp;&nbsp; Q(−2; 32) <em>(1 P.)</em> &nbsp;&nbsp; R(0,5; −0,125) <em>(1 P.)</em> &nbsp;&nbsp; S(−1; 2) <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        −2 · 1⁴ = −2 ✓ → P(1; −2) liegt auf dem Graphen.<br>
+        −2 · (−2)⁴ = −2 · 16 = −32 ≠ 32 → Q(−2; 32) liegt nicht auf dem Graphen.<br>
+        −2 · 0,5⁴ = −2 · 0,0625 = −0,125 ✓ → R(0,5; −0,125) liegt auf dem Graphen.<br>
+        −2 · (−1)⁴ = −2 · 1 = −2 ≠ 2 → S(−1; 2) liegt nicht auf dem Graphen.
+      </div>
+      <p style="margin:0">Wegen a = −2 &lt; 0 liegt der ganze Graph unterhalb der x-Achse (bis auf den Ursprung) – Punkte mit positivem y-Wert können gar nicht passen.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rechnen</span>Aufgabe 5 – Parameter bestimmen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-pf="pa1-a5a pa1-a5b pa1-a5c">
+    <p>a) Der Graph von y = a · x³ geht durch P(2; −4). Berechne a. <em>(2 P.)</em><br>
+    b) Der Graph von y = a · x⁻² geht durch Q(2; 3). Berechne a. <em>(2 P.)</em><br>
+    c) Der Graph von y = xⁿ geht durch R(3; 81). Bestimme n. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) −4 = a · 2³ → −4 = 8a &nbsp;<span class="note">| : 8</span> → <strong>a = −0,5</strong>, also y = −0,5x³<br>
+        b) 3 = a · 2⁻² = a · <span class="frac"><span>1</span><span>4</span></span> &nbsp;<span class="note">| · 4</span> → <strong>a = 12</strong>, also y = 12x⁻²<br>
+        c) 81 = 3ⁿ. Probieren: 3³ = 27, 3⁴ = 81 → <strong>n = 4</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Anwendung</span>Aufgabe 6 – Würfelvolumen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-pf="pa1-a6">
+    <p>Das Volumen eines Würfels mit der Kantenlänge a ist V = a³.</p>
+    <p>a) Lege eine Wertetabelle für a = 1 cm; 2 cm; 3 cm; 4 cm; 5 cm an. <em>(2 P.)</em><br>
+    b) Ein Würfel hat das Volumen 343 cm³. Wie lang ist eine Kante? <em>(1 P.)</em><br>
+    c) Wie ändert sich das Volumen, wenn man die Kantenlänge verdoppelt? Begründe. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table class="vt" data-pft="pa1-a6t">
+        <tr><th>a in cm</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+        <tr><th>V in cm³</th><td>1</td><td>8</td><td>27</td><td>64</td><td>125</td></tr>
+      </table></div>
+      <div class="calc">
+        b) a³ = 343 → a = ∛343 → <strong>a = 7 cm</strong> &nbsp;<span class="note">Probe: 7 · 7 · 7 = 343</span><br>
+        c) (2a)³ = 2a · 2a · 2a = 8a³. Beispiel: a = 3 cm → V = 27 cm³; a = 6 cm → V = 216 cm³
+      </div>
+      <p style="margin:0">Das Volumen wird 8-mal so groß (das 8-fache).</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Anwendung</span>Aufgabe 7 – Kreisfläche <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-pf="pa1-a7">
+    <p>Der Flächeninhalt eines Kreises mit dem Radius r ist A = π · r².</p>
+    <p>a) Berechne A für r = 3 cm. Runde auf zwei Nachkommastellen. <em>(1 P.)</em><br>
+    b) In einer Tabellenkalkulation steht der Radius in Zelle A2. Gib eine Formel für Zelle B2 an, die den Flächeninhalt berechnet. <em>(2 P.)</em><br>
+    c) Ein kreisrundes Beet soll 50 m² groß werden. Welchen Radius braucht es? Runde auf zwei Nachkommastellen. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) A = π · 3² = 9π → <strong>A ≈ 28,27 cm²</strong><br>
+        b) <strong>=PI()*A2^2</strong> &nbsp;<span class="note">PI() liefert π, ^2 bedeutet „hoch 2“</span><br>
+        c) π · r² = 50 &nbsp;<span class="note">| : π</span> → r² = <span class="frac"><span>50</span><span>π</span></span> ≈ 15,92 &nbsp;<span class="note">| √</span> → <strong>r ≈ 3,99 m</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Anwendung</span>Aufgabe 8 – Fallweg <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-pf="pa1-a8">
+    <p>Lässt man einen Stein fallen, so legt er (ohne Luftwiderstand) in t Sekunden ungefähr den Weg s = 5 · t² zurück (s in m). <span style="color:var(--muted)">Die Zahl 5 ist gerundet: s = ½ · g · t² mit g ≈ 9,81 m/s² ≈ 10 m/s².</span></p>
+    <p>a) Lege eine Wertetabelle für t = 0 s; 1 s; 2 s; 3 s; 4 s an. <em>(2 P.)</em><br>
+    b) Ein Stein fällt von einer 45 m hohen Brücke. Wie lange dauert der Fall? <em>(1 P.)</em><br>
+    c) Um welche Art von Funktion handelt es sich? Gib a und n an. <em>(1 P.)</em><br>
+    d) Welchen Weg hat der Stein nach 2,5 s zurückgelegt? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table class="vt" data-pft="pa1-a8t">
+        <tr><th>t in s</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+        <tr><th>s in m</th><td>0</td><td>5</td><td>20</td><td>45</td><td>80</td></tr>
+      </table></div>
+      <div class="calc">
+        b) 5 · t² = 45 &nbsp;<span class="note">| : 5</span> → t² = 9 → <strong>t = 3 s</strong> &nbsp;<span class="note">(nur die positive Lösung ergibt Sinn)</span><br>
+        c) Potenzfunktion y = a · xⁿ mit a = 5 und n = 2 (eine gestreckte Parabel, nur für t ≥ 0)<br>
+        d) s = 5 · 2,5² = 5 · 6,25 = 31,25 m
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Begründen</span>Aufgabe 9 – Fehler finden <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card" data-pf="pa1-a9">
+    <p>Lea sagt: „Der Graph von y = x⁻² ist punktsymmetrisch zum Ursprung, weil der Exponent negativ ist.“ Hat Lea recht? Begründe mit einem Zahlenbeispiel.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <p style="margin:0">Lea hat <strong>nicht</strong> recht. Die Symmetrie hängt davon ab, ob n gerade oder ungerade ist – nicht vom Vorzeichen. n = −2 ist gerade, also ist der Graph <strong>achsensymmetrisch zur y-Achse</strong>.<br>
+      Zahlenbeispiel: (−2)⁻² = 0,25 und 2⁻² = 0,25 – gleiche y-Werte bei x und −x. Bei Punktsymmetrie müsste bei −2 der Wert −0,25 herauskommen.</p>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>44–41</td><td>40–33</td><td>32–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

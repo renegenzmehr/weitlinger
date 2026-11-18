@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potenzen</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+.hl{background:var(--warn-soft);border-radius:4px;padding:0 3px;font-weight:700}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.btns button{font:inherit;font-size:.9rem;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
+.btns button:hover{background:var(--accent-soft)}
+.labor .ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.labor fieldset{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:0}
+.labor legend{font-weight:700;padding:0 6px}
+.labor label{display:flex;align-items:center;gap:8px;font-size:.95rem;margin:4px 0}
+.labor input[type=range]{flex:1;min-width:0}
+.labor .val{min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}
+.out{font-weight:600;padding:10px 14px;border-radius:8px;background:var(--accent-soft);margin:10px 0}
+.anim ol{list-style:none;padding:0;margin:10px 0}
+.anim li{padding:6px 12px;margin:4px 0;border-radius:8px;border:1px solid var(--line);background:var(--card)}
+.anim li.off{display:none}
+.anim li.now{border-color:var(--wk);background:var(--wk-soft);animation:fadein .5s ease}
+.anim .scrub{display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--muted)}
+.anim .scrub input{flex:1;min-width:0}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.anim li.now{animation:none}}
+@media print{
+  .anim li.off{display:block!important} .anim li.now{background:none;border-color:var(--line)}
+  .btns,.anim .scrub,.labor .ctrl{display:none}
+}
+.btns button.on{background:var(--accent-soft);border-color:var(--accent);font-weight:700}
+.calc{overflow-wrap:anywhere}
+.zoomview{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;align-items:center}
+.zoomview svg{max-width:260px}
+svg .zbig{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+svg .zsmall{fill:var(--wk-soft);stroke:var(--wk);stroke-width:1.5}
+svg .zrow rect{fill:none;stroke:var(--wk);stroke-width:.8;stroke-dasharray:2 2}
+.zoomout{font-weight:400}
+.zoomtab tr.cur td{background:var(--warn-soft);font-weight:700}
+.zoomtab td{font-size:.9rem;padding:4px 6px}
+.zoomtab td:last-child{min-width:340px;text-align:left}
+.zoomtab th:nth-child(3),.zoomtab td:nth-child(3){white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:52px;padding:10px 4px}
+.chips .grp{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:8px;border:1.5px dashed var(--line);transition:border-color .5s,padding .5s,gap .5s}
+.chips .op{font-size:1.3rem;font-weight:700;padding:0 4px;transition:opacity .5s,max-width .5s;max-width:3em;overflow:hidden}
+.chips .c{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:6px;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-weight:700;color:#fff;transition:opacity .5s,transform .5s}
+.chips .c.k1{background:var(--g1)} .chips .c.k2{background:var(--g2)}
+.chips .c.x{opacity:.25;text-decoration:line-through}
+.chips .frow{display:flex;flex-direction:column;align-items:center;gap:4px}
+.chips .frow .bar{align-self:stretch;border-top:2px solid var(--text)}
+.chips.merged .op.join{opacity:0;max-width:0;padding:0}
+.chips.merged .grp{border-color:transparent;padding:4px 0}
+.chips.merged .c.x{opacity:0;transform:scale(.4)}
+.chips .pair{display:inline-flex;gap:2px;padding:2px;border-radius:8px;border:1.5px solid transparent;transition:border-color .5s}
+.chips.merged .pair{border-color:var(--warn)}
+#growSvg{max-width:520px}
+svg .gb{fill:var(--g1)} svg .gb.last{fill:var(--g2)}
+@media (prefers-reduced-motion: reduce){
+  .chips .grp,.chips .op,.chips .c,.chips .pair{transition:none}
+}
+@media print{
+  .zoomview,.zoom .btns,.zoom .scrub,#lawCard .btns,#lawCard .ctrl,#growCard .btns,#growCard .scrub{display:none}
+  .zoomtab tr.cur td{background:none;font-weight:400}
+}
+.out{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <span>Potenzen</span></div>
+  <h1>Potenzen · Klasse 9</h1>
+  <p>Basis und Exponent · negative Exponenten · Zehnerpotenzen und wissenschaftliche Schreibweise · Potenzgesetze · Anwendungen — Lernübersicht mit Regeln, Beispielen und Übungen</p>
+</header>
+
+<nav><div class="inner">
+  <a href="#tests"><strong>Leistungskontrollen &amp; Probearbeiten</strong></a>
+  <a href="#ueberblick">Überblick</a>
+  <a href="#begriffe">Begriffe</a>
+  <a href="#vorzeichen">Vorzeichen</a>
+  <a href="#negativ">Null &amp; negative Exponenten</a>
+  <a href="#zehner">Zehnerpotenzen</a>
+  <a href="#zoom">Größenordnungs-Zoom</a>
+  <a href="#vorsilben">Vorsilben</a>
+  <a href="#rechner">Taschenrechner</a>
+  <a href="#gesetze">Potenzgesetze</a>
+  <a href="#labor">Gesetze-Labor</a>
+  <a href="#wachstum">Verdoppeln</a>
+  <a href="#anwendungen">Anwendungen</a>
+  <a href="#fehler">Typische Fehler</a>
+  <a href="#uebungen">Übungen</a>
+  <a href="#check">Checkliste</a>
+</div></nav>
+
+<main>
+
+<!-- TESTS -->
+<section id="tests">
+  <h2>Leistungskontrollen &amp; Probearbeiten</h2>
+  <p>Laut Stoffverteilungsplan endet die Einheit mit einer Zusammenfassung und einem <strong>Test am Ende der Einheit</strong>. Die Leistungskontrollen (20 Minuten) prüfen jeweils ein Teilthema, die Probearbeiten (45 Minuten) die ganze Einheit. Alle haben Punkte pro Aufgabe, Lösungen zum Aufklappen und einen Notenschlüssel.</p>
+  <div class="card">
+    <ul>
+      <li style="margin:6px 0"><a href="leistungskontrolle-1.html"><strong>Leistungskontrolle 1</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--warn-soft);color:var(--warn)">20 min</span> – Basis, Exponent, Potenzwert, Potenzschreibweise, Null und negative Exponenten, (−2)<sup>4</sup> gegen −2<sup>4</sup> (19 P.)</li>
+      <li style="margin:6px 0"><a href="leistungskontrolle-2.html"><strong>Leistungskontrolle 2</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--warn-soft);color:var(--warn)">20 min</span> – wissenschaftliche Schreibweise, Vorsilben kilo bis nano, Potenzgesetze, mit Zehnerpotenzen rechnen (20 P.)</li>
+      <li style="margin:6px 0"><a href="probearbeit-1.html"><strong>Probearbeit 1</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--stat-soft);color:var(--stat)">Standard</span> – Begriffe, Vorzeichen, negative Exponenten, wissenschaftliche Schreibweise, Potenzgesetze, Bakterien, Speicherkarte, Lichtlaufzeit (44 P.)</li>
+      <li style="margin:6px 0"><a href="probearbeit-2.html"><strong>Probearbeit 2</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--stat-soft);color:var(--stat)">Standard</span> – Begriffe, Potenzwerte, Vorsilben, Potenzgesetze, Wassermoleküle und Blutkörperchen, Papier falten, Reise zur Sonne (44 P.)</li>
+      <li style="margin:6px 0"><a href="probearbeit-3.html"><strong>Probearbeit 3</strong></a> <span style="font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px;background:#c53030;color:#fff">🔥 Schwer</span> – verschachtelte Terme, Exponenten bestimmen, Lichtjahre, Atom und Kern, Bakterienmasse, Festplatte, Fehlersuche (46 P.)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ÜBERBLICK -->
+<section id="ueberblick">
+  <h2>Überblick: Was kommt dran?</h2>
+  <div class="grid2">
+    <div class="card rule stat">
+      <span class="tag stat">Teil A</span><strong>Potenzen verstehen</strong>
+      <ul>
+        <li>Basis, Exponent, Potenzwert</li>
+        <li>Potenzschreibweise, Vorzeichenregeln</li>
+        <li>Null als Exponent, negative Exponenten</li>
+        <li>Zehnerpotenzen, wissenschaftliche Schreibweise</li>
+        <li>Vorsilben kilo, mega, giga, milli, mikro, nano</li>
+      </ul>
+    </div>
+    <div class="card rule wk">
+      <span class="tag wk">Teil B</span><strong>Mit Potenzen rechnen und anwenden</strong>
+      <ul>
+        <li>Taschenrechner: Eingabe mit EE bzw. ×10<sup>x</sup></li>
+        <li>Potenzgesetze mit Herleitung</li>
+        <li>Wachstum durch Verdoppeln</li>
+        <li>Anwendungen: Bakterien, Speichergrößen, Astronomie, Mikrokosmos</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BEGRIFFE -->
+<section id="begriffe">
+  <h2 class="stat">1 · Begriffe und Potenzschreibweise</h2>
+  <div class="card rule stat">
+    <p>Ein Produkt aus <strong>gleichen Faktoren</strong> schreibt man kürzer als <strong>Potenz</strong>:</p>
+    <div class="formula">a · a · a · … · a &nbsp;(n Faktoren) = a<sup>n</sup></div>
+    <ul style="margin-bottom:0">
+      <li><strong>a</strong> heißt <strong>Basis</strong> (Grundzahl) – der Faktor, der sich wiederholt.</li>
+      <li><strong>n</strong> heißt <strong>Exponent</strong> (Hochzahl) – er zählt, wie oft der Faktor vorkommt.</li>
+      <li>Das Ergebnis heißt <strong>Potenzwert</strong>. Gelesen: „a hoch n“.</li>
+      <li>Sonderfälle: a<sup>1</sup> = a; a<sup>2</sup> heißt „a Quadrat“, a<sup>3</sup> „a hoch drei“.</li>
+    </ul>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <strong>Beispiel 1</strong>
+      <div class="calc">2 · 2 · 2 · 2 · 2 = <b class="r" data-pot="lp-b1">2<sup>5</sup></b> = <b class="r" data-pot="lp-b2">32</b></div>
+      <p style="margin:0">Basis 2, Exponent 5, Potenzwert 32.</p>
+    </div>
+    <div class="card">
+      <strong>Beispiel 2</strong>
+      <div class="calc">x · x · x · x = <b class="r" data-pot="lp-b3">x<sup>4</sup></b><br>0,1 · 0,1 · 0,1 = <b class="r" data-pot="lp-b4">0,1<sup>3</sup></b> = <b class="r" data-pot="lp-b5">0,001</b></div>
+      <p style="margin:0">Auch Variablen und Dezimalzahlen können Basis sein.</p>
+    </div>
+  </div>
+  <div class="card warn">
+    <strong>Nicht verwechseln:</strong> 2<sup>5</sup> = 2 · 2 · 2 · 2 · 2 = 32, aber 2 · 5 = 10. Der Exponent ist <em>kein</em> Faktor, sondern zählt die Faktoren.
+  </div>
+</section>
+
+<!-- VORZEICHEN -->
+<section id="vorzeichen">
+  <h2 class="stat">2 · Negative Basis – auf die Klammer kommt es an</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag stat">mit Klammer</span>
+      <div class="calc">(−2)<sup>4</sup> = (−2) · (−2) · (−2) · (−2) = <b class="r" data-pot="lp-v1">16</b></div>
+      <p style="margin:0">Die Basis ist <strong>−2</strong>. Das Minus wird mit potenziert.</p>
+    </div>
+    <div class="card">
+      <span class="tag stat">ohne Klammer</span>
+      <div class="calc">−2<sup>4</sup> = −(2 · 2 · 2 · 2) = <b class="r" data-pot="lp-v2">−16</b></div>
+      <p style="margin:0">Die Basis ist nur <strong>2</strong>. Erst potenzieren, dann das Minus davor.</p>
+    </div>
+  </div>
+  <div class="card rule stat">
+    <strong>Vorzeichenregel bei negativer Basis in Klammern:</strong>
+    <ul style="margin-bottom:0">
+      <li>gerader Exponent → Potenzwert <strong>positiv</strong>: (−3)<sup>2</sup> = <b class="r" data-pot="lp-v3">9</b></li>
+      <li>ungerader Exponent → Potenzwert <strong>negativ</strong>: (−3)<sup>3</sup> = <b class="r" data-pot="lp-v4">−27</b></li>
+    </ul>
+    <p style="margin:8px 0 0">Grund: Je zwei Minuszeichen ergeben ein Plus. Bleibt eines übrig, ist das Ergebnis negativ.</p>
+  </div>
+</section>
+
+<!-- NULL UND NEGATIVE EXPONENTEN -->
+<section id="negativ">
+  <h2 class="stat">3 · Null als Exponent und negative Exponenten</h2>
+  <p>Geht man in der Zweierreihe einen Exponenten nach unten, wird jedes Mal <strong>durch 2 geteilt</strong>. Dieses Muster setzt man einfach fort:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Potenz</th><td>2<sup>3</sup></td><td>2<sup>2</sup></td><td>2<sup>1</sup></td><td>2<sup>0</sup></td><td>2<sup>−1</sup></td><td>2<sup>−2</sup></td><td>2<sup>−3</sup></td></tr>
+    <tr><th>Wert</th><td><b class="r" data-pot="lp-n1">8</b></td><td><b class="r" data-pot="lp-n2">4</b></td><td><b class="r" data-pot="lp-n3">2</b></td><td><b class="r" data-pot="lp-n4">1</b></td><td><b class="r" data-pot="lp-n5"><span class="frac"><span>1</span><span>2</span></span></b></td><td><b class="r" data-pot="lp-n6"><span class="frac"><span>1</span><span>4</span></span></b></td><td><b class="r" data-pot="lp-n7"><span class="frac"><span>1</span><span>8</span></span></b></td></tr>
+  </table></div>
+  <p style="text-align:center;color:var(--muted);margin:4px 0">jeder Schritt nach rechts: : 2</p>
+  <div class="grid2">
+    <div class="card rule stat">
+      <strong>Null als Exponent</strong>
+      <div class="formula">a<sup>0</sup> = 1 &nbsp;&nbsp;(a ≠ 0)</div>
+      <p style="margin:0">Beispiele: 7<sup>0</sup> = 1, (−5)<sup>0</sup> = 1, aber −5<sup>0</sup> = −1 (das Minus steht vor der Potenz). Für die Basis 0 ist 0<sup>0</sup> nicht festgelegt.</p>
+    </div>
+    <div class="card rule stat">
+      <strong>Negativer Exponent = Kehrwert</strong>
+      <div class="formula">a<sup>−n</sup> = <span class="frac"><span>1</span><span>a<sup>n</sup></span></span> &nbsp;&nbsp;(a ≠ 0)</div>
+      <p style="margin:0">Beispiele: 5<sup>−2</sup> = <span class="frac"><span>1</span><span>5<sup>2</sup></span></span> = <b class="r" data-pot="lp-n8"><span class="frac"><span>1</span><span>25</span></span></b> &nbsp;·&nbsp; 10<sup>−3</sup> = <span class="frac"><span>1</span><span>1000</span></span> = <b class="r" data-pot="lp-n9">0,001</b> &nbsp;·&nbsp; <span class="frac"><span>1</span><span>x<sup>3</sup></span></span> = <b class="r" data-pot="lp-n10">x<sup>−3</sup></b></p>
+    </div>
+  </div>
+  <div class="card">
+    <strong>Bruch als Basis:</strong> Bei negativem Exponenten den Bruch umdrehen und den Exponenten positiv machen:
+    <div class="calc">(<span class="frac"><span>2</span><span>3</span></span>)<sup>−2</sup> = (<span class="frac"><span>3</span><span>2</span></span>)<sup>2</sup> = <b class="r" data-pot="lp-n11"><span class="frac"><span>9</span><span>4</span></span></b> = <b class="r" data-pot="lp-n12">2,25</b></div>
+  </div>
+  <div class="card warn">
+    <strong>Achtung:</strong> Ein negativer Exponent macht die Zahl <em>nicht</em> negativ! 10<sup>−3</sup> = 0,001 ist eine kleine <strong>positive</strong> Zahl.
+  </div>
+</section>
+
+<!-- ZEHNERPOTENZEN -->
+<section id="zehner">
+  <h2 class="stat">4 · Zehnerpotenzen und wissenschaftliche Schreibweise</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Zehnerpotenz</th><td>10<sup>6</sup></td><td>10<sup>3</sup></td><td>10<sup>2</sup></td><td>10<sup>1</sup></td><td>10<sup>0</sup></td><td>10<sup>−1</sup></td><td>10<sup>−2</sup></td><td>10<sup>−3</sup></td><td>10<sup>−6</sup></td></tr>
+    <tr><th>Zahl</th><td><b class="r" data-pot="lp-z1">1 000 000</b></td><td><b class="r" data-pot="lp-z2">1000</b></td><td>100</td><td>10</td><td>1</td><td>0,1</td><td>0,01</td><td><b class="r" data-pot="lp-z3">0,001</b></td><td><b class="r" data-pot="lp-z4">0,000001</b></td></tr>
+  </table></div>
+  <div class="card rule stat">
+    <p style="margin-top:0"><strong>Merkregel:</strong> 10<sup>n</sup> ist eine 1 mit n Nullen. 10<sup>−n</sup> hat n Stellen nach dem Komma, die letzte davon ist die 1.</p>
+    <p><strong>Wissenschaftliche Schreibweise:</strong></p>
+    <div class="formula">Zahl = a · 10<sup>n</sup> &nbsp;&nbsp;mit 1 ≤ a &lt; 10 und n ganzzahlig</div>
+    <p style="margin-bottom:0">Vor dem Komma von a steht also genau <strong>eine Ziffer, die nicht 0 ist</strong>.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag stat">große Zahl</span>
+      <p>Entfernung Erde–Mond: 384 400 000 m</p>
+      <div class="calc">Komma um 8 Stellen nach <strong>links</strong> → 3,844<br>384 400 000 m = <b class="r" data-pot="lp-z5">3,844 · 10<sup>8</sup></b> m</div>
+      <p style="margin:0">Komma nach links → Exponent <strong>positiv</strong>.</p>
+    </div>
+    <div class="card">
+      <span class="tag stat">kleine Zahl</span>
+      <p>Durchmesser eines roten Blutkörperchens: 0,0000075 m</p>
+      <div class="calc">Komma um 6 Stellen nach <strong>rechts</strong> → 7,5<br>0,0000075 m = <b class="r" data-pot="lp-z6">7,5 · 10<sup>−6</sup></b> m</div>
+      <p style="margin:0">Komma nach rechts → Exponent <strong>negativ</strong>.</p>
+    </div>
+  </div>
+  <div class="card">
+    <strong>Zurück in die normale Schreibweise:</strong> Exponent positiv → Komma nach rechts, Exponent negativ → Komma nach links, fehlende Stellen mit Nullen auffüllen.
+    <div class="calc">2,05 · 10<sup>4</sup> = <b class="r" data-pot="lp-z7">20 500</b> &nbsp;&nbsp;·&nbsp;&nbsp; 4,3 · 10<sup>−5</sup> = <b class="r" data-pot="lp-z8">0,000043</b></div>
+  </div>
+  <div class="card warn">
+    <strong>Keine wissenschaftliche Schreibweise:</strong> 38 · 10<sup>5</sup> (38 ist größer als 10) und 0,6 · 10<sup>3</sup> (0,6 ist kleiner als 1). Richtig: 38 · 10<sup>5</sup> = <b class="r" data-pot="lp-z9">3,8 · 10<sup>6</sup></b> und 0,6 · 10<sup>3</sup> = <b class="r" data-pot="lp-z10">6 · 10<sup>2</sup></b>.
+  </div>
+</section>
+
+<!-- ZOOM -->
+<section id="zoom">
+  <h2 class="stat">5 · Größenordnungs-Zoom: von 10<sup>−9</sup> m bis 10<sup>9</sup> m</h2>
+  <p>Jeder Schritt auf dem Regler macht die Länge <strong>10-mal so groß</strong>. Das kleine Quadrat in der Zeichnung ist die vorige Größenordnung – es passt zehnmal nebeneinander in das große. Neun Schritte nach oben bedeuten also „mal 10<sup>9</sup>“, also mal eine Milliarde.</p>
+  <div class="card labor anim zoom" id="zoomCard">
+    <div class="btns">
+      <button type="button" id="zoomPlay">▶ Start</button>
+      <button type="button" id="zoomDown">◀ kleiner</button>
+      <button type="button" id="zoomUp">größer ▶</button>
+    </div>
+    <div class="scrub"><span>10<sup>−9</sup></span><input type="range" id="zoomRange" min="-9" max="9" step="1" value="0" aria-label="Zehnerpotenz in Metern"><span>10<sup>9</sup></span></div>
+    <div class="zoomview">
+      <svg id="zoomSvg" viewBox="0 0 240 240" role="img" aria-label="Großes Quadrat für die aktuelle Größenordnung, kleines Quadrat für die vorige">
+        <rect class="zbig" x="20" y="20" width="200" height="200"/>
+        <rect class="zsmall" x="20" y="200" width="20" height="20"/>
+        <g class="zrow"></g>
+        <text id="zoomBigLab" x="120" y="122" text-anchor="middle" font-size="18" font-weight="700">10⁰ m</text>
+        <text x="44" y="194" font-size="11" id="zoomSmallLab">10⁻¹ m</text>
+      </svg>
+      <div class="out zoomout" id="zoomOut" aria-live="polite">10<sup>0</sup> m = 1 m · Beispiel: Größe eines Schülers ≈ 1,6 m</div>
+    </div>
+    <div class="tablewrap"><table class="zoomtab" id="zoomTab">
+      <tr><th>Zehnerpotenz</th><th>ausgeschrieben</th><th>in passender Einheit</th><th>Beispiel (gerundet)</th></tr>
+      <tr data-e="-9" data-m="2"><td>10<sup>−9</sup> m</td><td>0,000000001 m</td><td>1 nm</td><td>Dicke der DNA-Doppelhelix ≈ 2 nm = 2 · 10<sup>−9</sup> m</td></tr>
+      <tr data-e="-8" data-m="3"><td>10<sup>−8</sup> m</td><td>0,00000001 m</td><td>10 nm</td><td>Poliovirus ≈ 30 nm = 3 · 10<sup>−8</sup> m</td></tr>
+      <tr data-e="-7" data-m="1"><td>10<sup>−7</sup> m</td><td>0,0000001 m</td><td>100 nm</td><td>Coronavirus ≈ 100 nm = 1 · 10<sup>−7</sup> m</td></tr>
+      <tr data-e="-6" data-m="2"><td>10<sup>−6</sup> m</td><td>0,000001 m</td><td>1 µm</td><td>Kolibakterium (Länge) ≈ 2 µm = 2 · 10<sup>−6</sup> m</td></tr>
+      <tr data-e="-5" data-m="7"><td>10<sup>−5</sup> m</td><td>0,00001 m</td><td>10 µm</td><td>Dicke eines Haares ≈ 70 µm = 7 · 10<sup>−5</sup> m</td></tr>
+      <tr data-e="-4" data-m="1"><td>10<sup>−4</sup> m</td><td>0,0001 m</td><td>0,1 mm</td><td>Dicke eines Blattes Papier ≈ 0,1 mm = 1 · 10<sup>−4</sup> m</td></tr>
+      <tr data-e="-3" data-m="5"><td>10<sup>−3</sup> m</td><td>0,001 m</td><td>1 mm</td><td>Ameise ≈ 5 mm = 5 · 10<sup>−3</sup> m</td></tr>
+      <tr data-e="-2" data-m="2,3"><td>10<sup>−2</sup> m</td><td>0,01 m</td><td>1 cm</td><td>1-Euro-Münze ≈ 2,3 cm = 2,3 · 10<sup>−2</sup> m</td></tr>
+      <tr data-e="-1" data-m="2,1"><td>10<sup>−1</sup> m</td><td>0,1 m</td><td>1 dm</td><td>Breite eines A4-Blattes = 21 cm = 2,1 · 10<sup>−1</sup> m</td></tr>
+      <tr data-e="0" data-m="1,6"><td>10<sup>0</sup> m</td><td>1 m</td><td>1 m</td><td>Größe eines Schülers ≈ 1,6 m</td></tr>
+      <tr data-e="1" data-m="1,2"><td>10<sup>1</sup> m</td><td>10 m</td><td>10 m</td><td>Linienbus ≈ 12 m = 1,2 · 10<sup>1</sup> m</td></tr>
+      <tr data-e="2" data-m="1,05"><td>10<sup>2</sup> m</td><td>100 m</td><td>100 m</td><td>Fußballfeld ≈ 105 m = 1,05 · 10<sup>2</sup> m</td></tr>
+      <tr data-e="3" data-m="1,1"><td>10<sup>3</sup> m</td><td>1000 m</td><td>1 km</td><td>Höhe des Brockens ≈ 1,1 km = 1,1 · 10<sup>3</sup> m</td></tr>
+      <tr data-e="4" data-m="4,2"><td>10<sup>4</sup> m</td><td>10 000 m</td><td>10 km</td><td>Marathonstrecke ≈ 42 km = 4,2 · 10<sup>4</sup> m</td></tr>
+      <tr data-e="5" data-m="4"><td>10<sup>5</sup> m</td><td>100 000 m</td><td>100 km</td><td>Flughöhe der Raumstation ISS ≈ 400 km = 4 · 10<sup>5</sup> m</td></tr>
+      <tr data-e="6" data-m="3,5"><td>10<sup>6</sup> m</td><td>1 000 000 m</td><td>1000 km</td><td>Durchmesser des Mondes ≈ 3500 km = 3,5 · 10<sup>6</sup> m</td></tr>
+      <tr data-e="7" data-m="1,3"><td>10<sup>7</sup> m</td><td>10 000 000 m</td><td>10 000 km</td><td>Durchmesser der Erde ≈ 12 700 km = 1,3 · 10<sup>7</sup> m</td></tr>
+      <tr data-e="8" data-m="3,8"><td>10<sup>8</sup> m</td><td>100 000 000 m</td><td>100 000 km</td><td>Entfernung Erde–Mond ≈ 384 000 km = 3,8 · 10<sup>8</sup> m</td></tr>
+      <tr data-e="9" data-m="1,4"><td>10<sup>9</sup> m</td><td>1 000 000 000 m</td><td>1 Mio. km</td><td>Durchmesser der Sonne ≈ 1,4 Mio. km = 1,4 · 10<sup>9</sup> m</td></tr>
+    </table></div>
+    <noscript><p>Für den Zoom muss JavaScript aktiviert sein. Die Tabelle zeigt alle Größenordnungen.</p></noscript>
+  </div>
+  <p style="font-size:.85rem;color:var(--muted)">Werte gerundet; Erde und Mond nach NASA-Datenblättern (NSSDC). Die übrigen Angaben sind typische Richtwerte – in der Natur schwanken die Größen (ein Haar ist z. B. je nach Mensch 20 bis 180 µm dick).</p>
+</section>
+
+<!-- VORSILBEN -->
+<section id="vorsilben">
+  <h2 class="stat">6 · Vorsilben für Zehnerpotenzen</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Vorsilbe</th><th>Zeichen</th><th>Faktor</th><th>Beispiel</th></tr>
+    <tr><td>Giga</td><td>G</td><td>10<sup>9</sup></td><td>1 GB = 10<sup>9</sup> Byte</td></tr>
+    <tr><td>Mega</td><td>M</td><td>10<sup>6</sup></td><td>1 MW = 10<sup>6</sup> W (Windrad)</td></tr>
+    <tr><td>Kilo</td><td>k</td><td>10<sup>3</sup></td><td>1 km = 10<sup>3</sup> m</td></tr>
+    <tr><td>Milli</td><td>m</td><td>10<sup>−3</sup></td><td>1 mm = 10<sup>−3</sup> m</td></tr>
+    <tr><td>Mikro</td><td>µ</td><td>10<sup>−6</sup></td><td>1 µm = 10<sup>−6</sup> m</td></tr>
+    <tr><td>Nano</td><td>n</td><td>10<sup>−9</sup></td><td>1 nm = 10<sup>−9</sup> m</td></tr>
+  </table></div>
+  <div class="card">
+    <strong>Umrechnen:</strong> Vorsilbe durch ihre Zehnerpotenz ersetzen.
+    <div class="calc">
+      7 km = 7 · 10<sup>3</sup> m = <b class="r" data-pot="lp-s1">7000</b> m<br>
+      250 µm = 250 · 10<sup>−6</sup> m = 2,5 · 10<sup>2</sup> · 10<sup>−6</sup> m = <b class="r" data-pot="lp-s2">2,5 · 10<sup>−4</sup></b> m<br>
+      3,2 GB = <b class="r" data-pot="lp-s3">3,2 · 10<sup>9</sup></b> Byte
+    </div>
+  </div>
+  <div class="card warn">
+    <strong>Speichergrößen:</strong> In dieser Einheit gilt immer 1 kB = 10<sup>3</sup> Byte, 1 MB = 10<sup>6</sup> Byte, 1 GB = 10<sup>9</sup> Byte, 1 TB = 10<sup>12</sup> Byte. Computer zählen intern manchmal mit 2<sup>10</sup> = 1024 statt 1000 (Zeichen KiB, MiB, GiB) – deshalb zeigt ein Rechner bei einer „64-GB“-Karte oft etwas weniger an.
+  </div>
+</section>
+
+<!-- TASCHENRECHNER -->
+<section id="rechner">
+  <h2 class="wk">7 · Zehnerpotenzen in den Taschenrechner eingeben</h2>
+  <div class="card rule wk">
+    <p style="margin-top:0">Für „· 10<sup>n</sup>“ hat der Taschenrechner eine eigene Taste: je nach Modell <strong>EE</strong>, <strong>EXP</strong> oder <strong>×10<sup>x</sup></strong>. Sie ersetzt „· 10 hoch“ – du tippst also <em>nicht</em> zusätzlich „· 10“.</p>
+    <div class="tablewrap"><table>
+      <tr><th>Zahl</th><th>Eingabe</th><th>Anzeige (je nach Modell)</th></tr>
+      <tr><td>6,4 · 10<sup>5</sup></td><td>6.4 [EE] 5</td><td>640000 oder 6.4E05</td></tr>
+      <tr><td>3 · 10<sup>−7</sup></td><td>3 [EE] [(−)] 7</td><td>3E−07 oder 3×10<sup>−07</sup></td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Für das negative Vorzeichen im Exponenten die Taste <strong>(−)</strong> bzw. <strong>+/−</strong> nehmen, nicht die Minus-Rechentaste. Potenzen wie 2<sup>10</sup> rechnest du mit der Taste <strong>x<sup>y</sup></strong> oder <strong>^</strong>: 2 [x<sup>y</sup>] 10 = 1024.</p>
+  </div>
+  <div class="card">
+    <strong>Beispiel:</strong> (4 · 10<sup>8</sup>) · (3 · 10<sup>7</sup>)
+    <div class="calc">
+      Eingabe: 4 [EE] 8 [×] 3 [EE] 7 [=] → Anzeige 1.2E16<br>
+      Ohne Rechner: 4 · 3 = 12 und 10<sup>8</sup> · 10<sup>7</sup> = 10<sup>15</sup> → 12 · 10<sup>15</sup> = <b class="r" data-pot="lp-t1">1,2 · 10<sup>16</sup></b>
+    </div>
+  </div>
+  <div class="card warn">
+    Die Anzeige „1.2E16“ ist eine Kurzschrift des Rechners. Ins Heft schreibst du <strong>1,2 · 10<sup>16</sup></strong>.
+  </div>
+</section>
+
+<!-- POTENZGESETZE -->
+<section id="gesetze">
+  <h2 class="wk">8 · Potenzgesetze – und warum sie gelten</h2>
+  <p>Alle Gesetze folgen daraus, dass a<sup>n</sup> nur eine Abkürzung für n gleiche Faktoren ist. Schreibt man die Faktoren aus, sieht man die Regel.</p>
+
+  <h3>Gleiche Basis</h3>
+  <div class="grid2">
+    <div class="card rule wk">
+      <strong>Multiplizieren: Exponenten addieren</strong>
+      <div class="formula">a<sup>m</sup> · a<sup>n</sup> = a<sup>m + n</sup></div>
+      <div class="calc">a<sup>3</sup> · a<sup>2</sup> = (a · a · a) · (a · a) = <b class="r" data-pot="lp-g1">a<sup>5</sup></b><br>
+      <span class="note">3 Faktoren und 2 Faktoren sind zusammen 5 Faktoren.</span></div>
+    </div>
+    <div class="card rule wk">
+      <strong>Dividieren: Exponenten subtrahieren</strong>
+      <div class="formula">a<sup>m</sup> : a<sup>n</sup> = a<sup>m − n</sup> &nbsp;(a ≠ 0)</div>
+      <div class="calc">a<sup>5</sup> : a<sup>2</sup> = <span class="frac"><span>a · a · a · a · a</span><span>a · a</span></span> = <b class="r" data-pot="lp-g2">a<sup>3</sup></b><br>
+      <span class="note">2 Faktoren kürzen sich weg.</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <strong>So entstehen a<sup>0</sup> = 1 und a<sup>−n</sup>:</strong>
+    <div class="calc">
+      a<sup>3</sup> : a<sup>3</sup> = a<sup>3 − 3</sup> = a<sup>0</sup> &nbsp;und zugleich&nbsp; a<sup>3</sup> : a<sup>3</sup> = 1 &nbsp;→&nbsp; a<sup>0</sup> = 1<br>
+      a<sup>2</sup> : a<sup>5</sup> = a<sup>2 − 5</sup> = a<sup>−3</sup> &nbsp;und zugleich&nbsp; <span class="frac"><span>a · a</span><span>a · a · a · a · a</span></span> = <b class="r" data-pot="lp-g3"><span class="frac"><span>1</span><span>a<sup>3</sup></span></span></b> &nbsp;→&nbsp; a<sup>−3</sup> = <span class="frac"><span>1</span><span>a<sup>3</sup></span></span>
+    </div>
+  </div>
+
+  <h3>Potenz einer Potenz</h3>
+  <div class="card rule wk">
+    <div class="formula">(a<sup>m</sup>)<sup>n</sup> = a<sup>m · n</sup></div>
+    <div class="calc">(a<sup>2</sup>)<sup>3</sup> = a<sup>2</sup> · a<sup>2</sup> · a<sup>2</sup> = (a · a) · (a · a) · (a · a) = <b class="r" data-pot="lp-g4">a<sup>6</sup></b><br>
+    <span class="note">3 Gruppen mit je 2 Faktoren sind 6 Faktoren – Exponenten multiplizieren.</span></div>
+  </div>
+
+  <h3>Gleicher Exponent</h3>
+  <div class="grid2">
+    <div class="card rule wk">
+      <strong>Multiplizieren: Basen multiplizieren</strong>
+      <div class="formula">a<sup>n</sup> · b<sup>n</sup> = (a · b)<sup>n</sup></div>
+      <div class="calc">a<sup>3</sup> · b<sup>3</sup> = (a · a · a) · (b · b · b) = (a · b)(a · b)(a · b) = <b class="r" data-pot="lp-g5">(ab)<sup>3</sup></b><br>
+      Zahlenbeispiel: 2<sup>4</sup> · 5<sup>4</sup> = 10<sup>4</sup> = <b class="r" data-pot="lp-g6">10 000</b></div>
+    </div>
+    <div class="card rule wk">
+      <strong>Dividieren: Basen dividieren</strong>
+      <div class="formula">a<sup>n</sup> : b<sup>n</sup> = (a : b)<sup>n</sup> &nbsp;(b ≠ 0)</div>
+      <div class="calc">15<sup>3</sup> : 5<sup>3</sup> = (15 : 5)<sup>3</sup> = 3<sup>3</sup> = <b class="r" data-pot="lp-g7">27</b><br>
+      <span class="note">Kürzen in jedem der drei Faktorpaare.</span></div>
+    </div>
+  </div>
+  <div class="card warn">
+    <strong>Kein Gesetz für Summen!</strong> a<sup>m</sup> + a<sup>n</sup> lässt sich nicht zu einer Potenz zusammenfassen. Nur gleiche Potenzen kann man addieren: 3<sup>4</sup> + 3<sup>4</sup> = 2 · 3<sup>4</sup> = <b class="r" data-pot="lp-g8">162</b>, aber <strong>nicht</strong> 3<sup>8</sup>.
+  </div>
+</section>
+
+<!-- LABOR -->
+<section id="labor">
+  <h2 class="wk">9 · Gesetze-Labor: Faktoren ausschreiben</h2>
+  <p>Wähle ein Gesetz und die Exponenten. Jedes Kästchen ist <em>ein</em> Faktor. Mit „Zusammenfassen“ siehst du, warum die Exponenten addiert, subtrahiert oder multipliziert werden. Rechts steht die Probe mit der Zahl 2 als Basis.</p>
+  <div class="card labor" id="lawCard">
+    <div class="btns" role="group" aria-label="Gesetz wählen">
+      <button type="button" data-law="mul" class="on">a<sup>m</sup> · a<sup>n</sup></button>
+      <button type="button" data-law="div">a<sup>m</sup> : a<sup>n</sup></button>
+      <button type="button" data-law="pow">(a<sup>m</sup>)<sup>n</sup></button>
+      <button type="button" data-law="same">a<sup>n</sup> · b<sup>n</sup></button>
+    </div>
+    <div class="ctrl">
+      <label id="lawMLab">m <input type="range" id="lawM" min="1" max="6" step="1" value="3"><span class="val" id="lawMv">3</span></label>
+      <label>n <input type="range" id="lawN" min="1" max="6" step="1" value="2"><span class="val" id="lawNv">2</span></label>
+    </div>
+    <div class="btns">
+      <button type="button" id="lawPlay">▶ Zusammenfassen</button>
+      <button type="button" id="lawReset">↺ Ausgangslage</button>
+    </div>
+    <div class="chips merged" id="lawChips" aria-hidden="true"></div>
+    <div class="out" id="lawOut" aria-live="polite">a³ · a² = a⁵</div>
+    <noscript><p>Für das Labor muss JavaScript aktiviert sein.</p></noscript>
+  </div>
+</section>
+
+<!-- WACHSTUM -->
+<section id="wachstum">
+  <h2 class="wk">10 · Immer wieder verdoppeln</h2>
+  <p>Wird etwas n-mal verdoppelt, wird es mit 2 · 2 · … · 2 = <strong>2<sup>n</sup></strong> multipliziert. Am Anfang wächst es langsam, dann explodiert es. Das Balkenbild zeigt jede Verdopplung im gleichen Maßstab – die frühen Balken sind am Ende kaum noch zu sehen.</p>
+  <div class="card labor anim" id="growCard">
+    <div class="btns" role="group" aria-label="Beispiel wählen">
+      <button type="button" data-grow="paper" class="on">Papier falten</button>
+      <button type="button" data-grow="bact">Bakterien</button>
+    </div>
+    <div class="btns">
+      <button type="button" id="growPlay">▶ Start</button>
+      <button type="button" id="growPrev">◀ −1</button>
+      <button type="button" id="growNext">+1 ▶</button>
+    </div>
+    <div class="scrub"><span id="growLab">Faltungen</span><input type="range" id="growRange" min="0" max="42" step="1" value="42" aria-label="Anzahl der Verdopplungen"><span id="growNum">42</span></div>
+    <svg id="growSvg" viewBox="0 0 320 170" role="img" aria-label="Balken für jede Verdopplung"></svg>
+    <div class="out" id="growOut" aria-live="polite"></div>
+    <p style="font-size:.85rem;color:var(--muted);margin:0">Papier: 0,1 mm dick, gedachtes Falten (in Wirklichkeit schafft man nur etwa 7 Faltungen). Bakterien: Kolibakterien teilen sich unter idealen Bedingungen etwa alle 20 Minuten.</p>
+    <noscript><p>Für die Animation muss JavaScript aktiviert sein.</p></noscript>
+  </div>
+  <div class="card rule wk">
+    <strong>Rechnung zum Papier:</strong>
+    <div class="calc">Dicke nach n Faltungen: d = 0,1 mm · 2<sup>n</sup><br>
+    n = 42: d = 0,1 mm · 2<sup>42</sup> ≈ <b class="r" data-pot="lp-w1">4,4 · 10<sup>11</sup></b> mm ≈ <b class="r" data-pot="lp-w2">4,4 · 10<sup>8</sup></b> m</div>
+    <p style="margin:0">Das ist mehr als die Entfernung Erde–Mond (≈ 3,8 · 10<sup>8</sup> m). Nach 41 Faltungen wären es erst ≈ <b class="r" data-pot="lp-w3">2,2 · 10<sup>8</sup></b> m.</p>
+  </div>
+</section>
+
+<!-- ANWENDUNGEN -->
+<section id="anwendungen">
+  <h2 class="wk">11 · Anwendungen</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag wk">Astronomie</span>
+      <p>Licht legt in einer Sekunde etwa 3 · 10<sup>5</sup> km zurück. Die Sonne ist etwa 1,5 · 10<sup>8</sup> km entfernt. Wie lange braucht ihr Licht zur Erde?</p>
+      <div class="calc">t = <span class="frac"><span>1,5 · 10<sup>8</sup> km</span><span>3 · 10<sup>5</sup> <span class="frac"><span>km</span><span>s</span></span></span></span> = 0,5 · 10<sup>3</sup> s = <b class="r" data-pot="lp-a1">500</b> s ≈ <b class="r" data-pot="lp-a2">8,3</b> min</div>
+    </div>
+    <div class="card">
+      <span class="tag wk">Mikrokosmos</span>
+      <p>Ein Kolibakterium ist etwa 2 · 10<sup>−6</sup> m lang. Wie viele passen hintereinander auf 1 cm?</p>
+      <div class="calc">n = <span class="frac"><span>10<sup>−2</sup> m</span><span>2 · 10<sup>−6</sup> m</span></span> = 0,5 · 10<sup>4</sup> = <b class="r" data-pot="lp-a3">5000</b></div>
+    </div>
+    <div class="card">
+      <span class="tag wk">Speichergrößen</span>
+      <p>Wie viele Fotos zu je 5 MB passen auf eine Speicherkarte mit 32 GB?</p>
+      <div class="calc">n = <span class="frac"><span>32 · 10<sup>9</sup> Byte</span><span>5 · 10<sup>6</sup> Byte</span></span> = 6,4 · 10<sup>3</sup> = <b class="r" data-pot="lp-a4">6400</b></div>
+    </div>
+    <div class="card">
+      <span class="tag wk">Bakterien</span>
+      <p>100 Bakterien verdoppeln sich jede Stunde. Wie viele sind es nach 10 Stunden?</p>
+      <div class="calc">N = 100 · 2<sup>10</sup> = 100 · 1024 = <b class="r" data-pot="lp-a5">102 400</b> ≈ <b class="r" data-pot="lp-a6">1,0 · 10<sup>5</sup></b></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEHLER -->
+<section id="fehler">
+  <h2>12 · Typische Fehler vermeiden</h2>
+  <div class="card warn">
+    <ul>
+      <li><strong>Basen multipliziert:</strong> 2<sup>3</sup> · 2<sup>4</sup> ist <strong>nicht</strong> 4<sup>7</sup>. Die Basis bleibt: 2<sup>3</sup> · 2<sup>4</sup> = 2<sup>7</sup> = <b class="r" data-pot="lp-f1">128</b>, dagegen wäre 4<sup>7</sup> = 16 384.</li>
+      <li><strong>Exponenten multipliziert statt addiert:</strong> a<sup>2</sup> · a<sup>3</sup> = a<sup>5</sup>, nicht a<sup>6</sup>. Multipliziert wird nur bei (a<sup>2</sup>)<sup>3</sup>.</li>
+      <li><strong>Exponent als Faktor gelesen:</strong> 3<sup>4</sup> = 81, nicht 3 · 4 = 12.</li>
+      <li><strong>Minuszeichen:</strong> −3<sup>2</sup> = −9, aber (−3)<sup>2</sup> = 9. Ohne Klammer gehört das Minus nicht zur Basis.</li>
+      <li><strong>Negativer Exponent für negative Zahl gehalten:</strong> 10<sup>−3</sup> = 0,001 ist positiv, nicht −1000.</li>
+      <li><strong>a<sup>0</sup> = 0 geschrieben:</strong> richtig ist a<sup>0</sup> = 1.</li>
+      <li><strong>Summen zusammengefasst:</strong> 5<sup>3</sup> + 5<sup>3</sup> = 250, nicht 5<sup>6</sup>.</li>
+      <li><strong>Wissenschaftliche Schreibweise nicht fertig:</strong> 45 · 10<sup>6</sup> ist erst richtig als 4,5 · 10<sup>7</sup>.</li>
+      <li><strong>Taschenrechner:</strong> „5 × 10 [EE] 3“ ergibt 50 000 statt 5000 – die EE-Taste ersetzt schon „· 10“.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ÜBUNGEN -->
+<section id="uebungen">
+  <h2>13 · Übungsaufgaben mit Lösungen</h2>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 1 – Potenzschreibweise</h3>
+  <div class="card">
+    <p>Schreibe als Potenz und berechne den Potenzwert.</p>
+    <p>a) 4 · 4 · 4 &nbsp;&nbsp; b) 0,5 · 0,5 &nbsp;&nbsp; c) (−3) · (−3) · (−3) · (−3)</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 4 · 4 · 4 = <b class="r" data-pot="lp-u1a">4<sup>3</sup></b> = <b class="r" data-pot="lp-u1b">64</b><br>
+        b) 0,5 · 0,5 = <b class="r" data-pot="lp-u1c">0,5<sup>2</sup></b> = <b class="r" data-pot="lp-u1d">0,25</b><br>
+        c) (−3) · (−3) · (−3) · (−3) = <b class="r" data-pot="lp-u1e">(−3)<sup>4</sup></b> = <b class="r" data-pot="lp-u1f">81</b> &nbsp;<span class="note">gerade Anzahl Minuszeichen → positiv</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 2 – Auf das Minus achten</h3>
+  <div class="card">
+    <p>a) (−4)<sup>2</sup> &nbsp;&nbsp; b) −4<sup>2</sup> &nbsp;&nbsp; c) (−4)<sup>3</sup> &nbsp;&nbsp; d) −(−4)<sup>2</sup></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (−4) · (−4) = <b class="r" data-pot="lp-u2a">16</b><br>
+        b) −(4 · 4) = <b class="r" data-pot="lp-u2b">−16</b><br>
+        c) (−4) · (−4) · (−4) = <b class="r" data-pot="lp-u2c">−64</b><br>
+        d) −(16) = <b class="r" data-pot="lp-u2d">−16</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 3 – Negative Exponenten</h3>
+  <div class="card">
+    <p>Berechne. a) 3<sup>−2</sup> als Bruch &nbsp;&nbsp; b) 10<sup>−5</sup> als Dezimalzahl &nbsp;&nbsp; c) 2<sup>−1</sup> als Dezimalzahl &nbsp;&nbsp; d) (<span class="frac"><span>1</span><span>5</span></span>)<sup>−2</sup></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 3<sup>−2</sup> = <span class="frac"><span>1</span><span>3<sup>2</sup></span></span> = <b class="r" data-pot="lp-u3a"><span class="frac"><span>1</span><span>9</span></span></b><br>
+        b) 10<sup>−5</sup> = <span class="frac"><span>1</span><span>100 000</span></span> = <b class="r" data-pot="lp-u3b">0,00001</b><br>
+        c) 2<sup>−1</sup> = <span class="frac"><span>1</span><span>2</span></span> = <b class="r" data-pot="lp-u3c">0,5</b><br>
+        d) (<span class="frac"><span>1</span><span>5</span></span>)<sup>−2</sup> = 5<sup>2</sup> = <b class="r" data-pot="lp-u3d">25</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Zehnerpotenzen</span>Aufgabe 4 – Wissenschaftliche Schreibweise</h3>
+  <div class="card">
+    <p>Schreibe a) und b) wissenschaftlich, c) und d) ohne Zehnerpotenz.</p>
+    <p>a) 602 000 000 &nbsp;&nbsp; b) 0,000045 &nbsp;&nbsp; c) 3,1 · 10<sup>6</sup> &nbsp;&nbsp; d) 8 · 10<sup>−7</sup></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Komma 8 Stellen nach links: <b class="r" data-pot="lp-u4a">6,02 · 10<sup>8</sup></b><br>
+        b) Komma 5 Stellen nach rechts: <b class="r" data-pot="lp-u4b">4,5 · 10<sup>−5</sup></b><br>
+        c) Komma 6 Stellen nach rechts: <b class="r" data-pot="lp-u4c">3 100 000</b><br>
+        d) Komma 7 Stellen nach links: <b class="r" data-pot="lp-u4d">0,0000008</b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Zehnerpotenzen</span>Aufgabe 5 – Vorsilben</h3>
+  <div class="card">
+    <p>Gib in der Grundeinheit in wissenschaftlicher Schreibweise an.</p>
+    <p>a) 12 mm in m &nbsp;&nbsp; b) 650 nm (Wellenlänge von rotem Licht) in m &nbsp;&nbsp; c) 4,5 GB in Byte &nbsp;&nbsp; d) 5 kW in W</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 12 · 10<sup>−3</sup> m = <b class="r" data-pot="lp-u5a">1,2 · 10<sup>−2</sup></b> m<br>
+        b) 650 · 10<sup>−9</sup> m = <b class="r" data-pot="lp-u5b">6,5 · 10<sup>−7</sup></b> m<br>
+        c) <b class="r" data-pot="lp-u5c">4,5 · 10<sup>9</sup></b> Byte<br>
+        d) <b class="r" data-pot="lp-u5d">5 · 10<sup>3</sup></b> W
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Potenzgesetze</span>Aufgabe 6 – Vereinfachen</h3>
+  <div class="card">
+    <p>a) a<sup>2</sup> · a<sup>7</sup> &nbsp;&nbsp; b) b<sup>8</sup> : b<sup>5</sup> &nbsp;&nbsp; c) (c<sup>4</sup>)<sup>3</sup> &nbsp;&nbsp; d) 2<sup>6</sup> · 5<sup>6</sup> &nbsp;&nbsp; e) x<sup>3</sup> · x<sup>−3</sup></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) a<sup>2 + 7</sup> = <b class="r" data-pot="lp-u6a">a<sup>9</sup></b><br>
+        b) b<sup>8 − 5</sup> = <b class="r" data-pot="lp-u6b">b<sup>3</sup></b><br>
+        c) c<sup>4 · 3</sup> = <b class="r" data-pot="lp-u6c">c<sup>12</sup></b><br>
+        d) (2 · 5)<sup>6</sup> = <b class="r" data-pot="lp-u6d">10<sup>6</sup></b><br>
+        e) x<sup>3 + (−3)</sup> = x<sup>0</sup> = <b class="r" data-pot="lp-u6e">1</b> &nbsp;<span class="note">(x ≠ 0)</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Taschenrechner</span>Aufgabe 7 – Mit Zehnerpotenzen rechnen</h3>
+  <div class="card">
+    <p>Rechne ohne Taschenrechner und kontrolliere mit der EE-Taste. Gib das Ergebnis wissenschaftlich an.</p>
+    <p>a) (2,4 · 10<sup>7</sup>) · (5 · 10<sup>−3</sup>) &nbsp;&nbsp; b) (3,6 · 10<sup>−4</sup>) : (1,2 · 10<sup>3</sup>)</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 2,4 · 5 = 12; 10<sup>7</sup> · 10<sup>−3</sup> = 10<sup>4</sup> → 12 · 10<sup>4</sup> = <b class="r" data-pot="lp-u7a">1,2 · 10<sup>5</sup></b><br>
+        b) 3,6 : 1,2 = 3; 10<sup>−4</sup> : 10<sup>3</sup> = 10<sup>−7</sup> → <b class="r" data-pot="lp-u7b">3 · 10<sup>−7</sup></b>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 8 – Bakterien im Labor</h3>
+  <div class="card">
+    <p>In einer Nährlösung sind 200 Bakterien. Ihre Anzahl verdoppelt sich alle 15 Minuten. Wie viele sind es nach 2 Stunden?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        2 Stunden = 120 min → 120 : 15 = <b class="r" data-pot="lp-u8a">8</b> Verdopplungen<br>
+        N = 200 · 2<sup>8</sup> = 200 · 256 = <b class="r" data-pot="lp-u8b">51 200</b>
+      </div>
+      <p style="margin:0">Nach 2 Stunden sind es 51 200 Bakterien.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 9 – Funkspruch zum Mond</h3>
+  <div class="card">
+    <p>Der Mond ist im Mittel 3,844 · 10<sup>5</sup> km von der Erde entfernt. Funksignale breiten sich mit etwa 3 · 10<sup>5</sup> km pro Sekunde aus. Wie lange dauert ein Funkspruch zum Mond und zurück? Runde auf Zehntelsekunden.</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        Hin und zurück: 2 · 3,844 · 10<sup>5</sup> km = 7,688 · 10<sup>5</sup> km<br>
+        t = <span class="frac"><span>7,688 · 10<sup>5</sup></span><span>3 · 10<sup>5</sup></span></span> s ≈ <b class="r" data-pot="lp-u9">2,6</b> s
+      </div>
+      <p style="margin:0">Ein Funkspruch braucht hin und zurück etwa 2,6 Sekunden.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 10 – Handyspeicher</h3>
+  <div class="card">
+    <p>Auf einem Handy sind noch 24 GB frei. Eine Minute Video braucht 150 MB. Wie viele Minuten Video passen noch darauf?</p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        n = <span class="frac"><span>24 · 10<sup>9</sup> Byte</span><span>150 · 10<sup>6</sup> Byte</span></span> = <span class="frac"><span>24 000</span><span>150</span></span> = <b class="r" data-pot="lp-u10">160</b>
+      </div>
+      <p style="margin:0">Es passen noch 160 Minuten Video auf das Handy.</p>
+    </details>
+  </div>
+</section>
+
+<!-- CHECKLISTE -->
+<section id="check">
+  <h2>14 · Checkliste: Kann ich das?</h2>
+  <div class="card">
+    <ul class="check">
+      <li><label><input type="checkbox"> Basis, Exponent und Potenzwert benennen</label></li>
+      <li><label><input type="checkbox"> Produkte gleicher Faktoren als Potenz schreiben und umgekehrt</label></li>
+      <li><label><input type="checkbox"> (−2)<sup>4</sup> und −2<sup>4</sup> unterscheiden und richtig berechnen</label></li>
+      <li><label><input type="checkbox"> Begründen, warum a<sup>0</sup> = 1 ist</label></li>
+      <li><label><input type="checkbox"> Negative Exponenten als Kehrwert schreiben (Bruch und Dezimalzahl)</label></li>
+      <li><label><input type="checkbox"> Große und kleine Zahlen in wissenschaftlicher Schreibweise angeben (1 ≤ a &lt; 10)</label></li>
+      <li><label><input type="checkbox"> Zahlen aus der wissenschaftlichen Schreibweise zurückverwandeln</label></li>
+      <li><label><input type="checkbox"> Vorsilben Giga bis Nano in Zehnerpotenzen umrechnen</label></li>
+      <li><label><input type="checkbox"> Zehnerpotenzen mit der EE- bzw. ×10<sup>x</sup>-Taste eingeben</label></li>
+      <li><label><input type="checkbox"> Potenzgesetze für gleiche Basis anwenden und herleiten</label></li>
+      <li><label><input type="checkbox"> Potenz einer Potenz und gleiche Exponenten zusammenfassen</label></li>
+      <li><label><input type="checkbox"> Typische Fehler wie 2<sup>3</sup> · 2<sup>4</sup> = 4<sup>7</sup> erkennen</label></li>
+      <li><label><input type="checkbox"> Verdopplungs-Aufgaben mit 2<sup>n</sup> lösen</label></li>
+      <li><label><input type="checkbox"> Sachaufgaben mit sehr großen oder sehr kleinen Zahlen lösen</label></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<footer><a href="../" style="color:var(--accent)">← zurück zu Mathematik</a> &nbsp;·&nbsp; <a href="../../" style="color:var(--accent)">Alle Fächer</a></footer>
+
+<script>
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SUP = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "−": "⁻", "-": "⁻" };
+  function supU(n) { return String(n).replace("-", "−").split("").map(function (c) { return SUP[c] || c; }).join(""); }
+  function minus(n) { return String(n).replace("-", "−"); }
+  // group an integer digit string in blocks of three (narrow no-break space), only for 5+ digits
+  function group(s) { return s.length < 5 ? s : s.replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
+  // scientific notation of B · 10^scale (B: BigInt > 0), mantissa rounded half up to dec decimals
+  function sci(B, scale, dec) {
+    var d = B.toString(), e = d.length - 1 + scale, k = dec + 1, q;
+    if (d.length <= k) { q = BigInt(d + "0".repeat(k - d.length)); }
+    else {
+      var p = BigInt(10) ** BigInt(d.length - k);
+      q = B / p; if ((B % p) * BigInt(2) >= p) q += BigInt(1);
+    }
+    var qs = q.toString();
+    if (qs.length > k) { qs = qs.slice(0, k); e += 1; }
+    var m = qs.charAt(0) + (dec > 0 ? "," + qs.slice(1) : "");
+    return { html: m + " · 10<sup>" + minus(e) + "</sup>" };
+  }
+  // exact decimal of B / 10 (one decimal place, trailing ,0 dropped)
+  function tenth(B) {
+    var s = B.toString(), ip = s.length > 1 ? s.slice(0, -1) : "0", last = s.slice(-1);
+    return group(ip) + (last === "0" ? "" : "," + last);
+  }
+
+  // ---------- Größenordnungs-Zoom ----------
+  var zr = document.getElementById("zoomRange"), zOut = document.getElementById("zoomOut");
+  var rows = Array.prototype.slice.call(document.querySelectorAll("#zoomTab tr[data-e]"));
+  var zRow = document.querySelector("#zoomSvg .zrow"), NS = "http://www.w3.org/2000/svg";
+  for (var i = 0; i < 10; i++) {
+    var r = document.createElementNS(NS, "rect");
+    r.setAttribute("x", 20 + 20 * i); r.setAttribute("y", 200); r.setAttribute("width", 20); r.setAttribute("height", 20);
+    zRow.appendChild(r);
+  }
+  var zPlay = document.getElementById("zoomPlay"), zTimer = null;
+  function zShow(k) {
+    k = Math.max(-9, Math.min(9, k));
+    zr.value = k;
+    var row = rows.filter(function (t) { return +t.getAttribute("data-e") === k; })[0];
+    rows.forEach(function (t) { t.classList.toggle("cur", t === row); });
+    var c = row.cells;
+    document.getElementById("zoomBigLab").textContent = "10" + supU(k) + " m";
+    document.getElementById("zoomSmallLab").textContent = "10" + supU(k - 1) + " m";
+    zOut.innerHTML = "10<sup>" + minus(k) + "</sup> m = " + c[1].innerHTML + " (" + c[2].innerHTML + ")<br>Beispiel: " + c[3].innerHTML;
+  }
+  function zStop() { clearInterval(zTimer); zTimer = null; zPlay.textContent = "▶ Start"; }
+  zPlay.addEventListener("click", function () {
+    if (zTimer) { zStop(); return; }
+    if (reduce) { zShow(9); return; }
+    if (+zr.value >= 9) zShow(-9);
+    zPlay.textContent = "⏸ Pause";
+    zTimer = setInterval(function () { if (+zr.value >= 9) { zStop(); return; } zShow(+zr.value + 1); }, 1500);
+  });
+  document.getElementById("zoomDown").addEventListener("click", function () { zStop(); zShow(+zr.value - 1); });
+  document.getElementById("zoomUp").addEventListener("click", function () { zStop(); zShow(+zr.value + 1); });
+  zr.addEventListener("input", function () { zStop(); zShow(+zr.value); });
+  zShow(0);
+
+  // ---------- Gesetze-Labor ----------
+  var chips = document.getElementById("lawChips"), lOut = document.getElementById("lawOut");
+  var lm = document.getElementById("lawM"), ln = document.getElementById("lawN");
+  var law = "mul", merged = true;
+  function chip(t, k, crossed) { return '<span class="c ' + k + (crossed ? " x" : "") + '">' + t + "</span>"; }
+  function chipsOf(n, t, k, crossFrom) {
+    var s = "";
+    for (var j = 0; j < n; j++) s += chip(t, k, crossFrom !== undefined && j < crossFrom);
+    return s;
+  }
+  function pw(b, e) { return b + "<sup>" + minus(e) + "</sup>"; }
+  function frac(a, b) { return '<span class="frac"><span>' + a + "</span><span>" + b + "</span></span>"; }
+  function render() {
+    var m = +lm.value, n = +ln.value, h = "", o = "";
+    document.getElementById("lawMv").textContent = m;
+    document.getElementById("lawNv").textContent = n;
+    document.getElementById("lawMLab").style.visibility = law === "same" ? "hidden" : "";
+    var two = function (e) { return Math.pow(2, e); };
+    if (law === "mul") {
+      h = '<span class="grp">' + chipsOf(m, "a", "k1") + '</span><span class="op join">·</span><span class="grp">' + chipsOf(n, "a", "k2") + "</span>";
+      o = pw("a", m) + " · " + pw("a", n) + " = " + pw("a", m + " + " + n) + " = " + pw("a", m + n) +
+        "<br>Probe mit a = 2: " + two(m) + " · " + two(n) + " = " + two(m + n) + " = " + pw("2", m + n);
+    } else if (law === "div") {
+      var c = Math.min(m, n);
+      h = '<span class="frow"><span class="grp">' + chipsOf(m, "a", "k1", c) + (m === c ? '<span class="op">1</span>' : "") +
+        '</span><span class="bar"></span><span class="grp">' + chipsOf(n, "a", "k2", c) + (n === c ? '<span class="op">1</span>' : "") + "</span></span>";
+      var res = m - n;
+      o = pw("a", m) + " : " + pw("a", n) + " = " + pw("a", m + " − " + n) + " = " + pw("a", res) +
+        (res === 0 ? " = 1" : res < 0 ? " = " + frac("1", pw("a", -res)) : "") +
+        " &nbsp;(" + c + (c === 1 ? " Faktor kürzt" : " Faktoren kürzen") + " sich weg)" +
+        "<br>Probe mit a = 2: " + two(m) + " : " + two(n) + " = " + (res >= 0 ? two(res) : frac("1", two(-res))) + " = " + pw("2", res);
+    } else if (law === "pow") {
+      for (var g = 0; g < n; g++) h += (g ? '<span class="op join">·</span>' : "") + '<span class="grp">' + chipsOf(m, "a", g % 2 ? "k2" : "k1") + "</span>";
+      o = "(" + pw("a", m) + ")<sup>" + n + "</sup> = " + pw("a", m + " · " + n) + " = " + pw("a", m * n) +
+        " &nbsp;(" + n + (n === 1 ? " Gruppe" : " Gruppen") + " mit je " + m + (m === 1 ? " Faktor)" : " Faktoren)") +
+        "<br>Probe mit a = 2: " + two(m) + "<sup>" + n + "</sup> = " + two(m * n) + " = " + pw("2", m * n);
+    } else {
+      if (merged) {
+        for (var p = 0; p < n; p++) h += (p ? '<span class="op">·</span>' : "") + '<span class="pair">' + chip("a", "k1") + chip("b", "k2") + "</span>";
+      } else {
+        h = '<span class="grp">' + chipsOf(n, "a", "k1") + '</span><span class="op join">·</span><span class="grp">' + chipsOf(n, "b", "k2") + "</span>";
+      }
+      o = pw("a", n) + " · " + pw("b", n) + " = (a · b)<sup>" + n + "</sup> &nbsp;(" + n + (n === 1 ? " Paar" : " Paare") + " a · b)" +
+        "<br>Probe mit a = 2, b = 5: " + two(n) + " · " + Math.pow(5, n) + " = " + Math.pow(10, n) + " = " + pw("10", n);
+    }
+    chips.innerHTML = h;
+    lOut.innerHTML = o;
+  }
+  function setMerged(v) {
+    merged = v;
+    if (law === "same") render();
+    chips.classList.toggle("merged", v);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-law]"), function (b) {
+    b.addEventListener("click", function () {
+      law = b.getAttribute("data-law");
+      Array.prototype.forEach.call(document.querySelectorAll("[data-law]"), function (x) { x.classList.toggle("on", x === b); });
+      render();
+    });
+  });
+  [lm, ln].forEach(function (x) { x.addEventListener("input", render); });
+  document.getElementById("lawPlay").addEventListener("click", function () {
+    if (reduce) { setMerged(true); return; }
+    setMerged(false);
+    render();
+    setTimeout(function () { setMerged(true); }, 700);
+  });
+  document.getElementById("lawReset").addEventListener("click", function () { setMerged(false); render(); });
+  render();
+
+  // ---------- Verdoppeln ----------
+  var gr = document.getElementById("growRange"), gOut = document.getElementById("growOut"), gSvg = document.getElementById("growSvg");
+  var gPlay = document.getElementById("growPlay"), gTimer = null, mode = "paper";
+  var MODES = { paper: { max: 42, lab: "Faltungen" }, bact: { max: 72, lab: "Verdopplungen" } };
+  // landmarks in metres for the paper stack
+  var MARKS = [[0.75, "eine Tischhöhe (0,75 m)"], [1.6, "ein Schüler (1,6 m)"], [12, "ein dreistöckiges Schulhaus (≈ 12 m)"],
+    [1141, "der Brocken (1141 m)"], [8849, "der Mount Everest (8849 m)"], [400000, "die Flughöhe der ISS (≈ 400 km)"],
+    [384400000, "die Entfernung zum Mond (≈ 384 400 km)"]];
+  function gShow(n) {
+    var M = MODES[mode];
+    n = Math.max(0, Math.min(M.max, n));
+    gr.max = M.max; gr.value = n;
+    document.getElementById("growNum").textContent = n;
+    document.getElementById("growLab").textContent = M.lab;
+    var B = BigInt(2) ** BigInt(n);
+    if (mode === "paper") {
+      var mm = tenth(B), s = sci(B, -4, 1), metres = Number(B) / 10000;
+      var above = MARKS.filter(function (x) { return metres > x[0]; }).pop();
+      gOut.innerHTML = "Nach " + n + (n === 1 ? " Faltung" : " Faltungen") + ": d = 0,1 mm · 2<sup>" + n + "</sup> = " + mm + " mm" +
+        (n >= 14 ? " ≈ " + s.html + " m" : "") + "<br>" +
+        (above ? "Der Stapel ist höher als " + above[1] + "." : "Der Stapel ist noch niedriger als eine Tischhöhe.");
+    } else {
+      var t = n * 20, hh = Math.floor(t / 60), mi = t % 60, s2 = sci(B, 0, 1);
+      gOut.innerHTML = "Nach " + n + (n === 1 ? " Verdopplung (" : " Verdopplungen (") + hh + " h " + mi + " min): 2<sup>" + n + "</sup> = " + group(B.toString()) +
+        (n >= 14 ? " ≈ " + s2.html : "") + (n === 0 ? " Bakterium" : " Bakterien") + " aus einem einzigen";
+    }
+    // linear bars: bar k has height 2^(k−n) of the last bar
+    var W = 320, H = 150, bw = W / (M.max + 1), out = "";
+    for (var k = 0; k <= n; k++) {
+      var h = Math.max(H * Math.pow(2, k - n), k === n ? 1 : 0);
+      out += '<rect class="gb' + (k === n ? " last" : "") + '" x="' + (k * bw + 0.5).toFixed(2) + '" y="' + (H - h + 10).toFixed(2) +
+        '" width="' + Math.max(bw - 1, 1).toFixed(2) + '" height="' + h.toFixed(2) + '"/>';
+    }
+    out += '<line class="ax" x1="0" y1="' + (H + 10) + '" x2="' + W + '" y2="' + (H + 10) + '"/>';
+    out += '<text x="2" y="' + (H + 24) + '" font-size="10">0</text><text x="' + (W - 2) + '" y="' + (H + 24) + '" font-size="10" text-anchor="end">' + M.max + "</text>";
+    gSvg.setAttribute("viewBox", "0 0 " + W + " " + (H + 28));
+    gSvg.innerHTML = out;
+  }
+  function gStop() { clearInterval(gTimer); gTimer = null; gPlay.textContent = "▶ Start"; }
+  gPlay.addEventListener("click", function () {
+    if (gTimer) { gStop(); return; }
+    var M = MODES[mode];
+    if (reduce) { gShow(M.max); return; }
+    if (+gr.value >= M.max) gShow(0);
+    gPlay.textContent = "⏸ Pause";
+    gTimer = setInterval(function () { if (+gr.value >= M.max) { gStop(); return; } gShow(+gr.value + 1); }, 400);
+  });
+  document.getElementById("growPrev").addEventListener("click", function () { gStop(); gShow(+gr.value - 1); });
+  document.getElementById("growNext").addEventListener("click", function () { gStop(); gShow(+gr.value + 1); });
+  gr.addEventListener("input", function () { gStop(); gShow(+gr.value); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-grow]"), function (b) {
+    b.addEventListener("click", function () {
+      gStop();
+      mode = b.getAttribute("data-grow");
+      Array.prototype.forEach.call(document.querySelectorAll("[data-grow]"), function (x) { x.classList.toggle("on", x === b); });
+      gShow(MODES[mode].max);
+    });
+  });
+  gShow(42);
+
+  // print shows the end state of every widget
+  window.addEventListener("beforeprint", function () {
+    zStop(); gStop();
+    setMerged(true); render();
+    gShow(MODES[mode].max);
+  });
+})();
+</script>
+</body>
+</html>

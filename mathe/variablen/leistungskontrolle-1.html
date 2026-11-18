@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leistungskontrolle 1 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75;overflow-wrap:anywhere}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+.box{display:inline-block;min-width:2.2em;border-bottom:2px solid var(--muted);text-align:center}
+.keynote{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+svg .cell{stroke:var(--text);stroke-width:1.5}
+svg .c1{fill:var(--accent-soft)} svg .c2{fill:var(--stat-soft)} svg .c3{fill:var(--wk-soft)}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Arbeiten mit Variablen</a> › <span>Leistungskontrolle 1</span></div>
+  <h1>Leistungskontrolle 1 · Mathematik Klasse 9</h1>
+  <p>Arbeiten mit Variablen · Terme umformen: zusammenfassen, ausmultiplizieren, Minusklammern, ausklammern</p>
+</header>
+
+<main>
+<!-- LEISTUNGSKONTROLLE -->
+<section id="lk">
+  <h2>Leistungskontrolle 1</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 20 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> keine &nbsp;·&nbsp; <strong>Gesamt:</strong> 18 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 1 – Zusammenfassen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="lk1-a1">
+    <p>Fasse so weit wie möglich zusammen.</p>
+    <p>a) 7x − 3y + 2x + 5y <em>(1 P.)</em> &nbsp;&nbsp; b) 4a² + 3a − a² − 5a <em>(1 P.)</em><br>
+    c) 3x · (−4y) <em>(1 P.)</em> &nbsp;&nbsp; d) 2ab + 5a · 3b − ab <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (7 + 2)x + (−3 + 5)y = <strong>9x + 2y</strong><br>
+        b) (4 − 1)a² + (3 − 5)a = <strong>3a² − 2a</strong> &nbsp;<span class="note">a² und a nicht zusammenfassen</span><br>
+        c) 3 · (−4) · x · y = <strong>−12xy</strong><br>
+        d) 2ab + 15ab − ab = <strong>16ab</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 2 – Ausmultiplizieren <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-var="lk1-a2">
+    <p>a) 6(3x − 2) <em>(1 P.)</em> &nbsp;&nbsp; b) −5(2a + 3b − 1) <em>(2 P.)</em> &nbsp;&nbsp; c) 4x(2x − 7y) <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 6 · 3x − 6 · 2 = <strong>18x − 12</strong><br>
+        b) −5 · 2a − 5 · 3b − 5 · (−1) = <strong>−10a − 15b + 5</strong><br>
+        c) 4x · 2x − 4x · 7y = <strong>8x² − 28xy</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 3 – Klammern auflösen und zusammenfassen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-var="lk1-a3">
+    <p>a) 15 − (6x − 4) <em>(1 P.)</em><br>
+    b) 3a − (5a − 2b) + (a − 4b) <em>(2 P.)</em><br>
+    c) 4(x + 3) − 2(3x − 5) <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 15 − 6x + 4 = <strong>19 − 6x</strong><br>
+        b) 3a − 5a + 2b + a − 4b = <strong>−a − 2b</strong><br>
+        c) 4x + 12 − 6x + 10 = <strong>−2x + 22</strong> &nbsp;<span class="note">−2 · (−5) = +10</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Terme</span>Aufgabe 4 – Ausklammern <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-var="lk1-a4">
+    <p>Klammere den größten gemeinsamen Faktor aus.</p>
+    <p>a) 9x + 21 <em>(1 P.)</em> &nbsp;&nbsp; b) 8a² − 12ab <em>(1 P.)</em> &nbsp;&nbsp; c) 5xy − 5x <em>(1 P.)</em> &nbsp;&nbsp; d) −6m − 18 <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) <strong>3(3x + 7)</strong><br>
+        b) <strong>4a(2a − 3b)</strong><br>
+        c) <strong>5x(y − 1)</strong> &nbsp;<span class="note">die 1 bleibt in der Klammer</span><br>
+        d) <strong>−6(m + 3)</strong> &nbsp;<span class="note">auch 6(−m − 3) ist richtig</span>
+      </div>
+    </details>
+  </div>
+
+<h3>Notenschlüssel (Beispiel)</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>18–17</td><td>16–14</td><td>13–11</td><td>10–8</td><td>7–4</td><td>3–0</td></tr>
+  </table></div>
+  <p class="keynote">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

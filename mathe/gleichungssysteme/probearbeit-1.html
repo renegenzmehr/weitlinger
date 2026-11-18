@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 1 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Lineare Gleichungssysteme</a> › <span>Probearbeit 1</span></div>
+  <h1>Probearbeit 1 · Mathematik Klasse 9</h1>
+  <p>Lineare Gleichungssysteme</p>
+</header>
+
+<main>
+<!-- PROBEARBEIT -->
+<section id="probearbeit">
+  <h2>Probearbeit 1</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, Geodreieck &nbsp;·&nbsp; <strong>Gesamt:</strong> 44 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag stat">Grundlagen</span>Aufgabe 1 – Zahlenpaare <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-lgs="pa1-a1">
+    <div class="sys"><span class="g1">(I)</span><span>3x + y = 11</span><span class="g2">(II)</span><span>x − 2y = −1</span></div>
+    <p>a) Prüfe für die Zahlenpaare (2; 5), (3; 2) und (4; −1), ob sie Gleichung (I) und Gleichung (II) erfüllen. <em>(3 P.)</em><br>
+    b) Welches Zahlenpaar ist Lösung des Gleichungssystems? Begründe. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table>
+        <tr><th>Paar</th><th>(I) 3x + y = 11</th><th>(II) x − 2y = −1</th></tr>
+        <tr><td>(2; 5)</td><td>6 + 5 = 11 ✓</td><td>2 − 10 = −8 ✗</td></tr>
+        <tr><td>(3; 2)</td><td>9 + 2 = 11 ✓</td><td>3 − 4 = −1 ✓</td></tr>
+        <tr><td>(4; −1)</td><td>12 − 1 = 11 ✓</td><td>4 + 2 = 6 ✗</td></tr>
+      </table></div>
+      <p style="margin:0">b) <strong>(3; 2)</strong> ist die Lösung, weil nur dieses Paar <em>beide</em> Gleichungen erfüllt. L = {(3; 2)}</p>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grafisch</span>Aufgabe 2 – Grafisch lösen <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card" data-lgs="pa1-a2">
+    <div class="sys"><span class="g1">(I)</span><span>y = 2x − 3</span><span class="g2">(II)</span><span>x + y = 6</span></div>
+    <p>a) Stelle Gleichung (II) nach y um. <em>(1 P.)</em><br>
+    b) Zeichne beide Geraden in ein Koordinatensystem. <em>(4 P.)</em><br>
+    c) Lies die Lösung ab und mache die Probe. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) x + y = 6 &nbsp;| − x → <strong>y = −x + 6</strong></p>
+      <p>b) (I): Start (0; −3), 1 nach rechts, 2 nach oben. (II): Start (0; 6), 1 nach rechts, 1 nach unten.</p>
+      <svg viewBox="0 0 288 378" style="max-width:420px" role="img" aria-label="Geraden y = 2x − 3 und y = −x + 6 mit Schnittpunkt S(3; 3)" data-svg="pa1-a2" data-o="54,234" data-u="30">
+  <g><line class="grid" x1="24" y1="354" x2="24" y2="24"/><line class="grid" x1="54" y1="354" x2="54" y2="24"/><line class="grid" x1="84" y1="354" x2="84" y2="24"/><line class="grid" x1="114" y1="354" x2="114" y2="24"/><line class="grid" x1="144" y1="354" x2="144" y2="24"/><line class="grid" x1="174" y1="354" x2="174" y2="24"/><line class="grid" x1="204" y1="354" x2="204" y2="24"/><line class="grid" x1="234" y1="354" x2="234" y2="24"/><line class="grid" x1="264" y1="354" x2="264" y2="24"/><line class="grid" x1="24" y1="354" x2="264" y2="354"/><line class="grid" x1="24" y1="324" x2="264" y2="324"/><line class="grid" x1="24" y1="294" x2="264" y2="294"/><line class="grid" x1="24" y1="264" x2="264" y2="264"/><line class="grid" x1="24" y1="234" x2="264" y2="234"/><line class="grid" x1="24" y1="204" x2="264" y2="204"/><line class="grid" x1="24" y1="174" x2="264" y2="174"/><line class="grid" x1="24" y1="144" x2="264" y2="144"/><line class="grid" x1="24" y1="114" x2="264" y2="114"/><line class="grid" x1="24" y1="84" x2="264" y2="84"/><line class="grid" x1="24" y1="54" x2="264" y2="54"/><line class="grid" x1="24" y1="24" x2="264" y2="24"/></g>
+  <line class="ax" x1="24" y1="234" x2="274" y2="234"/><line class="ax" x1="54" y1="354" x2="54" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="248">−1</text><text x="84" y="248">1</text><text x="114" y="248">2</text><text x="144" y="248">3</text><text x="174" y="248">4</text><text x="204" y="248">5</text><text x="234" y="248">6</text><text x="264" y="248">7</text></g>
+  <g font-size="11" text-anchor="end"><text x="49" y="358">−4</text><text x="49" y="328">−3</text><text x="49" y="298">−2</text><text x="49" y="268">−1</text><text x="49" y="208">1</text><text x="49" y="178">2</text><text x="49" y="148">3</text><text x="49" y="118">4</text><text x="49" y="88">5</text><text x="49" y="58">6</text><text x="49" y="28">7</text><text x="49" y="248">0</text></g>
+  <text x="270" y="228" font-size="13" font-style="italic">x</text><text x="60" y="22" font-size="13" font-style="italic">y</text>
+  <line class="gI" x1="39" y1="354" x2="204" y2="24"/>
+  <text x="204" y="16" font-size="13" font-weight="700" fill="var(--g1)" style="fill:var(--g1)">I</text>
+  <line class="gII" x1="24" y1="24" x2="264" y2="264"/>
+  <text x="246" y="280" font-size="13" font-weight="700" fill="var(--g2)" style="fill:var(--g2)">II</text>
+  <circle class="sp" cx="144" cy="144" r="4.5"/>
+  <text x="152" y="136" font-size="13" font-weight="700">S(3; 3)</text>
+</svg>
+      <div class="calc">c) S(3; 3). Probe (I): 2 · 3 − 3 = 3 ✓ &nbsp; (II): 3 + 3 = 6 ✓ → <strong>L = {(3; 3)}</strong></div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grafisch</span>Aufgabe 3 – Lösbarkeit <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-lgs="pa1-a3a pa1-a3b">
+    <p>Forme beide Gleichungen in die Form y = mx + n um und entscheide, wie viele Lösungen das System hat.</p>
+    <p>a) (I) y = −x + 2, &nbsp;(II) 3x + 3y = 6 <em>(2 P.)</em><br>
+    b) (I) 2x − y = 4, &nbsp;(II) y = 2x + 1 <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (II): 3y = −3x + 6 &nbsp;<span class="note">| : 3</span> → y = −x + 2. Gleich wie (I) → identische Geraden → <strong>unendlich viele Lösungen</strong>, L = {(x; y) | y = −x + 2}<br>
+        b) (I): −y = −2x + 4 &nbsp;<span class="note">| · (−1)</span> → y = 2x − 4. Gleicher Anstieg 2, verschiedene n (−4 und 1) → parallel → <strong>keine Lösung</strong>, L = { }<br>
+        <span class="note">Rechnerisch: 2x − 4 = 2x + 1 → −4 = 1, falsche Aussage.</span>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rechnerisch</span>Aufgabe 4 – Gleichsetzungsverfahren <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-lgs="pa1-a4">
+    <div class="sys"><span class="g1">(I)</span><span>y = 3x − 7</span><span class="g2">(II)</span><span>y = −2x + 18</span></div>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        3x − 7 = −2x + 18 &nbsp;<span class="note">| + 2x</span><br>
+        5x − 7 = 18 &nbsp;<span class="note">| + 7</span><br>
+        5x = 25 &nbsp;<span class="note">| : 5</span> → x = 5<br>
+        in (I): y = 3 · 5 − 7 = 8<br>
+        Probe (II): −2 · 5 + 18 = 8 ✓ → <strong>L = {(5; 8)}</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rechnerisch</span>Aufgabe 5 – Einsetzungsverfahren <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-lgs="pa1-a5">
+    <div class="sys"><span class="g1">(I)</span><span>x = y + 4</span><span class="g2">(II)</span><span>3x − 2y = 17</span></div>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        (I) in (II): 3 · (y + 4) − 2y = 17<br>
+        3y + 12 − 2y = 17<br>
+        y + 12 = 17 &nbsp;<span class="note">| − 12</span> → y = 5<br>
+        in (I): x = 5 + 4 = 9<br>
+        Probe (II): 3 · 9 − 2 · 5 = 27 − 10 = 17 ✓ → <strong>L = {(9; 5)}</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rechnerisch</span>Aufgabe 6 – Additionsverfahren <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-lgs="pa1-a6">
+    <div class="sys"><span class="g1">(I)</span><span>3x + 2y = 7</span><span class="g2">(II)</span><span>4x − 3y = −19</span></div>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        Ziel: y fällt weg (2 und −3 → beide auf 6 bringen).<br>
+        (I) · 3: &nbsp;9x + 6y = 21<br>
+        (II) · 2: 8x − 6y = −38<br>
+        addieren: 17x = −17 &nbsp;<span class="note">| : 17</span> → x = −1<br>
+        in (I): −3 + 2y = 7 &nbsp;<span class="note">| + 3</span> → 2y = 10 → y = 5<br>
+        Probe (II): 4 · (−1) − 3 · 5 = −4 − 15 = −19 ✓ → <strong>L = {(−1; 5)}</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 7 – Eintritt im Freibad <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-lgs="pa1-a7">
+    <p>Familie Krüger (2 Erwachsene, 3 Kinder) zahlt im Freibad 19 € Eintritt. Familie Bauer (1 Erwachsener, 4 Kinder) zahlt 17 €.</p>
+    <p>a) Lege Variablen fest und stelle ein Gleichungssystem auf. <em>(2 P.)</em><br>
+    b) Berechne die Eintrittspreise. <em>(3 P.)</em><br>
+    c) Schreibe einen Antwortsatz. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) E = Eintritt für einen Erwachsenen in €, K = Eintritt für ein Kind in €<br>
+        (I) 2E + 3K = 19 &nbsp;&nbsp; (II) E + 4K = 17<br>
+        b) (II) nach E umstellen: E = 17 − 4K<br>
+        in (I): 2 · (17 − 4K) + 3K = 19 → 34 − 8K + 3K = 19 → 34 − 5K = 19 &nbsp;<span class="note">| − 34</span><br>
+        −5K = −15 &nbsp;<span class="note">| : (−5)</span> → K = 3; E = 17 − 4 · 3 = 5<br>
+        Probe am Text: 2 · 5 + 3 · 3 = 10 + 9 = 19 ✓ &nbsp; 5 + 4 · 3 = 17 ✓
+      </div>
+      <p style="margin:0">c) Ein Erwachsener zahlt 5 €, ein Kind 3 € Eintritt.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 8 – Fahrradverleih <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card" data-lgs="pa1-a8">
+    <p>Verleih A verlangt 8 € Grundgebühr und 2 € pro Stunde. Verleih B verlangt 4 € pro Stunde ohne Grundgebühr.</p>
+    <p>a) Stelle für beide Verleihe eine Gleichung auf (x = Mietdauer in Stunden, y = Kosten in €). <em>(2 P.)</em><br>
+    b) Berechne, bei welcher Mietdauer beide Verleihe gleich viel kosten. <em>(3 P.)</em><br>
+    c) Welcher Verleih ist für 6 Stunden günstiger? Um wie viel? <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) A: y = 2x + 8 &nbsp;&nbsp; B: y = 4x<br>
+        b) 2x + 8 = 4x &nbsp;<span class="note">| − 2x</span> → 8 = 2x &nbsp;<span class="note">| : 2</span> → x = 4; y = 4 · 4 = 16<br>
+        Probe A: 2 · 4 + 8 = 16 ✓ → Bei 4 Stunden kosten beide 16 €.<br>
+        c) A: 2 · 6 + 8 = 20 € &nbsp;&nbsp; B: 4 · 6 = 24 €
+      </div>
+      <p style="margin:0">Für 6 Stunden ist Verleih A um 4 € günstiger.</p>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>44–41</td><td>40–33</td><td>32–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

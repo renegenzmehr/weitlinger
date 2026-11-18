@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probearbeit 3 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.g1{color:var(--g1);font-weight:700} .g2{color:var(--g2);font-weight:700}
+.sys{display:inline-grid;grid-template-columns:auto auto;gap:2px 12px;align-items:baseline;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.12rem;padding:4px 14px;margin:4px 0;border-left:3px solid var(--line)}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg .gI{stroke:var(--g1);stroke-width:2.5;stroke-linecap:round}
+svg .gII{stroke:var(--g2);stroke-width:2.5;stroke-linecap:round}
+svg .gII.same{stroke-dasharray:8 7}
+svg .sp{fill:var(--text)}
+svg .tri{fill:var(--warn-soft);stroke:none}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Lineare Gleichungssysteme</a> › <span>Probearbeit 3</span></div>
+  <h1>Probearbeit 3 · Mathematik Klasse 9 <span class="niveau schwer">🔥 Niveau: Schwer</span></h1>
+  <p>Lineare Gleichungssysteme</p>
+</header>
+
+<main>
+<section>
+  <div class="card" style="border-left:5px solid #c53030">
+    <p style="margin:0"><strong>🔥 Achtung, diese Arbeit ist deutlich schwerer als eine normale Klassenarbeit.</strong>
+    Sie enthält Gleichungen mit Klammern und Brüchen, Parameter, Rätsel zum Übersetzen und Aufgaben zum Begründen. Nimm sie dir erst vor, wenn die Probearbeiten 1 und 2 gut klappen.</p>
+  </div>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 45 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, Geodreieck &nbsp;·&nbsp; <strong>Gesamt:</strong> 45 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag wk">Rechnerisch</span>Aufgabe 1 – Erst vereinfachen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-lgs="pa3-a1">
+    <div class="sys"><span class="g1">(I)</span><span>2(x + 3) − y = 9</span><span class="g2">(II)</span><span><span class="frac"><span>x</span><span>2</span></span> + <span class="frac"><span>y</span><span>5</span></span> = 3</span></div>
+    <p>a) Forme beide Gleichungen in die Form ax + by = c um (ohne Klammern und Brüche). <em>(2 P.)</em><br>
+    b) Löse das Gleichungssystem und mache die Probe mit den Ausgangsgleichungen. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (I): 2x + 6 − y = 9 &nbsp;<span class="note">| − 6</span> → 2x − y = 3<br>
+        (II): mit 10 multiplizieren (Hauptnenner): 5x + 2y = 30<br>
+        b) (I) · 2: 4x − 2y = 6<br>
+        + (II): &nbsp;5x + 2y = 30<br>
+        9x = 36 &nbsp;<span class="note">| : 9</span> → x = 4<br>
+        in 2x − y = 3: 8 − y = 3 → y = 5<br>
+        Probe (I): 2 · (4 + 3) − 5 = 14 − 5 = 9 ✓ &nbsp; (II): 4 : 2 + 5 : 5 = 2 + 1 = 3 ✓ → <strong>L = {(4; 5)}</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Lösbarkeit</span>Aufgabe 2 – Parameter <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-lgs="pa3-a2a pa3-a2b pa3-a2c">
+    <div class="sys"><span class="g1">(I)</span><span>y = a · x + b</span><span class="g2">(II)</span><span>4x − 2y = 2</span></div>
+    <p>a) Wähle Zahlen für a und b so, dass das System <strong>keine</strong> Lösung hat. Begründe. <em>(2 P.)</em><br>
+    b) Für welche Werte von a und b hat das System <strong>unendlich viele</strong> Lösungen? <em>(2 P.)</em><br>
+    c) Berechne die Lösung für a = 0 und b = 3. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        (II) umstellen: −2y = −4x + 2 &nbsp;<span class="note">| : (−2)</span> → y = 2x − 1<br>
+        a) a = 2 und b ≠ −1, z. B. b = 3: gleicher Anstieg 2, anderer y-Achsenabschnitt → parallel → keine Lösung<br>
+        b) a = 2 und b = −1: beide Gleichungen beschreiben dieselbe Gerade y = 2x − 1<br>
+        c) (I): y = 3. In (II): 4x − 2 · 3 = 2 → 4x − 6 = 2 → 4x = 8 → x = 2<br>
+        Probe (II): 4 · 2 − 2 · 3 = 8 − 6 = 2 ✓ → <strong>L = {(2; 3)}</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Grafisch</span>Aufgabe 3 – Dreieck zwischen zwei Geraden <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-lgs="pa3-a3 pa3-a3g pa3-a3h">
+    <p>Die Geraden <strong>g: y = x + 1</strong> und <strong>h: y = −0,5x + 4</strong> schließen mit der x-Achse ein Dreieck ein (1 Längeneinheit = 1 cm).</p>
+    <p>a) Berechne den Schnittpunkt S von g und h. <em>(2 P.)</em><br>
+    b) Berechne die Schnittpunkte von g und h mit der x-Achse. <em>(2 P.)</em><br>
+    c) Berechne den Flächeninhalt des Dreiecks. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) x + 1 = −0,5x + 4 &nbsp;<span class="note">| + 0,5x | − 1</span> → 1,5x = 3 &nbsp;<span class="note">| : 1,5</span> → x = 2; y = 2 + 1 = 3 → S(2; 3)<br>
+        Probe h: −0,5 · 2 + 4 = 3 ✓<br>
+        b) g: 0 = x + 1 → x = −1 → N<sub>g</sub>(−1; 0) &nbsp;&nbsp; h: 0 = −0,5x + 4 → 0,5x = 4 → x = 8 → N<sub>h</sub>(8; 0)<br>
+        c) Grundseite auf der x-Achse: 8 − (−1) = 9 cm; Höhe = y-Wert von S = 3 cm<br>
+        A = ½ · Grundseite · Höhe = ½ · 9 cm · 3 cm = <strong>13,5 cm²</strong>
+      </div>
+      <svg viewBox="0 0 378 228" style="max-width:420px" role="img" aria-label="Dreieck aus den Geraden g und h und der x-Achse" data-svg="pa3-a3" data-o="84,174" data-u="30">
+  <g><line class="grid" x1="24" y1="204" x2="24" y2="24"/><line class="grid" x1="54" y1="204" x2="54" y2="24"/><line class="grid" x1="84" y1="204" x2="84" y2="24"/><line class="grid" x1="114" y1="204" x2="114" y2="24"/><line class="grid" x1="144" y1="204" x2="144" y2="24"/><line class="grid" x1="174" y1="204" x2="174" y2="24"/><line class="grid" x1="204" y1="204" x2="204" y2="24"/><line class="grid" x1="234" y1="204" x2="234" y2="24"/><line class="grid" x1="264" y1="204" x2="264" y2="24"/><line class="grid" x1="294" y1="204" x2="294" y2="24"/><line class="grid" x1="324" y1="204" x2="324" y2="24"/><line class="grid" x1="354" y1="204" x2="354" y2="24"/><line class="grid" x1="24" y1="204" x2="354" y2="204"/><line class="grid" x1="24" y1="174" x2="354" y2="174"/><line class="grid" x1="24" y1="144" x2="354" y2="144"/><line class="grid" x1="24" y1="114" x2="354" y2="114"/><line class="grid" x1="24" y1="84" x2="354" y2="84"/><line class="grid" x1="24" y1="54" x2="354" y2="54"/><line class="grid" x1="24" y1="24" x2="354" y2="24"/></g>
+  <line class="ax" x1="24" y1="174" x2="364" y2="174"/><line class="ax" x1="84" y1="204" x2="84" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="188">−2</text><text x="54" y="188">−1</text><text x="114" y="188">1</text><text x="144" y="188">2</text><text x="174" y="188">3</text><text x="204" y="188">4</text><text x="234" y="188">5</text><text x="264" y="188">6</text><text x="294" y="188">7</text><text x="324" y="188">8</text><text x="354" y="188">9</text></g>
+  <g font-size="11" text-anchor="end"><text x="79" y="208">−1</text><text x="79" y="148">1</text><text x="79" y="118">2</text><text x="79" y="88">3</text><text x="79" y="58">4</text><text x="79" y="28">5</text><text x="79" y="188">0</text></g>
+  <text x="360" y="168" font-size="13" font-style="italic">x</text><text x="90" y="22" font-size="13" font-style="italic">y</text>
+  <polygon class="tri" points="54,174 324,174 144,84"/>
+  <line class="gI" x1="24" y1="204" x2="204" y2="24"/>
+  <text x="204" y="16" font-size="13" font-weight="700" fill="var(--g1)" style="fill:var(--g1)">g</text>
+  <line class="gII" x1="24" y1="24" x2="354" y2="189"/>
+  <text x="336" y="205" font-size="13" font-weight="700" fill="var(--g2)" style="fill:var(--g2)">h</text>
+  <circle class="sp" cx="144" cy="84" r="4.5"/>
+  <text x="152" y="76" font-size="13" font-weight="700">S(2; 3)</text>
+</svg>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 4 – Saftmischung <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-lgs="pa3-a4">
+    <p>Ein Getränkehändler mischt Apfelsaft (1,20 € pro Liter) und Kirschsaft (2,00 € pro Liter). Er möchte 40 Liter Mischung herstellen, die 1,50 € pro Liter kostet.</p>
+    <p>a) Stelle ein Gleichungssystem auf. <em>(2 P.)</em><br>
+    b) Berechne, wie viele Liter er von jeder Sorte braucht. <em>(3 P.)</em><br>
+    c) Schreibe einen Antwortsatz. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) x = Liter Apfelsaft, y = Liter Kirschsaft<br>
+        (I) x + y = 40 &nbsp;&nbsp; (II) 1,2x + 2y = 40 · 1,50 = 60 <span class="note">(Gesamtpreis der Mischung)</span><br>
+        b) (I) nach y: y = 40 − x; in (II): 1,2x + 2 · (40 − x) = 60 → 1,2x + 80 − 2x = 60<br>
+        −0,8x + 80 = 60 &nbsp;<span class="note">| − 80</span> → −0,8x = −20 &nbsp;<span class="note">| : (−0,8)</span> → x = 25; y = 15<br>
+        Probe am Text: 25 + 15 = 40 ✓ &nbsp; 1,20 · 25 + 2,00 · 15 = 30 + 30 = 60 € = 40 · 1,50 € ✓
+      </div>
+      <p style="margin:0">c) Er braucht 25 Liter Apfelsaft und 15 Liter Kirschsaft.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 5 – Ziffernrätsel <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-lgs="pa3-a5">
+    <p>Eine zweistellige Zahl hat die Quersumme 11. Vertauscht man ihre beiden Ziffern, entsteht eine Zahl, die um 27 größer ist.</p>
+    <p>a) Stelle mit z (Zehnerziffer) und e (Einerziffer) ein Gleichungssystem auf. Tipp: Die Zahl hat den Wert 10z + e. <em>(3 P.)</em><br>
+    b) Löse das System und gib die Zahl an. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (I) z + e = 11 &nbsp;&nbsp; (II) 10e + z = 10z + e + 27<br>
+        b) (II) vereinfachen: 10e + z − 10z − e = 27 → −9z + 9e = 27 &nbsp;<span class="note">| : 9</span> → −z + e = 3<br>
+        + (I): 2e = 14 → e = 7; z = 11 − 7 = 4<br>
+        Probe: 4 + 7 = 11 ✓ &nbsp; 74 − 47 = 27 ✓
+      </div>
+      <p style="margin:0">Die Zahl heißt <strong>47</strong>.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Sachaufgabe</span>Aufgabe 6 – Altersrätsel <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card" data-lgs="pa3-a6">
+    <p>Eine Mutter ist heute dreimal so alt wie ihre Tochter. In 12 Jahren ist sie nur noch doppelt so alt wie ihre Tochter.</p>
+    <p>a) Stelle ein Gleichungssystem auf (t = heutiges Alter der Tochter, m = heutiges Alter der Mutter). <em>(3 P.)</em><br>
+    b) Berechne, wie alt beide heute sind. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) (I) m = 3t &nbsp;&nbsp; (II) m + 12 = 2 · (t + 12)<br>
+        b) (I) in (II): 3t + 12 = 2t + 24 &nbsp;<span class="note">| − 2t | − 12</span> → t = 12; m = 3 · 12 = 36<br>
+        Probe am Text: heute 36 = 3 · 12 ✓; in 12 Jahren 48 und 24, 48 = 2 · 24 ✓
+      </div>
+      <p style="margin:0">Die Tochter ist heute 12 Jahre alt, die Mutter 36 Jahre.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rechnerisch</span>Aufgabe 7 – Fehlersuche <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-lgs="pa3-a7">
+    <p>Jonas löst das System (I) 3x + 2y = 8, (II) x − 2y = 8 so:</p>
+    <div class="calc" style="border-left:3px solid var(--line);padding-left:12px">(I) + (II): 4x = 0 → x = 0<br>in (I): 2y = 8 → y = 4 → L = {(0; 4)}</div>
+    <p>a) Zeige mit einer Probe, dass seine Lösung falsch ist. <em>(1 P.)</em><br>
+    b) Beschreibe seinen Fehler. <em>(1 P.)</em><br>
+    c) Löse das System richtig. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) Probe (II): 0 − 2 · 4 = −8 ≠ 8 → falsch<br>
+        b) Er hat die rechten Seiten subtrahiert statt addiert: 8 + 8 = 16, nicht 0.<br>
+        c) (I) + (II): 4x = 16 &nbsp;<span class="note">| : 4</span> → x = 4<br>
+        in (I): 12 + 2y = 8 &nbsp;<span class="note">| − 12</span> → 2y = −4 → y = −2<br>
+        Probe (II): 4 − 2 · (−2) = 4 + 4 = 8 ✓ → <strong>L = {(4; −2)}</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag stat">Begründen</span>Aufgabe 8 – Begründen und selbst erfinden <span style="color:var(--muted);font-weight:400">(5 P.)</span></h3>
+  <div class="card" data-lgs="pa3-a8">
+    <p>a) Begründe: Ein Gleichungssystem aus zwei linearen Gleichungen kann nicht genau zwei Lösungen haben. <em>(2 P.)</em><br>
+    b) Gib ein Gleichungssystem an, dessen Lösung (−2; 3) ist. Keine der Gleichungen darf die Form y = … haben. Zeige mit einer Probe, dass es stimmt. <em>(3 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <p>a) Jede Gleichung beschreibt eine Gerade. Zwei verschiedene Geraden schneiden sich höchstens in einem Punkt. Haben zwei Geraden zwei gemeinsame Punkte, sind sie identisch, denn durch zwei Punkte geht genau eine Gerade. Dann gibt es unendlich viele Lösungen. Möglich sind also nur keine, genau eine oder unendlich viele Lösungen.</p>
+      <div class="calc">
+        b) Linke Seiten frei wählen, rechte Seiten durch Einsetzen von x = −2, y = 3 berechnen, zum Beispiel:<br>
+        (I) x + y = 1 &nbsp;&nbsp; (II) 2x − y = −7<br>
+        Probe (I): −2 + 3 = 1 ✓ &nbsp; (II): 2 · (−2) − 3 = −4 − 3 = −7 ✓<br>
+        Die linken Seiten dürfen kein Vielfaches voneinander sein, sonst gibt es nicht genau eine Lösung.
+      </div>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>45–42</td><td>41–34</td><td>33–27</td><td>26–18</td><td>17–9</td><td>8–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>

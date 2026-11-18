@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leistungskontrolle 2 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+  --g1:#2b6cb0; --g2:#c05621; --g3:#2f855a; --g4:#805ad5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a; --g3:#68c08f; --g4:#b794f4;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17; --g1:#6ea8e6; --g2:#f6a05a; --g3:#68c08f; --g4:#b794f4;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+.calc{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05rem;line-height:1.75}
+.calc strong{white-space:nowrap}
+.calc .note{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted)}
+.c1t{color:var(--g1);font-weight:700} .c2t{color:var(--g2);font-weight:700} .c3t{color:var(--g3);font-weight:700} .c4t{color:var(--g4);font-weight:700}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.5}
+svg path.c1,svg path.c2,svg path.c3,svg path.c4,svg path.c5,svg path.c6{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+svg path.c1{stroke:var(--g1)} svg path.c2{stroke:var(--g2)} svg path.c3{stroke:var(--g3)} svg path.c4{stroke:var(--g4)} svg path.c5{stroke:var(--wk)} svg path.c6{stroke:var(--warn)}
+svg .pt{fill:var(--text)}
+svg .lbl{font-size:13px;font-weight:700}
+.hl{background:var(--warn-soft);border-radius:4px;padding:0 3px;font-weight:700}
+table.vt td:first-child,table.vt th:first-child{white-space:nowrap}
+table.sheet{width:auto;font-size:.92rem}
+table.sheet th{background:var(--line);font-weight:600;min-width:2.2em}
+table.sheet td{text-align:right;font-family:Consolas,"Courier New",monospace;min-width:5.5em}
+.svgcap{text-align:center;font-weight:700;margin:4px 0 0}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Potenzfunktionen</a> › <span>Leistungskontrolle 2</span></div>
+  <h1>Leistungskontrolle 2 · Mathematik Klasse 9</h1>
+  <p>Potenzfunktionen · Wertetabellen, Graphen zeichnen, Werte ablesen, y = a · xⁿ, Punktprobe, a und n bestimmen</p>
+</header>
+
+<main>
+<!-- LEISTUNGSKONTROLLE -->
+<section id="lk">
+  <h2>Leistungskontrolle 2</h2>
+  <div class="card warn">
+    <p style="margin:0"><strong>Bearbeitungszeit:</strong> 20 Minuten &nbsp;·&nbsp; <strong>Hilfsmittel:</strong> Taschenrechner, Lineal, kariertes Papier &nbsp;·&nbsp; <strong>Gesamt:</strong> 17 Punkte<br>
+    Tipp: Stelle dir einen Timer, rechne alles auf Papier und schau erst danach in die Lösungen.</p>
+  </div>
+
+  <h3><span class="tag wk">Wertetabelle</span>Aufgabe 1 – Wertetabellen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p>Lege für beide Funktionen eine Wertetabelle mit x = −2; −1; −0,5; 0; 0,5; 1; 2 an.</p>
+    <p>a) y = x³ <em>(2 P.)</em> &nbsp;&nbsp; b) y = −2x² <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table class="vt" data-pft="lk2-a1">
+        <tr><th>x</th><td>−2</td><td>−1</td><td>−0,5</td><td>0</td><td>0,5</td><td>1</td><td>2</td></tr>
+        <tr><th>y = x³</th><td>−8</td><td>−1</td><td>−0,125</td><td>0</td><td>0,125</td><td>1</td><td>8</td></tr>
+        <tr><th>y = −2x²</th><td>−8</td><td>−2</td><td>−0,5</td><td>0</td><td>−0,5</td><td>−2</td><td>−8</td></tr>
+      </table></div>
+      <p style="margin:0">Achtung bei b): erst quadrieren, dann mit −2 multiplizieren. Beispiel x = −1: −2 · (−1)² = −2 · 1 = −2.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Graph</span>Aufgabe 2 – Hyperbel zeichnen <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p>a) Lege für y = x⁻¹ eine Wertetabelle mit x = −4; −2; −1; −0,5; 0,5; 1; 2; 4 an. <em>(1 P.)</em><br>
+    b) Zeichne den Graphen für −4 ≤ x ≤ 4. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="tablewrap"><table class="vt" data-pft="lk2-a2">
+        <tr><th>x</th><td>−4</td><td>−2</td><td>−1</td><td>−0,5</td><td>0,5</td><td>1</td><td>2</td><td>4</td></tr>
+        <tr><th>y = x⁻¹</th><td>−0,25</td><td>−0,5</td><td>−1</td><td>−2</td><td>2</td><td>1</td><td>0,5</td><td>0,25</td></tr>
+      </table></div>
+      <svg viewBox="0 0 304 304" style="max-width:380px" role="img" aria-label="Hyperbel y = x hoch −1 mit den Punkten der Wertetabelle" data-svg="lk2-a2" data-o="152,152" data-u="32,32" data-view="-4,4,-4,4">
+  <g><line class="grid" x1="24" y1="280" x2="24" y2="24"/><line class="grid" x1="56" y1="280" x2="56" y2="24"/><line class="grid" x1="88" y1="280" x2="88" y2="24"/><line class="grid" x1="120" y1="280" x2="120" y2="24"/><line class="grid" x1="152" y1="280" x2="152" y2="24"/><line class="grid" x1="184" y1="280" x2="184" y2="24"/><line class="grid" x1="216" y1="280" x2="216" y2="24"/><line class="grid" x1="248" y1="280" x2="248" y2="24"/><line class="grid" x1="280" y1="280" x2="280" y2="24"/><line class="grid" x1="24" y1="280" x2="280" y2="280"/><line class="grid" x1="24" y1="248" x2="280" y2="248"/><line class="grid" x1="24" y1="216" x2="280" y2="216"/><line class="grid" x1="24" y1="184" x2="280" y2="184"/><line class="grid" x1="24" y1="152" x2="280" y2="152"/><line class="grid" x1="24" y1="120" x2="280" y2="120"/><line class="grid" x1="24" y1="88" x2="280" y2="88"/><line class="grid" x1="24" y1="56" x2="280" y2="56"/><line class="grid" x1="24" y1="24" x2="280" y2="24"/></g>
+  <line class="ax" x1="24" y1="152" x2="290" y2="152"/><line class="ax" x1="152" y1="280" x2="152" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="166">−4</text><text x="56" y="166">−3</text><text x="88" y="166">−2</text><text x="120" y="166">−1</text><text x="184" y="166">1</text><text x="216" y="166">2</text><text x="248" y="166">3</text><text x="280" y="166">4</text></g>
+  <g font-size="11" text-anchor="end"><text x="147" y="284">−4</text><text x="147" y="252">−3</text><text x="147" y="220">−2</text><text x="147" y="188">−1</text><text x="147" y="124">1</text><text x="147" y="92">2</text><text x="147" y="60">3</text><text x="147" y="28">4</text><text x="147" y="166">0</text></g>
+  <text x="286" y="146" font-size="13" font-style="italic">x</text><text x="158" y="22" font-size="13" font-style="italic">y</text>
+  <path class="c1" d="M24 160 L59.33 163.05 L81.92 166.61 L97.28 170.71 L108.29 175.43 L116.61 180.93 L123.33 187.71 L128.83 196.2 L133.5 207.36 L137.54 222.8 L141.06 245.57 L144 280 M160 24 L163.01 58.98 L166.53 81.52 L170.62 97.02 L175.36 108.16 L180.86 116.52 L187.58 123.22 L195.97 128.71 L207.1 133.42 L222.72 137.52 L245.82 141.09 L280 144"/>
+  <text class="lbl" x="235.2" y="129.69" style="fill:var(--g1)">y = x⁻¹</text>
+  <circle class="pt" cx="24" cy="160" r="4"/>
+  <circle class="pt" cx="88" cy="168" r="4"/>
+  <circle class="pt" cx="120" cy="184" r="4"/>
+  <circle class="pt" cx="136" cy="216" r="4"/>
+  <circle class="pt" cx="168" cy="88" r="4"/>
+  <circle class="pt" cx="184" cy="120" r="4"/>
+  <circle class="pt" cx="216" cy="136" r="4"/>
+  <circle class="pt" cx="280" cy="144" r="4"/>
+</svg>
+      <p style="margin:0">Bei x = 0 gibt es keinen Funktionswert (Division durch 0). Die beiden Äste werden <strong>nicht</strong> verbunden. Bewertet wird: beide Äste vorhanden, Punkte richtig eingetragen, glatte Kurve ohne Verbindung über x = 0.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Graph</span>Aufgabe 3 – Werte ablesen <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card" data-pf="lk2-a3">
+    <p>Das Bild zeigt den Graphen von y = 0,5x².</p>
+    <svg viewBox="0 0 348 288" style="max-width:435px" role="img" aria-label="Parabel y = 0,5 x Quadrat" data-svg="lk2-a3" data-o="174,240" data-u="30,24" data-view="-5,5,-1,9">
+  <g><line class="grid" x1="24" y1="264" x2="24" y2="24"/><line class="grid" x1="54" y1="264" x2="54" y2="24"/><line class="grid" x1="84" y1="264" x2="84" y2="24"/><line class="grid" x1="114" y1="264" x2="114" y2="24"/><line class="grid" x1="144" y1="264" x2="144" y2="24"/><line class="grid" x1="174" y1="264" x2="174" y2="24"/><line class="grid" x1="204" y1="264" x2="204" y2="24"/><line class="grid" x1="234" y1="264" x2="234" y2="24"/><line class="grid" x1="264" y1="264" x2="264" y2="24"/><line class="grid" x1="294" y1="264" x2="294" y2="24"/><line class="grid" x1="324" y1="264" x2="324" y2="24"/><line class="grid" x1="24" y1="264" x2="324" y2="264"/><line class="grid" x1="24" y1="240" x2="324" y2="240"/><line class="grid" x1="24" y1="216" x2="324" y2="216"/><line class="grid" x1="24" y1="192" x2="324" y2="192"/><line class="grid" x1="24" y1="168" x2="324" y2="168"/><line class="grid" x1="24" y1="144" x2="324" y2="144"/><line class="grid" x1="24" y1="120" x2="324" y2="120"/><line class="grid" x1="24" y1="96" x2="324" y2="96"/><line class="grid" x1="24" y1="72" x2="324" y2="72"/><line class="grid" x1="24" y1="48" x2="324" y2="48"/><line class="grid" x1="24" y1="24" x2="324" y2="24"/></g>
+  <line class="ax" x1="24" y1="240" x2="334" y2="240"/><line class="ax" x1="174" y1="264" x2="174" y2="14"/>
+  <g font-size="11" text-anchor="middle"><text x="24" y="254">−5</text><text x="54" y="254">−4</text><text x="84" y="254">−3</text><text x="114" y="254">−2</text><text x="144" y="254">−1</text><text x="204" y="254">1</text><text x="234" y="254">2</text><text x="264" y="254">3</text><text x="294" y="254">4</text><text x="324" y="254">5</text></g>
+  <g font-size="11" text-anchor="end"><text x="169" y="268">−1</text><text x="169" y="220">1</text><text x="169" y="196">2</text><text x="169" y="172">3</text><text x="169" y="148">4</text><text x="169" y="124">5</text><text x="169" y="100">6</text><text x="169" y="76">7</text><text x="169" y="52">8</text><text x="169" y="28">9</text><text x="169" y="254">0</text></g>
+  <text x="330" y="234" font-size="13" font-style="italic">x</text><text x="180" y="22" font-size="13" font-style="italic">y</text>
+  <path class="c1" d="M46.72 24 L58.5 62.13 L71.46 99.81 L85.74 136.14 L99.12 165.24 L111.54 187.98 L123.06 205.4 L133.86 218.52 L143.88 227.9 L153.3 234.29 L162.24 238.16 L170.94 239.88 L179.52 239.59 L188.16 237.33 L197.22 232.81 L206.82 225.64 L217.02 215.32 L228 201.12 L239.82 182.24 L252.48 157.88 L266.04 127.05 L280.14 89.79 L292.74 52.01 L301.28 24"/>
+  <text class="lbl" x="278.5" y="125.12" style="fill:var(--g1)">y = 0,5x²</text>
+</svg>
+    <p>a) Lies den y-Wert bei x = 2 ab. <em>(1 P.)</em><br>
+    b) Für welche x-Werte ist y = 8? Lies ab und bestätige durch Rechnung. <em>(2 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) y = 2 &nbsp;<span class="note">Kontrolle: 0,5 · 2² = 2</span><br>
+        b) x = −4 und x = 4 &nbsp;<span class="note">Kontrolle: 0,5 · 4² = 8 und 0,5 · (−4)² = 8</span>
+      </div>
+      <p style="margin:0">Der Graph ist achsensymmetrisch – zu jedem positiven x gehört ein negatives x mit demselben y-Wert.</p>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rechnen</span>Aufgabe 4 – Punktprobe <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card" data-pf="lk2-a4">
+    <p>Prüfe rechnerisch, ob der Punkt auf dem Graphen von <strong>y = 3x³</strong> liegt.</p>
+    <p>a) P(2; 24) <em>(1 P.)</em> &nbsp;&nbsp; b) Q(−1; 3) <em>(1 P.)</em> &nbsp;&nbsp; c) R(0,5; 0,375) <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 3 · 2³ = 3 · 8 = 24 ✓ → P(2; 24) liegt auf dem Graphen.<br>
+        b) 3 · (−1)³ = 3 · (−1) = −3 ≠ 3 → Q(−1; 3) liegt nicht auf dem Graphen.<br>
+        c) 3 · 0,5³ = 3 · 0,125 = 0,375 ✓ → R(0,5; 0,375) liegt auf dem Graphen.
+      </div>
+    </details>
+  </div>
+
+  <h3><span class="tag wk">Rechnen</span>Aufgabe 5 – Parameter bestimmen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card" data-pf="lk2-a5a lk2-a5b lk2-a5c">
+    <p>a) Der Graph von y = a · x² geht durch P(3; 18). Berechne a. <em>(2 P.)</em><br>
+    b) Der Graph von y = xⁿ geht durch Q(2; 32). Bestimme n. <em>(1 P.)</em><br>
+    c) Der Graph von y = xⁿ geht durch R(2; 0,25). Bestimme n. <em>(1 P.)</em></p>
+    <details><summary>Lösung anzeigen</summary>
+      <div class="calc">
+        a) 18 = a · 3² &nbsp;→&nbsp; 18 = 9a &nbsp;<span class="note">| : 9</span> &nbsp;→&nbsp; <strong>a = 2</strong>, also y = 2x²<br>
+        b) 32 = 2ⁿ. Probieren: 2⁴ = 16, 2⁵ = 32 &nbsp;→&nbsp; <strong>n = 5</strong><br>
+        c) 0,25 = <span class="frac"><span>1</span><span>4</span></span> = <span class="frac"><span>1</span><span>2²</span></span> = 2⁻² &nbsp;→&nbsp; <strong>n = −2</strong>
+      </div>
+    </details>
+  </div>
+
+  <h3>Notenschlüssel</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Punkte</th><td>17–16</td><td>15–13</td><td>12–11</td><td>10–7</td><td>6–4</td><td>3–0</td></tr>
+  </table></div>
+  <p class="key-note" style="font-size:.85rem;color:var(--muted);margin:.3rem 0 0">Schlüssel nach Leistungsbewertungserlass Sachsen-Anhalt (Nr. 6.3); die Lehrkraft kann bei höheren oder geringeren Anforderungen abweichen.</p>
+</section>
+
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a></footer>
+</body>
+</html>
