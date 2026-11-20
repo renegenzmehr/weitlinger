@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lösung Probearbeit 5 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <span>Lösung Probearbeit 5</span></div>
+  <a class="back" href="probearbeit-5.html">← zur Probearbeit 5</a>
+  <h1>Lösung Probearbeit 5 · Mathematik Klasse 9 <span class="niveau schwer">🔥 Niveau: Schwer</span></h1>
+  <p>Ausführliche Musterlösung · Daten &amp; Statistik · Wahrscheinlichkeitsrechnung</p>
+</header>
+
+<main>
+<section>
+  <div class="card" style="border-left:5px solid #c53030">
+    <p style="margin:0"><strong>So arbeitest du mit dieser Seite:</strong> Bearbeite zuerst die Probearbeit selbst. Vergleiche danach Aufgabe für Aufgabe.
+    Diese Arbeit ist schwer, weil man oft <strong>rückwärts</strong> denken muss: Das Ergebnis ist gegeben, gesucht ist der Anfang.
+    Deshalb steht bei jeder Teilaufgabe auch, <strong>wie du auf den Lösungsansatz kommst</strong>. Lies diesen Teil besonders genau – genau das musst du in der Arbeit selbst können.</p>
+  </div>
+  <div class="card warn">
+    <p style="margin:0"><strong>Aufbau jeder Teilaufgabe:</strong> Was ist gefragt? → Das brauchst du → So kommst du auf den Ansatz → Schritt für Schritt → Ergebnis → Kontrolle (→ Typischer Fehler).<br>
+    Gesamt: 45 Punkte · Aufgaben 1–3 Statistik (23 P.), Aufgaben 4–6 Wahrscheinlichkeit (22 P.)</p>
+  </div>
+
+  <!-- ===================== Aufgabe 1 ===================== -->
+  <h3><span class="tag stat">Statistik</span>Aufgabe 1 – Detektivarbeit <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabe:</em> Fünf natürliche Zahlen haben folgende Eigenschaften: Median = 6 · Modalwert = 8 (kommt als einzige Zahl mehrfach vor) · arithmetisches Mittel = 5 · Spannweite = 7.<br>
+    a) Bestimme die fünf Zahlen. Schreibe auf, wie du vorgegangen bist. (5 P.)<br>
+    b) Verändere genau eine Zahl so, dass der Mittelwert 7 wird, der Median aber 6 bleibt. (3 P.)</p>
+  </div>
+
+  <h4>a) Die fünf Zahlen bestimmen <em style="font-weight:400">(5 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Du kennst nicht die Zahlen, sondern nur vier Kennwerte. Du sollst rückwärts herausfinden, welche fünf Zahlen dazu passen – und deinen Weg aufschreiben.</p>
+  <div class="card rule stat">
+    <p style="margin:0"><strong>Das brauchst du:</strong></p>
+    <ul style="margin:.3rem 0 0">
+      <li><strong>Median (Zentralwert):</strong> Daten der Größe nach ordnen. Bei ungerader Anzahl ist es der Wert genau in der Mitte – bei 5 Zahlen also die 3. Zahl.</li>
+      <li><strong>Modalwert:</strong> der Wert, der am häufigsten vorkommt.</li>
+      <li><strong>Spannweite</strong> = größter Wert − kleinster Wert.</li>
+      <li><strong>Arithmetisches Mittel</strong> = Summe aller Werte : Anzahl der Werte. Rückwärts: <strong>Summe = Mittelwert · Anzahl</strong>.</li>
+    </ul>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Wenn Zahlen gesucht sind, schreibst du sie zuerst als geordnete Platzhalter hin: <strong>a ≤ b ≤ c ≤ d ≤ e</strong>. Dann gehst du die Angaben durch und fragst bei jeder: „Welchen Platz legt diese Angabe fest?“ Fang mit der Angabe an, die sofort eine Zahl liefert (Median), und hebe den Mittelwert bis zum Schluss auf – mit ihm bestimmst du die letzte fehlende Zahl.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li><strong>Ordnen:</strong> Schreibe die gesuchten Zahlen als a ≤ b ≤ c ≤ d ≤ e.</li>
+    <li><strong>Median = 6:</strong> Bei 5 Zahlen ist die mittlere (die 3.) der Median → <strong>c = 6</strong>.</li>
+    <li><strong>Modalwert = 8:</strong> Die 8 kommt mindestens zweimal vor. Da 8 größer als 6 ist, kann sie nur rechts von c stehen. Rechts von c gibt es aber nur zwei Plätze → <strong>d = 8 und e = 8</strong>.</li>
+    <li><strong>Spannweite = 7:</strong> e − a = 7 → 8 − a = 7 → <strong>a = 1</strong>.</li>
+    <li><strong>Mittelwert = 5:</strong> Summe = 5 · 5 = 25. Bekannt sind 1 + 6 + 8 + 8 = 23. → b = 25 − 23 = <strong>2</strong>.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> Die Zahlen heißen <strong>1, 2, 6, 8, 8</strong>.</p>
+  <p><strong>Kontrolle:</strong> Geordnet 1, 2, 6, 8, 8 → Median 6 ✓ · nur die 8 kommt doppelt vor (1, 2 und 6 sind verschieden) → Modalwert 8 ✓ · (1 + 2 + 6 + 8 + 8) : 5 = 25 : 5 = 5 ✓ · Spannweite 8 − 1 = 7 ✓. Außerdem liegt b = 2 zwischen a = 1 und c = 6 – die Reihenfolge stimmt also.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Den Mittelwert zuerst benutzen. Dann hast du eine Summe von 25, aber fünf unbekannte Zahlen – und rätst herum. Erst die Angaben nutzen, die einzelne Plätze festlegen (Median, Modalwert, Spannweite), der Mittelwert kommt zum Schluss. Und: Bei „Schreibe auf, wie du vorgegangen bist“ gibt es Punkte für den Weg – nur die fünf Zahlen hinschreiben reicht nicht.</p></div>
+  <p><strong>Musterantwort (Vorgehen in Sätzen):</strong> „Ich ordne die Zahlen der Größe nach. Weil der Median 6 ist, ist die mittlere Zahl 6. Die 8 muss mindestens zweimal vorkommen und ist größer als 6, also sind die beiden größten Zahlen 8. Aus der Spannweite 7 folgt, dass die kleinste Zahl 8 − 7 = 1 ist. Die Summe muss 5 · 5 = 25 sein, also fehlt noch 25 − 23 = 2.“</p>
+  <p><strong>Was die Lehrkraft sehen will:</strong> dass du die Zahlen ordnest, den Median als 3. Zahl erkennst, begründest, warum beide 8en rechts stehen müssen, und den Mittelwert über die Summe (Mittelwert · Anzahl) rückwärts nutzt.</p>
+
+  <h4>b) Eine Zahl verändern <em style="font-weight:400">(3 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Du darfst genau eine der Zahlen 1, 2, 6, 8, 8 austauschen. Danach soll der Mittelwert 7 sein, der Median weiterhin 6.</p>
+  <div class="card rule stat">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Summe = Mittelwert · Anzahl. Der Median hängt nur davon ab, welche Zahl nach dem Ordnen in der Mitte steht.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Übersetze „Mittelwert 7“ sofort in eine Summe. Dann weißt du, um wie viel die Summe wachsen muss. Danach überlegst du: Welche Zahl kann ich um diesen Betrag vergrößern, <em>ohne</em> dass sich die Mitte verschiebt? Eine Zahl, die schon rechts von der Mitte steht, bleibt beim Vergrößern rechts – die Mitte bleibt dann gleich.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Neue Summe: 5 · 7 = 35. Alte Summe: 25. → Die Summe muss um <strong>10</strong> steigen.</li>
+    <li>Da nur eine Zahl verändert wird, muss genau diese Zahl um 10 größer werden.</li>
+    <li>Ausprobieren, welche Zahl infrage kommt:
+      <ul>
+        <li>1 → 11: geordnet 2, 6, 8, 8, 11 → Median 8 ✗</li>
+        <li>2 → 12: geordnet 1, 6, 8, 8, 12 → Median 8 ✗</li>
+        <li>6 → 16: geordnet 1, 2, 8, 8, 16 → Median 8 ✗</li>
+        <li>eine 8 → 18: geordnet 1, 2, 6, 8, 18 → Median 6 ✓</li>
+      </ul>
+    </li>
+  </ol>
+  <p><strong>Ergebnis:</strong> Eine der beiden 8en wird zur <strong>18</strong>: <strong>1, 2, 6, 8, 18</strong>. Das ist die einzige Möglichkeit.</p>
+  <p><strong>Kontrolle:</strong> (1 + 2 + 6 + 8 + 18) : 5 = 35 : 5 = 7 ✓ · mittlere Zahl 6 ✓. Den Modalwert musst du in b) nicht mehr erfüllen – jetzt kommt keine Zahl mehr doppelt vor, das ist erlaubt.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Die kleinste Zahl vergrößern (1 → 11). Der Mittelwert stimmt dann zwar, aber nach dem Ordnen rutscht die 8 in die Mitte. Nach jeder Änderung neu ordnen und den Median prüfen!</p></div>
+
+  <!-- ===================== Aufgabe 2 ===================== -->
+  <h3><span class="tag stat">Statistik</span>Aufgabe 2 – Die Nachschreiber <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabe:</em> 20 Schüler schrieben eine Arbeit, der Durchschnitt war 2,6. Danach schrieben 4 Schüler nach. Der Durchschnitt aller 24 Arbeiten beträgt jetzt 2,75.<br>
+    a) Berechne die Durchschnittsnote der vier Nachschreiber. (4 P.)<br>
+    b) Gib zwei verschiedene Möglichkeiten an, welche Noten die vier Nachschreiber gehabt haben könnten. (3 P.)</p>
+  </div>
+
+  <h4>a) Durchschnitt der Nachschreiber <em style="font-weight:400">(4 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Du kennst zwei Durchschnitte (vorher und nachher), aber keine einzige Note. Gesucht ist der Durchschnitt der vier neuen Noten.</p>
+  <div class="card rule stat">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Arithmetisches Mittel = Summe aller Werte : Anzahl der Werte.<br>
+    Rückwärts gelesen: <strong>Summe aller Werte = Mittelwert · Anzahl</strong>.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Durchschnitte darfst du nicht einfach verrechnen – aber <strong>Summen</strong> schon. Immer wenn Gruppen dazukommen oder wegfallen, rechnest du deshalb jeden Durchschnitt zuerst in eine Summe um. Die Summe der neuen Gruppe ist dann einfach „Summe nachher − Summe vorher“.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Notensumme der ersten 20 Arbeiten: 20 · 2,6 = <strong>52</strong>.</li>
+    <li>Notensumme aller 24 Arbeiten: 24 · 2,75 = <strong>66</strong>.</li>
+    <li>Notensumme der 4 Nachschreiber: 66 − 52 = <strong>14</strong>.</li>
+    <li>Durchschnitt der Nachschreiber: 14 : 4 = <strong>3,5</strong>.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> Die Nachschreiber haben im Durchschnitt die Note <strong>3,5</strong>.</p>
+  <p><strong>Kontrolle:</strong> (52 + 14) : 24 = 66 : 24 = 2,75 ✓. Plausibel: Der Gesamtdurchschnitt ist schlechter geworden (2,6 → 2,75), also müssen die Nachschreiber schlechter als 2,6 sein – 3,5 passt.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Mit den Durchschnitten direkt rechnen, z. B. (2,6 + x) : 2 = 2,75 → x = 2,9. Das ist falsch, weil die beiden Gruppen verschieden groß sind (20 und 4 Schüler). Immer über die Summen gehen!</p></div>
+
+  <h4>b) Mögliche Noten <em style="font-weight:400">(3 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Du sollst zwei verschiedene Sätze aus je vier Noten angeben, die zum Ergebnis aus a) passen.</p>
+  <div class="card rule stat">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Durchschnitt 3,5 bei 4 Noten bedeutet: Die vier Noten haben zusammen die <strong>Summe 14</strong>. Noten sind ganze Zahlen von 1 bis 6.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Nicht mit dem Durchschnitt 3,5 probieren, sondern mit der Summe 14. Starte mit vier Noten nahe 3,5 (z. B. 3, 3, 4, 4) und verschiebe dann: Wird eine Note um 1 besser, muss eine andere um 1 schlechter werden – die Summe bleibt 14.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Summe aus a): 3,5 · 4 = 14.</li>
+    <li>Erste Möglichkeit: 3 + 3 + 4 + 4 = 14 → <strong>3, 3, 4, 4</strong>.</li>
+    <li>Verschieben: aus einer 3 wird eine 2, aus einer 4 wird eine 5 → 2 + 3 + 4 + 5 = 14 → <strong>2, 3, 4, 5</strong>.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> z. B. <strong>3, 3, 4, 4</strong> und <strong>2, 3, 4, 5</strong>. Weitere richtige Antworten: 2, 4, 4, 4 · 1, 4, 4, 5 · 1, 1, 6, 6 · 3, 3, 3, 5 · 2, 2, 5, 5 und andere – jede Kombination aus vier Noten von 1 bis 6 mit Summe 14 ist richtig.</p>
+  <p><strong>Kontrolle:</strong> Summe nachrechnen und durch 4 teilen: 14 : 4 = 3,5 ✓. Prüfe auch, dass alle Noten zwischen 1 und 6 liegen und ganze Zahlen sind.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> „Die Nachschreiber hatten alle 3,5.“ Die Note 3,5 gibt es auf dem Zeugnis nicht, gefragt sind echte Noten. Oder: zweimal dieselbe Kombination in anderer Reihenfolge (3, 4, 3, 4 statt 3, 3, 4, 4) – das zählt nicht als „verschieden“.</p></div>
+
+  <!-- ===================== Aufgabe 3 ===================== -->
+  <h3><span class="tag stat">Statistik</span>Aufgabe 3 – Lückentabelle <span style="color:var(--muted);font-weight:400">(8 P.)</span></h3>
+  <div class="card">
+    <p><em>Aufgabe:</em> In einer Arztpraxis wurde die Wartezeit von 40 Patienten erfasst. Leider ist die Tabelle unvollständig:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Wartezeit (min)</th><td>0–&lt;5</td><td>5–&lt;10</td><td>10–&lt;15</td><td>15–&lt;20</td><td>20–&lt;25</td></tr>
+      <tr><th>abs. H.</th><td>?</td><td>8</td><td>?</td><td>?</td><td>?</td></tr>
+      <tr><th>rel. H.</th><td>10 %</td><td>?</td><td>35 %</td><td>20 %</td><td>?</td></tr>
+    </table></div>
+    <p style="margin-bottom:0">a) Vervollständige die Tabelle. (3 P.) · b) Berechne die mittlere Wartezeit näherungsweise. (3 P.) · c) In welcher Klasse liegt der Median? Begründe. (2 P.)</p>
+  </div>
+
+  <h4>a) Tabelle vervollständigen <em style="font-weight:400">(3 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Fünf Felder fehlen. In jeder Spalte steht entweder die absolute oder die relative Häufigkeit – die andere musst du daraus berechnen. In der letzten Spalte fehlen beide.</p>
+  <div class="card rule stat">
+    <p style="margin:0"><strong>Das brauchst du:</strong> relative Häufigkeit h = absolute Häufigkeit : Gesamtanzahl n.<br>
+    Rückwärts: <strong>absolute Häufigkeit = h · n</strong> (z. B. 10 % von 40 = 0,10 · 40).<br>
+    Kontrolle: Alle absoluten Häufigkeiten ergeben zusammen n, alle relativen zusammen 100 %.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Geh Spalte für Spalte vor und frag: „Was steht schon da – absolut oder relativ?“ Für die letzte Spalte, in der beides fehlt, nutzt du die Kontrollregel als Werkzeug: Was zu 40 (bzw. 100 %) fehlt, ist der Rest.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>0–&lt;5 min: 10 % von 40 = 0,10 · 40 = <strong>4</strong>.</li>
+    <li>5–&lt;10 min: 8 : 40 = 0,20 = <strong>20 %</strong>.</li>
+    <li>10–&lt;15 min: 35 % von 40 = 0,35 · 40 = <strong>14</strong>.</li>
+    <li>15–&lt;20 min: 20 % von 40 = 0,20 · 40 = <strong>8</strong>.</li>
+    <li>20–&lt;25 min: Rest 40 − 4 − 8 − 14 − 8 = <strong>6</strong>; 6 : 40 = 0,15 = <strong>15 %</strong>.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong></p>
+  <div class="tablewrap"><table>
+    <tr><th>Wartezeit (min)</th><td>0–&lt;5</td><td>5–&lt;10</td><td>10–&lt;15</td><td>15–&lt;20</td><td>20–&lt;25</td><th>Σ</th></tr>
+    <tr><th>abs. H.</th><td><strong>4</strong></td><td>8</td><td><strong>14</strong></td><td><strong>8</strong></td><td><strong>6</strong></td><td>40</td></tr>
+    <tr><th>rel. H.</th><td>10 %</td><td><strong>20 %</strong></td><td>35 %</td><td>20 %</td><td><strong>15 %</strong></td><td>100 %</td></tr>
+  </table></div>
+  <p><strong>Kontrolle:</strong> 4 + 8 + 14 + 8 + 6 = 40 ✓ und 10 % + 20 % + 35 % + 20 % + 15 % = 100 % ✓. Die letzte Spalte über die Prozente gegengeprüft: 100 % − 10 % − 20 % − 35 % − 20 % = 15 %, und 15 % von 40 = 6 ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Prozent und Anzahl verwechseln, z. B. bei 35 % einfach „35“ eintragen. Es wurden nur 40 Patienten befragt – eine Anzahl über 40 kann nicht stimmen.</p></div>
+
+  <h4>b) Mittlere Wartezeit <em style="font-weight:400">(3 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Den Durchschnitt der Wartezeit. Die genauen Einzelwerte kennst du nicht, nur die Klassen – deshalb „näherungsweise“.</p>
+  <div class="card rule stat">
+    <p style="margin:0"><strong>Das brauchst du:</strong></p>
+    <ul style="margin:.3rem 0 0">
+      <li><strong>Klassenmitte</strong> = (untere Grenze + obere Grenze) : 2. Sie steht stellvertretend für alle Werte der Klasse.</li>
+      <li><strong>Mittelwert aus einer Häufigkeitstabelle:</strong> jeden Wert (hier: Klassenmitte) mit seiner Häufigkeit multiplizieren, alles addieren, durch n teilen.</li>
+    </ul>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Das Wort „näherungsweise“ bei einer Klasseneinteilung ist das Signal für Klassenmitten. Du tust so, als hätten alle Patienten einer Klasse genau die mittlere Wartezeit ihrer Klasse gewartet.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Klassenmitten: (0 + 5) : 2 = 2,5 · (5 + 10) : 2 = 7,5 · 12,5 · 17,5 · 22,5.</li>
+    <li>Klassenmitte · Häufigkeit:
+      <div class="tablewrap"><table>
+        <tr><th>Klassenmitte (min)</th><td>2,5</td><td>7,5</td><td>12,5</td><td>17,5</td><td>22,5</td><th>Σ</th></tr>
+        <tr><th>abs. H.</th><td>4</td><td>8</td><td>14</td><td>8</td><td>6</td><td>40</td></tr>
+        <tr><th>Produkt</th><td>10</td><td>60</td><td>175</td><td>140</td><td>135</td><td>520</td></tr>
+      </table></div>
+    </li>
+    <li>Summe der Produkte: 10 + 60 + 175 + 140 + 135 = 520.</li>
+    <li>Durch die Anzahl teilen: 520 : 40 = <strong>13</strong>.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> Die mittlere Wartezeit beträgt etwa <strong>13 min</strong>.</p>
+  <p><strong>Kontrolle:</strong> Plausibel? 13 min liegt in der Klasse 10–&lt;15, und das ist die häufigste Klasse (14 Patienten). Der Wert liegt zwischen der kleinsten (2,5) und der größten Klassenmitte (22,5) ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Mit den Klassengrenzen rechnen (z. B. 5 · 4 + 10 · 8 + …) oder am Ende durch 5 (Anzahl der Klassen) statt durch 40 (Anzahl der Patienten) teilen.</p></div>
+
+  <h4>c) Klasse des Medians <em style="font-weight:400">(2 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Du sollst nicht den genauen Median ausrechnen, sondern sagen, in welcher Klasse er liegt – und das begründen.</p>
+  <div class="card rule stat">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Median: Daten der Größe nach ordnen. Gerade Anzahl → Mittelwert der beiden mittleren Werte. Bei 40 Werten sind das der <strong>20. und der 21. Wert</strong>.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Stell dir die 40 Patienten nach Wartezeit in einer Reihe vor – die kürzesten vorne. Dann zählst du klassenweise ab, bis du an Platz 20/21 vorbei bist.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Bei 40 Werten liegen der 20. und 21. Wert in der Mitte.</li>
+    <li>Klasse 0–&lt;5: Plätze 1 bis 4.</li>
+    <li>Klasse 5–&lt;10: 4 + 8 = 12 → Plätze 5 bis 12.</li>
+    <li>Klasse 10–&lt;15: 12 + 14 = 26 → Plätze 13 bis 26. Hier liegen Platz 20 und 21.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> Der Median liegt in der Klasse <strong>10 bis unter 15 min</strong>.</p>
+  <p><strong>Musterantwort:</strong> „Bei 40 Patienten liegt der Median zwischen dem 20. und 21. Wert. Bis unter 10 min sind es 4 + 8 = 12 Patienten, bis unter 15 min 12 + 14 = 26 Patienten. Der 20. und der 21. Wert liegen also beide in der Klasse 10 bis unter 15 min.“</p>
+  <p><strong>Was die Lehrkraft sehen will:</strong> die Platznummer der Mitte (20./21. Wert) und das Aufsummieren der Häufigkeiten (12 und 26), sodass man sieht, dass 20 und 21 dazwischen liegen.</p>
+  <p><strong>Kontrolle:</strong> Von hinten gezählt: 20–&lt;25 sind 6, 15–&lt;20 nochmal 8 → 14 Patienten warten 15 min oder länger. Das sind weniger als 20, also kann der Median nicht in den oberen Klassen liegen ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> „Der Median liegt in der mittleren Klasse“ (also der 3. von 5 Klassen) ohne Begründung. Hier stimmt das zufällig – die Begründung muss aber über die Anzahl der Werte laufen, nicht über die Anzahl der Klassen.</p></div>
+
+  <!-- ===================== Aufgabe 4 ===================== -->
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 4 – Augensumme <span style="color:var(--muted);font-weight:400">(6 P.)</span></h3>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabe:</em> Zwei Würfel werden gleichzeitig geworfen und die Augenzahlen addiert.<br>
+    a) Wie viele mögliche Ergebnisse (Zahlenpaare) gibt es? (1 P.) · b) Berechne P(Augensumme 7) und P(Augensumme mindestens 10). (2 P.) · c) Berechne P(Pasch, also zwei gleiche Zahlen). (1 P.) · d) Berechne P(Augensumme ist eine Primzahl). (2 P.)</p>
+  </div>
+  <p>Für alle Teilaufgaben hilft diese <strong>Ergebnistabelle</strong>: Zeile = 1. Würfel, Spalte = 2. Würfel, im Feld steht die Augensumme. Primzahl-Summen sind farbig hinterlegt (für d), der Pasch steht auf der Diagonale (fett, für c).</p>
+  <div class="tablewrap"><table>
+    <tr><th>+</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+    <tr><th>1</th><td style="background:var(--wk-soft)"><strong>2</strong></td><td style="background:var(--wk-soft)">3</td><td>4</td><td style="background:var(--wk-soft)">5</td><td>6</td><td style="background:var(--wk-soft)">7</td></tr>
+    <tr><th>2</th><td style="background:var(--wk-soft)">3</td><td><strong>4</strong></td><td style="background:var(--wk-soft)">5</td><td>6</td><td style="background:var(--wk-soft)">7</td><td>8</td></tr>
+    <tr><th>3</th><td>4</td><td style="background:var(--wk-soft)">5</td><td><strong>6</strong></td><td style="background:var(--wk-soft)">7</td><td>8</td><td>9</td></tr>
+    <tr><th>4</th><td style="background:var(--wk-soft)">5</td><td>6</td><td style="background:var(--wk-soft)">7</td><td><strong>8</strong></td><td>9</td><td>10</td></tr>
+    <tr><th>5</th><td>6</td><td style="background:var(--wk-soft)">7</td><td>8</td><td>9</td><td><strong>10</strong></td><td style="background:var(--wk-soft)">11</td></tr>
+    <tr><th>6</th><td style="background:var(--wk-soft)">7</td><td>8</td><td>9</td><td>10</td><td style="background:var(--wk-soft)">11</td><td><strong>12</strong></td></tr>
+  </table></div>
+
+  <h4>a) Anzahl der Ergebnisse <em style="font-weight:400">(1 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Wie viele verschiedene Zahlenpaare (1. Würfel | 2. Würfel) es gibt.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Jeder der 6 Ausgänge des 1. Würfels kann mit jedem der 6 Ausgänge des 2. Würfels zusammenkommen → Anzahl = 6 · 6.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Denk dir die Würfel verschiedenfarbig (rot und blau). Dann ist (1|6) etwas anderes als (6|1). Genau das zeigt die Tabelle oben: 6 Zeilen mal 6 Spalten.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>1. Würfel: 6 Möglichkeiten.</li>
+    <li>Zu jeder davon 6 Möglichkeiten beim 2. Würfel.</li>
+    <li>6 · 6 = 36.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> Es gibt <strong>36</strong> gleich wahrscheinliche Zahlenpaare.</p>
+  <p><strong>Kontrolle:</strong> Die Ergebnistabelle hat 6 · 6 = 36 Felder ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> „11 Ergebnisse“ (die Summen 2 bis 12). Die Summen sind <em>nicht</em> gleich wahrscheinlich – die 7 kommt sechsmal vor, die 2 nur einmal. Für die Laplace-Rechnung (alle Ergebnisse gleich wahrscheinlich) brauchst du die 36 Paare.</p></div>
+
+  <h4>b) P(Augensumme 7) und P(Augensumme mindestens 10) <em style="font-weight:400">(2 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Zwei Wahrscheinlichkeiten: für genau die Summe 7 und für die Summen 10, 11 oder 12.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Laplace-Wahrscheinlichkeit (alle Ergebnisse gleich wahrscheinlich):</p>
+    <div class="formula">P(E) = <span class="frac"><span>Anzahl günstiger Ergebnisse</span><span>Anzahl möglicher Ergebnisse</span></span></div>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Der Nenner ist aus a) bekannt: 36. Du musst nur noch die günstigen Paare zählen – in der Tabelle oder durch systematisches Aufschreiben. „Mindestens 10“ heißt: 10 <em>oder mehr</em>.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Summe 7: (1|6), (2|5), (3|4), (4|3), (5|2), (6|1) → 6 Paare (in der Tabelle die Diagonale von rechts oben nach links unten).</li>
+    <li>P(Summe 7) = 6/36 = 1/6.</li>
+    <li>Summe 10: (4|6), (5|5), (6|4) → 3 Paare; Summe 11: (5|6), (6|5) → 2 Paare; Summe 12: (6|6) → 1 Paar. Zusammen 3 + 2 + 1 = 6 Paare.</li>
+    <li>P(Summe ≥ 10) = 6/36 = 1/6.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(Summe 7) = <strong>6/36 = 1/6 ≈ 16,7 %</strong> · P(Summe ≥ 10) = <strong>6/36 = 1/6 ≈ 16,7 %</strong></p>
+  <p><strong>Kontrolle:</strong> Die 7 ist die häufigste Summe – sie kommt als einzige sechsmal vor. Dass „mindestens 10“ (drei Summen zusammen) genauso wahrscheinlich ist, passt: Je weiter die Summe von 7 weg ist, desto seltener kommt sie vor (3, 2, 1 Paar).</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> (3|4) und (4|3) nur einmal zählen. Das sind zwei verschiedene Ergebnisse (roter Würfel 3, blauer 4 – oder umgekehrt). Oder bei „mindestens 10“ die 10 vergessen.</p></div>
+
+  <h4>c) P(Pasch) <em style="font-weight:400">(1 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit, dass beide Würfel dieselbe Augenzahl zeigen.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> P(E) = Anzahl günstiger Ergebnisse : Anzahl möglicher Ergebnisse.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Ein Pasch ist ein Paar mit zwei gleichen Zahlen. In der Tabelle sind das die fett gedruckten Felder auf der Diagonale von links oben nach rechts unten.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Paschs: (1|1), (2|2), (3|3), (4|4), (5|5), (6|6) → 6 Paare.</li>
+    <li>P(Pasch) = 6/36 = 1/6.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(Pasch) = <strong>6/36 = 1/6 ≈ 16,7 %</strong></p>
+  <p><strong>Kontrolle:</strong> Anders gedacht: Egal was der 1. Würfel zeigt, der 2. Würfel muss genau dieselbe Zahl treffen – das ist 1 von 6 Möglichkeiten → 1/6 ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Den Pasch mit der Augensumme verwechseln und z. B. nur gerade Summen zählen. Summe 4 entsteht auch durch (1|3) – das ist kein Pasch.</p></div>
+
+  <h4>d) P(Augensumme ist eine Primzahl) <em style="font-weight:400">(2 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit, dass die Summe eine Primzahl ist.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong></p>
+    <ul style="margin:.3rem 0 0">
+      <li><strong>Primzahl:</strong> eine natürliche Zahl mit genau zwei Teilern (1 und sich selbst). 1 ist keine Primzahl, 2 ist eine.</li>
+      <li><strong>Summenregel:</strong> Gehören mehrere Ergebnisse zu einem Ereignis, zählst du (bzw. addierst du) sie zusammen.</li>
+    </ul>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Zerlege die Aufgabe in zwei Schritte. Erst: Welche Summen von 2 bis 12 sind Primzahlen? Dann: Wie viele Paare gehören zu jeder dieser Summen?</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Mögliche Summen: 2 bis 12. Primzahlen davon: <strong>2, 3, 5, 7, 11</strong> (4, 6, 8, 9, 10, 12 sind teilbar).</li>
+    <li>Paare zählen: Summe 2 → 1 Paar · Summe 3 → 2 · Summe 5 → 4 · Summe 7 → 6 · Summe 11 → 2.</li>
+    <li>Zusammen: 1 + 2 + 4 + 6 + 2 = 15 günstige Paare.</li>
+    <li>P(Primzahl) = 15/36 = 5/12 (gekürzt durch 3) = 5 : 12 ≈ 0,417.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(Augensumme ist Primzahl) = <strong>15/36 = 5/12 ≈ 41,7 %</strong></p>
+  <p><strong>Kontrolle:</strong> In der Ergebnistabelle sind genau 15 Felder farbig hinterlegt ✓. Gegenprobe: Keine Primzahl sind 36 − 15 = 21 Paare → 15 + 21 = 36 ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> 9 als Primzahl zählen (9 = 3 · 3) oder die 2 vergessen. Oder die Primzahl-Summen zählen statt der Paare: „5 Primzahlen von 11 Summen = 5/11“ – falsch, weil die Summen nicht gleich wahrscheinlich sind.</p></div>
+
+  <!-- ===================== Aufgabe 5 ===================== -->
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 5 – Drei Kugeln (dreistufig, ohne Zurücklegen) <span style="color:var(--muted);font-weight:400">(9 P.)</span></h3>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabe:</em> In einer Urne liegen 4 rote (r) und 2 weiße (w) Kugeln. Es werden nacheinander <strong>drei</strong> Kugeln ohne Zurücklegen gezogen.<br>
+    a) P(drei rote Kugeln) (2 P.) · b) P(genau eine weiße Kugel) (3 P.) · c) P(beide weißen Kugeln werden gezogen) (2 P.) · d) P(die <em>dritte</em> gezogene Kugel ist weiß). Was fällt dir auf? (2 P.)</p>
+  </div>
+
+  <p><strong>Das Baumdiagramm – Grundlage für a) bis d):</strong></p>
+  <svg viewBox="0 0 460 360" role="img" aria-label="Dreistufiges Baumdiagramm ohne Zurücklegen: 4 rote und 2 weiße Kugeln, drei Züge, sieben Pfade">
+    <circle cx="12" cy="180" r="4" fill="var(--muted)"/>
+    <g class="ln" fill="none">
+      <line x1="16" y1="176" x2="106" y2="104"/><line x1="16" y1="184" x2="106" y2="276"/>
+      <line x1="124" y1="96" x2="226" y2="54"/><line x1="124" y1="104" x2="226" y2="146"/>
+      <line x1="124" y1="276" x2="226" y2="239"/><line x1="124" y1="284" x2="226" y2="321"/>
+      <line x1="244" y1="47" x2="341" y2="28"/><line x1="244" y1="53" x2="341" y2="72"/>
+      <line x1="244" y1="147" x2="341" y2="128"/><line x1="244" y1="153" x2="341" y2="172"/>
+      <line x1="244" y1="232" x2="341" y2="215"/><line x1="244" y1="238" x2="341" y2="255"/>
+      <line x1="244" y1="325" x2="341" y2="325"/>
+    </g>
+    <g font-size="17" font-weight="700" text-anchor="middle">
+      <text x="115" y="106" style="fill:var(--wk)">r</text><text x="115" y="286" style="fill:var(--accent)">w</text>
+      <text x="235" y="56" style="fill:var(--wk)">r</text><text x="235" y="156" style="fill:var(--accent)">w</text>
+      <text x="235" y="241" style="fill:var(--wk)">r</text><text x="235" y="331" style="fill:var(--accent)">w</text>
+      <text x="350" y="31" style="fill:var(--wk)">r</text><text x="350" y="81" style="fill:var(--accent)">w</text>
+      <text x="350" y="131" style="fill:var(--wk)">r</text><text x="350" y="181" style="fill:var(--accent)">w</text>
+      <text x="350" y="218" style="fill:var(--wk)">r</text><text x="350" y="264" style="fill:var(--accent)">w</text>
+      <text x="350" y="331" style="fill:var(--wk)">r</text>
+    </g>
+    <g font-size="14">
+      <text x="44" y="130">4/6</text><text x="44" y="248">2/6</text>
+      <text x="160" y="66">3/5</text><text x="160" y="140">2/5</text>
+      <text x="160" y="250">4/5</text><text x="160" y="318">1/5</text>
+      <text x="278" y="30">2/4</text><text x="278" y="77">2/4</text>
+      <text x="278" y="130">3/4</text><text x="278" y="177">1/4</text>
+      <text x="278" y="216">3/4</text><text x="278" y="262">1/4</text>
+      <text x="278" y="319">4/4</text>
+    </g>
+    <g font-size="14" font-weight="600">
+      <text x="364" y="31">rrr 24/120</text>
+      <text x="364" y="81" style="fill:var(--wk)">rrw 24/120</text>
+      <text x="364" y="131" style="fill:var(--wk)">rwr 24/120</text>
+      <text x="364" y="181" style="fill:var(--stat)">rww 8/120</text>
+      <text x="364" y="218" style="fill:var(--wk)">wrr 24/120</text>
+      <text x="364" y="264" style="fill:var(--stat)">wrw 8/120</text>
+      <text x="364" y="331" style="fill:var(--stat)">wwr 8/120</text>
+    </g>
+  </svg>
+  <p style="color:var(--muted);font-size:.9rem;text-align:center">Farbe der Pfadnamen: normale Schriftfarbe = keine weiße Kugel (a) · <span style="color:var(--wk)">orange = genau eine weiße (b)</span> · <span style="color:var(--stat)">grün = beide weißen (c)</span></p>
+
+  <div class="card">
+    <p style="margin:0 0 .3rem"><strong>So zeichnest du es</strong></p>
+    <ol style="margin:0">
+      <li><strong>Stufen:</strong> Drei Züge → drei Stufen nebeneinander. Startpunkt links.</li>
+      <li><strong>1. Stufe:</strong> zwei Äste, r und w. In der Urne liegen 6 Kugeln: P(r) = 4/6, P(w) = 2/6.</li>
+      <li><strong>2. Stufe:</strong> Jetzt liegen nur noch <strong>5</strong> Kugeln drin (Nenner 5). Nach r: noch 3 rote und 2 weiße → 3/5 und 2/5. Nach w: noch 4 rote und 1 weiße → 4/5 und 1/5.</li>
+      <li><strong>3. Stufe:</strong> Noch <strong>4</strong> Kugeln (Nenner 4). Zähle bei jedem Ast neu, was noch drin ist. Nach w, w ist keine weiße Kugel mehr übrig → nur noch ein Ast r mit 4/4 = 1. Darum gibt es <strong>7 Pfade statt 8</strong>.</li>
+      <li><strong>Pfadende:</strong> Pfadnamen hinschreiben (z. B. rrw) und mit der Pfadregel ausrechnen. Gleicher Nenner 6 · 5 · 4 = 120 macht das Addieren leicht.</li>
+      <li><strong>Kontrolle:</strong> An jedem Verzweigungspunkt ergeben die Äste zusammen 1 (z. B. 3/5 + 2/5 = 1), alle Pfade zusammen ebenfalls: 4 · 24/120 + 3 · 8/120 = 96/120 + 24/120 = 120/120 = 1 ✓.</li>
+    </ol>
+  </div>
+
+  <h4>a) P(drei rote Kugeln) <em style="font-weight:400">(2 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit, dass alle drei gezogenen Kugeln rot sind – also genau der Pfad rrr.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> <strong>Pfadregel (Produktregel):</strong> Die Wahrscheinlichkeit eines Pfades = alle Wahrscheinlichkeiten entlang des Pfades multiplizieren. <strong>Ohne Zurücklegen:</strong> Nach jedem Zug wird der Nenner um 1 kleiner, und der Zähler der gezogenen Farbe auch.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> „Drei rote“ gibt es nur auf eine Weise: rot, rot, rot. Also ein einziger Pfad – du brauchst nur die Pfadregel.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>1. Zug rot: 4 von 6 → 4/6.</li>
+    <li>2. Zug rot: noch 3 rote von 5 → 3/5.</li>
+    <li>3. Zug rot: noch 2 rote von 4 → 2/4.</li>
+    <li>P(rrr) = 4/6 · 3/5 · 2/4 = (4 · 3 · 2) / (6 · 5 · 4) = 24/120 = 1/5.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(drei rote) = <strong>24/120 = 1/5 = 20 %</strong></p>
+  <p><strong>Kontrolle:</strong> Plausibel: Rot ist zwar die Mehrheit, aber dreimal hintereinander wird es immer knapper (die roten Kugeln werden weniger). 20 % ist deutlich weniger als die 4/6 ≈ 67 % beim ersten Zug ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Wie mit Zurücklegen rechnen: 4/6 · 4/6 · 4/6 = 64/216 ≈ 29,6 %. Bei „ohne Zurücklegen“ müssen Zähler und Nenner von Zug zu Zug kleiner werden.</p></div>
+
+  <h4>b) P(genau eine weiße Kugel) <em style="font-weight:400">(3 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit, dass unter den drei Kugeln genau eine weiße ist (und damit zwei rote) – egal, beim wievielten Zug die weiße kommt.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> <strong>Pfadregel</strong> für jeden einzelnen Pfad, dann <strong>Summenregel:</strong> Gehören mehrere Pfade zu einem Ereignis, werden ihre Wahrscheinlichkeiten addiert.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Das Wort „genau eine“ (ohne „beim ersten Zug“) heißt: Die weiße Kugel kann an Stelle 1, 2 oder 3 kommen. Schreib alle Reihenfolgen auf, indem du das w durch die drei Plätze wandern lässt: <strong>w</strong>rr, r<strong>w</strong>r, rr<strong>w</strong>. Jede Reihenfolge ist ein eigener Pfad.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Pfade finden: rrw, rwr, wrr.</li>
+    <li>P(rrw) = 4/6 · 3/5 · 2/4 = 24/120.</li>
+    <li>P(rwr) = 4/6 · 2/5 · 3/4 = 24/120.</li>
+    <li>P(wrr) = 2/6 · 4/5 · 3/4 = 24/120.</li>
+    <li>Summenregel: 24/120 + 24/120 + 24/120 = 72/120 = 3/5.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(genau eine weiße) = <strong>72/120 = 3/5 = 60 %</strong></p>
+  <p><strong>Kontrolle:</strong> Alle drei Pfade haben dieselben Zahlen im Zähler (4, 3, 2 bzw. 2, 4, 3 – nur in anderer Reihenfolge), darum ist jeder 24/120. Das ist ein guter Selbsttest: Pfade mit denselben Farben in anderer Reihenfolge haben bei „ohne Zurücklegen“ dieselbe Wahrscheinlichkeit.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Nur einen Pfad (z. B. rrw) ausrechnen und die anderen Reihenfolgen vergessen. Ergebnis wäre dann 20 % statt 60 %.</p></div>
+
+  <h4>c) P(beide weißen Kugeln werden gezogen) <em style="font-weight:400">(2 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit, dass beide weißen Kugeln unter den drei gezogenen sind – die dritte Kugel ist dann zwangsläufig rot.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Pfadregel und Summenregel wie in b). Außerdem die <strong>Kontrolle</strong>: Alle Pfadwahrscheinlichkeiten zusammen ergeben 1.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Wieder wandert eine Kugel durch die Plätze – diesmal die eine <strong>rote</strong>: <strong>r</strong>ww, w<strong>r</strong>w, ww<strong>r</strong>. Clever: Mehr als zwei weiße gibt es nicht. Also gibt es nur drei Fälle – 0, 1 oder 2 weiße. Du kannst c) deshalb auch über das Gegenereignis prüfen: 1 − P(a) − P(b).</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Pfade finden: rww, wrw, wwr.</li>
+    <li>P(rww) = 4/6 · 2/5 · 1/4 = 8/120.</li>
+    <li>P(wrw) = 2/6 · 4/5 · 1/4 = 8/120.</li>
+    <li>P(wwr) = 2/6 · 1/5 · 4/4 = 8/120.</li>
+    <li>Summenregel: 8/120 + 8/120 + 8/120 = 24/120 = 1/5.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(beide weißen) = <strong>24/120 = 1/5 = 20 %</strong></p>
+  <p><strong>Kontrolle:</strong> Die drei Fälle „keine weiße“ (a), „genau eine weiße“ (b) und „beide weißen“ (c) decken alles ab: 1/5 + 3/5 + 1/5 = 5/5 = 1 ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Beim Pfad wwr den letzten Ast mit 4/5 oder 3/4 rechnen. Nach zwei weißen Kugeln liegen noch 4 Kugeln in der Urne, alle rot → 4/4 = 1. Oder einen Pfad „www“ einzeichnen, den es gar nicht geben kann.</p></div>
+
+  <h4>d) P(die dritte Kugel ist weiß) – Was fällt dir auf? <em style="font-weight:400">(2 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit, dass beim <em>dritten</em> Zug eine weiße Kugel kommt – was vorher passiert, ist egal. Außerdem sollst du eine Beobachtung formulieren.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Pfadregel und Summenregel. Alle Pfade, die auf <strong>w</strong> enden, gehören zum Ereignis.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Schau im Baumdiagramm auf die <strong>letzte Stelle</strong> der Pfadnamen. Alle Pfade, deren dritter Buchstabe ein w ist, zählen – egal was davor steht. Für „Was fällt dir auf?“ vergleichst du das Ergebnis mit einer Zahl, die du schon kennst: der Wahrscheinlichkeit für Weiß beim <em>ersten</em> Zug.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>Pfade mit w an dritter Stelle: rrw, rww, wrw (wwr endet auf r und zählt nicht).</li>
+    <li>P(rrw) = 24/120 · P(rww) = 8/120 · P(wrw) = 8/120.</li>
+    <li>Summenregel: 24/120 + 8/120 + 8/120 = 40/120 = 1/3.</li>
+    <li>Vergleich: P(1. Kugel weiß) = 2/6 = 1/3. Beide Werte sind gleich.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(3. Kugel weiß) = <strong>40/120 = 1/3 ≈ 33,3 %</strong></p>
+  <p><strong>Musterantwort:</strong> „Die Wahrscheinlichkeit, dass die dritte Kugel weiß ist, beträgt 1/3. Das ist genauso groß wie die Wahrscheinlichkeit, beim ersten Zug eine weiße Kugel zu ziehen (2/6 = 1/3). Solange man nicht weiß, was vorher gezogen wurde, ist es egal, an welcher Stelle man zieht – jede Position hat dieselbe Chance auf Weiß.“</p>
+  <p><strong>Was die Lehrkraft sehen will:</strong> die drei richtigen Pfade mit Summe 1/3 und den Vergleich mit 2/6 = 1/3 beim ersten Zug – also die Erkenntnis, dass die Reihenfolge ohne Vorwissen keine Rolle spielt.</p>
+  <p><strong>Kontrolle:</strong> Gegenereignis: Die dritte Kugel ist rot bei rrr, rwr, wrr, wwr → 24/120 + 24/120 + 24/120 + 8/120 = 80/120 = 2/3. Und 1/3 + 2/3 = 1 ✓. Auch 2/3 passt zu 4/6 (Rot beim ersten Zug).</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Nur einen Ast der 3. Stufe nehmen (z. B. 1/4 oder 2/4) und vergessen, dass man erst über die ersten beiden Züge dorthin kommt. Die Pfadregel gilt für den ganzen Weg vom Start bis zum Ende.</p></div>
+
+  <!-- ===================== Aufgabe 6 ===================== -->
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 6 – Rückwärts gedacht <span style="color:var(--muted);font-weight:400">(7 P.)</span></h3>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabe:</em> Ein Glücksrad hat ein rotes Feld. Es wird zweimal gedreht. Die Wahrscheinlichkeit, <strong>zweimal Rot</strong> zu erhalten, beträgt 16 %.<br>
+    a) Wie groß ist die Wahrscheinlichkeit für Rot bei einer Drehung? (2 P.) · b) Berechne P(genau einmal Rot) bei zwei Drehungen. (2 P.) · c) Wie oft muss man mindestens drehen, damit die Wahrscheinlichkeit für „mindestens einmal Rot“ über 90 % liegt? (3 P.)</p>
+  </div>
+
+  <h4>a) Wahrscheinlichkeit für Rot bei einer Drehung <em style="font-weight:400">(2 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Du kennst das Ergebnis für zwei Drehungen (16 %) und sollst rückwärts die Wahrscheinlichkeit für eine Drehung finden.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> <strong>Pfadregel:</strong> P(rot, rot) = P(rot) · P(rot). Ein Glücksrad ändert sich beim Drehen nicht – jede Drehung hat dieselbe Wahrscheinlichkeit p (wie „mit Zurücklegen“).</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Schreib die Pfadregel hin, als ob du p kennen würdest: p · p = 0,16. Jetzt suchst du eine Zahl, die mit sich selbst multipliziert 0,16 ergibt – das ist die Quadratwurzel. Wer die Wurzel nicht sieht, probiert: 0,3 · 0,3 = 0,09 (zu klein), 0,4 · 0,4 = 0,16 ✓.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>16 % = 0,16.</li>
+    <li>Pfadregel: p · p = p² = 0,16.</li>
+    <li>p = √0,16 = 0,4 (die negative Lösung −0,4 fällt weg, denn Wahrscheinlichkeiten liegen zwischen 0 und 1).</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(Rot) = <strong>0,4 = 40 %</strong></p>
+  <p><strong>Kontrolle:</strong> 0,4 · 0,4 = 0,16 = 16 % ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> 16 % : 2 = 8 % rechnen. Bei zwei Drehungen wird <em>multipliziert</em> (Pfadregel), also musst du rückwärts die Wurzel ziehen, nicht halbieren. Probe: 0,08 · 0,08 = 0,0064 – passt nicht.</p></div>
+
+  <h4>b) P(genau einmal Rot) bei zwei Drehungen <em style="font-weight:400">(2 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit, dass bei zwei Drehungen genau einmal Rot kommt – beim ersten oder beim zweiten Mal.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> Gegenereignis einer Drehung: P(nicht Rot) = 1 − 0,4 = 0,6. Dann Pfadregel und Summenregel.</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> Zeichne in Gedanken einen zweistufigen Baum mit den Ästen „rot“ (0,4) und „nicht rot“ (0,6). „Genau einmal“ heißt wie in Aufgabe 5b: das Rot kann an Stelle 1 oder 2 stehen → zwei Pfade.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>P(nicht Rot) = 1 − 0,4 = 0,6.</li>
+    <li>Pfad (rot, nicht rot): 0,4 · 0,6 = 0,24.</li>
+    <li>Pfad (nicht rot, rot): 0,6 · 0,4 = 0,24.</li>
+    <li>Summenregel: 0,24 + 0,24 = 0,48.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> P(genau einmal Rot) = <strong>0,48 = 48 %</strong></p>
+  <p><strong>Kontrolle:</strong> Die drei Fälle bei zwei Drehungen ergeben zusammen 1: zweimal Rot 0,16 + genau einmal Rot 0,48 + keinmal Rot 0,6 · 0,6 = 0,36 → 0,16 + 0,48 + 0,36 = 1 ✓.</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Nur einen Pfad rechnen (0,24) oder für „nicht Rot“ wieder 0,4 einsetzen.</p></div>
+
+  <h4>c) Mindestanzahl der Drehungen <em style="font-weight:400">(3 P.)</em></h4>
+  <p><strong>Was ist gefragt?</strong> Die kleinste Anzahl n von Drehungen, bei der P(mindestens einmal Rot) größer als 90 % ist.</p>
+  <div class="card rule wk">
+    <p style="margin:0"><strong>Das brauchst du:</strong> <strong>Gegenereignis:</strong> P(mindestens einmal X) = 1 − P(nie X).<br>
+    P(nie Rot) bei n Drehungen = 0,6 · 0,6 · … · 0,6 (n-mal) = 0,6<sup>n</sup> (Pfadregel).</p>
+  </div>
+  <p><strong>So kommst du auf den Ansatz:</strong> „Mindestens einmal“ hat sehr viele Pfade (einmal, zweimal, dreimal Rot …). Das Gegenteil „nie Rot“ hat nur <strong>einen</strong> Pfad: immer „nicht rot“. Darum rechnest du über das Gegenereignis. Und weil n gesucht ist, probierst du n = 1, 2, 3, … der Reihe nach aus, bis du über 90 % kommst – eine Tabelle hält das übersichtlich.</p>
+  <p><strong>Schritt für Schritt</strong></p>
+  <ol>
+    <li>P(nie Rot bei n Drehungen) = 0,6<sup>n</sup>.</li>
+    <li>P(mindestens einmal Rot) = 1 − 0,6<sup>n</sup>.</li>
+    <li>Tabelle anlegen und von Spalte zu Spalte mit 0,6 weitermultiplizieren:
+      <div class="tablewrap"><table>
+        <tr><th>n</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+        <tr><th>0,6<sup>n</sup></th><td>0,6</td><td>0,36</td><td>0,216</td><td>0,1296</td><td>0,07776</td></tr>
+        <tr><th>1 − 0,6<sup>n</sup></th><td>40 %</td><td>64 %</td><td>78,4 %</td><td>87,04 %</td><td><strong>92,224 %</strong></td></tr>
+      </table></div>
+    </li>
+    <li>Bei n = 4: 87,04 % – noch unter 90 %. Bei n = 5: 92,224 % ≈ 92,2 % – über 90 %.</li>
+  </ol>
+  <p><strong>Ergebnis:</strong> Man muss mindestens <strong>5-mal</strong> drehen (dann ≈ 92,2 %).</p>
+  <p><strong>Kontrolle:</strong> Die Werte in der letzten Zeile steigen mit jeder Drehung – das muss so sein, mehr Versuche bringen mehr Chancen. n = 2 passt zu b): 1 − 0,36 = 0,64 = 0,16 + 0,48 ✓ (zweimal Rot + genau einmal Rot).</p>
+  <div class="card warn"><p style="margin:0"><strong>Typischer Fehler:</strong> Bei n = 4 aufhören, weil 87 % „fast 90 %“ ist – gefragt ist <em>über</em> 90 %. Oder 0,4 · n rechnen (bei 3 Drehungen 120 %?!) Addieren darf man nur Pfade, die sich gegenseitig ausschließen (Summenregel). „Rot bei der 1. Drehung“ und „Rot bei der 2. Drehung“ können aber gleichzeitig eintreten – deshalb über das Gegenereignis 1 − 0,6<sup>n</sup> rechnen.</p></div>
+
+  <!-- ===================== Mitnehmen ===================== -->
+  <h3>Das solltest du mitnehmen</h3>
+  <div class="card rule">
+    <ol style="margin:0">
+      <li><strong>Rückwärts mit dem Mittelwert:</strong> Summe = Mittelwert · Anzahl. Kommen Gruppen dazu, rechnest du mit Summen, nie mit Durchschnitten (Aufgabe 1, 2).</li>
+      <li><strong>Gesuchte Zahlen erst ordnen:</strong> a ≤ b ≤ c ≤ d ≤ e. Der Median ist der mittlere Platz. Nach jeder Änderung neu ordnen (Aufgabe 1).</li>
+      <li><strong>Klassen:</strong> Mittelwert näherungsweise mit Klassenmitten; den Median findest du durch Aufsummieren bis zum mittleren Platz (Aufgabe 3).</li>
+      <li><strong>Prozent ↔ Anzahl:</strong> absolute Häufigkeit = relative Häufigkeit · n; Kontrolle: Summe = n bzw. 100 % (Aufgabe 3).</li>
+      <li><strong>Zwei Würfel:</strong> 36 gleich wahrscheinliche Paare, (3|4) und (4|3) sind verschieden. Mit Summen allein kannst du nicht rechnen (Aufgabe 4).</li>
+      <li><strong>Ohne Zurücklegen:</strong> Zähler und Nenner werden von Stufe zu Stufe kleiner; ist eine Farbe aufgebraucht, endet der Ast (Aufgabe 5).</li>
+      <li><strong>„Genau eine“:</strong> alle Reihenfolgen als eigene Pfade aufschreiben, mit der Pfadregel rechnen und mit der Summenregel addieren (Aufgabe 5, 6).</li>
+      <li><strong>„Mindestens einmal“:</strong> über das Gegenereignis, 1 − P(nie). Ist eine Anzahl gesucht, Tabelle anlegen und ausprobieren (Aufgabe 6).</li>
+    </ol>
+  </div>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="probearbeit-5.html">← zur Probearbeit 5</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+</body>
+</html>

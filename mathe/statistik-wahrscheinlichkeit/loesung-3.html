@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lösung Probearbeit 3 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <a href="probearbeit-3.html" style="color:inherit;text-decoration:underline">Probearbeit 3</a> › <span>Lösung Probearbeit 3</span></div>
+  <a class="back" href="probearbeit-3.html">← zur Probearbeit 3</a>
+  <h1>Lösung Probearbeit 3 · Mathematik Klasse 9 <span class="niveau">Niveau: Standard</span></h1>
+  <p>Ausführliche Musterlösung · Daten &amp; Statistik · Wahrscheinlichkeitsrechnung</p>
+</header>
+
+<nav><div class="inner">
+  <a href="#a1">1 Schuhgrößen</a><a href="#a2">2 Schulweg</a><a href="#a3">3 Zwei Klassen</a><a href="#a4">4 Achterwürfel</a><a href="#a5">5 Glücksrad</a><a href="#a6">6 Klassensprecher</a><a href="#a7">7 Spiel</a><a href="#mitnehmen">Mitnehmen</a>
+</div></nav>
+
+<main>
+<section>
+  <div class="card warn">
+    <p style="margin:0"><strong>So nutzt du diese Seite:</strong> Bearbeite zuerst die Probearbeit selbst. Vergleiche danach Schritt für Schritt. Jede Teilaufgabe ist gleich aufgebaut: <em>Was ist gefragt?</em> → <em>Das brauchst du</em> → <em>Schritt für Schritt</em> → <em>Ergebnis</em> → <em>Kontrolle</em>. Gesamt: 44 Punkte.</p>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 1 ===================== -->
+<section id="a1">
+  <h2 class="stat"><span class="tag stat">Statistik</span>Aufgabe 1 – Schuhgrößen <span style="color:var(--muted);font-weight:400">(10 P.)</span></h2>
+  <div class="card">
+    <p>Die Schuhgrößen von 18 Schülern:<br><strong>38, 40, 42, 39, 41, 38, 43, 40, 40, 44, 39, 42, 40, 41, 37, 40, 42, 39</strong></p>
+  </div>
+
+  <h3>a) Häufigkeitstabelle <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Du zählst, wie oft jede Schuhgröße vorkommt (absolute Häufigkeit), und rechnest aus, welcher Anteil das von allen 18 Schülern ist (relative Häufigkeit in Prozent).</p>
+  </div>
+  <div class="card rule stat">
+    <p><strong>Absolute Häufigkeit H:</strong> Wie oft kommt ein Wert vor? (eine Anzahl)</p>
+    <p><strong>Relative Häufigkeit h:</strong> Welcher Anteil ist das?</p>
+    <div class="formula">h = <span class="frac"><span>absolute Häufigkeit</span><span>Gesamtanzahl n</span></span> · 100 %</div>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Suche den kleinsten und den größten Wert: 37 und 44. Die Tabelle braucht also die Spalten 37, 38, 39, 40, 41, 42, 43, 44.</li>
+      <li>Geh die Liste einmal von vorne nach hinten durch und mach für jeden Wert einen Strich bei seiner Größe (Strichliste). Streiche jeden Wert in der Liste ab, damit du keinen doppelt zählst.</li>
+      <li>Zähle die Striche: 37 → 1, 38 → 2, 39 → 3, 40 → 5, 41 → 2, 42 → 3, 43 → 1, 44 → 1.</li>
+      <li>Prüfe die Summe: 1 + 2 + 3 + 5 + 2 + 3 + 1 + 1 = 18. Das passt zu 18 Schülern.</li>
+      <li>Rechne jede absolute Häufigkeit durch n = 18 und mal 100 %. Es kommen nur vier verschiedene Anzahlen vor, also nur vier Rechnungen:
+        <ul>
+          <li>1 : 18 = 0,0555… ≈ 5,6 %</li>
+          <li>2 : 18 = 0,1111… ≈ 11,1 %</li>
+          <li>3 : 18 = 0,1666… ≈ 16,7 %</li>
+          <li>5 : 18 = 0,2777… ≈ 27,8 %</li>
+        </ul>
+      </li>
+    </ol>
+    <p><strong>Ergebnis</strong></p>
+    <div class="tablewrap"><table>
+      <tr><th>Größe</th><td>37</td><td>38</td><td>39</td><td>40</td><td>41</td><td>42</td><td>43</td><td>44</td><th>Σ</th></tr>
+      <tr><th>abs. H.</th><td>1</td><td>2</td><td>3</td><td><strong>5</strong></td><td>2</td><td>3</td><td>1</td><td>1</td><td>18</td></tr>
+      <tr><th>rel. H.</th><td>5,6 %</td><td>11,1 %</td><td>16,7 %</td><td><strong>27,8 %</strong></td><td>11,1 %</td><td>16,7 %</td><td>5,6 %</td><td>5,6 %</td><td>≈ 100 %</td></tr>
+    </table></div>
+    <p><strong>Kontrolle:</strong> Die absoluten Häufigkeiten ergeben 18 ✓. Die gerundeten Prozente ergeben 5,6 + 11,1 + 16,7 + 27,8 + 11,1 + 16,7 + 5,6 + 5,6 = 100,2 %. Die 0,2 % kommen nur vom Runden – deshalb steht in der Summe „≈ 100 %“.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> durch 8 teilen (die Anzahl der verschiedenen Größen) statt durch 18 (die Anzahl der Schüler). Teile immer durch die <em>Gesamtanzahl n</em>.
+  </div>
+
+  <h3>b) Mittelwert, Median, Modalwert, Spannweite <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Vier Kennwerte: den Durchschnitt, den Wert in der Mitte der geordneten Liste, die häufigste Größe und den Abstand zwischen größter und kleinster Größe.</p>
+  </div>
+  <div class="grid2">
+    <div class="card rule stat">
+      <strong>Arithmetisches Mittel (Durchschnitt)</strong>
+      <div class="formula">x̄ = <span class="frac"><span>Summe aller Werte</span><span>Anzahl der Werte</span></span></div>
+    </div>
+    <div class="card rule stat">
+      <strong>Median (Zentralwert)</strong>
+      <p>1. Daten <strong>der Größe nach ordnen</strong>.<br>
+      2. <em>Ungerade</em> Anzahl: der Wert genau in der Mitte.<br>
+      <em>Gerade</em> Anzahl: Mittelwert der beiden mittleren Werte.</p>
+    </div>
+    <div class="card rule stat"><strong>Modalwert:</strong> der Wert, der am häufigsten vorkommt.</div>
+    <div class="card rule stat"><strong>Spannweite:</strong> größter Wert − kleinster Wert.</div>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li><strong>Summe aus der Tabelle:</strong> Größe mal absolute Häufigkeit, dann alles addieren:<br>
+      37·1 + 38·2 + 39·3 + 40·5 + 41·2 + 42·3 + 43·1 + 44·1<br>
+      = 37 + 76 + 117 + 200 + 82 + 126 + 43 + 44 = 725</li>
+      <li><strong>Mittelwert:</strong> 725 : 18 = 40,277… ≈ 40,28</li>
+      <li><strong>Ordnen:</strong> 37, 38, 38, 39, 39, 39, 40, 40, <strong>40</strong>, <strong>40</strong>, 40, 41, 41, 42, 42, 42, 43, 44</li>
+      <li><strong>Median:</strong> n = 18 ist gerade. Die beiden mittleren Werte sind der 9. und der 10. Wert. Beide sind 40 → (40 + 40) : 2 = 40</li>
+      <li><strong>Modalwert:</strong> In der Tabelle hat 40 die größte absolute Häufigkeit (5-mal) → 40</li>
+      <li><strong>Spannweite:</strong> 44 − 37 = 7</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Mittelwert <strong>≈ 40,28</strong> · Median <strong>40</strong> · Modalwert <strong>40</strong> · Spannweite <strong>7</strong> (Schuhgrößen)</p>
+    <p><strong>Kontrolle:</strong> Der Mittelwert liegt zwischen 37 und 44 und ganz nah am Median – das passt, weil die Werte fast gleichmäßig um 40 verteilt sind. Beim Ordnen musst du wieder 18 Werte haben.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> den Median aus der <em>ungeordneten</em> Liste ablesen. Dort stehen an Platz 9 und 10 die Werte 40 und 44 – das wäre falsch. Erst ordnen, dann die Mitte suchen.
+  </div>
+
+  <h3>c) Welcher Kennwert hilft dem Schuhgeschäft? <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Das Geschäft will die Größe kennen, die am meisten gekauft wird. Du sollst den passenden Kennwert nennen und begründen.</p>
+  </div>
+  <div class="card rule stat"><strong>Modalwert:</strong> der Wert, der am häufigsten vorkommt.</div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Frage dich: „am häufigsten“ – welcher Kennwert gehört zu diesem Wort? Der Modalwert.</li>
+      <li>Prüfe die anderen: Der Mittelwert 40,28 ist keine Schuhgröße, die man kaufen kann. Die Spannweite sagt nur, wie weit die Größen auseinanderliegen.</li>
+    </ol>
+    <p><strong>Ergebnis – Musterantwort:</strong> <strong>Der Modalwert hilft, denn er gibt die Schuhgröße an, die am häufigsten vorkommt (hier 40); der Mittelwert 40,28 ist dagegen gar keine echte Schuhgröße.</strong></p>
+    <p><strong>Was die Lehrkraft sehen will:</strong> den Namen „Modalwert“ <em>und</em> die Begründung „häufigste Größe“. Pluspunkt: zeigen, warum der Mittelwert hier nicht taugt.</p>
+    <p><strong>Kontrolle:</strong> Lies deine Antwort noch mal mit der Frage zusammen: „Welche Größe am häufigsten bestellen?“ – „Die häufigste Größe, also 40.“ Passt.</p>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 2 ===================== -->
+<section id="a2">
+  <h2 class="stat"><span class="tag stat">Statistik</span>Aufgabe 2 – Schulweg <span style="color:var(--muted);font-weight:400">(6 P.)</span></h2>
+  <div class="card">
+    <p>Fahrtzeiten zur Schule in Minuten:<br><strong>5 · 12 · 25 · 8 · 15 · 32 · 18 · 22 · 10 · 7 · 28 · 14 · 35 · 19 · 9 · 24 · 16 · 11 · 30 · 21</strong></p>
+  </div>
+
+  <h3>a) Klasseneinteilung <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Du sortierst jede der 20 Fahrtzeiten in eine von vier Zeitspannen (Klassen) und zählst, wie viele in jeder Klasse liegen.</p>
+  </div>
+  <div class="card rule stat">
+    <strong>Klasseneinteilung</strong>
+    <p>„10 bis unter 20“ heißt: 10 gehört <strong>dazu</strong>, 20 gehört <strong>nicht</strong> mehr dazu (20 kommt in die nächste Klasse). Jeder Wert kommt in genau eine Klasse.</p>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Geh die Liste der Reihe nach durch und schreib jeden Wert in seine Klasse:
+        <ul>
+          <li>0 bis unter 10: 5, 8, 7, 9 → <strong>4</strong></li>
+          <li>10 bis unter 20: 12, 15, 18, 10, 14, 19, 16, 11 → <strong>8</strong></li>
+          <li>20 bis unter 30: 25, 22, 28, 24, 21 → <strong>5</strong></li>
+          <li>30 bis unter 40: 32, 35, 30 → <strong>3</strong></li>
+        </ul>
+      </li>
+      <li>Achte auf die Grenzwerte: 10 gehört in die 2. Klasse, 30 in die 4. Klasse.</li>
+    </ol>
+    <p><strong>Ergebnis</strong></p>
+    <div class="tablewrap"><table>
+      <tr><th>Klasse (min)</th><td>0–&lt;10</td><td>10–&lt;20</td><td>20–&lt;30</td><td>30–&lt;40</td><th>Σ</th></tr>
+      <tr><th>abs. H.</th><td><strong>4</strong></td><td><strong>8</strong></td><td><strong>5</strong></td><td><strong>3</strong></td><td>20</td></tr>
+    </table></div>
+    <p><strong>Kontrolle:</strong> 4 + 8 + 5 + 3 = 20 – genau so viele Werte stehen in der Liste ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> die 10 in die erste Klasse oder die 30 in die dritte Klasse stecken. „Bis unter 10“ heißt: 10 ist schon zu groß.
+  </div>
+
+  <h3>b) Mittelwert mit Klassenmitten <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Du tust so, als hätten alle Schüler einer Klasse genau die mittlere Fahrtzeit dieser Klasse, und rechnest damit den Durchschnitt aus.</p>
+  </div>
+  <div class="card rule stat">
+    <p><strong>Klassenmitte</strong> = (untere Grenze + obere Grenze) : 2</p>
+    <div class="formula">x̄ ≈ <span class="frac"><span>Summe (Klassenmitte · Häufigkeit)</span><span>Gesamtanzahl n</span></span></div>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Klassenmitten: (0 + 10) : 2 = 5 · (10 + 20) : 2 = 15 · (20 + 30) : 2 = 25 · (30 + 40) : 2 = 35</li>
+      <li>Jede Klassenmitte mal ihre Häufigkeit: 5 · 4 = 20 · 15 · 8 = 120 · 25 · 5 = 125 · 35 · 3 = 105</li>
+      <li>Addieren: 20 + 120 + 125 + 105 = 370</li>
+      <li>Durch n = 20 teilen: 370 : 20 = 18,5</li>
+    </ol>
+    <div class="tablewrap"><table>
+      <tr><th>Klasse (min)</th><td>0–&lt;10</td><td>10–&lt;20</td><td>20–&lt;30</td><td>30–&lt;40</td><th>Σ</th></tr>
+      <tr><th>Klassenmitte</th><td>5</td><td>15</td><td>25</td><td>35</td><td></td></tr>
+      <tr><th>abs. H.</th><td>4</td><td>8</td><td>5</td><td>3</td><td>20</td></tr>
+      <tr><th>Mitte · H.</th><td>20</td><td>120</td><td>125</td><td>105</td><td>370</td></tr>
+    </table></div>
+    <p><strong>Ergebnis:</strong> Mittelwert <strong>≈ 18,5 min</strong></p>
+    <p><strong>Kontrolle:</strong> Der Wert liegt in der Klasse mit den meisten Schülern (10 bis unter 20) – plausibel. Zum Vergleich: Mit allen 20 Einzelwerten kommst du auf 361 : 20 = 18,05 min. Der Näherungswert liegt also nur knapp eine halbe Minute daneben. (In der Arbeit ist nur die Näherung gefragt.)</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> die vier Klassenmitten einfach addieren und durch 4 teilen: (5 + 15 + 25 + 35) : 4 = 20. Das ist falsch, weil die Klassen unterschiedlich viele Schüler haben. Jede Mitte muss mit ihrer Häufigkeit malgenommen werden.
+  </div>
+
+  <h3>c) Anteil mit 20 Minuten oder länger <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie viel Prozent der 20 Schüler brauchen 20 Minuten oder mehr?</p>
+  </div>
+  <div class="card rule stat">
+    <div class="formula">h = <span class="frac"><span>absolute Häufigkeit</span><span>Gesamtanzahl n</span></span> · 100 %</div>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>„20 Minuten oder länger“ = Klasse 20 bis unter 30 <em>und</em> Klasse 30 bis unter 40.</li>
+      <li>Anzahl: 5 + 3 = 8 Schüler</li>
+      <li>Anteil: 8 : 20 = 0,4 = 40 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>40 %</strong> der Schüler brauchen 20 Minuten oder länger.</p>
+    <p><strong>Kontrolle:</strong> Unter 20 Minuten brauchen 4 + 8 = 12 Schüler = 60 %. 40 % + 60 % = 100 % ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> nur die Klasse 20 bis unter 30 nehmen (5 : 20 = 25 %). „Oder länger“ schließt auch die 30er-Klasse ein.
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 3 ===================== -->
+<section id="a3">
+  <h2 class="stat"><span class="tag stat">Statistik</span>Aufgabe 3 – Zwei Klassen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h2>
+  <div class="card">
+    <p>Klasse 9a (24 Schüler) hat in einer Arbeit den Durchschnitt 2,5. Klasse 9b (26 Schüler) hat den Durchschnitt 2,9.</p>
+  </div>
+
+  <h3>a) Durchschnitt aller 50 Schüler <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Der Notendurchschnitt, wenn man beide Klassen zusammen als eine Gruppe von 50 Schülern betrachtet.</p>
+  </div>
+  <div class="card rule stat">
+    <strong>Arithmetisches Mittel – rückwärts benutzt</strong>
+    <div class="formula">Mittelwert = <span class="frac"><span>Summe aller Werte</span><span>Anzahl der Werte</span></span> &nbsp;⇒&nbsp; Summe aller Werte = Mittelwert · Anzahl</div>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Notensumme der 9a: 24 · 2,5 = 60</li>
+      <li>Notensumme der 9b: 26 · 2,9 = 75,4</li>
+      <li>Notensumme aller Schüler: 60 + 75,4 = 135,4</li>
+      <li>Anzahl aller Schüler: 24 + 26 = 50</li>
+      <li>Gesamtdurchschnitt: 135,4 : 50 = 2,708 ≈ 2,71</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Durchschnittsnote aller 50 Schüler <strong>≈ 2,71</strong></p>
+    <p><strong>Kontrolle:</strong> Das Ergebnis muss zwischen 2,5 und 2,9 liegen ✓. Weil die 9b mehr Schüler hat, muss es etwas näher an 2,9 liegen als die Mitte 2,7 ✓.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> (2,5 + 2,9) : 2 = 2,7 rechnen. Das stimmt nur, wenn beide Klassen gleich groß sind – siehe b).
+  </div>
+
+  <h3>b) Warum nicht einfach (2,5 + 2,9) : 2? <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Du sollst erklären, warum der Mittelwert der beiden Durchschnitte nicht der Durchschnitt aller Schüler ist.</p>
+  </div>
+  <div class="card rule stat">
+    <p>Beim Mittelwert zählt <strong>jeder einzelne Wert</strong> gleich. Eine Gruppe mit mehr Werten hat deshalb mehr Einfluss auf den Gesamtmittelwert.</p>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Bei (2,5 + 2,9) : 2 zählt jede <em>Klasse</em> gleich viel.</li>
+      <li>Gefragt ist aber der Durchschnitt über alle <em>Schüler</em>. Die 9b hat 2 Schüler mehr, also zählt sie stärker.</li>
+    </ol>
+    <p><strong>Ergebnis – Musterantwort:</strong> <strong>Man darf nicht einfach (2,5 + 2,9) : 2 rechnen, weil die Klassen unterschiedlich groß sind: Die 9b hat mehr Schüler und muss deshalb stärker zählen, darum liegt der richtige Durchschnitt mit 2,71 etwas über 2,7.</strong></p>
+    <p><strong>Was die Lehrkraft sehen will:</strong> das Kernargument „unterschiedlich viele Schüler“ bzw. „die größere Klasse zählt stärker“.</p>
+    <p><strong>Kontrolle:</strong> Vergleich mit a): 2,71 ≠ 2,7 – der Unterschied bestätigt deine Begründung.</p>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 4 ===================== -->
+<section id="a4">
+  <h2 class="wk"><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 4 – Achterwürfel <span style="color:var(--muted);font-weight:400">(4 P.)</span></h2>
+  <div class="card">
+    <p>Ein Würfel hat 8 gleich große Flächen mit den Zahlen 1 bis 8. Berechne die Wahrscheinlichkeit für: a) eine Zahl größer als 5 &nbsp; b) eine ungerade Zahl &nbsp; c) eine Quadratzahl &nbsp; d) <em>nicht</em> die 8</p>
+  </div>
+  <div class="card rule wk">
+    <strong>Laplace-Wahrscheinlichkeit</strong> (alle Ergebnisse gleich wahrscheinlich – hier passt das, weil alle 8 Flächen gleich groß sind)
+    <div class="formula">P(E) = <span class="frac"><span>Anzahl günstiger Ergebnisse</span><span>Anzahl möglicher Ergebnisse</span></span></div>
+    <p>Ergebnismenge: S = {1; 2; 3; 4; 5; 6; 7; 8} → 8 mögliche Ergebnisse. Der Nenner ist bei jeder Teilaufgabe 8.</p>
+  </div>
+
+  <h3>a) Zahl größer als 5</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist eine Zahl über 5?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Günstige Ergebnisse aufschreiben: E = {6; 7; 8} → 3 Ergebnisse. Die 5 gehört <em>nicht</em> dazu.</li>
+      <li>P = 3 : 8 = 0,375</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(größer als 5) = <strong>3/8 = 37,5 %</strong></p>
+    <p><strong>Kontrolle:</strong> Gegenereignis „höchstens 5“ = {1; 2; 3; 4; 5} → 5/8. 3/8 + 5/8 = 1 ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> die 5 mitzählen (4/8). „Größer als 5“ heißt: ab 6.
+  </div>
+
+  <h3>b) Ungerade Zahl</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist eine ungerade Zahl?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>E = {1; 3; 5; 7} → 4 Ergebnisse</li>
+      <li>P = 4/8 = 1/2 (gekürzt mit 4)</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(ungerade) = <strong>1/2 = 50 %</strong></p>
+    <p><strong>Kontrolle:</strong> Gerade sind {2; 4; 6; 8}, also ebenfalls 4 Zahlen – gerade und ungerade sind gleich wahrscheinlich ✓</p>
+  </div>
+
+  <h3>c) Quadratzahl</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist eine Quadratzahl (eine Zahl, die man als Zahl mal sich selbst schreiben kann)?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Quadratzahlen der Reihe nach: 1 · 1 = 1, 2 · 2 = 4, 3 · 3 = 9 – 9 ist schon größer als 8.</li>
+      <li>E = {1; 4} → 2 Ergebnisse</li>
+      <li>P = 2/8 = 1/4 (gekürzt mit 2)</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(Quadratzahl) = <strong>1/4 = 25 %</strong></p>
+    <p><strong>Kontrolle:</strong> 1 = 1², 4 = 2² – beide liegen zwischen 1 und 8 ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> die 1 vergessen (1 = 1 · 1 ist auch eine Quadratzahl) und dann 1/8 angeben.
+  </div>
+
+  <h3>d) Nicht die 8</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist es, dass irgendeine Zahl außer der 8 fällt?</p>
+  </div>
+  <div class="card rule wk">
+    <strong>Gegenereignis:</strong> P(Ē) = 1 − P(E)
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>E = „die 8“ → P(E) = 1/8</li>
+      <li>„Nicht die 8“ ist das Gegenereignis: 1 − 1/8 = 8/8 − 1/8 = 7/8</li>
+      <li>7 : 8 = 0,875</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(nicht 8) = <strong>7/8 = 87,5 %</strong></p>
+    <p><strong>Kontrolle:</strong> Direkt gezählt: {1; 2; 3; 4; 5; 6; 7} → 7 von 8 Ergebnissen ✓</p>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 5 ===================== -->
+<section id="a5">
+  <h2 class="wk"><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 5 – Glücksrad mit drei Farben <span style="color:var(--muted);font-weight:400">(8 P.)</span></h2>
+  <div class="card">
+    <p>Ein Glücksrad ist zur Hälfte rot (R), zu einem Drittel blau (B) und zu einem Sechstel gelb (G). Es wird zweimal gedreht.</p>
+  </div>
+  <div class="grid2">
+    <div class="card rule wk">
+      <strong>1. Pfadregel (Produktregel)</strong>
+      <p>Die Wahrscheinlichkeit eines Pfades = alle Wahrscheinlichkeiten <strong>entlang des Pfades multiplizieren</strong>.</p>
+    </div>
+    <div class="card rule wk">
+      <strong>2. Summenregel</strong>
+      <p>Gehören mehrere Pfade zu einem Ereignis, werden ihre Wahrscheinlichkeiten <strong>addiert</strong>.</p>
+    </div>
+  </div>
+
+  <h3>a) Vollständiges Baumdiagramm <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein Baumdiagramm mit zwei Stufen (1. Drehung, 2. Drehung), allen Ästen, den Wahrscheinlichkeiten an den Ästen und den Pfadwahrscheinlichkeiten am Ende.</p>
+    <p><strong>So zeichnest du es</strong></p>
+    <ol>
+      <li>Links ein Startpunkt. Davon gehen <strong>3 Äste</strong> zur 1. Drehung: R, B, G.</li>
+      <li>An die Äste schreibst du die Wahrscheinlichkeiten: R = 1/2, B = 1/3, G = 1/6.</li>
+      <li>Von <strong>jedem</strong> dieser drei Punkte gehen wieder 3 Äste ab (2. Drehung): R, B, G. Das Rad ändert sich nicht – die Wahrscheinlichkeiten sind wieder 1/2, 1/3, 1/6.</li>
+      <li>Am Ende hast du 3 · 3 = <strong>9 Pfade</strong>. Rechts daneben schreibst du den Pfad (z. B. RB) und seine Wahrscheinlichkeit nach der Pfadregel, z. B. RB: 1/2 · 1/3 = 1/6.</li>
+      <li>Lass genug Platz zwischen den Ästen, damit die Brüche lesbar bleiben.</li>
+    </ol>
+    <svg viewBox="0 0 440 300" style="max-width:540px" role="img" aria-label="Baumdiagramm Glücksrad drei Farben">
+      <g class="ln" fill="none"><line x1="20" y1="150" x2="140" y2="55"/><line x1="162" y1="55" x2="280" y2="25"/><line x1="162" y1="55" x2="280" y2="55"/><line x1="162" y1="55" x2="280" y2="85"/><line x1="20" y1="150" x2="140" y2="150"/><line x1="162" y1="150" x2="280" y2="120"/><line x1="162" y1="150" x2="280" y2="150"/><line x1="162" y1="150" x2="280" y2="180"/><line x1="20" y1="150" x2="140" y2="245"/><line x1="162" y1="245" x2="280" y2="215"/><line x1="162" y1="245" x2="280" y2="245"/><line x1="162" y1="245" x2="280" y2="275"/></g>
+      <g><text x="150" y="60" text-anchor="middle" font-weight="700" font-size="15" style="fill:var(--wk)">R</text><text x="60" y="96" font-size="12">1/2</text><text x="290" y="30" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--wk)">R</text><text x="215" y="36" font-size="11">1/2</text><text x="310" y="30" font-size="12">RR: 1/4</text><text x="290" y="60" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--accent)">B</text><text x="215" y="51" font-size="11">1/3</text><text x="310" y="60" font-size="12">RB: 1/6</text><text x="290" y="90" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--warn)">G</text><text x="215" y="83" font-size="11">1/6</text><text x="310" y="90" font-size="12">RG: 1/12</text><text x="150" y="155" text-anchor="middle" font-weight="700" font-size="15" style="fill:var(--accent)">B</text><text x="70" y="144" font-size="12">1/3</text><text x="290" y="125" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--wk)">R</text><text x="215" y="131" font-size="11">1/2</text><text x="310" y="125" font-size="12">BR: 1/6</text><text x="290" y="155" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--accent)">B</text><text x="215" y="146" font-size="11">1/3</text><text x="310" y="155" font-size="12">BB: 1/9</text><text x="290" y="185" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--warn)">G</text><text x="215" y="178" font-size="11">1/6</text><text x="310" y="185" font-size="12">BG: 1/18</text><text x="150" y="250" text-anchor="middle" font-weight="700" font-size="15" style="fill:var(--warn)">G</text><text x="60" y="213" font-size="12">1/6</text><text x="290" y="220" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--wk)">R</text><text x="215" y="226" font-size="11">1/2</text><text x="310" y="220" font-size="12">GR: 1/12</text><text x="290" y="250" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--accent)">B</text><text x="215" y="241" font-size="11">1/3</text><text x="310" y="250" font-size="12">GB: 1/18</text><text x="290" y="280" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--warn)">G</text><text x="215" y="273" font-size="11">1/6</text><text x="310" y="280" font-size="12">GG: 1/36</text></g>
+    </svg>
+    <p><strong>Ergebnis:</strong> Baumdiagramm mit 3 Ästen in der 1. Stufe, je 3 Ästen in der 2. Stufe und 9 Pfaden (siehe oben).</p>
+    <p><strong>Kontrolle:</strong> Die Äste an jedem Punkt ergeben 1: 1/2 + 1/3 + 1/6 = 3/6 + 2/6 + 1/6 = 6/6 = 1 ✓.<br>
+    Alle 9 Pfade zusammen (in Sechsunddreißigsteln): 9 + 6 + 3 + 6 + 4 + 2 + 3 + 2 + 1 = 36 → 36/36 = 1 ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> in der 2. Stufe nur bei einem Ast weiterzeichnen oder „Ohne Zurücklegen“-Brüche verwenden. Beim Glücksrad bleibt alles gleich – jede Drehung hat wieder 1/2, 1/3, 1/6.
+  </div>
+
+  <h3>b) P(zweimal dieselbe Farbe) <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist es, dass beide Drehungen dieselbe Farbe zeigen – egal welche?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Passende Pfade suchen: RR, BB, GG (im Baum grün markiert).</li>
+      <li>Pfadregel:<br>
+        P(RR) = 1/2 · 1/2 = 1/4<br>
+        P(BB) = 1/3 · 1/3 = 1/9<br>
+        P(GG) = 1/6 · 1/6 = 1/36</li>
+      <li>Summenregel – vorher auf den gemeinsamen Nenner 36 bringen:<br>
+        1/4 + 1/9 + 1/36 = 9/36 + 4/36 + 1/36 = 14/36</li>
+      <li>Kürzen mit 2: 14/36 = 7/18</li>
+      <li>In Prozent: 7 : 18 = 0,3888… ≈ 38,9 %</li>
+    </ol>
+    <svg viewBox="0 0 440 300" style="max-width:540px" role="img" aria-label="Baumdiagramm mit markierten Pfaden RR, BB und GG">
+      <g class="ln" fill="none"><line x1="20" y1="150" x2="140" y2="55"/><line x1="162" y1="55" x2="280" y2="25"/><line x1="162" y1="55" x2="280" y2="55"/><line x1="162" y1="55" x2="280" y2="85"/><line x1="20" y1="150" x2="140" y2="150"/><line x1="162" y1="150" x2="280" y2="120"/><line x1="162" y1="150" x2="280" y2="150"/><line x1="162" y1="150" x2="280" y2="180"/><line x1="20" y1="150" x2="140" y2="245"/><line x1="162" y1="245" x2="280" y2="215"/><line x1="162" y1="245" x2="280" y2="245"/><line x1="162" y1="245" x2="280" y2="275"/></g>
+      <g fill="none" stroke="var(--stat)" stroke-width="4" stroke-linecap="round" opacity=".85"><line x1="20" y1="150" x2="140" y2="55"/><line x1="162" y1="55" x2="280" y2="25"/><line x1="20" y1="150" x2="140" y2="150"/><line x1="162" y1="150" x2="280" y2="150"/><line x1="20" y1="150" x2="140" y2="245"/><line x1="162" y1="245" x2="280" y2="275"/></g>
+      <g><text x="150" y="60" text-anchor="middle" font-weight="700" font-size="15" style="fill:var(--wk)">R</text><text x="60" y="96" font-size="12">1/2</text><text x="290" y="30" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--wk)">R</text><text x="215" y="36" font-size="11">1/2</text><text x="310" y="30" font-size="12" font-weight="700">RR: 1/4 ✓</text><text x="290" y="60" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--accent)">B</text><text x="215" y="51" font-size="11">1/3</text><text x="310" y="60" font-size="12">RB: 1/6</text><text x="290" y="90" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--warn)">G</text><text x="215" y="83" font-size="11">1/6</text><text x="310" y="90" font-size="12">RG: 1/12</text><text x="150" y="155" text-anchor="middle" font-weight="700" font-size="15" style="fill:var(--accent)">B</text><text x="70" y="144" font-size="12">1/3</text><text x="290" y="125" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--wk)">R</text><text x="215" y="131" font-size="11">1/2</text><text x="310" y="125" font-size="12">BR: 1/6</text><text x="290" y="155" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--accent)">B</text><text x="215" y="146" font-size="11">1/3</text><text x="310" y="155" font-size="12" font-weight="700">BB: 1/9 ✓</text><text x="290" y="185" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--warn)">G</text><text x="215" y="178" font-size="11">1/6</text><text x="310" y="185" font-size="12">BG: 1/18</text><text x="150" y="250" text-anchor="middle" font-weight="700" font-size="15" style="fill:var(--warn)">G</text><text x="60" y="213" font-size="12">1/6</text><text x="290" y="220" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--wk)">R</text><text x="215" y="226" font-size="11">1/2</text><text x="310" y="220" font-size="12">GR: 1/12</text><text x="290" y="250" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--accent)">B</text><text x="215" y="241" font-size="11">1/3</text><text x="310" y="250" font-size="12">GB: 1/18</text><text x="290" y="280" text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--warn)">G</text><text x="215" y="273" font-size="11">1/6</text><text x="310" y="280" font-size="12" font-weight="700">GG: 1/36 ✓</text></g>
+    </svg>
+    <p><strong>Ergebnis:</strong> P(zweimal dieselbe Farbe) = <strong>7/18 ≈ 38,9 %</strong></p>
+    <p><strong>Kontrolle:</strong> Die Gegenwahrscheinlichkeit „zwei verschiedene Farben“ sind die übrigen 6 Pfade: 6 + 3 + 6 + 2 + 3 + 2 = 22 → 22/36. 14/36 + 22/36 = 36/36 = 1 ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> Brüche mit verschiedenen Nennern einfach „oben plus oben, unten plus unten“ addieren: 1/4 + 1/9 + 1/36 ist <em>nicht</em> 3/49. Erst auf einen gemeinsamen Nenner bringen.
+  </div>
+
+  <h3>c) P(kein Gelb) <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist es, dass bei beiden Drehungen <em>kein</em> Gelb kommt?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Bei einer Drehung: P(nicht gelb) = 1 − 1/6 = 5/6 (das ist rot oder blau: 1/2 + 1/3 = 5/6).</li>
+      <li>Zwei Drehungen, beide „nicht gelb“ – Pfadregel: 5/6 · 5/6 = 25/36</li>
+      <li>In Prozent: 25 : 36 = 0,6944… ≈ 69,4 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(kein Gelb) = <strong>25/36 ≈ 69,4 %</strong></p>
+    <p><strong>Kontrolle:</strong> Im Baum die Pfade ohne G zählen: RR + RB + BR + BB = 9/36 + 6/36 + 6/36 + 4/36 = 25/36 ✓</p>
+  </div>
+
+  <h3>d) P(mindestens einmal Gelb) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist es, dass Gelb einmal oder zweimal vorkommt?</p>
+  </div>
+  <div class="card rule wk">
+    <strong>Gegenereignis rechnen:</strong> P(mindestens einmal X) = 1 − P(nie X).
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>„Mindestens einmal Gelb“ ist das Gegenereignis zu „kein Gelb“ aus c).</li>
+      <li>1 − 25/36 = 36/36 − 25/36 = 11/36</li>
+      <li>In Prozent: 11 : 36 = 0,3055… ≈ 30,6 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(mindestens einmal Gelb) = <strong>11/36 ≈ 30,6 %</strong></p>
+    <p><strong>Kontrolle:</strong> Direkt über die Pfade mit mindestens einem G: RG + BG + GR + GB + GG = 3/36 + 2/36 + 3/36 + 2/36 + 1/36 = 11/36 ✓. Außerdem: c) + d) = 25/36 + 11/36 = 1 ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> 1/6 + 1/6 = 2/6 rechnen („einmal beim ersten, einmal beim zweiten Drehen“). Das zählt den Pfad GG doppelt: In 1/6 (1. Drehung gelb) und in 1/6 (2. Drehung gelb) steckt GG jeweils schon drin. Richtig wäre 1/6 + 1/6 − 1/36 = 11/36. Mit dem Gegenereignis passiert dieser Fehler gar nicht erst.
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 6 ===================== -->
+<section id="a6">
+  <h2 class="wk"><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 6 – Klassensprecher (ohne Zurücklegen) <span style="color:var(--muted);font-weight:400">(8 P.)</span></h2>
+  <div class="card">
+    <p>In einer Klasse sind 12 Mädchen (M) und 8 Jungen (J). Zwei Klassensprecher werden nacheinander ausgelost.</p>
+  </div>
+  <div class="card rule wk">
+    <strong>Ohne Zurücklegen</strong>
+    <p>Wer schon ausgelost ist, kann nicht noch mal gezogen werden. Auf der 2. Stufe ist deshalb <strong>einer weniger</strong> im Topf: Der Nenner wird um 1 kleiner, und bei der Gruppe, die schon gezogen wurde, wird auch der Zähler um 1 kleiner.</p>
+    <p>Dazu wie immer: <strong>Pfadregel</strong> (entlang des Pfades multiplizieren) und <strong>Summenregel</strong> (passende Pfade addieren).</p>
+  </div>
+
+  <h3>a) Baumdiagramm <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein zweistufiges Baumdiagramm (1. Sprecher, 2. Sprecher) mit allen Wahrscheinlichkeiten.</p>
+    <p><strong>So zeichnest du es</strong></p>
+    <ol>
+      <li>Startpunkt links, <strong>2 Äste</strong>: M und J. Insgesamt sind 12 + 8 = 20 Schüler da → M: 12/20, J: 8/20.</li>
+      <li>Nach M: Es sind noch 19 Schüler da, davon 11 Mädchen und 8 Jungen → M: 11/19, J: 8/19.</li>
+      <li>Nach J: Es sind noch 19 Schüler da, davon 12 Mädchen und 7 Jungen → M: 12/19, J: 7/19.</li>
+      <li>Am Ende 4 Pfade: MM, MJ, JM, JJ – jeweils mit der Pfadwahrscheinlichkeit (Pfadregel). Lass die Brüche mit Nenner 380 ruhig ungekürzt stehen, dann kannst du sie leicht addieren.</li>
+    </ol>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm Klassensprecher">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">M</text><text x="160" y="200" style="fill:var(--accent)">J</text>
+        <text x="300" y="35" style="fill:var(--wk)">M</text><text x="300" y="105" style="fill:var(--accent)">J</text>
+        <text x="300" y="165" style="fill:var(--wk)">M</text><text x="300" y="235" style="fill:var(--accent)">J</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">12/20</text><text x="70" y="180">8/20</text>
+        <text x="215" y="40">11/19</text><text x="215" y="98">8/19</text>
+        <text x="215" y="170">12/19</text><text x="215" y="228">7/19</text>
+        <text x="320" y="35">MM: 132/380</text><text x="320" y="105">MJ: 96/380</text>
+        <text x="320" y="165">JM: 96/380</text><text x="320" y="235">JJ: 56/380</text>
+      </g>
+    </svg>
+    <p><strong>Ergebnis:</strong> Baumdiagramm mit 2 Stufen und 4 Pfaden (siehe oben).</p>
+    <p><strong>Kontrolle:</strong> An jedem Punkt ergeben die Äste 1: 12/20 + 8/20 = 1 · 11/19 + 8/19 = 1 · 12/19 + 7/19 = 1 ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> auf der 2. Stufe den Nenner 20 stehen lassen. Dann rechnest du so, als dürfte derselbe Schüler zweimal Klassensprecher werden (mit Zurücklegen).
+  </div>
+
+  <h3>b) P(zwei Mädchen) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist es, dass beide Klassensprecher Mädchen sind?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Passender Pfad: nur MM.</li>
+      <li>Pfadregel: 12/20 · 11/19 = (12 · 11)/(20 · 19) = 132/380</li>
+      <li>Kürzen mit 4: 132/380 = 33/95</li>
+      <li>In Prozent: 33 : 95 = 0,3473… ≈ 34,7 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(zwei Mädchen) = <strong>33/95 ≈ 34,7 %</strong></p>
+    <p><strong>Kontrolle:</strong> Plausibel: Mehr als die Hälfte sind Mädchen (60 %), aber zweimal hintereinander ein Mädchen ist seltener als einmal – ungefähr ein Drittel passt.</p>
+  </div>
+
+  <h3>c) P(ein Mädchen und ein Junge) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist ein gemischtes Sprecher-Paar – egal, wer zuerst gezogen wird?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Passende Pfade: MJ <em>und</em> JM (im Baum grün markiert).</li>
+      <li>Pfadregel:<br>
+        P(MJ) = 12/20 · 8/19 = 96/380<br>
+        P(JM) = 8/20 · 12/19 = 96/380</li>
+      <li>Summenregel: 96/380 + 96/380 = 192/380</li>
+      <li>Kürzen mit 4: 192/380 = 48/95</li>
+      <li>In Prozent: 48 : 95 = 0,5052… ≈ 50,5 %</li>
+    </ol>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm mit markierten Pfaden MJ und JM">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g fill="none" stroke="var(--stat)" stroke-width="4" stroke-linecap="round" opacity=".85">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="20" y1="130" x2="150" y2="195"/><line x1="170" y1="195" x2="290" y2="160"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">M</text><text x="160" y="200" style="fill:var(--accent)">J</text>
+        <text x="300" y="35" style="fill:var(--wk)">M</text><text x="300" y="105" style="fill:var(--accent)">J</text>
+        <text x="300" y="165" style="fill:var(--wk)">M</text><text x="300" y="235" style="fill:var(--accent)">J</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">12/20</text><text x="70" y="180">8/20</text>
+        <text x="215" y="40">11/19</text><text x="215" y="98">8/19</text>
+        <text x="215" y="170">12/19</text><text x="215" y="228">7/19</text>
+        <text x="320" y="35">MM: 132/380</text><text x="320" y="105" font-weight="700">MJ: 96/380 ✓</text>
+        <text x="320" y="165" font-weight="700">JM: 96/380 ✓</text><text x="320" y="235">JJ: 56/380</text>
+      </g>
+    </svg>
+    <p><strong>Ergebnis:</strong> P(ein Mädchen und ein Junge) = <strong>48/95 ≈ 50,5 %</strong></p>
+    <p><strong>Kontrolle:</strong> MJ und JM haben dieselbe Wahrscheinlichkeit, nur die Reihenfolge der Faktoren ist anders (12 · 8 = 8 · 12) ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> nur den Pfad MJ nehmen (96/380 ≈ 25,3 %). „Ein Mädchen und ein Junge“ sagt nichts über die Reihenfolge – beide Pfade gehören dazu.
+  </div>
+
+  <h3>d) P(zwei Jungen) und Kontrolle <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit für zwei Jungen – und danach der Nachweis, dass b), c) und d) zusammen 1 ergeben.</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Passender Pfad: JJ.</li>
+      <li>Pfadregel: 8/20 · 7/19 = 56/380</li>
+      <li>Kürzen mit 4: 56/380 = 14/95</li>
+      <li>In Prozent: 14 : 95 = 0,1473… ≈ 14,7 %</li>
+      <li>Kontrolle mit Nenner 380: 132/380 + 192/380 + 56/380 = 380/380 = 1</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(zwei Jungen) = <strong>14/95 ≈ 14,7 %</strong>; die drei Ergebnisse ergeben zusammen <strong>1 (= 100 %)</strong> ✓</p>
+    <p><strong>Kontrolle:</strong> Auch gekürzt: 33/95 + 48/95 + 14/95 = 95/95 = 1 ✓. Das muss so sein: MM, „gemischt“ und JJ decken alle Möglichkeiten ab, und keine kommt doppelt vor.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> mit gerundeten Prozenten prüfen (34,7 + 50,5 + 14,7 = 99,9 %) und dann denken, es sei falsch. Prüfe mit den Brüchen – Rundungen gehen nicht immer genau auf.
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 7 ===================== -->
+<section id="a7">
+  <h2 class="wk"><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 7 – Lohnt sich das Spiel? <span style="color:var(--muted);font-weight:400">(4 P.)</span></h2>
+  <div class="card">
+    <p>Auf dem Schulfest gibt es ein Würfelspiel: Man zahlt 1 € Einsatz und würfelt einmal. Bei einer 6 bekommt man 4 € ausgezahlt, sonst nichts.</p>
+  </div>
+
+  <h3>a) Wie oft fällt bei 600 Spielen eine 6? <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Eine Schätzung, wie viele Sechsen bei 600 Würfen ungefähr kommen.</p>
+  </div>
+  <div class="card rule wk">
+    <strong>Relative Häufigkeit und Wahrscheinlichkeit:</strong> Bei vielen Versuchen nähert sich die relative Häufigkeit der Wahrscheinlichkeit an (Gesetz der großen Zahlen).
+    <div class="formula">erwartete Anzahl ≈ Anzahl der Versuche · Wahrscheinlichkeit</div>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>P(6) = 1/6 (normaler Würfel, 6 gleich große Flächen)</li>
+      <li>600 · 1/6 = 600 : 6 = 100</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>etwa 100-mal</strong></p>
+    <p><strong>Kontrolle:</strong> 100 von 600 = 1/6 ✓. „Etwa“ ist wichtig: Es können auch 92 oder 107 Sechsen sein.</p>
+  </div>
+
+  <h3>b) Gewinn oder Verlust der Spieler bei 600 Spielen <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie viel Geld die Spieler zusammen einzahlen und wie viel sie zurückbekommen – und was am Ende übrig bleibt.</p>
+  </div>
+  <div class="card rule wk">
+    <p>Ergebnis für die Spieler = <strong>Auszahlung insgesamt − Einsatz insgesamt</strong>. Positiv = Gewinn, negativ = Verlust.</p>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Einsatz: Jedes Spiel kostet 1 € → 600 · 1 € = 600 €</li>
+      <li>Auszahlung: etwa 100 Sechsen aus a) → 100 · 4 € = 400 €</li>
+      <li>Bilanz: 400 € − 600 € = −200 € → die Spieler verlieren etwa 200 €</li>
+      <li>Pro Spiel: 200 € : 600 ≈ 0,33 €</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Die Spieler verlieren zusammen <strong>etwa 200 €</strong> (≈ 0,33 € pro Spiel).</p>
+    <p><strong>Kontrolle (zweiter Rechenweg):</strong> Wer eine 6 würfelt, hat 4 € − 1 € = 3 € Plus: 100 · 3 € = 300 €. Wer keine 6 würfelt, verliert 1 €: 500 · 1 € = 500 €. 300 € − 500 € = −200 € ✓</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> die Rechenwege mischen – z. B. 100 · 3 € Gewinn rechnen und dann <em>zusätzlich</em> 600 € Einsatz abziehen (300 € − 600 € = −300 €). Dann ist der Einsatz der Gewinner doppelt abgezogen. Entscheide dich für einen Weg.
+  </div>
+
+  <h3>c) Lohnt sich das Spiel für die Spieler? <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ja oder nein – mit Begründung aus b).</p>
+  </div>
+  <div class="card rule wk">
+    <p>Was bei vielen Spielen im Durchschnitt passiert, zeigt, ob sich ein Spiel <strong>auf lange Sicht</strong> lohnt. Ein einzelnes Spiel kann man trotzdem gewinnen.</p>
+  </div>
+  <div class="card">
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Aus b): Bei 600 Spielen verlieren die Spieler etwa 200 €.</li>
+      <li>Pro Spiel zahlt man 1 € und bekommt im Durchschnitt nur 400 € : 600 ≈ 0,67 € zurück.</li>
+    </ol>
+    <p><strong>Ergebnis – Musterantwort:</strong> <strong>Nein, das Spiel lohnt sich für die Spieler nicht, denn auf lange Sicht verlieren sie im Durchschnitt etwa 0,33 € pro Spiel; für die Schulkasse lohnt es sich dagegen.</strong></p>
+    <p><strong>Was die Lehrkraft sehen will:</strong> „Nein“ <em>mit</em> Bezug auf die Rechnung: Die Spieler bekommen auf lange Sicht weniger heraus, als sie einzahlen.</p>
+    <p><strong>Kontrolle:</strong> Fair wäre das Spiel, wenn die Auszahlung den Einsatz genau ausgleicht: 100 · 6 € = 600 €. Bei 6 € Auszahlung wäre es fair – 4 € sind zu wenig, also lohnt es sich nicht ✓</p>
+  </div>
+</section>
+
+<!-- ===================== Mitnehmen ===================== -->
+<section id="mitnehmen">
+  <h2>Das solltest du mitnehmen</h2>
+  <div class="card">
+    <ol>
+      <li><strong>Relative Häufigkeit</strong> = absolute Häufigkeit : Gesamtanzahl n. Alle relativen Häufigkeiten ergeben zusammen 100 % (gerundet ungefähr).</li>
+      <li><strong>Median:</strong> erst ordnen, dann die Mitte suchen – bei gerader Anzahl den Mittelwert der beiden mittleren Werte nehmen. <strong>Modalwert</strong> = häufigster Wert, <strong>Spannweite</strong> = größter − kleinster Wert.</li>
+      <li>Welcher Kennwert passt, hängt von der Frage ab: „am häufigsten“ → Modalwert; ein Mittelwert muss kein echter Wert sein (40,28 ist keine Schuhgröße).</li>
+      <li><strong>Klassen:</strong> „von 10 bis unter 20“ – der untere Grenzwert gehört dazu, der obere nicht. Mittelwert näherungsweise mit Klassenmitte · Häufigkeit.</li>
+      <li><strong>Gemeinsamer Mittelwert zweier Gruppen:</strong> über die Summen rechnen (Mittelwert · Anzahl), nie einfach die beiden Mittelwerte mitteln, wenn die Gruppen verschieden groß sind.</li>
+      <li><strong>Laplace-Wahrscheinlichkeit:</strong> günstige Ergebnisse : mögliche Ergebnisse – vorher die günstigen Ergebnisse als Menge aufschreiben.</li>
+      <li><strong>Baumdiagramm:</strong> Pfadregel (entlang multiplizieren), Summenregel (Pfade addieren). Ohne Zurücklegen wird auf der 2. Stufe der Nenner um 1 kleiner.</li>
+      <li><strong>Gegenereignis:</strong> P(mindestens einmal X) = 1 − P(nie X). Und: Bei vielen Spielen zeigt die Wahrscheinlichkeit, ob sich ein Spiel auf lange Sicht lohnt.</li>
+    </ol>
+  </div>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="probearbeit-3.html">← zur Probearbeit 3</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+</body>
+</html>

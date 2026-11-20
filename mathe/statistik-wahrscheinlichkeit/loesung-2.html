@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lösung Probearbeit 2 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <span>Lösung Probearbeit 2</span></div>
+  <a class="back" href="probearbeit-2.html">← zur Probearbeit 2</a>
+  <h1>Lösung Probearbeit 2 · Mathematik Klasse 9 <span class="niveau">Niveau: Standard</span></h1>
+  <p>Ausführliche Musterlösung · Daten &amp; Statistik · Wahrscheinlichkeitsrechnung</p>
+</header>
+
+<nav><div class="inner">
+  <a href="#a1">1 Notenspiegel</a><a href="#a2">2 Temperaturen</a><a href="#a3">3 Freibad</a><a href="#a4">4 Buchstabenkarten</a><a href="#a5">5 Zweimal würfeln</a><a href="#a6">6 Bonbontüte</a><a href="#a7">7 Reißzwecke</a><a href="#mitnehmen">Mitnehmen</a>
+</div></nav>
+
+<main>
+<section>
+  <div class="card warn">
+    <p style="margin:0"><strong>So arbeitest du mit dieser Seite:</strong> Bearbeite zuerst die Probearbeit allein. Vergleiche danach Aufgabe für Aufgabe. Hast du etwas falsch, lies den Teil <em>Schritt für Schritt</em> und rechne die Aufgabe noch einmal ohne Hilfe.<br>
+    Jede Teilaufgabe hat dieselben Bausteine: <strong>Was ist gefragt?</strong> → <strong>Das brauchst du</strong> → <strong>Schritt für Schritt</strong> → <strong>Ergebnis</strong> → <strong>Kontrolle</strong>.</p>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 1 ===================== -->
+<section id="a1">
+  <h2 class="stat">Aufgabe 1 – Notenspiegel <span style="color:var(--muted);font-weight:400">(10 P.)</span></h2>
+  <div class="card">
+    <p>Der Notenspiegel einer Mathearbeit der Klasse 9b:</p>
+    <div class="tablewrap"><table><tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>Anzahl</th><td>3</td><td>6</td><td>8</td><td>5</td><td>2</td><td>1</td></tr></table></div>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>a) Relative Häufigkeiten in Prozent <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Du sollst für jede Note angeben, welcher <em>Anteil</em> der Klasse diese Note bekommen hat – in Prozent.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: relative Häufigkeit</strong>
+      <div class="formula">h = <span class="frac"><span>absolute Häufigkeit</span><span>Gesamtanzahl n</span></span></div>
+      <p style="margin:0">Dezimalzahl → Prozent: mal 100. Kontrolle: Alle relativen Häufigkeiten ergeben zusammen 1 = 100 %.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Gesamtanzahl n bestimmen: 3 + 6 + 8 + 5 + 2 + 1 = <strong>25</strong> Schüler.</li>
+      <li>Jede Anzahl durch 25 teilen:
+        <ul>
+          <li>Note 1: 3 : 25 = 0,12 = 12 %</li>
+          <li>Note 2: 6 : 25 = 0,24 = 24 %</li>
+          <li>Note 3: 8 : 25 = 0,32 = 32 %</li>
+          <li>Note 4: 5 : 25 = 0,20 = 20 %</li>
+          <li>Note 5: 2 : 25 = 0,08 = 8 %</li>
+          <li>Note 6: 1 : 25 = 0,04 = 4 %</li>
+        </ul>
+      </li>
+      <li>Trick ohne Taschenrechner: 1 Schüler von 25 sind 4 %. Also Anzahl · 4 %.</li>
+    </ol>
+    <p><strong>Ergebnis</strong></p>
+    <div class="tablewrap"><table>
+      <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><th>Σ</th></tr>
+      <tr><th>Anzahl</th><td>3</td><td>6</td><td>8</td><td>5</td><td>2</td><td>1</td><td>25</td></tr>
+      <tr><th>rel. H.</th><td><strong>12 %</strong></td><td><strong>24 %</strong></td><td><strong>32 %</strong></td><td><strong>20 %</strong></td><td><strong>8 %</strong></td><td><strong>4 %</strong></td><td>100 %</td></tr>
+    </table></div>
+    <p><strong>Kontrolle:</strong> 12 + 24 + 32 + 20 + 8 + 4 = 100 % ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> durch 6 teilen (die Anzahl der Noten) statt durch 25 (die Anzahl der Schüler). n ist immer die Summe der Anzahlen.</div>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>b) Durchschnittsnote und Median <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Zwei Kennwerte: der Durchschnitt (arithmetisches Mittel) aller 25 Noten und der Median, also die Note, die in der geordneten Liste genau in der Mitte steht.</p>
+    <div class="grid2">
+      <div class="card rule stat">
+        <strong>Das brauchst du: Arithmetisches Mittel aus einer Tabelle</strong>
+        <p style="margin:0">Jeden Wert mit seiner Häufigkeit multiplizieren, alles addieren, durch n teilen.</p>
+        <div class="formula">x̄ = <span class="frac"><span>Summe aller Werte</span><span>Anzahl der Werte</span></span></div>
+      </div>
+      <div class="card rule stat">
+        <strong>Das brauchst du: Median (Zentralwert)</strong>
+        <p style="margin:0">1. Daten der Größe nach ordnen.<br>2. Ungerade Anzahl: der Wert genau in der Mitte. Gerade Anzahl: Mittelwert der beiden mittleren Werte.</p>
+      </div>
+    </div>
+    <p><strong>Schritt für Schritt – Durchschnitt</strong></p>
+    <ol>
+      <li>Note · Anzahl: 1·3 = 3, 2·6 = 12, 3·8 = 24, 4·5 = 20, 5·2 = 10, 6·1 = 6.</li>
+      <li>Summe aller Noten: 3 + 12 + 24 + 20 + 10 + 6 = 75.</li>
+      <li>Durch n = 25 teilen: 75 : 25 = 3.</li>
+    </ol>
+    <p><strong>Schritt für Schritt – Median</strong></p>
+    <ol>
+      <li>n = 25 ist ungerade. Der mittlere Wert steht auf Platz (25 + 1) : 2 = <strong>13</strong>. Links und rechts davon stehen je 12 Werte.</li>
+      <li>Plätze abzählen (die Tabelle ist schon nach Noten geordnet):
+        <ul>
+          <li>Note 1: Platz 1–3</li>
+          <li>Note 2: Platz 4–9</li>
+          <li>Note 3: Platz 10–17 ← Platz 13 liegt hier</li>
+        </ul>
+      </li>
+      <li>Der 13. Wert ist also eine 3.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Durchschnittsnote <strong>x̄ = 3</strong>, Median <strong>= 3</strong>.</p>
+    <p><strong>Kontrolle:</strong> Die meisten Noten liegen bei 2, 3 und 4, die Klasse hat ungefähr „befriedigend“ geschrieben. Ein Durchschnitt von 3 passt dazu. Beim Median: Vor Platz 13 stehen 12 Werte (3 Einsen, 6 Zweien, 3 Dreien), danach ebenfalls 12 Werte (4 Dreien, 5 Vieren, 2 Fünfen, 1 Sechs) ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> beim Mittelwert die Häufigkeiten vergessen und (1 + 2 + 3 + 4 + 5 + 6) : 6 = 3,5 rechnen. Beim Median die Spalte in der Mitte der Tabelle nehmen oder die Anzahlen ordnen (1, 2, 3, 5, 6, 8) – du musst die <em>Noten</em> abzählen, nicht die Anzahlen.</div>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>c) Winkel für ein Kreisdiagramm <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie groß muss jedes „Tortenstück“ sein, wenn der ganze Kreis (360°) für alle 25 Schüler steht?</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Kreisdiagramm berechnen</strong>
+      <div class="formula">Winkel = relative Häufigkeit · 360°</div>
+      <p style="margin:0">Ein Kreisdiagramm zeigt Anteile an einem Ganzen: alles zusammen = 100 % = 360°.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Relative Häufigkeit aus a) als Dezimalzahl nehmen und mit 360° multiplizieren:
+        <ul>
+          <li>Note 1: 0,12 · 360° = 43,2°</li>
+          <li>Note 2: 0,24 · 360° = 86,4°</li>
+          <li>Note 3: 0,32 · 360° = 115,2°</li>
+          <li>Note 4: 0,20 · 360° = 72°</li>
+          <li>Note 5: 0,08 · 360° = 28,8°</li>
+          <li>Note 6: 0,04 · 360° = 14,4°</li>
+        </ul>
+      </li>
+      <li>Abkürzung: 1 Schüler entspricht 360° : 25 = 14,4°. Dann Anzahl · 14,4°, z. B. Note 3: 8 · 14,4° = 115,2°.</li>
+    </ol>
+    <p><strong>Ergebnis</strong></p>
+    <div class="tablewrap"><table>
+      <tr><th>Note</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><th>Σ</th></tr>
+      <tr><th>Winkel</th><td><strong>43,2°</strong></td><td><strong>86,4°</strong></td><td><strong>115,2°</strong></td><td><strong>72°</strong></td><td><strong>28,8°</strong></td><td><strong>14,4°</strong></td><td>360°</td></tr>
+    </table></div>
+    <p><strong>Kontrolle:</strong> 43,2 + 86,4 + 115,2 + 72 + 28,8 + 14,4 = 360° ✓</p>
+    <svg viewBox="0 0 240 240" style="max-width:300px" role="img" aria-label="Kreisdiagramm Notenspiegel 9b">
+      <g stroke="var(--card)" stroke-width="2" fill-opacity=".45">
+        <path d="M120,120 L120.0,30.0 A90,90 0 0 1 181.6,54.4 Z" fill="var(--stat)"/>
+        <path d="M120,120 L181.6,54.4 A90,90 0 0 1 189.3,177.4 Z" fill="var(--accent)"/>
+        <path d="M120,120 L189.3,177.4 A90,90 0 0 1 38.6,158.3 Z" fill="var(--wk)"/>
+        <path d="M120,120 L38.6,158.3 A90,90 0 0 1 58.4,54.4 Z" fill="var(--warn)"/>
+        <path d="M120,120 L58.4,54.4 A90,90 0 0 1 97.6,32.8 Z" fill="var(--muted)"/>
+        <path d="M120,120 L97.6,32.8 A90,90 0 0 1 120.0,30.0 Z" fill="var(--text)"/>
+      </g>
+      <g font-size="11" text-anchor="middle" font-weight="700">
+        <text x="140.5" y="72">1</text><text x="175.7" y="120">2</text><text x="113" y="179">3</text>
+        <text x="65.2" y="113">4</text><text x="68.9" y="30">5</text><text x="106.7" y="18">6</text>
+      </g>
+    </svg>
+    <div class="card rule stat">
+      <strong>So zeichnest du es</strong>
+      <ol style="margin:0">
+        <li>Kreis mit dem Zirkel zeichnen (z. B. r = 4 cm), Mittelpunkt markieren.</li>
+        <li>Einen Radius senkrecht nach oben als Startlinie ziehen.</li>
+        <li>Geodreieck am Mittelpunkt anlegen und 43,2° abtragen (auf dem Geodreieck ≈ 43°), Radius ziehen → Stück für Note 1.</li>
+        <li>Am <em>neuen</em> Radius weitermessen: 86,4° für Note 2, dann 115,2° usw. Immer vom letzten Strich aus, nie wieder von oben.</li>
+        <li>Jedes Stück mit Note und Prozentwert beschriften. Das letzte Stück (Note 6) muss genau bis zur Startlinie reichen – sonst hast du falsch gemessen.</li>
+      </ol>
+    </div>
+    <div class="card warn"><strong>Typischer Fehler:</strong> den Prozentwert direkt als Winkel nehmen (12 % → 12°). Prozent und Grad sind nicht dasselbe: 100 % entsprechen 360°.</div>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 2 ===================== -->
+<section id="a2">
+  <h2 class="stat">Aufgabe 2 – Temperaturen <span style="color:var(--muted);font-weight:400">(5 P.)</span></h2>
+  <div class="card">
+    <p>Von Montag bis Samstag wurden mittags diese Temperaturen gemessen: <strong>12 °C, 15 °C, 9 °C, 14 °C, 11 °C, 13 °C</strong>.</p>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>a) Temperatur am Sonntag für einen Durchschnitt von 13 °C <span style="color:var(--muted);font-weight:400">(3 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein Wert fehlt (Sonntag). Du kennst aber den Durchschnitt, der am Ende herauskommen soll. Rechne rückwärts: Welche Summe brauchen alle 7 Tage, und wie viel fehlt davon noch?</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Arithmetisches Mittel – rückwärts gerechnet</strong>
+      <div class="formula">x̄ = <span class="frac"><span>Summe aller Werte</span><span>Anzahl der Werte</span></span> &nbsp;⇒&nbsp; Summe aller Werte = x̄ · Anzahl</div>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Summe, die 7 Tage mit Durchschnitt 13 °C haben müssen: 7 · 13 = 91.</li>
+      <li>Summe der 6 bekannten Tage: 12 + 15 + 9 + 14 + 11 + 13 = 74.</li>
+      <li>Fehlender Wert: 91 − 74 = 17.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Am Sonntag muss es <strong>17 °C</strong> warm sein.</p>
+    <p><strong>Kontrolle:</strong> (74 + 17) : 7 = 91 : 7 = 13 ✓. Plausibel: Der Durchschnitt Mo–Sa ist 74 : 6 ≈ 12,3 °C, also unter 13 °C. Der Sonntag muss deshalb wärmer als 13 °C sein, um den Schnitt anzuheben.</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> mit 6 statt 7 Tagen rechnen (6 · 13 = 78) oder einfach „13 °C“ antworten. Wenn der Sonntag nur 13 °C hätte, bliebe der Schnitt bei (74 + 13) : 7 ≈ 12,4 °C.</div>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>b) Median der sieben Temperaturen <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Der Wert in der Mitte, wenn du alle sieben Temperaturen (mit dem Sonntag aus a) der Größe nach ordnest.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Median (Zentralwert)</strong>
+      <p style="margin:0">1. Daten der Größe nach ordnen. 2. Ungerade Anzahl: der Wert genau in der Mitte.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Alle sieben Werte: 12, 15, 9, 14, 11, 13, 17.</li>
+      <li>Ordnen: 9, 11, 12, <strong>13</strong>, 14, 15, 17.</li>
+      <li>n = 7 ist ungerade → Platz (7 + 1) : 2 = 4. Der 4. Wert ist 13.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Median = <strong>13 °C</strong>.</p>
+    <p><strong>Kontrolle:</strong> Links von 13 stehen 3 Werte (9, 11, 12), rechts auch 3 Werte (14, 15, 17) ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> die Werte nicht ordnen und den 4. Wert der Messreihe nehmen (14 °C) oder den Sonntag vergessen und nur sechs Werte betrachten.</div>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 3 ===================== -->
+<section id="a3">
+  <h2 class="stat">Aufgabe 3 – Freibad <span style="color:var(--muted);font-weight:400">(6 P.)</span></h2>
+  <div class="card">
+    <p>Das Liniendiagramm zeigt die Besucherzahlen eines Freibads. Hier mit Ablesehilfen ergänzt: gestrichelte Linien zur Achse und die abgelesenen Werte an den Punkten.</p>
+    <svg viewBox="0 0 360 200" style="max-width:480px" role="img" aria-label="Liniendiagramm Freibadbesucher mit abgelesenen Werten"><line class="ln" x1="40" y1="170" x2="340" y2="170"/><line class="ln" x1="40" y1="170" x2="40" y2="20"/><line x1="40" x2="340" y1="170" y2="170" stroke="var(--line)"/><text x="34" y="174" font-size="10" text-anchor="end">0</text><line x1="40" x2="340" y1="147" y2="147" stroke="var(--line)"/><text x="34" y="151" font-size="10" text-anchor="end">1000</text><line x1="40" x2="340" y1="123" y2="123" stroke="var(--line)"/><text x="34" y="127" font-size="10" text-anchor="end">2000</text><line x1="40" x2="340" y1="100" y2="100" stroke="var(--line)"/><text x="34" y="104" font-size="10" text-anchor="end">3000</text><line x1="40" x2="340" y1="77" y2="77" stroke="var(--line)"/><text x="34" y="81" font-size="10" text-anchor="end">4000</text><line x1="40" x2="340" y1="53" y2="53" stroke="var(--line)"/><text x="34" y="57" font-size="10" text-anchor="end">5000</text><line x1="40" x2="340" y1="30" y2="30" stroke="var(--line)"/><text x="34" y="34" font-size="10" text-anchor="end">6000</text>
+      <g stroke="var(--muted)" stroke-dasharray="3 3" stroke-width="1"><line x1="40" y1="142" x2="60" y2="142"/><line x1="40" y1="88" x2="125" y2="88"/><line x1="40" y1="49" x2="190" y2="49"/><line x1="40" y1="58" x2="255" y2="58"/><line x1="40" y1="128" x2="320" y2="128"/></g>
+      <polyline points="60,142 125,88 190,49 255,58 320,128" fill="none" stroke="var(--stat)" stroke-width="2.5"/><circle cx="60" cy="142" r="4" fill="var(--stat)"/><text x="60" y="188" font-size="11" text-anchor="middle">Mai</text><circle cx="125" cy="88" r="4" fill="var(--stat)"/><text x="125" y="188" font-size="11" text-anchor="middle">Juni</text><circle cx="190" cy="49" r="4" fill="var(--stat)"/><text x="190" y="188" font-size="11" text-anchor="middle">Juli</text><circle cx="255" cy="58" r="4" fill="var(--stat)"/><text x="255" y="188" font-size="11" text-anchor="middle">Aug.</text><circle cx="320" cy="128" r="4" fill="var(--stat)"/><text x="320" y="188" font-size="11" text-anchor="middle">Sep.</text>
+      <circle cx="190" cy="49" r="9" fill="none" stroke="var(--wk)" stroke-width="2"/>
+      <g font-size="10" font-weight="700" text-anchor="middle"><text x="66" y="134">1200</text><text x="125" y="80">3500</text><text x="190" y="36">5200</text><text x="262" y="50">4800</text><text x="320" y="120">1800</text></g>
+    </svg>
+    <div class="card rule stat">
+      <strong>So liest du es ab</strong>
+      <ol style="margin:0">
+        <li>Achseneinteilung prüfen: Von einer Gitterlinie zur nächsten sind es 1000 Besucher. Die Hälfte zwischen zwei Linien sind 500.</li>
+        <li>Vom Punkt waagerecht (mit dem Lineal) nach links zur Achse gehen und die Zahl schätzen.</li>
+        <li>Werte in eine Tabelle schreiben – die brauchst du für b), c) und d).</li>
+      </ol>
+    </div>
+    <div class="tablewrap"><table>
+      <tr><th>Monat</th><td>Mai</td><td>Juni</td><td>Juli</td><td>Aug.</td><td>Sep.</td><th>Σ</th></tr>
+      <tr><th>Besucher</th><td>1200</td><td>3500</td><td>5200</td><td>4800</td><td>1800</td><td>16 500</td></tr>
+    </table></div>
+    <p style="font-size:.9rem;color:var(--muted)">Abgelesene Werte sind immer etwas ungenau. Liest du z. B. 1250 statt 1200 ab, ändern sich die Ergebnisse leicht – das ist in Ordnung, wenn dein Rechenweg stimmt.</p>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>a) Monat mit den meisten Besuchern <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Der höchste Punkt der Linie.</p>
+    <div class="card rule stat"><strong>Das brauchst du:</strong> Im Liniendiagramm gilt: je höher der Punkt, desto größer der Wert.</div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>Den höchsten Punkt suchen: Er liegt über „Juli“ (im Bild umkreist).</li><li>Wert ablesen: knapp über 5000, also etwa 5200.</li></ol>
+    <p><strong>Ergebnis:</strong> Im <strong>Juli</strong> kamen die meisten Besucher (etwa 5200).</p>
+    <p><strong>Kontrolle:</strong> August (4800) ist der zweithöchste Punkt und liegt sichtbar tiefer ✓. Plausibel: Juli ist meist der heißeste Monat.</p>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>b) Prozentuale Zunahme von Mai bis Juni <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Um wie viel Prozent ist die Zahl gewachsen? Die Zunahme wird mit dem <em>alten</em> Wert (Mai) verglichen.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: prozentuale Zunahme</strong>
+      <div class="formula">Zunahme in % = <span class="frac"><span>neuer Wert − alter Wert</span><span>alter Wert</span></span> · 100</div>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Zunahme: 3500 − 1200 = 2300 Besucher.</li>
+      <li>Mit dem alten Wert vergleichen: 2300 : 1200 ≈ 1,9167.</li>
+      <li>In Prozent: 1,9167 · 100 ≈ 191,7 %.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Die Besucherzahl stieg um <strong>≈ 191,7 %</strong>.</p>
+    <p><strong>Kontrolle:</strong> 1200 + 191,7 % von 1200 = 1200 + 2300 = 3500 ✓. Plausibel: Die Zahl hat sich fast verdreifacht (3 · 1200 = 3600). Verdreifachen wäre +200 %, also passt ein Wert knapp unter 200 %.</p>
+    <div class="card warn"><strong>Typischer Fehler 1:</strong> durch den neuen Wert teilen: 2300 : 3500 ≈ 65,7 % – falsch, die Basis ist der Mai.<br>
+    <strong>Typischer Fehler 2:</strong> 3500 : 1200 ≈ 291,7 % als Zunahme angeben. Das ist der Juni <em>im Vergleich</em> zum Mai (Juni = 291,7 % vom Mai). Die Zunahme ist 291,7 % − 100 % = 191,7 %.</div>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>c) Durchschnittliche Besucherzahl pro Monat <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Das arithmetische Mittel der fünf Monatswerte.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Arithmetisches Mittel</strong>
+      <div class="formula">x̄ = <span class="frac"><span>Summe aller Werte</span><span>Anzahl der Werte</span></span></div>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Summe: 1200 + 3500 + 5200 + 4800 + 1800 = 16 500.</li>
+      <li>Anzahl der Monate: 5 (Mai bis September).</li>
+      <li>16 500 : 5 = 3300.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Im Durchschnitt kamen <strong>3300 Besucher pro Monat</strong>.</p>
+    <p><strong>Kontrolle:</strong> 3300 · 5 = 16 500 ✓. Der Wert liegt zwischen dem kleinsten (1200) und dem größten (5200) Wert ✓</p>
+  </div>
+
+  <h3><span class="tag stat">Statistik</span>d) Anteil der Juli-Besucher <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Welcher Teil aller Besucher (Mai bis September) kam im Juli? Das ist eine relative Häufigkeit.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: relative Häufigkeit</strong>
+      <div class="formula">h = <span class="frac"><span>absolute Häufigkeit</span><span>Gesamtanzahl n</span></span></div>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Juli-Besucher: 5200. Alle Besucher: 16 500 (aus c).</li>
+      <li>5200 : 16 500 ≈ 0,315.</li>
+      <li>In Prozent: ≈ 31,5 %.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <span class="frac"><span>5200</span><span>16 500</span></span> = <span class="frac"><span>52</span><span>165</span></span> ≈ <strong>31,5 %</strong> aller Besucher kamen im Juli.</p>
+    <p><strong>Kontrolle:</strong> Bei 5 gleich starken Monaten hätte jeder 20 %. Der Juli ist der stärkste Monat, also muss sein Anteil über 20 % liegen ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> durch den Durchschnitt 3300 teilen statt durch die Gesamtzahl 16 500.</div>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 4 ===================== -->
+<section id="a4">
+  <h2 class="wk">Aufgabe 4 – Buchstabenkarten <span style="color:var(--muted);font-weight:400">(4 P.)</span></h2>
+  <div class="card">
+    <p>Die Buchstaben des Wortes <strong>M A T H E M A T I K</strong> stehen auf 10 Karten. Eine Karte wird zufällig gezogen.</p>
+    <p>Vor dem Rechnen: einmal alle Karten zählen.</p>
+    <div class="tablewrap"><table>
+      <tr><th>Buchstabe</th><td>M</td><td>A</td><td>T</td><td>H</td><td>E</td><td>I</td><td>K</td><th>Σ</th></tr>
+      <tr><th>Anzahl Karten</th><td>2</td><td>2</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td><td>10</td></tr>
+    </table></div>
+    <div class="card rule wk">
+      <strong>Das brauchst du (für alle Teile): Laplace-Wahrscheinlichkeit</strong> (alle Ergebnisse gleich wahrscheinlich – hier: jede Karte hat dieselbe Chance)
+      <div class="formula">P(E) = <span class="frac"><span>Anzahl günstiger Ergebnisse</span><span>Anzahl möglicher Ergebnisse</span></span></div>
+      <p style="margin:0">Gegenereignis: P(Ē) = 1 − P(E)</p>
+    </div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>a) ein M</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie groß ist die Chance, eine der M-Karten zu ziehen?</p>
+    <p><strong>Das brauchst du:</strong> Laplace-Wahrscheinlichkeit (siehe oben).</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>Mögliche Ergebnisse: 10 Karten.</li><li>Günstige Ergebnisse: Es gibt 2 Karten mit M.</li><li>P(M) = 2/10 = 1/5 = 0,2.</li></ol>
+    <p><strong>Ergebnis:</strong> P(M) = <strong>1/5 = 20 %</strong></p>
+    <p><strong>Kontrolle:</strong> 2 von 10 Karten → jede fünfte Karte ist ein M ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> „7 verschiedene Buchstaben, einer davon ist M → 1/7“. Gezogen wird eine <em>Karte</em>, nicht ein Buchstabe. Es gibt 10 Karten, und M steht auf zwei davon.</div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>b) einen Vokal</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Die Chance, eine Karte mit A, E, I, O oder U zu ziehen.</p>
+    <p><strong>Das brauchst du:</strong> Laplace-Wahrscheinlichkeit; Vokale sind A, E, I, O, U.</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>Vokal-Karten im Wort suchen: M <strong>A</strong> T H <strong>E</strong> M <strong>A</strong> T <strong>I</strong> K → A, E, A, I.</li><li>Das sind 4 günstige Karten von 10.</li><li>P(Vokal) = 4/10 = 2/5 = 0,4.</li></ol>
+    <p><strong>Ergebnis:</strong> P(Vokal) = <strong>2/5 = 40 %</strong></p>
+    <p><strong>Kontrolle:</strong> Konsonanten: M, T, H, M, T, K = 6 Karten. 4 + 6 = 10 ✓, und 40 % + 60 % = 100 % ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> das zweite A nur einmal zählen (3/10). Jede Karte zählt einzeln.</div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>c) ein K</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Die Chance, die K-Karte zu ziehen.</p>
+    <p><strong>Das brauchst du:</strong> Laplace-Wahrscheinlichkeit.</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>K kommt im Wort genau einmal vor → 1 günstige Karte.</li><li>P(K) = 1/10 = 0,1.</li></ol>
+    <p><strong>Ergebnis:</strong> P(K) = <strong>1/10 = 10 %</strong></p>
+    <p><strong>Kontrolle:</strong> Ein Buchstabe, der einmal vorkommt, hat halb so große Chance wie M (zweimal): 10 % ist die Hälfte von 20 % ✓</p>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>d) <em>kein</em> T</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Die Chance, irgendeine Karte zu ziehen, nur kein T.</p>
+    <p><strong>Das brauchst du:</strong> Gegenereignis P(Ē) = 1 − P(E). „Kein T“ ist das Gegenereignis von „T“.</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>P(T): Es gibt 2 T-Karten → 2/10 = 1/5.</li><li>P(kein T) = 1 − 2/10 = 8/10 = 4/5 = 0,8.</li></ol>
+    <p><strong>Ergebnis:</strong> P(kein T) = <strong>4/5 = 80 %</strong></p>
+    <p><strong>Kontrolle:</strong> Direkt gezählt: 10 − 2 = 8 Karten ohne T → 8/10 ✓. Und P(T) + P(kein T) = 20 % + 80 % = 100 % ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> nur P(T) = 20 % ausrechnen und das als Antwort hinschreiben. Lies „kein“ genau.</div>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 5 ===================== -->
+<section id="a5">
+  <h2 class="wk">Aufgabe 5 – Zweimal würfeln (mit Zurücklegen) <span style="color:var(--muted);font-weight:400">(7 P.)</span></h2>
+  <div class="card">
+    <p>Ein Würfel wird zweimal geworfen. Es interessiert nur, ob eine 6 fällt (6) oder nicht (keine 6, kurz: n).</p>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>a) Baumdiagramm zeichnen <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein Baum mit zwei Stufen (1. Wurf, 2. Wurf). Jede Stufe hat zwei Äste: „6“ und „n“. An jeden Ast gehört die Wahrscheinlichkeit.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Baumdiagramm</strong>
+      <p style="margin:0">Jede Stufe des Experiments ist eine Ebene im Baum. An jeden Ast schreibt man die Wahrscheinlichkeit. Die Äste, die von einem Punkt ausgehen, ergeben zusammen 1.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Einzelwahrscheinlichkeiten für einen Wurf: P(6) = 1/6, P(n) = 5/6 (die Zahlen 1–5).</li>
+      <li>1. Stufe: vom Startpunkt zwei Äste „6“ (1/6) und „n“ (5/6).</li>
+      <li>2. Stufe: an jedes Ende wieder zwei Äste „6“ (1/6) und „n“ (5/6). Der Würfel „merkt“ sich nichts – die Wahrscheinlichkeiten bleiben gleich.</li>
+      <li>Am Ende jedes Pfades das Ergebnis und die Pfadwahrscheinlichkeit notieren (Pfadregel: entlang des Pfades multiplizieren).</li>
+    </ol>
+    <p><strong>Ergebnis</strong></p>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm zweimal würfeln">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">6</text><text x="160" y="200" style="fill:var(--accent)">n</text>
+        <text x="300" y="35" style="fill:var(--wk)">6</text><text x="300" y="105" style="fill:var(--accent)">n</text>
+        <text x="300" y="165" style="fill:var(--wk)">6</text><text x="300" y="235" style="fill:var(--accent)">n</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">1/6</text><text x="70" y="180">5/6</text>
+        <text x="215" y="40">1/6</text><text x="215" y="98">5/6</text>
+        <text x="215" y="170">1/6</text><text x="215" y="228">5/6</text>
+        <text x="320" y="35">66: 1/36</text><text x="320" y="105">6n: 5/36</text>
+        <text x="320" y="165">n6: 5/36</text><text x="320" y="235">nn: 25/36</text>
+      </g>
+    </svg>
+    <div class="card rule wk">
+      <strong>So zeichnest du es</strong>
+      <ol style="margin:0">
+        <li>Startpunkt links, zwei Äste nach rechts (oben „6“, unten „n“).</li>
+        <li>Wahrscheinlichkeiten als Bruch an die Mitte jedes Astes schreiben: 1/6 und 5/6.</li>
+        <li>Von jedem Ende wieder zwei Äste, gleich beschriftet (mit Zurücklegen = gleiche Brüche).</li>
+        <li>Rechts neben jedes Pfadende: Ergebnis (66, 6n, n6, nn) und Pfadwahrscheinlichkeit, z. B. 1/6 · 5/6 = 5/36.</li>
+        <li>Platz lassen: Der Baum muss groß genug sein, damit alle Brüche lesbar sind.</li>
+      </ol>
+    </div>
+    <p><strong>Kontrolle:</strong> An jedem Verzweigungspunkt: 1/6 + 5/6 = 1 ✓. Alle Pfade zusammen: 1/36 + 5/36 + 5/36 + 25/36 = 36/36 = 1 ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> sechs Äste pro Stufe (1, 2, …, 6) zeichnen. Die Aufgabe fragt nur „6“ oder „nicht 6“ – zwei Äste reichen und machen den Baum übersichtlich.</div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>b) P(zwei Sechsen) <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Die Chance, dass beide Würfe eine 6 zeigen – das ist genau ein Pfad: 6 → 6.</p>
+    <div class="card rule wk"><strong>Das brauchst du: 1. Pfadregel (Produktregel)</strong><p style="margin:0">Die Wahrscheinlichkeit eines Pfades = alle Wahrscheinlichkeiten <strong>entlang des Pfades multiplizieren</strong>.</p></div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>Pfad 66 im Baum suchen: oberster Pfad.</li><li>Multiplizieren: 1/6 · 1/6 = 1/36.</li><li>In Prozent: 1 : 36 ≈ 0,0278 ≈ 2,8 %.</li></ol>
+    <p><strong>Ergebnis:</strong> P(66) = <strong>1/36 ≈ 2,8 %</strong></p>
+    <p><strong>Kontrolle:</strong> Ein Pasch mit zwei Sechsen ist selten – ein kleiner Wert passt. Von 36 gleich wahrscheinlichen Zahlenpaaren (1|1 bis 6|6) ist genau eins „6|6“ ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> addieren statt multiplizieren: 1/6 + 1/6 = 2/6. Entlang des Pfades wird immer multipliziert.</div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>c) P(genau eine Sechs) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Genau ein Wurf zeigt eine 6, der andere nicht. Das kann auf zwei Arten passieren: erst 6, dann keine 6 (6n) – oder erst keine 6, dann 6 (n6).</p>
+    <div class="grid2">
+      <div class="card rule wk"><strong>1. Pfadregel (Produktregel)</strong><p style="margin:0">Entlang des Pfades multiplizieren.</p></div>
+      <div class="card rule wk"><strong>2. Summenregel</strong><p style="margin:0">Gehören mehrere Pfade zu einem Ereignis, werden ihre Wahrscheinlichkeiten <strong>addiert</strong>.</p></div>
+    </div>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm zweimal würfeln, Pfade 6n und n6 markiert">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g stroke="var(--wk)" stroke-width="4" fill="none" stroke-linecap="round">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="20" y1="130" x2="150" y2="195"/><line x1="170" y1="195" x2="290" y2="160"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">6</text><text x="160" y="200" style="fill:var(--accent)">n</text>
+        <text x="300" y="35" style="fill:var(--wk)">6</text><text x="300" y="105" style="fill:var(--accent)">n</text>
+        <text x="300" y="165" style="fill:var(--wk)">6</text><text x="300" y="235" style="fill:var(--accent)">n</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">1/6</text><text x="70" y="180">5/6</text>
+        <text x="215" y="40">1/6</text><text x="215" y="98">5/6</text>
+        <text x="215" y="170">1/6</text><text x="215" y="228">5/6</text>
+        <text x="320" y="35">66: 1/36</text><text x="320" y="105" font-weight="700">6n: 5/36 ✓</text>
+        <text x="320" y="165" font-weight="700">n6: 5/36 ✓</text><text x="320" y="235">nn: 25/36</text>
+      </g>
+    </svg>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Passende Pfade markieren: 6n und n6 (im Bild dick).</li>
+      <li>Pfadregel: P(6n) = 1/6 · 5/6 = 5/36 und P(n6) = 5/6 · 1/6 = 5/36.</li>
+      <li>Summenregel: 5/36 + 5/36 = 10/36.</li>
+      <li>Kürzen (durch 2): 10/36 = 5/18. In Prozent: 5 : 18 ≈ 0,2778 ≈ 27,8 %.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(genau eine Sechs) = <strong>5/18 ≈ 27,8 %</strong></p>
+    <p><strong>Kontrolle:</strong> P(keine 6) + P(genau eine 6) + P(zwei 6) = 25/36 + 10/36 + 1/36 = 36/36 = 1 ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> nur den Pfad 6n nehmen (5/36). „Genau eine Sechs“ ist auch erfüllt, wenn die 6 erst im zweiten Wurf fällt.</div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>d) P(mindestens eine Sechs) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> „Mindestens eine“ heißt: eine oder zwei Sechsen. Das betrifft drei Pfade (66, 6n, n6). Einfacher geht es über das Gegenteil: „keine einzige Sechs“ – das ist nur ein Pfad (nn).</p>
+    <div class="card rule wk"><strong>Das brauchst du: Gegenereignis</strong><p style="margin:0">P(mindestens einmal X) = 1 − P(nie X).</p></div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Gegenereignis: „keine Sechs“ = Pfad nn.</li>
+      <li>Pfadregel: P(nn) = 5/6 · 5/6 = 25/36.</li>
+      <li>1 − 25/36 = 36/36 − 25/36 = 11/36.</li>
+      <li>In Prozent: 11 : 36 ≈ 0,3056 ≈ 30,6 %.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(mindestens eine Sechs) = <strong>11/36 ≈ 30,6 %</strong></p>
+    <p><strong>Kontrolle:</strong> Direkter Weg über die Summenregel: 1/36 + 5/36 + 5/36 = 11/36 ✓ – gleiches Ergebnis. Auch b) + c) = 1/36 + 10/36 = 11/36 ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> 1/6 + 1/6 = 2/6 ≈ 33,3 % rechnen. Dabei wird der Fall „zwei Sechsen“ doppelt gezählt – das Ergebnis ist zu groß.</div>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 6 ===================== -->
+<section id="a6">
+  <h2 class="wk">Aufgabe 6 – Bonbontüte (ohne Zurücklegen) <span style="color:var(--muted);font-weight:400">(7 P.)</span></h2>
+  <div class="card">
+    <p>In einer Tüte sind 4 Erdbeerbonbons (E) und 6 Zitronenbonbons (Z). Paul nimmt ohne hinzusehen nacheinander zwei Bonbons heraus.</p>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>a) Baumdiagramm zeichnen <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein zweistufiger Baum mit den Ästen E und Z. Wichtig: Paul isst bzw. behält das erste Bonbon – es kommt nicht zurück. Beim zweiten Ziehen ist ein Bonbon weniger in der Tüte.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: ohne Zurücklegen</strong>
+      <p style="margin:0">Auf der 2. Stufe ändert sich der Nenner (ein Bonbon weniger) und der Zähler der Sorte, die schon gezogen wurde. An jeden Ast gehört die Wahrscheinlichkeit; die Äste an einem Punkt ergeben zusammen 1.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>1. Zug: 10 Bonbons. P(E) = 4/10, P(Z) = 6/10.</li>
+      <li>2. Zug nach E: Es sind noch 9 Bonbons da, davon 3 E und 6 Z → 3/9 und 6/9.</li>
+      <li>2. Zug nach Z: noch 9 Bonbons, davon 4 E und 5 Z → 4/9 und 5/9.</li>
+      <li>Pfadwahrscheinlichkeiten mit der Pfadregel: EE = 4/10 · 3/9 = 12/90, EZ = 4/10 · 6/9 = 24/90, ZE = 6/10 · 4/9 = 24/90, ZZ = 6/10 · 5/9 = 30/90.</li>
+    </ol>
+    <p><strong>Ergebnis</strong></p>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm Bonbons">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">E</text><text x="160" y="200" style="fill:var(--accent)">Z</text>
+        <text x="300" y="35" style="fill:var(--wk)">E</text><text x="300" y="105" style="fill:var(--accent)">Z</text>
+        <text x="300" y="165" style="fill:var(--wk)">E</text><text x="300" y="235" style="fill:var(--accent)">Z</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">4/10</text><text x="70" y="180">6/10</text>
+        <text x="215" y="40">3/9</text><text x="215" y="98">6/9</text>
+        <text x="215" y="170">4/9</text><text x="215" y="228">5/9</text>
+        <text x="320" y="35">EE: 12/90</text><text x="320" y="105">EZ: 24/90</text>
+        <text x="320" y="165">ZE: 24/90</text><text x="320" y="235">ZZ: 30/90</text>
+      </g>
+    </svg>
+    <div class="card rule wk">
+      <strong>So zeichnest du es</strong>
+      <ol style="margin:0">
+        <li>Startpunkt links, zwei Äste: E (4/10) oben, Z (6/10) unten.</li>
+        <li>Für die 2. Stufe überlegen: Was liegt <em>jetzt</em> noch in der Tüte? Nenner überall 9.</li>
+        <li>Nach E: E bekommt 3/9 (ein E ist weg), Z bleibt bei 6/9. Nach Z: E bleibt bei 4/9, Z bekommt 5/9.</li>
+        <li>Pfadende beschriften: EE, EZ, ZE, ZZ mit Pfadwahrscheinlichkeit. Brüche erst am Schluss kürzen – mit gleichem Nenner (90) kannst du leichter addieren.</li>
+      </ol>
+    </div>
+    <p><strong>Kontrolle:</strong> 4/10 + 6/10 = 1, 3/9 + 6/9 = 1, 4/9 + 5/9 = 1 ✓. Alle Pfade: 12 + 24 + 24 + 30 = 90, also 90/90 = 1 ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> auf der 2. Stufe wieder 4/10 und 6/10 schreiben. Das wäre „mit Zurücklegen“. Hier fehlt nach dem 1. Zug ein Bonbon – Nenner 9.</div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>b) P(zwei Erdbeerbonbons) <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Beide Bonbons sind Erdbeer: der Pfad E → E.</p>
+    <div class="card rule wk"><strong>Das brauchst du: 1. Pfadregel (Produktregel)</strong><p style="margin:0">Entlang des Pfades multiplizieren.</p></div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>Pfad EE: 4/10 · 3/9 = 12/90.</li><li>Kürzen (durch 6): 12/90 = 2/15.</li><li>In Prozent: 2 : 15 ≈ 0,1333 ≈ 13,3 %.</li></ol>
+    <p><strong>Ergebnis:</strong> P(EE) = <strong>2/15 ≈ 13,3 %</strong></p>
+    <p><strong>Kontrolle:</strong> Es gibt weniger Erdbeer- als Zitronenbonbons, und beim zweiten Zug sinkt die Chance für E noch einmal. Ein kleiner Wert passt ✓ (Mit Zurücklegen wären es 4/10 · 4/10 = 16 % – ohne Zurücklegen muss es weniger sein.)</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> 4/10 · 4/10 rechnen – das erste Erdbeerbonbon ist aber schon aus der Tüte.</div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>c) P(zwei verschiedene Sorten) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein Erdbeer- und ein Zitronenbonbon – egal in welcher Reihenfolge. Das sind zwei Pfade: EZ und ZE.</p>
+    <div class="grid2">
+      <div class="card rule wk"><strong>1. Pfadregel (Produktregel)</strong><p style="margin:0">Entlang des Pfades multiplizieren.</p></div>
+      <div class="card rule wk"><strong>2. Summenregel</strong><p style="margin:0">Gehören mehrere Pfade zu einem Ereignis, werden ihre Wahrscheinlichkeiten <strong>addiert</strong>.</p></div>
+    </div>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm Bonbons, Pfade EZ und ZE markiert">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g stroke="var(--wk)" stroke-width="4" fill="none" stroke-linecap="round">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="20" y1="130" x2="150" y2="195"/><line x1="170" y1="195" x2="290" y2="160"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">E</text><text x="160" y="200" style="fill:var(--accent)">Z</text>
+        <text x="300" y="35" style="fill:var(--wk)">E</text><text x="300" y="105" style="fill:var(--accent)">Z</text>
+        <text x="300" y="165" style="fill:var(--wk)">E</text><text x="300" y="235" style="fill:var(--accent)">Z</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">4/10</text><text x="70" y="180">6/10</text>
+        <text x="215" y="40">3/9</text><text x="215" y="98">6/9</text>
+        <text x="215" y="170">4/9</text><text x="215" y="228">5/9</text>
+        <text x="320" y="35">EE: 12/90</text><text x="320" y="105" font-weight="700">EZ: 24/90 ✓</text>
+        <text x="320" y="165" font-weight="700">ZE: 24/90 ✓</text><text x="320" y="235">ZZ: 30/90</text>
+      </g>
+    </svg>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Pfade markieren: EZ und ZE (im Bild dick).</li>
+      <li>Pfadregel: P(EZ) = 4/10 · 6/9 = 24/90, P(ZE) = 6/10 · 4/9 = 24/90.</li>
+      <li>Summenregel: 24/90 + 24/90 = 48/90.</li>
+      <li>Kürzen (durch 6): 48/90 = 8/15. In Prozent: 8 : 15 ≈ 0,5333 ≈ 53,3 %.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(verschiedene Sorten) = <strong>8/15 ≈ 53,3 %</strong></p>
+    <p><strong>Kontrolle:</strong> EE + verschieden + ZZ = 12/90 + 48/90 + 30/90 = 90/90 = 1 ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> nur EZ zählen (24/90). „Verschiedene Sorten“ gilt auch, wenn zuerst Zitrone kommt.</div>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>d) P(mindestens ein Zitronenbonbon) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein oder zwei Zitronenbonbons. Das Gegenteil davon: „kein Zitronenbonbon“ – also zwei Erdbeerbonbons (EE), das hast du schon in b) berechnet.</p>
+    <div class="card rule wk"><strong>Das brauchst du: Gegenereignis</strong><p style="margin:0">P(mindestens einmal X) = 1 − P(nie X).</p></div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Gegenereignis „kein Z“ = EE, P(EE) = 2/15 (aus b).</li>
+      <li>1 − 2/15 = 15/15 − 2/15 = 13/15.</li>
+      <li>In Prozent: 13 : 15 ≈ 0,8667 ≈ 86,7 %.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> P(mindestens ein Z) = <strong>13/15 ≈ 86,7 %</strong></p>
+    <p><strong>Kontrolle:</strong> Direkt mit der Summenregel: EZ + ZE + ZZ = 24/90 + 24/90 + 30/90 = 78/90 = 13/15 ✓. Plausibel: Zitrone ist die häufigere Sorte, also ist es sehr wahrscheinlich, mindestens eine zu erwischen.</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> „mindestens ein Z“ mit „genau ein Z“ verwechseln und nur EZ + ZE = 8/15 angeben. Dann fehlt der Pfad ZZ.</div>
+  </div>
+</section>
+
+<!-- ===================== Aufgabe 7 ===================== -->
+<section id="a7">
+  <h2 class="wk">Aufgabe 7 – Reißzwecke <span style="color:var(--muted);font-weight:400">(3 P.)</span></h2>
+  <div class="card">
+    <p>Eine Reißzwecke wurde 500-mal geworfen. 310-mal landete sie mit der Spitze nach oben.</p>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>a) Wahrscheinlichkeit für „Spitze nach oben“ schätzen <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Bei einer Reißzwecke kannst du die Wahrscheinlichkeit nicht ausrechnen – du schätzt sie aus dem Versuch.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: relative Häufigkeit und Wahrscheinlichkeit</strong>
+      <p style="margin:0">Führt man ein Experiment sehr oft durch, nähert sich die relative Häufigkeit der Wahrscheinlichkeit an (Gesetz der großen Zahlen). Die relative Häufigkeit ist deshalb ein guter Schätzwert.</p>
+      <div class="formula">h = <span class="frac"><span>absolute Häufigkeit</span><span>Gesamtanzahl n</span></span></div>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>Absolute Häufigkeit: 310. Anzahl der Würfe: 500.</li><li>h = 310 : 500 = 0,62 = 62 %.</li></ol>
+    <p><strong>Ergebnis:</strong> P(Spitze nach oben) ≈ <strong>0,62 = 62 %</strong></p>
+    <p><strong>Kontrolle:</strong> 310 ist etwas mehr als die Hälfte von 500 (250), also muss der Wert etwas über 50 % liegen ✓</p>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>b) Erwartete Anzahl bei 2000 Würfen <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie oft wird „Spitze nach oben“ ungefähr fallen, wenn du 2000-mal wirfst?</p>
+    <div class="card rule wk"><strong>Das brauchst du:</strong><div class="formula">erwartete Anzahl ≈ Anzahl der Versuche · Wahrscheinlichkeit</div></div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol><li>Geschätzte Wahrscheinlichkeit aus a): 0,62.</li><li>2000 · 0,62 = 1240.</li></ol>
+    <p><strong>Ergebnis:</strong> Etwa <strong>1240-mal</strong> Spitze nach oben.</p>
+    <p><strong>Kontrolle:</strong> 2000 Würfe sind 4-mal so viele wie 500. Also etwa 4 · 310 = 1240 ✓. Das ist ein Schätzwert – genau 1240 muss es nicht werden, deshalb „etwa“.</p>
+  </div>
+
+  <h3><span class="tag wk">Wahrscheinlichkeit</span>c) Warum keine Laplace-Formel? <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Eine Begründung in einem Satz: Welche Bedingung der Laplace-Formel ist bei der Reißzwecke nicht erfüllt?</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Laplace-Wahrscheinlichkeit</strong>
+      <div class="formula">P(E) = <span class="frac"><span>Anzahl günstiger Ergebnisse</span><span>Anzahl möglicher Ergebnisse</span></span></div>
+      <p style="margin:0">Diese Formel gilt nur, wenn <strong>alle Ergebnisse gleich wahrscheinlich</strong> sind (z. B. Würfel, Münze). Ist das nicht so, spricht man von keinem Laplace-Experiment – z. B. Reißzwecke, Glücksrad mit unterschiedlich großen Feldern.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Mögliche Ergebnisse: „Spitze nach oben“ und „Spitze schräg nach unten“ (auf der Seite liegend) – also 2.</li>
+      <li>Mit Laplace käme 1/2 = 50 % heraus.</li>
+      <li>Der Versuch zeigt aber 62 % – und die Reißzwecke ist nicht symmetrisch gebaut (runder Kopf, spitze Nadel). Die beiden Ergebnisse sind also nicht gleich wahrscheinlich.</li>
+    </ol>
+    <p><strong>Ergebnis – Musterantwort:</strong> <strong>Man kann nicht mit der Laplace-Formel rechnen, weil die beiden Ergebnisse „Spitze nach oben“ und „Spitze schräg nach unten“ nicht gleich wahrscheinlich sind – die Reißzwecke ist nicht symmetrisch wie ein Würfel oder eine Münze.</strong></p>
+    <div class="card rule wk">
+      <strong>Was die Lehrkraft sehen will</strong>
+      <p style="margin:0">Das Kernargument: <em>Laplace setzt gleich wahrscheinliche Ergebnisse voraus – bei der Reißzwecke sind sie nicht gleich wahrscheinlich.</em> Beides muss im Satz stehen: die Bedingung und warum sie hier fehlt.</p>
+    </div>
+    <p><strong>Kontrolle:</strong> Passt die Antwort zum Versuch? Ja: 62 % weicht bei 500 Würfen deutlich von 50 % ab ✓</p>
+    <div class="card warn"><strong>Typischer Fehler:</strong> „Weil es nur zwei Ergebnisse gibt.“ – Auch eine Münze hat nur zwei Ergebnisse und ist trotzdem ein Laplace-Experiment. Entscheidend ist <em>gleich wahrscheinlich</em>, nicht die Anzahl.</div>
+  </div>
+</section>
+
+<!-- ===================== Mitnehmen ===================== -->
+<section id="mitnehmen">
+  <h2>Das solltest du mitnehmen</h2>
+  <div class="card">
+    <ol>
+      <li><strong>Relative Häufigkeit</strong> = absolute Häufigkeit : n. Alle relativen Häufigkeiten zusammen ergeben 1 = 100 %.</li>
+      <li><strong>Mittelwert aus einer Tabelle:</strong> Wert · Häufigkeit, alles addieren, durch n teilen. Rückwärts: Summe = Mittelwert · Anzahl.</li>
+      <li><strong>Median:</strong> erst ordnen, dann die Mitte suchen – bei ungeradem n Platz (n + 1) : 2.</li>
+      <li><strong>Kreisdiagramm:</strong> Winkel = relative Häufigkeit · 360°. Alle Winkel zusammen = 360°.</li>
+      <li><strong>Prozentuale Zunahme:</strong> Zunahme durch den <em>alten</em> Wert teilen.</li>
+      <li><strong>Laplace-Wahrscheinlichkeit</strong> = günstige : mögliche Ergebnisse – nur bei gleich wahrscheinlichen Ergebnissen. Sonst über die relative Häufigkeit schätzen.</li>
+      <li><strong>Baumdiagramm:</strong> Entlang des Pfades: mal (Pfadregel). Mehrere Pfade: plus (Summenregel). Ohne Zurücklegen ändern sich auf der 2. Stufe Zähler und Nenner.</li>
+      <li><strong>„Mindestens einmal“:</strong> über das Gegenereignis rechnen: P(mindestens einmal X) = 1 − P(nie X).</li>
+    </ol>
+  </div>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="probearbeit-2.html">← zur Probearbeit 2</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+</body>
+</html>

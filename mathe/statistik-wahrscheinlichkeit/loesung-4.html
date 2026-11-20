@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lösung Probearbeit 4 · Mathe 9</title>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --text:#1f2328; --muted:#5b6370; --line:#e3e0d8;
+  --accent:#2b6cb0; --accent-soft:#e6eff9; --stat:#2f855a; --stat-soft:#e7f4ec;
+  --wk:#9c4221; --wk-soft:#fbeee6; --warn:#b7791f; --warn-soft:#fdf5e3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+    --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+    --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1f2228; --text:#e6e6e6; --muted:#a0a7b4; --line:#33373f;
+  --accent:#6ea8e6; --accent-soft:#1d2a3a; --stat:#68c08f; --stat-soft:#1b2e24;
+  --wk:#e8956b; --wk-soft:#33231b; --warn:#e2b04f; --warn-soft:#332a17;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:32px 16px 20px;max-width:960px;margin:0 auto}
+header h1{margin:0 0 4px;font-size:1.9rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--text);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.9rem}
+nav a:hover{background:var(--accent-soft)}
+main{max-width:960px;margin:0 auto;padding:16px}
+section{margin:28px 0}
+h2{font-size:1.5rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
+h2.stat{border-color:var(--stat)} h2.wk{border-color:var(--wk)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.rule{border-left:5px solid var(--accent);background:var(--accent-soft)}
+.rule.stat{border-color:var(--stat);background:var(--stat-soft)}
+.rule.wk{border-color:var(--wk);background:var(--wk-soft)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.formula{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;text-align:center;padding:6px 0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:middle}
+.tag.stat{background:var(--stat-soft);color:var(--stat)} .tag.wk{background:var(--wk-soft);color:var(--wk)}
+details{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin-top:8px}
+summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--text);font-family:system-ui,sans-serif}
+svg .ln{stroke:var(--muted);stroke-width:1.5}
+ul.check{list-style:none;padding-left:0} ul.check li{margin:6px 0}
+ul.check label{cursor:pointer}
+.task{counter-increment:task}
+footer{max-width:960px;margin:0 auto;padding:24px 16px 48px;color:var(--muted);font-size:.85rem}
+@media print{
+  nav{display:none} details{border:none;padding:0} details>*{display:block}
+  .card{break-inside:avoid}
+  body{background:#fff;color:#000}
+}
+a.back{display:inline-block;margin-bottom:8px;color:var(--accent);text-decoration:none;font-weight:600}
+.niveau{display:inline-block;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--stat-soft);color:var(--stat);margin-left:6px;vertical-align:middle}
+.niveau.schwer{background:#c53030;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumbs" style="font-size:.95rem;margin-bottom:.7rem;opacity:.9"><a href="../../" style="color:inherit;text-decoration:underline">Start</a> › <a href="../" style="color:inherit;text-decoration:underline">Mathematik</a> › <a href="./" style="color:inherit;text-decoration:underline">Statistik &amp; Wahrscheinlichkeit</a> › <span>Lösung Probearbeit 4</span></div>
+  <a class="back" href="probearbeit-4.html">← zur Probearbeit 4</a>
+  <h1>Lösung Probearbeit 4 · Mathematik Klasse 9 <span class="niveau">Niveau: Standard</span></h1>
+  <p>Ausführliche Musterlösung · Daten &amp; Statistik · Wahrscheinlichkeitsrechnung</p>
+</header>
+
+<nav><div class="inner">
+  <a href="#a1">A1 Schulweg</a><a href="#a2">A2 Wettkampf</a><a href="#a3">A3 Busfahrer</a><a href="#a4">A4 Würfel</a><a href="#a5">A5 Ampeln</a><a href="#a6">A6 Batterien</a><a href="#a7">A7 Stimmt das?</a><a href="#mitnehmen">Mitnehmen</a>
+</div></nav>
+
+<main>
+<section>
+  <div class="card warn">
+    <p style="margin:0"><strong>So arbeitest du mit dieser Seite:</strong> Bearbeite zuerst die <a href="probearbeit-4.html">Probearbeit 4</a> selbst auf Papier. Vergleiche danach Teilaufgabe für Teilaufgabe. Jede Lösung hat dieselben Bausteine: <strong>Was ist gefragt?</strong> → <strong>Das brauchst du</strong> → <strong>Schritt für Schritt</strong> → <strong>Ergebnis</strong> → <strong>Kontrolle</strong>. Wo viele danebenliegen, steht ein Kasten <strong>Typischer Fehler</strong>.</p>
+  </div>
+</section>
+
+<!-- ================= AUFGABE 1 ================= -->
+<section id="a1">
+  <h2 class="stat"><span class="tag stat">Statistik</span>Aufgabe 1 – Schulweg-Umfrage <span style="color:var(--muted);font-weight:400">(8 P.)</span></h2>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabentext:</em> 30 Schüler wurden gefragt, wie sie zur Schule kommen: Bus: 12, Fahrrad: 9, zu Fuß: 6, Auto: 3.</p>
+  </div>
+
+  <h3>a) Relative Häufigkeiten in Prozent <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Welcher Anteil der 30 Befragten nutzt welches Verkehrsmittel – angegeben in Prozent.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Relative Häufigkeit</strong>
+      <div class="formula">h = <span class="frac"><span>absolute Häufigkeit</span><span>Gesamtanzahl n</span></span></div>
+      <p style="margin:0">Die absolute Häufigkeit ist die gezählte Anzahl. Nimmst du den Dezimalbruch mal 100, bekommst du Prozent.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Gesamtanzahl prüfen: n = 12 + 9 + 6 + 3 = 30. Das passt zum Text.</li>
+      <li>Bus: h = <span class="frac"><span>12</span><span>30</span></span> = 0,4 = 40 %</li>
+      <li>Fahrrad: h = <span class="frac"><span>9</span><span>30</span></span> = 0,3 = 30 %</li>
+      <li>zu Fuß: h = <span class="frac"><span>6</span><span>30</span></span> = 0,2 = 20 %</li>
+      <li>Auto: h = <span class="frac"><span>3</span><span>30</span></span> = 0,1 = 10 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>Bus 40 % · Fahrrad 30 % · zu Fuß 20 % · Auto 10 %</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> 40 % + 30 % + 20 % + 10 % = 100 % ✓ – alle relativen Häufigkeiten zusammen ergeben immer 100 %.</p>
+  </div>
+
+  <h3>b) Winkel berechnen und Kreisdiagramm zeichnen <span style="color:var(--muted);font-weight:400">(4 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie groß ist das „Tortenstück“ jedes Verkehrsmittels im Kreis? Danach zeichnest du den Kreis mit Radius 4 cm und trägst die Stücke ein.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Kreisdiagramm berechnen</strong>
+      <div class="formula">Winkel = relative Häufigkeit · 360°</div>
+      <p style="margin:0">Der ganze Kreis (100 %) hat 360°. Also sind 10 % genau 36°.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Bus: 0,4 · 360° = 144°</li>
+      <li>Fahrrad: 0,3 · 360° = 108°</li>
+      <li>zu Fuß: 0,2 · 360° = 72°</li>
+      <li>Auto: 0,1 · 360° = 36°</li>
+    </ol>
+    <div class="tablewrap"><table>
+      <tr><th></th><th>Bus</th><th>Fahrrad</th><th>zu Fuß</th><th>Auto</th><th>Σ</th></tr>
+      <tr><th>abs. H.</th><td>12</td><td>9</td><td>6</td><td>3</td><td>30</td></tr>
+      <tr><th>rel. H.</th><td>40 %</td><td>30 %</td><td>20 %</td><td>10 %</td><td>100 %</td></tr>
+      <tr><th>Winkel</th><td>144°</td><td>108°</td><td>72°</td><td>36°</td><td>360°</td></tr>
+    </table></div>
+    <p><strong>Ergebnis:</strong> <strong>Bus 144° · Fahrrad 108° · zu Fuß 72° · Auto 36°</strong></p>
+    <svg viewBox="0 0 400 220" style="max-width:460px" role="img" aria-label="Kreisdiagramm Schulweg"><path d="M110,110 L110.0,20.0 A90,90 0 0 1 162.9,182.8 Z" fill="var(--stat)" stroke="var(--card)" stroke-width="2"/><rect x="230" y="40" width="14" height="14" fill="var(--stat)"/><text x="252" y="52" font-size="13">Bus (144°)</text><path d="M110,110 L162.9,182.8 A90,90 0 0 1 24.4,137.8 Z" fill="var(--accent)" stroke="var(--card)" stroke-width="2"/><rect x="230" y="68" width="14" height="14" fill="var(--accent)"/><text x="252" y="80" font-size="13">Fahrrad (108°)</text><path d="M110,110 L24.4,137.8 A90,90 0 0 1 57.1,37.2 Z" fill="var(--wk)" stroke="var(--card)" stroke-width="2"/><rect x="230" y="96" width="14" height="14" fill="var(--wk)"/><text x="252" y="108" font-size="13">zu Fuß (72°)</text><path d="M110,110 L57.1,37.2 A90,90 0 0 1 110.0,20.0 Z" fill="var(--warn)" stroke="var(--card)" stroke-width="2"/><rect x="230" y="124" width="14" height="14" fill="var(--warn)"/><text x="252" y="136" font-size="13">Auto (36°)</text></svg>
+    <p><strong>So zeichnest du es</strong></p>
+    <ol>
+      <li>Mittelpunkt markieren, mit dem Zirkel einen Kreis mit <strong>r = 4 cm</strong> zeichnen (Zirkel auf 4 cm öffnen, also Durchmesser 8 cm).</li>
+      <li>Vom Mittelpunkt einen Radius senkrecht nach oben zeichnen – das ist deine Startlinie.</li>
+      <li>Geodreieck mit dem Nullpunkt auf den Mittelpunkt legen, an der Startlinie ausrichten und im Uhrzeigersinn <strong>144°</strong> abtragen. Radius zeichnen.</li>
+      <li>Von dieser neuen Linie aus weiter: <strong>108°</strong> abtragen, dann <strong>72°</strong>. Immer von der zuletzt gezeichneten Linie aus messen.</li>
+      <li>Das letzte Stück bleibt automatisch übrig. Miss es nach: Es muss <strong>36°</strong> haben.</li>
+      <li>Stücke beschriften (Name + Prozent) oder farbig anlegen und eine Legende danebenschreiben. Überschrift nicht vergessen, z. B. „Schulweg von 30 Schülern“.</li>
+    </ol>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> 144° + 108° + 72° + 36° = 360° ✓. Zusätzlich passt die Größe: Bus ist mit 40 % etwas weniger als ein halber Kreis, Auto mit 10 % das kleinste Stück.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> Den Winkel aus der absoluten Häufigkeit rechnen, z. B. 12 · 360° = 4320°. Du musst immer erst den Anteil bilden (12 : 30 = 0,4) und den <em>Anteil</em> mit 360° multiplizieren. Kurzer Weg zum selben Ergebnis: 360° : 30 = 12° pro Schüler, Bus also 12 · 12° = 144°.
+  </div>
+
+  <h3>c) Stimmt Toms Aussage? <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Tom behauptet: Die Zahl der Busfahrer ist <em>größer als</em> das Doppelte der Fußgänger. Du sollst prüfen, ob das stimmt.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: genau lesen</strong>
+      <p style="margin:0">„Doppelt so viele“ heißt: Anzahl = 2 · andere Anzahl. „<em>Mehr als</em> doppelt so viele“ heißt: Anzahl &gt; 2 · andere Anzahl.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Werte ablesen: Bus 12, zu Fuß 6.</li>
+      <li>Doppelte der Fußgänger: 2 · 6 = 12.</li>
+      <li>Vergleich: 12 &gt; 12? Nein, 12 = 12.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Die Aussage ist <strong>falsch</strong>.</p>
+    <p><strong>Musterantwort:</strong> „Tom hat nicht recht, denn 12 Schüler fahren Bus und 6 gehen zu Fuß. Das sind genau doppelt so viele (2 · 6 = 12), aber nicht mehr als doppelt so viele.“</p>
+    <p><strong>Was die Lehrkraft sehen will:</strong> die Rechnung 2 · 6 = 12 (oder 12 : 6 = 2) <em>und</em> den Unterschied zwischen „genau doppelt“ und „mehr als doppelt“. Nur „falsch“ ohne Begründung bringt kaum Punkte.</p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Auch mit den Prozenten klappt es: 40 % sind genau 2 · 20 %.</p>
+  </div>
+</section>
+
+<!-- ================= AUFGABE 2 ================= -->
+<section id="a2">
+  <h2 class="stat"><span class="tag stat">Statistik</span>Aufgabe 2 – Wer fährt zum Wettkampf? <span style="color:var(--muted);font-weight:400">(7 P.)</span></h2>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabentext:</em> Schlagballwurf, Weiten in m – Max: <strong>32, 35, 28, 34, 36</strong> · Ben: <strong>25, 44, 30, 41, 26</strong></p>
+  </div>
+
+  <h3>a) Mittelwert für beide <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie weit wirft jeder im Durchschnitt?</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Arithmetisches Mittel (Durchschnitt)</strong>
+      <div class="formula">x̄ = <span class="frac"><span>Summe aller Werte</span><span>Anzahl der Werte</span></span></div>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Max – Summe: 32 + 35 + 28 + 34 + 36 = 165</li>
+      <li>Max – Mittelwert: 165 : 5 = 33</li>
+      <li>Ben – Summe: 25 + 44 + 30 + 41 + 26 = 166</li>
+      <li>Ben – Mittelwert: 166 : 5 = 33,2</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>Max: x̄ = 33 m · Ben: x̄ = 33,2 m</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Der Mittelwert muss zwischen kleinstem und größtem Wert liegen: 28 ≤ 33 ≤ 36 ✓ und 25 ≤ 33,2 ≤ 44 ✓. Probe rückwärts: 33 · 5 = 165 ✓, 33,2 · 5 = 166 ✓.</p>
+  </div>
+
+  <h3>b) Median für beide <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Der Wert, der genau in der Mitte liegt, wenn man die Würfe der Größe nach sortiert.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Median (Zentralwert)</strong>
+      <p>1. Daten <strong>der Größe nach ordnen</strong>.</p>
+      <p style="margin:0">2. <em>Ungerade</em> Anzahl: der Wert genau in der Mitte. <em>Gerade</em> Anzahl: Mittelwert der beiden mittleren Werte.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Anzahl: je 5 Würfe – ungerade, also ist der <strong>3. Wert</strong> der Median (2 Werte davor, 2 danach).</li>
+      <li>Max geordnet: 28, 32, <strong>34</strong>, 35, 36 → 3. Wert = 34</li>
+      <li>Ben geordnet: 25, 26, <strong>30</strong>, 41, 44 → 3. Wert = 30</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>Max: Median = 34 m · Ben: Median = 30 m</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Zähle ab: Links und rechts vom Median stehen gleich viele Werte (je 2) ✓.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> Den mittleren Wert der <em>ungeordneten</em> Liste nehmen. Bei Max stünde dann 28 in der Mitte, bei Ben 30 – bei Max wäre das falsch. Immer zuerst ordnen!
+  </div>
+
+  <h3>c) Spannweite für beide <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie weit liegen der beste und der schlechteste Wurf auseinander?</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Spannweite</strong>
+      <div class="formula">Spannweite = größter Wert − kleinster Wert</div>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Max: größter Wert 36, kleinster 28 → 36 − 28 = 8</li>
+      <li>Ben: größter Wert 44, kleinster 25 → 44 − 25 = 19</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>Max: 8 m · Ben: 19 m</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> In der geordneten Liste aus b) stehen kleinster und größter Wert ganz außen – dort ablesen ist sicherer. Eine Spannweite ist nie negativ ✓.</p>
+  </div>
+
+  <h3>d) Wen schickst du zum Wettkampf? <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Eine Entscheidung – begründet mit den Kennwerten aus a) bis c), nicht mit dem Bauchgefühl.</p>
+    <div class="card rule stat">
+      <strong>Das brauchst du: Was die Kennwerte aussagen</strong>
+      <ul style="margin:0">
+        <li><strong>Mittelwert</strong> und <strong>Median</strong> zeigen, wie gut jemand „typischerweise“ wirft.</li>
+        <li>Die <strong>Spannweite</strong> zeigt, wie stark die Würfe schwanken. Kleine Spannweite = gleichmäßig.</li>
+        <li>Einzelne sehr gute oder sehr schlechte Würfe verändern den Mittelwert stark, den Median kaum.</li>
+      </ul>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Mittelwerte vergleichen: Ben 33,2 m, Max 33 m – fast gleich, Ben nur 0,2 m besser.</li>
+      <li>Mediane vergleichen: Max 34 m, Ben 30 m – Max deutlich besser. Drei von fünf Würfen von Max sind mindestens 34 m weit, bei Ben nur zwei.</li>
+      <li>Spannweiten vergleichen: Max 8 m, Ben 19 m – Max wirft viel gleichmäßiger.</li>
+      <li>Entscheidung treffen und mit mindestens zwei Kennwerten begründen.</li>
+    </ol>
+    <p><strong>Ergebnis (Musterantwort):</strong> „Ich schicke <strong>Max</strong>, denn sein Median ist mit 34 m deutlich höher als Bens 30 m, und seine Spannweite ist mit 8 m viel kleiner als Bens 19 m. Max wirft also zuverlässig weit. Bens Mittelwert ist zwar mit 33,2 m minimal höher, das liegt aber vor allem an zwei sehr weiten Würfen.“</p>
+    <p><strong>Auch richtig:</strong> „Ich schicke <strong>Ben</strong>, denn er hat den höheren Mittelwert (33,2 m) und mit 44 m den weitesten Wurf. Wenn im Wettkampf nur der beste Wurf zählt, hat er die größere Chance auf eine Spitzenweite.“</p>
+    <p><strong>Was die Lehrkraft sehen will:</strong> eine klare Entscheidung <em>und</em> mindestens zwei Kennwerte mit Zahlen, die zur Entscheidung passen. Beide Schüler sind möglich – es zählt die Begründung.</p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Steht in deiner Begründung wirklich ein Kennwert (Mittelwert, Median, Spannweite) mit Zahl? „Max ist besser“ allein reicht nicht.</p>
+  </div>
+</section>
+
+<!-- ================= AUFGABE 3 ================= -->
+<section id="a3">
+  <h2 class="stat"><span class="tag stat">Statistik</span>Aufgabe 3 – Busfahrer <span style="color:var(--muted);font-weight:400">(3 P.)</span></h2>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabentext:</em> Eine Schule hat 480 Schüler. 35 % von ihnen kommen mit dem Bus. 42 der Busfahrer sind in Klasse 9.</p>
+  </div>
+  <div class="card rule stat">
+    <strong>Das brauchst du für die ganze Aufgabe: Anteil und Prozent</strong>
+    <div class="formula">Anteil = <span class="frac"><span>Teil</span><span>Ganzes</span></span> &nbsp;&nbsp;·&nbsp;&nbsp; Teil = Ganzes · Anteil</div>
+    <p style="margin:0">Das ist dieselbe Rechnung wie bei der relativen Häufigkeit. Entscheidend ist in jeder Teilaufgabe: <strong>Was ist hier das Ganze?</strong></p>
+  </div>
+
+  <h3>a) Wie viele Schüler fahren Bus? <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Eine Anzahl: 35 % von 480 Schülern.</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Das Ganze sind alle 480 Schüler, der Anteil ist 35 % = 0,35.</li>
+      <li>Teil = 480 · 0,35 = 168</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>168 Schüler</strong> fahren Bus.</p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> 10 % von 480 sind 48, also 30 % = 144 und 5 % = 24 → 144 + 24 = 168 ✓. Plausibel: etwa ein Drittel der Schule.</p>
+  </div>
+
+  <h3>b) Welcher Anteil der Busfahrer ist in Klasse 9? <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein Anteil – das Ganze sind jetzt nur die <strong>Busfahrer</strong> (168), nicht die ganze Schule.</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Teil = 42, Ganzes = 168 (aus a).</li>
+      <li>Anteil = <span class="frac"><span>42</span><span>168</span></span> = <span class="frac"><span>1</span><span>4</span></span> = 0,25</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong><span class="frac"><span>1</span><span>4</span></span> = 25 %</strong> der Busfahrer sind in Klasse 9.</p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> 168 · 0,25 = 42 ✓ (ein Viertel von 168: 168 : 4 = 42).</p>
+  </div>
+
+  <h3>c) Wie viel Prozent aller Schüler sind Busfahrer aus Klasse 9? <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wieder ein Anteil von denselben 42 Schülern – aber jetzt ist das Ganze die <strong>gesamte Schule</strong> (480).</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Teil = 42, Ganzes = 480.</li>
+      <li>Anteil = <span class="frac"><span>42</span><span>480</span></span> = 0,0875</li>
+      <li>In Prozent: 0,0875 · 100 = 8,75 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>8,75 %</strong> aller Schüler sind Busfahrer aus Klasse 9.</p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Zweiter Weg: 25 % von 35 % = 0,25 · 0,35 = 0,0875 = 8,75 % ✓. Plausibel: Der Wert muss kleiner als 35 % sein, weil es nur ein Teil der Busfahrer ist.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> In b) und c) dasselbe Ganze verwenden. In b) fragt der Text nach dem Anteil „der Busfahrer“ (Ganzes 168), in c) nach dem Anteil „aller Schüler“ (Ganzes 480). Markiere dir beim Lesen immer, <em>wovon</em> der Anteil gesucht ist.
+  </div>
+</section>
+
+<!-- ================= AUFGABE 4 ================= -->
+<section id="a4">
+  <h2 class="wk"><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 4 – Sicher, unmöglich, möglich <span style="color:var(--muted);font-weight:400">(4 P.)</span></h2>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabentext:</em> Ein normaler Würfel wird einmal geworfen. Gib die Wahrscheinlichkeit an und entscheide, ob das Ereignis <em>sicher</em>, <em>unmöglich</em> oder <em>möglich</em> ist.</p>
+  </div>
+  <div class="card rule wk">
+    <strong>Das brauchst du für die ganze Aufgabe</strong>
+    <p>Ergebnismenge S = {1; 2; 3; 4; 5; 6} – 6 mögliche Ergebnisse, alle gleich wahrscheinlich.</p>
+    <div class="formula">P(E) = <span class="frac"><span>Anzahl günstiger Ergebnisse</span><span>Anzahl möglicher Ergebnisse</span></span></div>
+    <ul style="margin:0">
+      <li>unmögliches Ereignis: P = 0 · sicheres Ereignis: P = 1 · dazwischen: möglich</li>
+      <li><strong>Gegenereignis:</strong> P(Ē) = 1 − P(E)</li>
+    </ul>
+  </div>
+
+  <h3>a) Augenzahl 7</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist eine 7 auf einem Würfel mit den Zahlen 1 bis 6?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Günstige Ergebnisse: keins – die 7 steht nicht in S. Anzahl = 0.</li>
+      <li>P = <span class="frac"><span>0</span><span>6</span></span> = 0</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P = 0 = 0 % → unmöglich</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> P = 0 heißt immer „unmöglich“ ✓.</p>
+  </div>
+
+  <h3>b) Augenzahl kleiner als 7</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist eine Zahl unter 7?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Günstige Ergebnisse: 1, 2, 3, 4, 5, 6 – alle 6 sind kleiner als 7.</li>
+      <li>P = <span class="frac"><span>6</span><span>6</span></span> = 1</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P = 1 = 100 % → sicher</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> b) ist genau das Gegenereignis von a): 1 − 0 = 1 ✓.</p>
+  </div>
+
+  <h3>c) Augenzahl 1</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist genau eine 1?</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Günstige Ergebnisse: nur die 1 → Anzahl = 1.</li>
+      <li>P = <span class="frac"><span>1</span><span>6</span></span> ≈ 0,167</li>
+      <li>In Prozent: 1 : 6 ≈ 0,1667 → ≈ 16,7 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P = <span class="frac"><span>1</span><span>6</span></span> ≈ 16,7 % → möglich</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> 0 &lt; <span class="frac"><span>1</span><span>6</span></span> &lt; 1, also weder sicher noch unmöglich ✓.</p>
+  </div>
+
+  <h3>d) Augenzahl ist keine 1</h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Wie wahrscheinlich ist alles außer der 1? Das ist das <strong>Gegenereignis</strong> von c).</p>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Weg 1 (Gegenereignis): P = 1 − <span class="frac"><span>1</span><span>6</span></span> = <span class="frac"><span>5</span><span>6</span></span></li>
+      <li>Weg 2 (Abzählen): günstig sind 2, 3, 4, 5, 6 → 5 Ergebnisse → P = <span class="frac"><span>5</span><span>6</span></span></li>
+      <li>In Prozent: 5 : 6 ≈ 0,8333 → ≈ 83,3 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P = <span class="frac"><span>5</span><span>6</span></span> ≈ 83,3 % → möglich</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> c) + d) = <span class="frac"><span>1</span><span>6</span></span> + <span class="frac"><span>5</span><span>6</span></span> = 1 ✓ (16,7 % + 83,3 % = 100 %).</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> d) als „sicher“ einstufen, weil 83,3 % „ziemlich sicher“ klingt. In der Mathematik heißt <em>sicher</em> nur P = 1. Alles zwischen 0 und 1 ist <em>möglich</em> – auch 99 %.
+  </div>
+</section>
+
+<!-- ================= AUFGABE 5 ================= -->
+<section id="a5">
+  <h2 class="wk"><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 5 – Zwei Ampeln <span style="color:var(--muted);font-weight:400">(8 P.)</span></h2>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabentext:</em> Zwei Ampeln schalten unabhängig voneinander. Ampel 1 zeigt mit 60 % Wahrscheinlichkeit Grün, Ampel 2 nur mit 40 %.</p>
+  </div>
+
+  <h3>a) Baumdiagramm zeichnen <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein zweistufiges Baumdiagramm: 1. Stufe = Ampel 1, 2. Stufe = Ampel 2, jeweils mit G (grün) und R (rot).</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Baumdiagramm</strong>
+      <p style="margin:0">Jede Stufe des Experiments bekommt eine Verzweigung. An jeden Ast schreibst du die Wahrscheinlichkeit. Die Äste, die von <em>einem</em> Punkt ausgehen, ergeben zusammen 1.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Wahrscheinlichkeiten als Dezimalzahlen: Ampel 1 grün 60 % = 0,6, also rot 1 − 0,6 = 0,4.</li>
+      <li>Ampel 2 grün 40 % = 0,4, also rot 1 − 0,4 = 0,6.</li>
+      <li>Die Ampeln sind unabhängig: Auf der 2. Stufe stehen <strong>bei beiden Zweigen dieselben Werte</strong> (0,4 / 0,6) – egal was Ampel 1 zeigte.</li>
+      <li>Pfadwahrscheinlichkeiten mit der Pfadregel ans Ende schreiben (siehe b und c).</li>
+    </ol>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm zwei Ampeln">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">G</text><text x="160" y="200" style="fill:var(--accent)">R</text>
+        <text x="300" y="35" style="fill:var(--wk)">G</text><text x="300" y="105" style="fill:var(--accent)">R</text>
+        <text x="300" y="165" style="fill:var(--wk)">G</text><text x="300" y="235" style="fill:var(--accent)">R</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">0,6</text><text x="70" y="180">0,4</text>
+        <text x="215" y="40">0,4</text><text x="215" y="98">0,6</text>
+        <text x="215" y="170">0,4</text><text x="215" y="228">0,6</text>
+        <text x="320" y="35">GG: 0,24</text><text x="320" y="105">GR: 0,36</text>
+        <text x="320" y="165">RG: 0,16</text><text x="320" y="235">RR: 0,24</text>
+      </g>
+      <g font-size="11" fill="var(--muted)" text-anchor="middle">
+        <text x="85" y="252">Ampel 1</text><text x="230" y="252">Ampel 2</text>
+      </g>
+    </svg>
+    <p><strong>So zeichnest du es</strong></p>
+    <ol>
+      <li>Links einen Startpunkt setzen. Zwei Äste nach rechts: oben G, unten R. An die Äste 0,6 und 0,4 schreiben.</li>
+      <li>Von G und von R aus je zwei neue Äste (wieder G und R). An <strong>alle vier</strong> Äste der 2. Stufe 0,4 (G) und 0,6 (R) schreiben.</li>
+      <li>Ans Ende jedes Pfades den Namen (GG, GR, RG, RR) und das Produkt der Äste schreiben.</li>
+      <li>Darunter die Stufen beschriften: „Ampel 1“, „Ampel 2“.</li>
+    </ol>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Jede Astgabel: 0,6 + 0,4 = 1 ✓ und 0,4 + 0,6 = 1 ✓. Alle Pfade: 0,24 + 0,36 + 0,16 + 0,24 = 1 ✓.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> Auf der 2. Stufe wieder 0,6 für Grün eintragen, weil man die Werte von Ampel 1 einfach kopiert. Ampel 2 hat ihre eigenen Werte: Grün nur 0,4.
+  </div>
+
+  <h3>b) P(beide grün) <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit für den Pfad G → G.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: 1. Pfadregel (Produktregel)</strong>
+      <p style="margin:0">Die Wahrscheinlichkeit eines Pfades = alle Wahrscheinlichkeiten <strong>entlang des Pfades multiplizieren</strong>.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Pfad GG im Baum suchen: oberster Pfad (0,6 dann 0,4).</li>
+      <li>P(GG) = 0,6 · 0,4 = 0,24</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P(beide grün) = 0,24 = 24 %</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Ein Produkt zweier Zahlen unter 1 ist kleiner als jede der beiden: 0,24 &lt; 0,4 ✓.</p>
+  </div>
+
+  <h3>c) P(genau eine Ampel grün) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Genau eine von beiden ist grün, die andere rot. Dazu gehören <strong>zwei Pfade</strong>: GR (erste grün, zweite rot) und RG (erste rot, zweite grün).</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: 2. Summenregel</strong>
+      <p style="margin:0">Gehören mehrere Pfade zu einem Ereignis, werden ihre Wahrscheinlichkeiten <strong>addiert</strong>. Merksatz: „Entlang des Pfades: <strong>mal</strong>. Mehrere Pfade: <strong>plus</strong>.“</p>
+    </div>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm zwei Ampeln, Pfade GR und RG markiert">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g fill="none" stroke="var(--stat)" stroke-width="4" stroke-linecap="round">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="20" y1="130" x2="150" y2="195"/><line x1="170" y1="195" x2="290" y2="160"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">G</text><text x="160" y="200" style="fill:var(--accent)">R</text>
+        <text x="300" y="35" style="fill:var(--wk)">G</text><text x="300" y="105" style="fill:var(--accent)">R</text>
+        <text x="300" y="165" style="fill:var(--wk)">G</text><text x="300" y="235" style="fill:var(--accent)">R</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">0,6</text><text x="70" y="180">0,4</text>
+        <text x="215" y="40">0,4</text><text x="215" y="98">0,6</text>
+        <text x="215" y="170">0,4</text><text x="215" y="228">0,6</text>
+        <text x="320" y="35">GG: 0,24</text><text x="320" y="105" font-weight="700">GR: 0,36 ✓</text>
+        <text x="320" y="165" font-weight="700">RG: 0,16 ✓</text><text x="320" y="235">RR: 0,24</text>
+      </g>
+    </svg>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Pfad GR (Pfadregel): 0,6 · 0,6 = 0,36</li>
+      <li>Pfad RG (Pfadregel): 0,4 · 0,4 = 0,16</li>
+      <li>Beide Pfade addieren (Summenregel): 0,36 + 0,16 = 0,52</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P(genau eine grün) = 0,52 = 52 %</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> „Genau eine grün“ ist alles außer GG und RR: 1 − 0,24 − 0,24 = 0,52 ✓.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> Nur einen Pfad rechnen (z. B. nur GR = 0,36). „Genau eine“ kann die <em>erste</em> oder die <em>zweite</em> Ampel sein – beide Pfade gehören dazu.
+  </div>
+
+  <h3>d) P(mindestens eine Ampel rot) <span style="color:var(--muted);font-weight:400">(1 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Eine, die andere oder beide Ampeln sind rot. Das sind die Pfade GR, RG und RR – also alles außer „beide grün“.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Gegenereignis</strong>
+      <p style="margin:0">P(Ē) = 1 − P(E). Tipp „mindestens einmal“: fast immer über das Gegenereignis rechnen. Das Gegenereignis von „mindestens eine rot“ ist „keine rot“ = „beide grün“.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Gegenereignis bestimmen: „keine Ampel rot“ = GG.</li>
+      <li>P(GG) = 0,24 (aus b).</li>
+      <li>P(mindestens eine rot) = 1 − 0,24 = 0,76</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P(mindestens eine rot) = 0,76 = 76 %</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Direkt mit Summenregel: GR + RG + RR = 0,36 + 0,16 + 0,24 = 0,76 ✓.</p>
+  </div>
+
+  <h3>e) An wie vielen von 250 Schultagen sind beide Ampeln grün? <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Keine Wahrscheinlichkeit, sondern eine <strong>Anzahl von Tagen</strong>, mit der Lisa ungefähr rechnen kann.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Wahrscheinlichkeit und relative Häufigkeit</strong>
+      <p style="margin:0">Führt man ein Experiment sehr oft durch, nähert sich die relative Häufigkeit der Wahrscheinlichkeit an. Deshalb gilt ungefähr: <strong>erwartete Anzahl = Anzahl der Versuche · Wahrscheinlichkeit</strong>.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Anzahl der Versuche: 250 Schultage. Wahrscheinlichkeit pro Tag: P(GG) = 0,24.</li>
+      <li>250 · 0,24 = 60</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Lisa kann mit <strong>etwa 60 Tagen</strong> rechnen, an denen beide Ampeln grün sind.</p>
+    <p><strong>Kontrolle:</strong> 24 % von 250: 10 % sind 25, also 20 % = 50 und 4 % = 10 → 60 ✓. Das Wort „etwa“ gehört dazu: Es können in Wirklichkeit auch 55 oder 64 Tage sein.</p>
+  </div>
+</section>
+
+<!-- ================= AUFGABE 6 ================= -->
+<section id="a6">
+  <h2 class="wk"><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 6 – Batterien (ohne Zurücklegen) <span style="color:var(--muted);font-weight:400">(8 P.)</span></h2>
+  <div class="card">
+    <p style="margin:0"><em>Aufgabentext:</em> 6 Batterien, davon 2 leer (L) und 4 voll (V). Jan nimmt zufällig nacheinander zwei Batterien heraus.</p>
+  </div>
+
+  <h3>a) Baumdiagramm zeichnen <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Ein zweistufiges Baumdiagramm für zweimaliges Ziehen <strong>ohne Zurücklegen</strong> – die erste Batterie kommt nicht zurück in die Schublade.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Ohne Zurücklegen</strong>
+      <p style="margin:0">Das gezogene Stück bleibt draußen → auf der 2. Stufe ist eins weniger im Nenner, und von der gezogenen Sorte gibt es eins weniger.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>1. Stufe (6 Batterien): P(V) = <span class="frac"><span>4</span><span>6</span></span>, P(L) = <span class="frac"><span>2</span><span>6</span></span>.</li>
+      <li>2. Stufe nach V: Es liegen noch 5 Batterien da, davon 3 V und 2 L → <span class="frac"><span>3</span><span>5</span></span> und <span class="frac"><span>2</span><span>5</span></span>.</li>
+      <li>2. Stufe nach L: Es liegen noch 5 Batterien da, davon 4 V und 1 L → <span class="frac"><span>4</span><span>5</span></span> und <span class="frac"><span>1</span><span>5</span></span>.</li>
+      <li>Pfadwahrscheinlichkeiten mit der Pfadregel ausrechnen und ans Ende schreiben (Nenner 6 · 5 = 30).</li>
+    </ol>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm Batterien">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">V</text><text x="160" y="200" style="fill:var(--accent)">L</text>
+        <text x="300" y="35" style="fill:var(--wk)">V</text><text x="300" y="105" style="fill:var(--accent)">L</text>
+        <text x="300" y="165" style="fill:var(--wk)">V</text><text x="300" y="235" style="fill:var(--accent)">L</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">4/6</text><text x="70" y="180">2/6</text>
+        <text x="215" y="40">3/5</text><text x="215" y="98">2/5</text>
+        <text x="215" y="170">4/5</text><text x="215" y="228">1/5</text>
+        <text x="320" y="35">VV: 12/30</text><text x="320" y="105">VL: 8/30</text>
+        <text x="320" y="165">LV: 8/30</text><text x="320" y="235">LL: 2/30</text>
+      </g>
+      <g font-size="11" fill="var(--muted)" text-anchor="middle">
+        <text x="85" y="252">1. Batterie</text><text x="230" y="252">2. Batterie</text>
+      </g>
+    </svg>
+    <p><strong>So zeichnest du es</strong></p>
+    <ol>
+      <li>Startpunkt links, zwei Äste: V mit <span class="frac"><span>4</span><span>6</span></span>, L mit <span class="frac"><span>2</span><span>6</span></span>. Brüche erst einmal nicht kürzen – dann siehst du die Anzahlen.</li>
+      <li>Von V aus zwei Äste: V <span class="frac"><span>3</span><span>5</span></span>, L <span class="frac"><span>2</span><span>5</span></span>. Von L aus: V <span class="frac"><span>4</span><span>5</span></span>, L <span class="frac"><span>1</span><span>5</span></span>.</li>
+      <li>Ans Ende jedes Pfades Name und Produkt schreiben: VV, VL, LV, LL.</li>
+      <li>Stufen beschriften: „1. Batterie“, „2. Batterie“.</li>
+    </ol>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Jede Astgabel ergibt 1: <span class="frac"><span>4</span><span>6</span></span> + <span class="frac"><span>2</span><span>6</span></span> = 1, <span class="frac"><span>3</span><span>5</span></span> + <span class="frac"><span>2</span><span>5</span></span> = 1, <span class="frac"><span>4</span><span>5</span></span> + <span class="frac"><span>1</span><span>5</span></span> = 1 ✓.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> Auf der 2. Stufe wieder mit 6 im Nenner rechnen (wie mit Zurücklegen). Nach dem ersten Ziehen liegen nur noch 5 Batterien in der Schublade.
+  </div>
+
+  <h3>b) P(beide voll) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit für den Pfad V → V.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: 1. Pfadregel (Produktregel)</strong>
+      <p style="margin:0">Entlang des Pfades multiplizieren. Brüche: Zähler mal Zähler, Nenner mal Nenner.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>P(VV) = <span class="frac"><span>4</span><span>6</span></span> · <span class="frac"><span>3</span><span>5</span></span> = <span class="frac"><span>4 · 3</span><span>6 · 5</span></span> = <span class="frac"><span>12</span><span>30</span></span></li>
+      <li>Kürzen durch 6: <span class="frac"><span>12</span><span>30</span></span> = <span class="frac"><span>2</span><span>5</span></span></li>
+      <li>In Prozent: 2 : 5 = 0,4 = 40 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P(beide voll) = <span class="frac"><span>12</span><span>30</span></span> = <span class="frac"><span>2</span><span>5</span></span> = 40 %</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Kleiner als P(erste voll) = <span class="frac"><span>4</span><span>6</span></span> ≈ 66,7 % – eine zweite Bedingung kann die Wahrscheinlichkeit nicht vergrößern ✓.</p>
+  </div>
+
+  <h3>c) P(genau eine leer) <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Eine Batterie ist leer, die andere voll. Das passiert auf <strong>zwei Pfaden</strong>: VL (erst voll, dann leer) und LV (erst leer, dann voll).</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Pfadregel + Summenregel</strong>
+      <p style="margin:0">Jeden Pfad einzeln multiplizieren, dann die Pfade <strong>addieren</strong>.</p>
+    </div>
+    <svg viewBox="0 0 440 260" style="max-width:520px" role="img" aria-label="Baumdiagramm Batterien, Pfade VL und LV markiert">
+      <g class="ln" fill="none">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="20" y1="130" x2="150" y2="195"/>
+        <line x1="170" y1="65" x2="290" y2="30"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="170" y1="195" x2="290" y2="160"/><line x1="170" y1="195" x2="290" y2="230"/>
+      </g>
+      <g fill="none" stroke="var(--stat)" stroke-width="4" stroke-linecap="round">
+        <line x1="20" y1="130" x2="150" y2="65"/><line x1="170" y1="65" x2="290" y2="100"/>
+        <line x1="20" y1="130" x2="150" y2="195"/><line x1="170" y1="195" x2="290" y2="160"/>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <text x="160" y="70" style="fill:var(--wk)">V</text><text x="160" y="200" style="fill:var(--accent)">L</text>
+        <text x="300" y="35" style="fill:var(--wk)">V</text><text x="300" y="105" style="fill:var(--accent)">L</text>
+        <text x="300" y="165" style="fill:var(--wk)">V</text><text x="300" y="235" style="fill:var(--accent)">L</text>
+      </g>
+      <g font-size="12">
+        <text x="70" y="88">4/6</text><text x="70" y="180">2/6</text>
+        <text x="215" y="40">3/5</text><text x="215" y="98">2/5</text>
+        <text x="215" y="170">4/5</text><text x="215" y="228">1/5</text>
+        <text x="320" y="35">VV: 12/30</text><text x="320" y="105" font-weight="700">VL: 8/30 ✓</text>
+        <text x="320" y="165" font-weight="700">LV: 8/30 ✓</text><text x="320" y="235">LL: 2/30</text>
+      </g>
+    </svg>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Pfad VL: <span class="frac"><span>4</span><span>6</span></span> · <span class="frac"><span>2</span><span>5</span></span> = <span class="frac"><span>8</span><span>30</span></span></li>
+      <li>Pfad LV: <span class="frac"><span>2</span><span>6</span></span> · <span class="frac"><span>4</span><span>5</span></span> = <span class="frac"><span>8</span><span>30</span></span></li>
+      <li>Addieren: <span class="frac"><span>8</span><span>30</span></span> + <span class="frac"><span>8</span><span>30</span></span> = <span class="frac"><span>16</span><span>30</span></span></li>
+      <li>Kürzen durch 2: <span class="frac"><span>16</span><span>30</span></span> = <span class="frac"><span>8</span><span>15</span></span></li>
+      <li>In Prozent: 8 : 15 ≈ 0,5333 → ≈ 53,3 %</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P(genau eine leer) = <span class="frac"><span>16</span><span>30</span></span> = <span class="frac"><span>8</span><span>15</span></span> ≈ 53,3 %</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> Die beiden Pfade VL und LV sind gleich groß (beide <span class="frac"><span>8</span><span>30</span></span>) – nur die Reihenfolge der Faktoren ist vertauscht ✓. Die vollständige Kontrolle folgt in d).</p>
+  </div>
+
+  <h3>d) P(beide leer) und Kontrolle <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit für den Pfad L → L – und danach prüfen, ob alle Pfade zusammen 1 ergeben.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Pfadregel und Kontrollregel</strong>
+      <p style="margin:0">Alle Pfadwahrscheinlichkeiten am Ende ergeben zusammen 1.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>P(LL) = <span class="frac"><span>2</span><span>6</span></span> · <span class="frac"><span>1</span><span>5</span></span> = <span class="frac"><span>2</span><span>30</span></span></li>
+      <li>Kürzen durch 2: <span class="frac"><span>2</span><span>30</span></span> = <span class="frac"><span>1</span><span>15</span></span></li>
+      <li>In Prozent: 1 : 15 ≈ 0,0667 → ≈ 6,7 %</li>
+      <li>Kontrolle mit den ungekürzten Brüchen (gleicher Nenner 30): <span class="frac"><span>12</span><span>30</span></span> + <span class="frac"><span>16</span><span>30</span></span> + <span class="frac"><span>2</span><span>30</span></span> = <span class="frac"><span>30</span><span>30</span></span> = 1</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P(beide leer) = <span class="frac"><span>2</span><span>30</span></span> = <span class="frac"><span>1</span><span>15</span></span> ≈ 6,7 %</strong></p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> P(beide voll) + P(genau eine leer) + P(beide leer) = 1 ✓ (in Prozent: 40 % + 53,3 % + 6,7 % = 100 %). Plausibel: Es gibt nur 2 leere Batterien, also ist „beide leer“ selten.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> Für die Kontrolle nur die drei Ergebnisse aus b) bis d) addieren und dabei in c) einen Pfad vergessen haben – dann kommt nicht 1 heraus. Genau dafür ist die Kontrolle da: Ergibt die Summe nicht 1, such den Fehler im Baum.
+  </div>
+</section>
+
+<!-- ================= AUFGABE 7 ================= -->
+<section id="a7">
+  <h2 class="wk"><span class="tag wk">Wahrscheinlichkeit</span>Aufgabe 7 – Stimmt das? <span style="color:var(--muted);font-weight:400">(4 P.)</span></h2>
+
+  <h3>a) Lotto: 1 – 2 – 3 – 4 – 5 – 6 unwahrscheinlicher? <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><em>Aufgabentext:</em> Lea sagt: „Beim Lotto ist die Zahlenreihe 1 – 2 – 3 – 4 – 5 – 6 viel unwahrscheinlicher als eine gemischte Reihe wie 4 – 17 – 23 – 31 – 38 – 45.“</p>
+    <p><strong>Was ist gefragt?</strong> Ob Leas Behauptung stimmt – mit Begründung.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: gleich wahrscheinliche Ergebnisse</strong>
+      <p style="margin:0">Beim Lotto hat jede Kugel bei jeder Ziehung dieselbe Chance. Die Kugeln „wissen“ nicht, welche Zahl auf ihnen steht. Darum ist jede <em>bestimmte</em> Zahlenreihe genau ein günstiges Ergebnis unter gleich vielen möglichen.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Frage: Ist eine der beiden Reihen beim Ziehen bevorzugt? Nein – jede Zahl hat dieselbe Chance, gezogen zu werden.</li>
+      <li>Beide Reihen sind jeweils <strong>genau eine</strong> bestimmte Kombination aus sechs Zahlen.</li>
+      <li>Also: gleich viele günstige Ergebnisse (je 1), gleich viele mögliche Ergebnisse → gleiche Wahrscheinlichkeit.</li>
+      <li>Warum wirkt 1 – 6 seltener? Es gibt sehr viele „gemischt aussehende“ Reihen, aber nur wenige mit auffälligem Muster. Die <em>Gruppe</em> „irgendeine gemischte Reihe“ ist wahrscheinlicher – die <em>einzelne</em> Reihe 4 – 17 – 23 – 31 – 38 – 45 aber nicht.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> Leas Aussage ist <strong>falsch</strong>.</p>
+    <p><strong>Musterantwort:</strong> „Lea hat nicht recht, denn jede einzelne Zahlenreihe ist beim Lotto genau gleich wahrscheinlich. Jede Kugel hat dieselbe Chance, gezogen zu werden. Die Reihe 1 bis 6 wirkt nur besonders, weil sie ein Muster hat.“</p>
+    <p style="margin-bottom:0"><strong>Was die Lehrkraft sehen will:</strong> das Kernargument „jede bestimmte Reihe ist gleich wahrscheinlich, weil jede Zahl die gleiche Chance hat“. Ein Muster ändert nichts an der Wahrscheinlichkeit.</p>
+  </div>
+
+  <h3>b) Münze nach dreimal „Kopf“ <span style="color:var(--muted);font-weight:400">(2 P.)</span></h3>
+  <div class="card">
+    <p><em>Aufgabentext:</em> Eine Münze zeigte dreimal hintereinander „Kopf“. Wie groß ist die Wahrscheinlichkeit für „Zahl“ beim vierten Wurf?</p>
+    <p><strong>Was ist gefragt?</strong> Die Wahrscheinlichkeit für „Zahl“ beim <em>nächsten</em> Wurf – und ob die drei Würfe davor etwas daran ändern.</p>
+    <div class="card rule wk">
+      <strong>Das brauchst du: Unabhängigkeit</strong>
+      <p style="margin:0">Die Würfe einer Münze hängen nicht voneinander ab. Jeder Wurf beginnt neu, die Münze „merkt“ sich nichts. P(Zahl) = <span class="frac"><span>1</span><span>2</span></span> bei <em>jedem</em> Wurf.</p>
+    </div>
+    <p><strong>Schritt für Schritt</strong></p>
+    <ol>
+      <li>Mögliche Ergebnisse beim 4. Wurf: Kopf, Zahl → 2.</li>
+      <li>Günstig: Zahl → 1.</li>
+      <li>P(Zahl) = <span class="frac"><span>1</span><span>2</span></span> = 50 % – die vorherigen Würfe spielen keine Rolle.</li>
+    </ol>
+    <p><strong>Ergebnis:</strong> <strong>P(Zahl) = <span class="frac"><span>1</span><span>2</span></span> = 50 %</strong></p>
+    <p><strong>Musterantwort:</strong> „Die Wahrscheinlichkeit für Zahl beträgt auch beim vierten Wurf <span class="frac"><span>1</span><span>2</span></span> = 50 %, denn die Münze hat kein Gedächtnis. Jeder Wurf ist unabhängig von den vorherigen.“</p>
+    <p><strong>Was die Lehrkraft sehen will:</strong> den Wert 50 % <em>und</em> die Begründung „unabhängig / kein Gedächtnis“.</p>
+    <p style="margin-bottom:0"><strong>Kontrolle:</strong> P(Kopf) + P(Zahl) = <span class="frac"><span>1</span><span>2</span></span> + <span class="frac"><span>1</span><span>2</span></span> = 1 ✓.</p>
+  </div>
+  <div class="card warn">
+    <strong>Typischer Fehler:</strong> „Jetzt muss endlich Zahl kommen, also mehr als 50 %.“ Das Gesetz der großen Zahlen gilt erst für <em>sehr viele</em> Würfe – es gleicht nicht einzelne Würfe aus. Der nächste Wurf ist immer wieder 50 : 50.
+  </div>
+</section>
+
+<!-- ================= MITNEHMEN ================= -->
+<section id="mitnehmen">
+  <h2>Das solltest du mitnehmen</h2>
+  <div class="card">
+    <ol style="margin:0">
+      <li><strong>Relative Häufigkeit:</strong> h = absolute Häufigkeit : Gesamtanzahl. Alle relativen Häufigkeiten ergeben zusammen 100 %.</li>
+      <li><strong>Kreisdiagramm:</strong> Winkel = relative Häufigkeit · 360°. Alle Winkel ergeben zusammen 360°.</li>
+      <li><strong>Kennwerte:</strong> Mittelwert = Summe : Anzahl. Median = mittlerer Wert der <em>geordneten</em> Liste. Spannweite = größter − kleinster Wert. Begründungen immer mit Kennwerten und Zahlen.</li>
+      <li><strong>Anteile:</strong> Anteil = Teil : Ganzes – zuerst klären, <em>was</em> das Ganze ist.</li>
+      <li><strong>Laplace-Wahrscheinlichkeit:</strong> P(E) = günstige : mögliche Ergebnisse. P = 0 heißt unmöglich, P = 1 heißt sicher, alles dazwischen ist möglich.</li>
+      <li><strong>Gegenereignis:</strong> P(Ē) = 1 − P(E). Bei „mindestens einmal“ fast immer über das Gegenereignis rechnen.</li>
+      <li><strong>Baumdiagramm:</strong> Entlang des Pfades: <strong>mal</strong> (Pfadregel). Mehrere Pfade: <strong>plus</strong> (Summenregel). Kontrolle: Äste an jedem Punkt und alle Pfade ergeben je 1.</li>
+      <li><strong>Mit oder ohne Zurücklegen:</strong> Unabhängige Stufen (Ampeln, Münze) behalten ihre Wahrscheinlichkeiten. Ohne Zurücklegen ändern sich auf der 2. Stufe Zähler und Nenner. Erwartete Anzahl ≈ Anzahl der Versuche · Wahrscheinlichkeit.</li>
+    </ol>
+  </div>
+</section>
+</main>
+<footer><a class="back" href="./">← zur Lernseite</a> &nbsp;·&nbsp; <a class="back" href="probearbeit-4.html">← zur Probearbeit 4</a> &nbsp;·&nbsp; <a class="back" href="../">Mathematik</a> &nbsp;·&nbsp; <a class="back" href="../../">Alle Fächer</a></footer>
+</body>
+</html>
